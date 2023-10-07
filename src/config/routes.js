@@ -1,4 +1,5 @@
 const routes = {
+    normal: '/',
     home: '/movie-app/',
     aboutUs: '/movie-app/about',
     movie: '/movie-app/movie',

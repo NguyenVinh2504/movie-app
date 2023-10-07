@@ -10,6 +10,9 @@ function App() {
                     <Route path={routes.home} element={<MainLayout />}>
                         {routesPage}
                     </Route>
+                    <Route path={routes.normal} element={<MainLayout />}>
+                        {routesPage}
+                    </Route>
                 </Routes>
             </div>
         </BrowserRouter>
