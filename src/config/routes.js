@@ -1,5 +1,5 @@
 const routes = {
-    home: '/',
+    home: '/movie-app',
     aboutUs: '/about',
     movie: '/movie',
     topRateMovie: '/movie/top-rate',
