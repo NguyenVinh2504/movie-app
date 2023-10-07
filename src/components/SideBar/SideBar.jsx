@@ -17,6 +17,7 @@ import { NavLink } from 'react-router-dom';
 import { menuItems, userMenu } from '~/config/MenuItemsConfig';
 import Logo from '../Logo';
 import { MenuIcon } from '../Icon';
+import theme from '~/theme';
 
 function SideBar({ open, onClick, onKeyDown, onClose, user, handelSignIn, setUser }) {
     const props = {
@@ -132,9 +133,9 @@ function SideBar({ open, onClick, onKeyDown, onClose, user, handelSignIn, setUse
             open={open}
             onClose={onClose}
             sx={{
-                '& .css-4t3x6l-MuiPaper-root-MuiDrawer-paper': {
+                '& .MuiDrawer-paper': {
                     width: { xs: '92%', sm: '45%', md: '32%' },
-                    backgroundColor: (theme) => theme.movie.background,
+                    backgroundColor: theme.movie.background,
                     color: 'white',
                 },
             }}
