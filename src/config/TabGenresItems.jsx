@@ -1,7 +1,7 @@
 export const genres = [
-    {
-        name: 'Phổ biến',
-    },
+    // {
+    //     name: 'Phổ biến',
+    // },
     {
         name: 'Đang chiếu',
     },
