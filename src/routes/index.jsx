@@ -19,4 +19,4 @@ const generateRoute = (routes) => {
     );
 };
 
-export const routes = generateRoute(routesMainLayout);
+export const routesPage = generateRoute(routesMainLayout);

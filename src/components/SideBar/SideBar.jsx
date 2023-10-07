@@ -79,7 +79,7 @@ function SideBar({ open, onClick, onKeyDown, onClose, user, handelSignIn, setUse
                     </Box>
                 )}
                 {menuItems.map((item, index) => (
-                    <NavLink to={item.path} key={index}>
+                    <NavLink to={item.path} key={index} end>
                         {({ isActive }) => (
                             <ListItem
                                 disablePadding

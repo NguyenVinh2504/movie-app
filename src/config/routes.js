@@ -1,20 +1,20 @@
 const routes = {
-    home: '/movie-app',
-    aboutUs: '/about',
-    movie: '/movie',
-    topRateMovie: '/movie/top-rate',
-    tv: '/tv',
-    mediaList: '/:mediaType',
-    search: '/search',
+    home: '/movie-app/',
+    aboutUs: '/movie-app/about',
+    movie: '/movie-app/movie',
+    topRateMovie: '/movie-app/movie/top-rate',
+    tv: '/movie-app/tv',
+    mediaList: '/movie-app/:mediaType',
+    search: '/movie-app/search',
     //profile
-    profile: '/profile',
-    favorite: '/profile/favorite',
-    favoriteTvList: '/profile/favorite/tv',
+    profile: '/movie-app/profile',
+    favorite: '/movie-app/profile/favorite',
+    favoriteTvList: '/movie-app/profile/favorite/tv',
     //profile
 
     //setting
-    settingProfile: '/settings/profile',
-    deleteAccount: '/settings/delete-account',
+    settingProfile: '/movie-app/settings/profile',
+    deleteAccount: '/movie-app/settings/delete-account',
     //setting
 
     error: '*',

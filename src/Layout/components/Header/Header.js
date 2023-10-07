@@ -99,6 +99,7 @@ function Header() {
                                         key={index}
                                         className={(nav) => cx({ active: nav.isActive }, 'menu')}
                                         to={item.path}
+                                        end
                                     >
                                         {item.title}
                                     </NavLink>

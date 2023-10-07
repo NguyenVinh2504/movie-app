@@ -1,9 +1,10 @@
 import { Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
+import routes from '~/config/routes';
 
 function Logo() {
     return (
-        <NavLink to={'/'}>
+        <NavLink to={routes.home}>
             <Typography
                 variant="span"
                 sx={{
