@@ -1,4 +1,4 @@
-import { Tab, Tabs, Box, Container, styled, tabsClasses } from '@mui/material';
+import { Tab, Tabs, Container, styled, tabsClasses } from '@mui/material';
 import { useState } from 'react';
 import { genres } from '~/config/TabGenresItems';
 function TabGenres() {
