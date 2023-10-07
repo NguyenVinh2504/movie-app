@@ -13,10 +13,10 @@ export const genres = [
         id: 12,
         name: 'Phim Phiêu Lưu',
     },
-    // {
-    //     id: 16,
-    //     name: 'Phim Hoạt Hình',
-    // },
+    {
+        id: 16,
+        name: 'Phim Hoạt Hình',
+    },
     {
         id: 35,
         name: 'Phim Hài',
