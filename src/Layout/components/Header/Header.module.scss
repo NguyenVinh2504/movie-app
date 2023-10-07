@@ -1,0 +1,12 @@
+.menu {
+    &:hover {
+        color: #cbcaca;
+    }
+}
+.active {
+    color: white;
+    font-weight: 500;
+    &:hover {
+        color: white;
+    }
+}
