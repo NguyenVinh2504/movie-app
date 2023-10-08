@@ -24,10 +24,18 @@ const SwiperButton = styled(IconButton)(({ theme }) => ({
     position: 'absolute',
     zIndex: '10',
     top: '50%',
-    transform: 'translateY(-50%)',
-    ':hover': {
+    '&:hover': {
         backgroundColor: 'rgba(255, 255, 255, 0.2)',
     },
+    '@media (hover: none)': {
+        '&:hover': {
+            backgroundColor: 'rgba(0, 0, 0, 0.4)',
+        },
+    },
+    '&:active': {
+        backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    },
+    transform: 'translateY(-50%)',
     [theme.breakpoints.down('lg')]: {
         width: '40px',
         height: '40px',
@@ -119,9 +127,14 @@ function HeroSlice() {
                                 left: '50%',
                                 width: '50px',
                                 height: '50px',
+                                backgroundColor: 'rgba(0, 0, 0, 0.4)',
                                 transform: 'translate(-50%, -50%)',
-                                backgroundColor: 'black',
-                                opacity: '0.6',
+                                ':hover': {
+                                    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+                                },
+                                ':active': {
+                                    backgroundColor: 'rgba(255,255,255, 0.2)',
+                                },
                                 svg: {
                                     width: '100%',
                                     height: '100%',

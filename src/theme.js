@@ -86,6 +86,9 @@ const theme = createTheme({
             backgroundHover: '#2D2C2C',
         },
     },
+    listItems: {
+        backgroundActive: '#ec0101 !important',
+    },
     button: {
         neutralButton: {
             solid: {
@@ -126,6 +129,11 @@ const theme = createTheme({
                         '&:hover': {
                             backgroundColor: 'rgba(236, 1, 1, 0.80)',
                         },
+                        '@media (hover: none)': {
+                            '&:hover': {
+                                backgroundColor: '#ec0101',
+                            },
+                        },
                         '&:active': {
                             backgroundColor: 'rgba(236, 1, 1, 0.60)',
                         },
@@ -138,6 +146,11 @@ const theme = createTheme({
                         padding: '0 15px',
                         '&:hover': {
                             backgroundColor: '#4B4949',
+                        },
+                        '@media (hover: none)': {
+                            '&:hover': {
+                                backgroundColor: '#2D2C2C',
+                            },
                         },
                     },
                 },
@@ -166,7 +179,12 @@ const theme = createTheme({
                     props: { color: 'neutral' },
                     style: {
                         '&:hover': {
-                            backgroundColor: '#2D2C2C',
+                            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                        },
+                        '@media (hover: none)': {
+                            '&:hover': {
+                                backgroundColor: 'transparent',
+                            },
                         },
                         '&:active': {
                             backgroundColor: '#4B4949',
@@ -174,6 +192,20 @@ const theme = createTheme({
                     },
                 },
             ],
+        },
+        MuiListItem: {
+            styleOverrides: {
+                root: {
+                    '&:hover': {
+                        backgroundColor: '#2D2C2C',
+                    },
+                    '@media (hover: none)': {
+                        '&:hover': {
+                            backgroundColor: 'unset',
+                        },
+                    },
+                },
+            },
         },
         MuiCssBaseline: {
             styleOverrides: `

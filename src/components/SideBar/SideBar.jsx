@@ -53,15 +53,12 @@ function SideBar({ open, onClick, onKeyDown, onClose, user, handelSignIn, setUse
                                         disablePadding
                                         sx={{
                                             borderRadius: '0.25rem',
-                                            backgroundColor: isActive ? 'primary.main' : 'unset',
-                                            ':hover': {
-                                                backgroundColor: !isActive
-                                                    ? (theme) => theme.movie.action.backgroundHover
-                                                    : 'rgb(236, 1, 1, 0.8)',
-                                            },
+                                            backgroundColor: isActive
+                                                ? (theme) => theme.listItems.backgroundActive
+                                                : 'unset',
                                         }}
                                     >
-                                        <ListItemButton>
+                                        <ListItemButton disableRipple>
                                             <ListItemText
                                                 primary={
                                                     <Box gap={3} display={'flex'} alignItems={'center'}>
@@ -85,15 +82,15 @@ function SideBar({ open, onClick, onKeyDown, onClose, user, handelSignIn, setUse
                                 disablePadding
                                 sx={{
                                     borderRadius: '0.25rem',
-                                    backgroundColor: isActive ? 'primary.main' : 'unset',
-                                    ':hover': {
-                                        backgroundColor: !isActive
-                                            ? (theme) => theme.movie.action.backgroundHover
-                                            : 'rgb(236, 1, 1, 0.8)',
-                                    },
+                                    backgroundColor: isActive ? (theme) => theme.listItems.backgroundActive : 'unset',
+                                    // ':hover': {
+                                    //     backgroundColor: !isActive
+                                    //         ? (theme) => theme.movie.action.backgroundHover
+                                    //         : 'rgb(236, 1, 1, 0.8)',
+                                    // },
                                 }}
                             >
-                                <ListItemButton>
+                                <ListItemButton disableRipple>
                                     <ListItemText
                                         primary={
                                             <Box gap={3} display={'flex'} alignItems={'center'}>

@@ -17,6 +17,11 @@ function TabGenres() {
         ':hover': {
             backgroundColor: theme.button.neutralButton.solid.hover,
         },
+        '@media (hover: none)': {
+            '&:hover': {
+                backgroundColor: theme.button.neutralButton.solid.default,
+            },
+        },
         '&.Mui-selected': {
             color: theme.button.neutralButton.solid.textActive,
             fontWeight: '500',
