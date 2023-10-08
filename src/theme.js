@@ -4,6 +4,7 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/700.css';
 // A custom theme for this app
+
 const theme = createTheme({
     typography: {
         h1: {
@@ -244,5 +245,4 @@ const theme = createTheme({
         },
     },
 });
-
 export default theme;
