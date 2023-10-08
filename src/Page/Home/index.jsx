@@ -2,9 +2,10 @@
 // import styles from './Home.module.scss';
 // import { Container } from '@mui/material';
 import HeroSlice from '~/components/HeroSlice';
-import TabGenres from '~/components/TabGenres';
+import TabItems from '~/components/TabItems';
 import Media from '~/components/Media';
 // const cx = classNames.bind(styles);
+import { homeTabItems } from '~/config/TabMenuItems';
 
 function Home() {
     return (
@@ -25,7 +26,7 @@ function Home() {
         // </div>
         <>
             <HeroSlice />
-            <TabGenres />
+            <TabItems contentItems={homeTabItems} />
             <Media />
         </>
     );

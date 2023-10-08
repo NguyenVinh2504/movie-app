@@ -1,9 +1,15 @@
 export const genres = [
-    // {
-    //     name: 'Phổ biến',
-    // },
+    {
+        name: 'Phổ biến',
+    },
     {
         name: 'Đang chiếu',
+    },
+    {
+        name: 'Sắp ra mắt',
+    },
+    {
+        name: 'Top rate',
     },
     {
         id: 28,
@@ -80,5 +86,23 @@ export const genres = [
     {
         id: 37,
         name: 'Phim Miền Tây',
+    },
+];
+
+export const homeTabItems = [
+    {
+        name: 'Thịnh Hành',
+    },
+    {
+        name: 'Phim Lẻ Mới Nhất',
+    },
+    {
+        name: 'Phim Bộ Mới Nhất',
+    },
+    {
+        name: 'Phim Lẻ Sắp ra',
+    },
+    {
+        name: 'Phim Bộ Sắp ra',
     },
 ];

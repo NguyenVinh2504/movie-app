@@ -18,7 +18,6 @@ import { NavLink } from 'react-router-dom';
 import { menuItems, userMenu } from '~/config/MenuItemsConfig';
 import Logo from '../Logo';
 import { MenuIcon } from '../Icon';
-import theme from '~/theme';
 
 const ListCustoms = styled(ListItem)(({ theme }) => ({
     '&:hover': {
