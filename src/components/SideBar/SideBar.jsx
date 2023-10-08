@@ -144,7 +144,7 @@ function SideBar({ open, onClick, onKeyDown, onClose, user, handelSignIn, setUse
             sx={{
                 '& .MuiDrawer-paper': {
                     width: { xs: '92%', sm: '45%', md: '32%' },
-                    backgroundColor: theme.movie.background,
+                    backgroundColor: '#0c0a0a',
                     color: 'white',
                 },
             }}

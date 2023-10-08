@@ -4,7 +4,10 @@ import '@fontsource/roboto/500.css';
 import '@fontsource/roboto/400.css';
 import '@fontsource/roboto/700.css';
 // A custom theme for this app
-
+const Color = {
+    primary: '#ec0101',
+    secondary: '#2D2C2C',
+};
 const theme = createTheme({
     typography: {
         h1: {
@@ -84,18 +87,18 @@ const theme = createTheme({
         backgroundGradient:
             'linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4766281512605042) 31%, rgba(0,0,0,1) 92%)',
         action: {
-            backgroundHover: '#2D2C2C',
+            backgroundHover: Color.secondary,
         },
     },
     listItems: {
-        backgroundActive: '#ec0101 !important',
-        backgroundHover: '#2D2C2C',
+        backgroundActive: `${Color.primary}!important`,
+        backgroundHover: Color.secondary,
     },
 
     button: {
         neutralButton: {
             solid: {
-                default: '#2D2C2C',
+                default: Color.secondary,
                 hover: '#4B4949',
                 active: '#FFF',
                 text: '#fff',
@@ -107,18 +110,15 @@ const theme = createTheme({
         background: 'rgba(255, 255, 255, 0.08)',
         text: 'white',
         textOverview: 'rgba(255, 255, 255, 0.50)',
-        iconHeart: '#ec0101',
+        iconHeart: Color.primary,
         borderRadius: '5px',
     },
     palette: {
         primary: {
-            main: '#ec0101',
+            main: Color.primary,
         },
         secondary: {
-            main: '#2D2C2C',
-        },
-        error: {
-            main: '#EB3942',
+            main: Color.secondary,
         },
     },
     components: {
@@ -134,7 +134,7 @@ const theme = createTheme({
                         },
                         '@media (hover: none)': {
                             '&:hover': {
-                                backgroundColor: '#ec0101',
+                                backgroundColor: Color.primary,
                             },
                         },
                         '&:active': {
@@ -152,7 +152,7 @@ const theme = createTheme({
                         },
                         '@media (hover: none)': {
                             '&:hover': {
-                                backgroundColor: '#2D2C2C',
+                                backgroundColor: Color.secondary,
                             },
                         },
                     },

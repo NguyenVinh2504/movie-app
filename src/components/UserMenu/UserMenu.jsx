@@ -62,7 +62,7 @@ function UserMenu({ handelSignIn }) {
                                     background: 'rgba(255, 255, 255, 0.10)',
                                 },
                                 ':active': {
-                                    background: '#ec0101',
+                                    background: (theme) => theme.palette.primary.main,
                                 },
                             },
                         },
