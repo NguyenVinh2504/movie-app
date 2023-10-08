@@ -89,7 +89,9 @@ const theme = createTheme({
     },
     listItems: {
         backgroundActive: '#ec0101 !important',
+        backgroundHover: '#2D2C2C',
     },
+
     button: {
         neutralButton: {
             solid: {
@@ -193,20 +195,6 @@ const theme = createTheme({
                     },
                 },
             ],
-        },
-        MuiListItem: {
-            styleOverrides: {
-                root: {
-                    '&:hover': {
-                        backgroundColor: '#2D2C2C',
-                    },
-                    '@media (hover: none)': {
-                        '&:hover': {
-                            backgroundColor: 'unset',
-                        },
-                    },
-                },
-            },
         },
         MuiCssBaseline: {
             styleOverrides: `

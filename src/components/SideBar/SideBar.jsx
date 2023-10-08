@@ -11,6 +11,7 @@ import {
     Button,
     Divider,
     Avatar,
+    styled,
 } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 
@@ -18,6 +19,17 @@ import { menuItems, userMenu } from '~/config/MenuItemsConfig';
 import Logo from '../Logo';
 import { MenuIcon } from '../Icon';
 import theme from '~/theme';
+
+const ListCustoms = styled(ListItem)(({ theme }) => ({
+    '&:hover': {
+        backgroundColor: theme.listItems.backgroundHover,
+    },
+    '@media (hover: none)': {
+        '&:hover': {
+            backgroundColor: 'unset',
+        },
+    },
+}));
 
 function SideBar({ open, onClick, onKeyDown, onClose, user, handelSignIn, setUser }) {
     const props = {
@@ -49,7 +61,7 @@ function SideBar({ open, onClick, onKeyDown, onClose, user, handelSignIn, setUse
                         {userMenu.map((item, index) => (
                             <NavLink to={item.path} key={index} end>
                                 {({ isActive }) => (
-                                    <ListItem
+                                    <ListCustoms
                                         disablePadding
                                         sx={{
                                             borderRadius: '0.25rem',
@@ -68,7 +80,7 @@ function SideBar({ open, onClick, onKeyDown, onClose, user, handelSignIn, setUse
                                                 }
                                             />
                                         </ListItemButton>
-                                    </ListItem>
+                                    </ListCustoms>
                                 )}
                             </NavLink>
                         ))}
@@ -78,7 +90,7 @@ function SideBar({ open, onClick, onKeyDown, onClose, user, handelSignIn, setUse
                 {menuItems.map((item, index) => (
                     <NavLink to={item.path} key={index} end>
                         {({ isActive }) => (
-                            <ListItem
+                            <ListCustoms
                                 disablePadding
                                 sx={{
                                     borderRadius: '0.25rem',
@@ -100,7 +112,7 @@ function SideBar({ open, onClick, onKeyDown, onClose, user, handelSignIn, setUse
                                         }
                                     />
                                 </ListItemButton>
-                            </ListItem>
+                            </ListCustoms>
                         )}
                     </NavLink>
                 ))}

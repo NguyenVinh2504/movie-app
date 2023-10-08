@@ -6,43 +6,16 @@ import 'swiper/scss/navigation';
 import { Navigation, Autoplay } from 'swiper/modules';
 import { movie } from './movie';
 import { AboutIcon, ArrowLeftIcon, ArrowRightIcon, PlayIcon } from '../Icon';
-
-const CustomButton = styled(Button)(({ theme }) => ({
-    [theme.breakpoints.down('md')]: {
-        svg: {
-            height: '20px',
-            width: '20px',
-        },
-    },
-}));
-const SwiperButton = styled(IconButton)(({ theme }) => ({
-    borderRadius: '100px',
-    backgroundColor: 'rgba(0, 0, 0, 0.4)',
-    width: '50px',
-    height: '50px',
-    padding: '10px',
-    position: 'absolute',
-    zIndex: '10',
-    top: '50%',
-    '&:hover': {
-        backgroundColor: 'rgba(255, 255, 255, 0.2)',
-    },
-    '@media (hover: none)': {
-        '&:hover': {
-            backgroundColor: 'rgba(0, 0, 0, 0.4)',
-        },
-    },
-    '&:active': {
-        backgroundColor: 'rgba(255, 255, 255, 0.4)',
-    },
-    transform: 'translateY(-50%)',
-    [theme.breakpoints.down('lg')]: {
-        width: '40px',
-        height: '40px',
-    },
-}));
-
+import SwiperButton from './SwipperButon';
 function HeroSlice() {
+    const CustomButton = styled(Button)(({ theme }) => ({
+        [theme.breakpoints.down('md')]: {
+            svg: {
+                height: '20px',
+                width: '20px',
+            },
+        },
+    }));
     const pointDonwLg = useMediaQuery((theme) => theme.breakpoints.down('lg'));
     const pointDonwMd = useMediaQuery((theme) => theme.breakpoints.down('md'));
     const pointDonwSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
