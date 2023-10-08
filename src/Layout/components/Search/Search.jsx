@@ -2,6 +2,7 @@ import Input from '~/components/Input';
 import { CloseIcon, SearchIcon } from '~/components/Icon';
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
+import routes from '~/config/routes';
 function Search({ round }) {
     const props = {
         round,
@@ -14,10 +15,10 @@ function Search({ round }) {
         const searchValue = e.target.value;
         if (!searchValue.startsWith(' ')) {
             setSearchValue(searchValue);
-            location('/search');
+            location(routes.search);
         }
         if (searchValue === '') {
-            location('/');
+            location(routes.home);
         }
     };
     const handleClear = () => {

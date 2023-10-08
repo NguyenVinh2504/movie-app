@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import { cloneElement, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import Search from '../Search';
 import {
     Badge,
@@ -20,6 +20,7 @@ import { menuItems } from '~/config/MenuItemsConfig';
 import Logo from '~/components/Logo';
 import SideBar from '~/components/SideBar';
 import UserMenu from '~/components/UserMenu';
+import routes from '~/config/routes';
 
 const cx = classNames.bind(styles);
 
@@ -39,9 +40,13 @@ const ScrollAppBar = ({ children, window }) => {
 };
 
 function Header() {
+    const location = useNavigate();
     const [user, setUser] = useState(false);
     const handelSignIn = () => {
         setUser(true);
+    };
+    const handelSearch = () => {
+        location(routes.search);
     };
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
@@ -126,7 +131,7 @@ function Header() {
                                     display: { xs: 'block', lg: 'none' },
                                 }}
                             >
-                                <IconButton disableRipple color="neutral">
+                                <IconButton disableRipple color="neutral" onClick={handelSearch}>
                                     <SearchIcon />
                                 </IconButton>
                             </Box>
