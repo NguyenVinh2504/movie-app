@@ -6,14 +6,19 @@ function Logo() {
     return (
         <NavLink to={routes.home}>
             <Typography
-                variant="span"
+                variant="h5"
                 sx={{
                     color: 'primary.main',
-                    fontWeight: '700',
+                    fontWeight: '500',
                 }}
             >
                 MOVI
-                <Typography variant="span" sx={{ color: 'white', fontWeight: '700' }}>
+                <Typography
+                    variant="span"
+                    sx={{
+                        color: 'white',
+                    }}
+                >
                     .COM
                 </Typography>
             </Typography>

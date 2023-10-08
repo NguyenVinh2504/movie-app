@@ -1,5 +1,6 @@
 import { Box, Button, Grid, IconButton, Stack, Typography, styled, useMediaQuery } from '@mui/material';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import { useRef, useState } from 'react';
 import 'swiper/scss';
 import 'swiper/scss/navigation';
 import { Navigation, Autoplay } from 'swiper/modules';
@@ -14,13 +15,19 @@ const CustomButton = styled(Button)(({ theme }) => ({
         },
     },
 }));
-const SwiperButton = styled(Box)(({ theme }) => ({
+const SwiperButton = styled(IconButton)(({ theme }) => ({
     borderRadius: '100px',
-    backgroundColor: '#2D2C2C',
-    opacity: 0.6,
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
     width: '50px',
     height: '50px',
     padding: '10px',
+    position: 'absolute',
+    zIndex: '10',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    ':hover': {
+        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+    },
     [theme.breakpoints.down('lg')]: {
         width: '40px',
         height: '40px',
@@ -31,6 +38,18 @@ function HeroSlice() {
     const pointDonwLg = useMediaQuery((theme) => theme.breakpoints.down('lg'));
     const pointDonwMd = useMediaQuery((theme) => theme.breakpoints.down('md'));
     const pointDonwSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+    const SwiperRef = useRef();
+    const [stateBtn, setStateBtn] = useState({
+        isFirst: true,
+        isLast: false,
+    });
+
+    const onSlideChange = (swiper) => {
+        setStateBtn({
+            isFirst: swiper.isBeginning,
+            isLast: swiper.isEnd,
+        });
+    };
     return (
         <Swiper
             style={{
@@ -42,10 +61,12 @@ function HeroSlice() {
                 // border: '1px solid #848383',
             }}
             modules={[Navigation, Autoplay]}
+            ref={SwiperRef}
             autoplay={{
                 delay: 4000,
                 disableOnInteraction: false,
             }}
+            onSlideChange={onSlideChange}
             navigation={{ enabled: 'true', nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }}
         >
             {movie.map((item, index) => (
@@ -96,9 +117,15 @@ function HeroSlice() {
                                 top: '50%',
                                 zIndex: '10',
                                 left: '50%',
+                                width: '50px',
+                                height: '50px',
                                 transform: 'translate(-50%, -50%)',
                                 backgroundColor: 'black',
                                 opacity: '0.6',
+                                svg: {
+                                    width: '100%',
+                                    height: '100%',
+                                },
                             }}
                         >
                             <PlayIcon />
@@ -208,10 +235,16 @@ function HeroSlice() {
                 </SwiperSlide>
             ))}
 
-            <SwiperButton className="swiper-button-prev">
+            <SwiperButton
+                onClick={() => SwiperRef.current.swiper.slidePrev()}
+                sx={{ left: '5px', svg: { opacity: stateBtn.isFirst ? '0.5' : '1' } }}
+            >
                 <ArrowLeftIcon />
             </SwiperButton>
-            <SwiperButton className="swiper-button-next">
+            <SwiperButton
+                onClick={() => SwiperRef.current.swiper.slideNext()}
+                sx={{ right: '5px', svg: { opacity: stateBtn.isLast ? '0.5' : '1' } }}
+            >
                 <ArrowRightIcon />
             </SwiperButton>
         </Swiper>

@@ -1,6 +1,6 @@
 import { Box, Typography, Stack, IconButton } from '@mui/material';
 import theme from '~/theme';
-import { AboutIcon, HeartIcon, PlayIcon } from '../Icon';
+import { HeartIcon } from '../Icon';
 import { useState } from 'react';
 
 function MediaItems({ item }) {
@@ -31,7 +31,7 @@ function MediaItems({ item }) {
             {/* poster */}
 
             <Box
-                padding={'10px 15px 2px 15px'}
+                padding={'15px 15px 15px 15px'}
                 display={'flex'}
                 flexDirection={'column'}
                 justifyContent={'space-between'}
@@ -47,6 +47,7 @@ function MediaItems({ item }) {
                                 display: '-webkit-box',
                                 overflow: 'hidden',
                                 WebkitLineClamp: 1,
+                                fontWeight: '500',
                                 textOverflow: 'ellipsis',
                                 WebkitBoxOrient: 'vertical',
                                 whiteSpace: 'normal',
@@ -75,17 +76,17 @@ function MediaItems({ item }) {
                 {/* info */}
 
                 {/* button */}
-                <Stack marginLeft={'-8px'} direction={'row'}>
-                    {/* <Button startIcon={<PlayIcon />} variant="contained" disableElevation size="medium">
-                            Xem Ngay
-                        </Button> */}
+                {/* <Button variant="contained" disableElevation size="medium" sx={{ mt: '20px' }}>
+                    Xem Ngay
+                </Button> */}
+                {/* <Stack marginLeft={'-8px'} direction={'row'}>
                     <IconButton color="neutral">
                         <PlayIcon />
                     </IconButton>
                     <IconButton color="neutral">
                         <AboutIcon />
                     </IconButton>
-                </Stack>
+                </Stack> */}
                 {/* button */}
             </Box>
         </Box>

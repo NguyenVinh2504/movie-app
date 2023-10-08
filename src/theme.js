@@ -1,5 +1,8 @@
 import { createTheme } from '@mui/material/styles';
-
+import '@fontsource/roboto/300.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/700.css';
 // A custom theme for this app
 const theme = createTheme({
     typography: {
@@ -28,6 +31,7 @@ const theme = createTheme({
         h5: {
             fontSize: '1.5rem',
             fontStyle: 'normal',
+            // fontWeight: '500',
             lineHeight: '1.5rem' /* 116.667% */,
         },
         h6: {
@@ -176,7 +180,6 @@ const theme = createTheme({
             * {
             box-sizing: border-box;
         }
-        
         body {
             font-size: 1.6rem;
             line-height: 1.5rem;
@@ -187,11 +190,10 @@ const theme = createTheme({
             background-color: #0c0a0a;
             color: white !important;
         }
-        
         img {
             display: block;
         }
-        
+
         a {
             color: var(--black);
             text-decoration: none;
