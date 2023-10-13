@@ -14,6 +14,7 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { userMenu } from '~/config/MenuItemsConfig';
 import { SignOutIcon } from '../Icon';
+import AvatarUser from '../Avatar/Avatar';
 
 function UserMenu({ handelSignIn }) {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -38,7 +39,7 @@ function UserMenu({ handelSignIn }) {
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
             >
-                <Avatar sx={{ bgcolor: 'red' }} alt="H" src="/broken-image.jpg" />
+                <AvatarUser />
             </IconButton>
             <Menu
                 id="account-menu"

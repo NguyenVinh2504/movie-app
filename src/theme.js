@@ -190,7 +190,7 @@ const theme = createTheme({
                             },
                         },
                         '&:active': {
-                            backgroundColor: '#4B4949',
+                            backgroundColor: 'rgba(255, 255, 255, 0.4)',
                         },
                     },
                 },
@@ -200,7 +200,23 @@ const theme = createTheme({
             styleOverrides: `
             * {
             box-sizing: border-box;
-        }
+            scrollbar-width: auto;
+            scrollbar-color: rgba(255,255,255,0.5);
+          }
+        
+          /* Chrome, Edge, and Safari */
+          *::-webkit-scrollbar {
+            width: 8px;
+          }
+        
+          *::-webkit-scrollbar-track {
+            background: transparent;
+          }
+        
+          *::-webkit-scrollbar-thumb {
+            border-radius: 100px;
+            background: rgba(255,255,255,0.5);
+          }
         body {
             font-size: 1.6rem;
             line-height: 1.5rem;

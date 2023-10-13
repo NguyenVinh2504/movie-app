@@ -10,7 +10,6 @@ import {
     IconButton,
     Button,
     Divider,
-    Avatar,
     styled,
 } from '@mui/material';
 import { NavLink } from 'react-router-dom';
@@ -18,6 +17,7 @@ import { NavLink } from 'react-router-dom';
 import { menuItems, userMenu } from '~/config/MenuItemsConfig';
 import Logo from '../Logo';
 import { MenuIcon } from '../Icon';
+import AvatarUser from '../Avatar/Avatar';
 
 const ListCustoms = styled(ListItem)(({ theme }) => ({
     '&:hover': {
@@ -52,7 +52,7 @@ function SideBar({ open, onClick, onKeyDown, onClose, user, handelSignIn, setUse
                     <Box display={{ sm: 'none' }}>
                         <ListItem>
                             <Stack direction={'row'} alignItems={'center'} spacing={2}>
-                                <Avatar sx={{ bgcolor: 'red' }} alt="H" src="/broken-image.jpg" />
+                                <AvatarUser />
                                 <Typography component={'span'}>Hoangvinh250404</Typography>
                             </Stack>
                         </ListItem>
