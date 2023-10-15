@@ -91,26 +91,17 @@ function HeroSlice() {
                             }}
                         ></Box>
                         <IconButton
-                            color="neutral"
+                            color="secondNeutral"
                             sx={{
                                 display: { sm: 'none' },
                                 position: 'absolute',
                                 top: '50%',
                                 zIndex: '10',
                                 left: '50%',
-                                width: '50px',
-                                height: '50px',
-                                backgroundColor: 'rgba(0, 0, 0, 0.4)',
                                 transform: 'translate(-50%, -50%)',
-                                ':hover': {
-                                    backgroundColor: 'rgba(0, 0, 0, 0.4)',
-                                },
-                                ':active': {
-                                    backgroundColor: 'rgba(255,255,255, 0.2)',
-                                },
                                 svg: {
-                                    width: '100%',
-                                    height: '100%',
+                                    width: '40px',
+                                    height: '40px',
                                 },
                             }}
                         >

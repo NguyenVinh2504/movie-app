@@ -1,19 +1,8 @@
 import { memo } from 'react';
 import { Modal, Box, Typography, Stack, IconButton } from '@mui/material';
 import { CloseIcon, HeartIcon, PlayIcon } from '../Icon';
-
-// const style = {
-//     position: 'fixed',
-//     top: '0%',
-//     left: '50%',
-//     bottom: '0%',
-//     transform: 'translate(-50%, 0)',
-//     // height: 400,
-//     boxShadow: 24,
-//     overflowX: 'auto',
-//     width: 850,
-// };
-
+import CastSlice from '../CastItem/CastSlice';
+import VideoSlice from '../VideoSlice';
 function MovieDetail({ handleClose, open }) {
     return (
         <div>
@@ -29,16 +18,15 @@ function MovieDetail({ handleClose, open }) {
                         top: '2%',
                         bottom: '2%',
                         right: '0%',
-                        width: { md: '850px', xs: '90%' },
+                        width: { md: '850px', xs: '95%' },
                         left: '50%',
+                        display: 'flex',
+                        flexDirection: 'column',
                         transform: 'translate(-50%, 0)',
                         bgcolor: '#0c0a0a',
                         overflow: 'hidden',
                         borderRadius: '8px',
                         border: '1px solid rgba(255, 255, 255, 0.3)',
-                        // height: '90%',
-                        // pt: 2,
-                        // overflowY: 'overlay',
                     }}
                 >
                     <Stack direction={'row'} my={2} justifyContent={'flex-end'} px={2} position={'relative'}>
@@ -59,18 +47,8 @@ function MovieDetail({ handleClose, open }) {
                     {/* container */}
                     <Box
                         sx={{
-                            // borderRadius: '1.25rem',
-                            // width: { md: '850px', xs: '300px' },
-                            position: 'absolute',
                             borderTop: '1px solid rgba(255,255,255,0.6)',
-                            top: '0',
-                            mt: '68px',
-                            mb: '20px',
-                            // height: '100%',
-                            // left: '50%',
-                            bottom: '0%',
-                            // transform: 'translate(-50%, 0)',
-                            // bgcolor: theme.palette.secondary.main,
+                            pb: '20px',
                             overflowY: 'auto',
                             '&::-webkit-scrollbar': {
                                 width: '8px',
@@ -85,16 +63,16 @@ function MovieDetail({ handleClose, open }) {
                             },
                         }}
                     >
+                        {/* poster */}
                         <Box sx={{ position: 'relative' }}>
                             <IconButton
-                                color="neutral"
+                                color="secondNeutral"
                                 sx={{
                                     position: 'absolute',
                                     zIndex: '10',
                                     top: '50%',
                                     left: '50%',
                                     transform: 'translate(-50%, -50%)',
-                                    bgcolor: 'rgba(0,0,0,0.5)',
                                     svg: {
                                         width: '40px',
                                         height: '40px',
@@ -122,16 +100,13 @@ function MovieDetail({ handleClose, open }) {
                                     left: '0',
                                     width: '100%',
                                     height: '100%',
-                                    // bgcolor: 'red',
                                     background: 'linear-gradient(180deg, rgba(12, 10, 10, 0), rgba(12, 10, 10, 1))',
                                 }}
                             />
-                            {/* <img
-                                src="https://image.tmdb.org/t/p/original/xFYpUmB01nswPgbzi8EOCT1ZYFu.jpg"
-                                width="100%"
-                                alt="test"
-                            /> */}
                         </Box>
+                        {/* poster */}
+
+                        {/* thong tin phim */}
                         <Box sx={{ px: 5 }}>
                             {/* <Stack direction={'row'}>
                                 <Button startIcon={<PlayIcon />} color="primary" variant="contained" disableElevation>
@@ -168,6 +143,25 @@ function MovieDetail({ handleClose, open }) {
                                 yêu giữa hai nhân vật búp bê nổi tiếng thế giới.v
                             </Typography>
                         </Box>
+                        {/* thong tin phim */}
+
+                        {/* slice dien vien */}
+                        <Box sx={{ px: 5 }}>
+                            <Typography variant="h5" fontWeight={'500'} mt={3} mb={1}>
+                                Diễn viên
+                            </Typography>
+                            <CastSlice />
+                        </Box>
+                        {/* slice dien vien */}
+
+                        {/* trailer */}
+                        <Box sx={{ px: 5 }}>
+                            <Typography variant="h5" fontWeight={'500'} mt={3} mb={1}>
+                                Trailer
+                            </Typography>
+                            <VideoSlice />
+                        </Box>
+                        {/* trailer */}
                     </Box>
                     {/* container */}
                 </Box>

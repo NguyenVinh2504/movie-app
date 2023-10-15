@@ -190,7 +190,24 @@ const theme = createTheme({
                             },
                         },
                         '&:active': {
-                            backgroundColor: 'rgba(255, 255, 255, 0.4)',
+                            backgroundColor: 'rgba(255, 255, 255, 0.4)!important',
+                        },
+                    },
+                },
+                {
+                    props: { color: 'secondNeutral' },
+                    style: {
+                        backgroundColor: 'rgba(0,0,0,0.5)',
+                        '&:hover': {
+                            backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                        },
+                        '@media (hover: none)': {
+                            '&:hover': {
+                                backgroundColor: 'rgba(0,0,0,0.5)',
+                            },
+                        },
+                        '&:active': {
+                            backgroundColor: 'rgba(255, 255, 255, 0.4)!important',
                         },
                     },
                 },
