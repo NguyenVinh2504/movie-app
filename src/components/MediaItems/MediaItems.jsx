@@ -2,7 +2,7 @@ import { Box, Typography, Stack, IconButton } from '@mui/material';
 import theme from '~/theme';
 import { HeartIcon } from '../Icon';
 import { useState } from 'react';
-
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 function MediaItems({ item, handleOpen }) {
     const [liked, setLiked] = useState(false);
 
@@ -24,13 +24,23 @@ function MediaItems({ item, handleOpen }) {
                     onClick={handleOpen}
                     sx={{
                         // pt: '56.25%',
-                        pt: '150%',
-                        backgroundImage: `url('https://www.themoviedb.org/t/p/w500${item.poster_path}')`,
-                        backgroundSize: 'cover',
-                        backgroundRepeat: 'no-repeat',
+                        // pt: '150%',
+                        width: '100%',
+                        aspectRatio: '2/3',
+                        img: {
+                            objectFit: 'cover',
+                        },
                         cursor: 'pointer',
                     }}
-                />
+                >
+                    <LazyLoadImage
+                        src={`https://www.themoviedb.org/t/p/w500${item.poster_path}`}
+                        alt={item.title}
+                        width={'100%'}
+                        height={'100%'}
+                        effect="opacity"
+                    />
+                </Box>
                 {/* poster */}
 
                 <Box

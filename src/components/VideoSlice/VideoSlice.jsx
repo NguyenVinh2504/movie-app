@@ -13,6 +13,8 @@ import SwiperButton from '~/components/HeroSlice/SwipperButon';
 
 import { useRef, useState } from 'react';
 
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+
 function VideoSlice() {
     const pointDonwSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
@@ -30,7 +32,7 @@ function VideoSlice() {
     return (
         <Swiper
             slidesPerView={pointDonwSm ? 1 : 3}
-            style={{ height: 'max-content' }}
+            // style={{ height: 'max-content' }}
             spaceBetween={5}
             modules={[Navigation, Autoplay]}
             navigation={true}
@@ -40,7 +42,7 @@ function VideoSlice() {
             {video.map((item, index) => (
                 <SwiperSlide key={index}>
                     <Link to={`https://www.youtube.com/watch?v=${item.key}`} target="_blank">
-                        <Box
+                        {/* <Box
                             sx={{
                                 pt: '52.25%',
                                 backgroundImage: `url(https://img.youtube.com/vi/${item.key}/hqdefault.jpg)`,
@@ -49,7 +51,16 @@ function VideoSlice() {
                                 backgroundPosition: 'center',
                                 borderRadius: '8px',
                             }}
-                        />
+                        /> */}
+                        <Box sx={{ width: '100%', aspectRatio: '16/9', img: { objectFit: 'cover' } }}>
+                            <LazyLoadImage
+                                src={`https://img.youtube.com/vi/${item.key}/hqdefault.jpg`}
+                                width={'100%'}
+                                height={'100%'}
+                                alt="vinh"
+                                effect="blur"
+                            />
+                        </Box>
                         <IconButton
                             color="secondNeutral"
                             sx={{
