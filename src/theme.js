@@ -237,7 +237,6 @@ const theme = createTheme({
         body {
             font-size: 1.6rem;
             line-height: 1.5rem;
-            text-rendering: optimizeSpeed;
             margin: 0;
             overflow-y: overlay;
             padding: 0;
@@ -246,6 +245,7 @@ const theme = createTheme({
         }
         img {
             display: block;
+            objectFit: 'cover'
         }
 
         a {

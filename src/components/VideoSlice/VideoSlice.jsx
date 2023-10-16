@@ -35,7 +35,7 @@ function VideoSlice() {
             // style={{ height: 'max-content' }}
             spaceBetween={5}
             modules={[Navigation, Autoplay]}
-            navigation={true}
+            // navigation={true}
             ref={SwiperRef}
             onSlideChange={onSlideChange}
         >
@@ -52,12 +52,17 @@ function VideoSlice() {
                                 borderRadius: '8px',
                             }}
                         /> */}
-                        <Box sx={{ width: '100%', aspectRatio: '16/9', img: { objectFit: 'cover' } }}>
+                        <Box
+                            sx={{
+                                width: '100%',
+                                aspectRatio: '16/9',
+                            }}
+                        >
                             <LazyLoadImage
                                 src={`https://img.youtube.com/vi/${item.key}/hqdefault.jpg`}
                                 width={'100%'}
                                 height={'100%'}
-                                alt="vinh"
+                                alt={item.name}
                                 effect="blur"
                             />
                         </Box>

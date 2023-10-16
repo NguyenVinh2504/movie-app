@@ -7,6 +7,7 @@ import { Navigation, Autoplay } from 'swiper/modules';
 import { movie } from './movie';
 import { AboutIcon, ArrowLeftIcon, ArrowRightIcon, PlayIcon } from '../Icon';
 import SwiperButton from './SwipperButon';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
 function HeroSlice() {
     const CustomButton = styled(Button)(({ theme }) => ({
         [theme.breakpoints.down('md')]: {
@@ -55,15 +56,13 @@ function HeroSlice() {
                     {/* background image */}
                     <Box
                         sx={{
-                            backgroundImage: pointDonwSm
-                                ? `url(https://image.tmdb.org/t/p/original${item.poster_path})`
-                                : `url(https://image.tmdb.org/t/p/original${item.backdrop_path})`,
+                            // backgroundImage: pointDonwSm
+                            //     ? `url(https://image.tmdb.org/t/p/original${item.poster_path})`
+                            //     : `url(https://image.tmdb.org/t/p/original${item.backdrop_path})`,
                             width: '100%',
-                            pt: { sm: '43%', xs: '150%' },
-                            backgroundSize: 'cover',
-                            backgroundRepeat: 'no-repeat',
+                            // pt: { sm: '43%', xs: '150%' },
+                            aspectRatio: { sm: '100/43', xs: '3/2' },
                             position: 'relative',
-                            backgroundPosition: 'center top',
                             borderRadius: '20px',
                             overflow: 'hidden',
                             ':before': {
@@ -78,6 +77,19 @@ function HeroSlice() {
                         }}
                     >
                         {/* background image */}
+                        <Box>
+                            <LazyLoadImage
+                                src={
+                                    pointDonwSm
+                                        ? `https://image.tmdb.org/t/p/original${item.poster_path})`
+                                        : `https://image.tmdb.org/t/p/original${item.backdrop_path}`
+                                }
+                                width={'100%'}
+                                height={'100%'}
+                                alt={item.name}
+                                effect="blur"
+                            />
+                        </Box>
                         <Box
                             sx={{
                                 left: 0,
@@ -85,9 +97,7 @@ function HeroSlice() {
                                 position: 'absolute',
                                 width: '100%',
                                 height: '100%',
-                                background: {
-                                    sx: 'linear-gradient(-90deg, rgba(0, 0, 0, 0) 100%, rgb(0, 0, 0, 0))',
-                                },
+                                // background: 'linear-gradient(-90deg, rgba(0, 0, 0, 0) 100%, rgb(0, 0, 0, 1))',
                             }}
                         ></Box>
                         <IconButton
