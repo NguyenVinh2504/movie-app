@@ -3,7 +3,15 @@ import { Modal, Box, Typography, Stack, IconButton } from '@mui/material';
 import { CloseIcon, HeartIcon, PlayIcon } from '../Icon';
 import CastSlice from '../CastItem/CastSlice';
 import VideoSlice from '../VideoSlice';
-function MovieDetail({ handleClose, open }) {
+import { useSelector, useDispatch } from 'react-redux';
+import { openSelector } from '~/redux/selectors';
+import showHideDetailSlice from './MediaDetailSlice';
+function MovieDetail() {
+    const open = useSelector(openSelector);
+    const dispatch = useDispatch();
+    const handleClose = () => {
+        dispatch(showHideDetailSlice.actions.closeDetail(false));
+    };
     return (
         <div>
             <Modal

@@ -1,12 +1,7 @@
-// import classNames from 'classnames/bind';
-// import styles from './Home.module.scss';
-// import { Container } from '@mui/material';
 import HeroSlice from '~/components/HeroSlice';
 import TabItems from '~/components/TabItems';
 import Media from '~/components/Media';
-// const cx = classNames.bind(styles);
 import { homeTabItems } from '~/config/TabMenuItems';
-
 function Home() {
     return (
         // <div

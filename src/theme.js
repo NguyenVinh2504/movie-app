@@ -245,9 +245,12 @@ const theme = createTheme({
         }
         img {
             display: block;
-            objectFit: 'cover'
+            object-fit: cover;
+            line-height: 0;
         }
-
+        span {
+            display: block;
+        }
         a {
             color: var(--black);
             text-decoration: none;

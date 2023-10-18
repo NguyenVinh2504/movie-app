@@ -2,12 +2,18 @@ import { Box, Typography, Stack, IconButton } from '@mui/material';
 import theme from '~/theme';
 import { HeartIcon } from '../Icon';
 import { useState } from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-function MediaItems({ item, handleOpen }) {
+import { useDispatch } from 'react-redux';
+import showHideDetailSlice from '~/components/MediaDetail/MediaDetailSlice';
+
+function MediaItems({ item }) {
     const [liked, setLiked] = useState(false);
 
     const toggleLikebox = () => {
         setLiked(!liked);
+    };
+    const dispatch = useDispatch();
+    const handleOpen = () => {
+        dispatch(showHideDetailSlice.actions.openDetail(true));
     };
     return (
         <>
@@ -28,14 +34,18 @@ function MediaItems({ item, handleOpen }) {
                         width: '100%',
                         aspectRatio: '2/3',
                         cursor: 'pointer',
+                        span: {
+                            display: 'block',
+                        },
                     }}
                 >
-                    <LazyLoadImage
+                    <img
+                        loading="lazy"
                         src={`https://www.themoviedb.org/t/p/w500${item.poster_path}`}
                         alt={item.title}
                         width={'100%'}
                         height={'100%'}
-                        effect="opacity"
+                        // effect="blur"
                     />
                 </Box>
                 {/* poster */}

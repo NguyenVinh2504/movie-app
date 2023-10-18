@@ -1,4 +1,4 @@
-import { Box, Stack, Typography, useMediaQuery } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 
 import { cast } from './ItemsCast';
 
@@ -6,7 +6,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/scss';
 import 'swiper/scss/navigation';
 import { Navigation, Autoplay } from 'swiper/modules';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 function CastItem({ item }) {
     return (
         <Box sx={{ bgcolor: 'rgba(255,255,255,0.1)', borderRadius: '4px', overflow: 'hidden' }}>
@@ -20,12 +19,12 @@ function CastItem({ item }) {
                     cursor: 'pointer',
                 }}
             >
-                <LazyLoadImage
+                <img
                     src={`https://www.themoviedb.org/t/p/w500${item.profile_path}`}
                     alt={item.title}
                     width={'100%'}
                     height={'100%'}
-                    effect="opacity"
+                    loading="lazy"
                 />
             </Box>
             <Stack p={1}>
@@ -63,10 +62,22 @@ function CastItem({ item }) {
     );
 }
 function CastSlice() {
-    const pointDonwLg = useMediaQuery((theme) => theme.breakpoints.down('lg'));
-    const pointDonwSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     return (
-        <Swiper slidesPerView={pointDonwSm ? 3 : pointDonwLg ? 4 : 5} modules={[Navigation, Autoplay]} spaceBetween={8}>
+        <Swiper
+            modules={[Navigation, Autoplay]}
+            spaceBetween={8}
+            breakpoints={{
+                0: {
+                    slidesPerView: 3,
+                },
+                600: {
+                    slidesPerView: 4,
+                },
+                1200: {
+                    slidesPerView: 5,
+                },
+            }}
+        >
             {cast.map((item, index) => (
                 <SwiperSlide key={index}>
                     <CastItem item={item}></CastItem>

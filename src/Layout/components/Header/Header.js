@@ -56,6 +56,7 @@ function Header() {
     if (breakpoints && sidebarOpen) {
         setSidebarOpen(!sidebarOpen);
     }
+
     return (
         <>
             <SideBar
