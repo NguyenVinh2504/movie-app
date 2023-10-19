@@ -5,14 +5,15 @@
 // export default store;
 
 import { configureStore } from '@reduxjs/toolkit';
-import mediaDetailReducer from '~/components/MediaDetail/MediaDetailSlice';
-import userSlice from '~/redux/userSlice';
+import mediaDetailReducer from './features/mediaDetailSlice';
+import userSlice from './features/userSlice';
+const rootReducer = {
+    detailMovie: mediaDetailReducer,
+    user: userSlice,
+};
 
 const store = configureStore({
-    reducer: {
-        showHideDetail: mediaDetailReducer.reducer,
-        user: userSlice.reducer,
-    },
+    reducer: rootReducer,
 });
 
 export default store;

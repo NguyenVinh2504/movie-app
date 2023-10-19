@@ -21,6 +21,9 @@ import Logo from '~/components/Logo';
 import SideBar from '~/components/SideBar';
 import UserMenu from '~/components/UserMenu';
 import routes from '~/config/routes';
+import { useDispatch, useSelector } from 'react-redux';
+import { userValue } from '~/redux/selectors';
+import { setUser } from '~/redux/features/userSlice';
 
 const cx = classNames.bind(styles);
 
@@ -41,10 +44,8 @@ const ScrollAppBar = ({ children, window }) => {
 
 function Header() {
     const location = useNavigate();
-    const [user, setUser] = useState(false);
-    const handelSignIn = () => {
-        setUser(true);
-    };
+    const dispatch = useDispatch();
+    const user = useSelector(userValue);
     const handelSearch = () => {
         location(routes.search);
     };
@@ -59,15 +60,7 @@ function Header() {
 
     return (
         <>
-            <SideBar
-                open={sidebarOpen}
-                onClick={toggleSidebar}
-                onKeyDown={toggleSidebar}
-                onClose={toggleSidebar}
-                user={user}
-                handelSignIn={handelSignIn}
-                setUser={setUser}
-            />
+            <SideBar open={sidebarOpen} onClick={toggleSidebar} onKeyDown={toggleSidebar} onClose={toggleSidebar} />
             <ScrollAppBar>
                 <AppBar position="fixed" elevation={0}>
                     <Toolbar
@@ -162,20 +155,20 @@ function Header() {
                                         </Badge>
                                     </IconButton>
                                 </Tooltip>
-                                {user && (
+                                {!user && (
                                     <Button
                                         variant="contained"
                                         disableElevation
                                         disableRipple
-                                        onClick={() => setUser(!user)}
+                                        onClick={() => dispatch(setUser(true))}
                                         sx={{ display: { xs: 'none', sm: 'inline-block' } }}
                                     >
                                         Đăng Nhập
                                     </Button>
                                 )}
-                                {!user && (
+                                {user && (
                                     <Box sx={{ display: { xs: 'none', sm: 'inline-block' } }}>
-                                        <UserMenu handelSignIn={handelSignIn} />
+                                        <UserMenu />
                                     </Box>
                                 )}
                             </Stack>

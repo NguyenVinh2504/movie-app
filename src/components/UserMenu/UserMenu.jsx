@@ -15,11 +15,14 @@ import { NavLink } from 'react-router-dom';
 import { userMenu } from '~/config/MenuItemsConfig';
 import { SignOutIcon } from '../Icon';
 import AvatarUser from '../Avatar/Avatar';
+import { useDispatch } from 'react-redux';
+import { setUser } from '~/redux/features/userSlice';
 
-function UserMenu({ handelSignIn }) {
+function UserMenu() {
     const [anchorEl, setAnchorEl] = useState(null);
     const breakpoints = useMediaQuery((theme) => theme.breakpoints.up('sm'));
     const open = Boolean(anchorEl);
+    const dispatch = useDispatch();
     function handleClick(event) {
         setAnchorEl(event.currentTarget);
     }
@@ -86,7 +89,7 @@ function UserMenu({ handelSignIn }) {
                     </NavLink>
                 ))}
                 <Divider light sx={{ borderColor: 'white', mt: 1.5, mb: '5px', opacity: 0.3 }} />
-                <MenuItem onClick={handelSignIn}>
+                <MenuItem onClick={() => dispatch(setUser(false))}>
                     <ListItemIcon>{<SignOutIcon />}</ListItemIcon>
                     Đăng xuất
                 </MenuItem>

@@ -5,12 +5,12 @@ import CastSlice from '../CastItem/CastSlice';
 import VideoSlice from '../VideoSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { openSelector } from '~/redux/selectors';
-import showHideDetailSlice from './MediaDetailSlice';
+import { toggleDetail } from '~/redux/features/mediaDetailSlice';
 function MovieDetail() {
     const open = useSelector(openSelector);
     const dispatch = useDispatch();
     const handleClose = () => {
-        dispatch(showHideDetailSlice.actions.closeDetail(false));
+        dispatch(toggleDetail(false));
     };
     return (
         <div>

@@ -3,17 +3,16 @@ import theme from '~/theme';
 import { HeartIcon } from '../Icon';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import showHideDetailSlice from '~/components/MediaDetail/MediaDetailSlice';
+import { toggleDetail } from '~/redux/features/mediaDetailSlice';
 
 function MediaItems({ item }) {
     const [liked, setLiked] = useState(false);
-
     const toggleLikebox = () => {
         setLiked(!liked);
     };
     const dispatch = useDispatch();
     const handleOpen = () => {
-        dispatch(showHideDetailSlice.actions.openDetail(true));
+        dispatch(toggleDetail(true));
     };
     return (
         <>

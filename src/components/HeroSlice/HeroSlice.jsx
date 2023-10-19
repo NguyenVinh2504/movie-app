@@ -7,10 +7,9 @@ import { movie } from './movie';
 import { AboutIcon, PlayIcon } from '../Icon';
 import SwiperNavigation from '../SwiperNavigation';
 import { useDispatch } from 'react-redux';
-import showHideDetailSlice from '~/components/MediaDetail/MediaDetailSlice';
+import { toggleDetail } from '~/redux/features/mediaDetailSlice';
 
 function HeroSlice() {
-    const dispatch = useDispatch();
     const CustomButton = styled(Button)(({ theme }) => ({
         [theme.breakpoints.down('md')]: {
             svg: {
@@ -22,9 +21,10 @@ function HeroSlice() {
     const pointDonwLg = useMediaQuery((theme) => theme.breakpoints.down('lg'));
     const pointDonwMd = useMediaQuery((theme) => theme.breakpoints.down('md'));
     const pointDonwSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+    const dispatch = useDispatch();
 
     const handleOpen = () => {
-        dispatch(showHideDetailSlice.actions.openDetail(true));
+        dispatch(toggleDetail(true));
     };
     return (
         <SwiperNavigation>

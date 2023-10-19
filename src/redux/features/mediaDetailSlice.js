@@ -21,17 +21,19 @@
 
 import { createSlice } from '@reduxjs/toolkit';
 
-export default createSlice({
-    name: 'showHideDetail',
+const detailMovie = createSlice({
+    name: 'detailMovie',
     initialState: {
         toggleDetail: false,
     },
     reducers: {
-        openDetail: (state, action) => {
-            state.toggleDetail = action.payload;
-        },
-        closeDetail: (state, action) => {
+        toggleDetail: (state, action) => {
             state.toggleDetail = action.payload;
         },
     },
 });
+
+const { actions, reducer } = detailMovie;
+export const { toggleDetail } = actions;
+
+export default reducer;
