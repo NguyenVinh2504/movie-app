@@ -1,14 +1,7 @@
-// import { createStore } from 'redux';
-// import rootReducer from './reducer';
-// const store = createStore(rootReducer);
-
-// export default store;
-
 import { configureStore } from '@reduxjs/toolkit';
-import mediaDetailReducer from './features/mediaDetailSlice';
-import userSlice from './features/userSlice';
+import { mediaDetailSlice, userSlice } from './features';
 const rootReducer = {
-    detailMovie: mediaDetailReducer,
+    detailMovie: mediaDetailSlice,
     user: userSlice,
 };
 

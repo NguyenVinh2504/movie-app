@@ -8,6 +8,8 @@ import { AboutIcon, PlayIcon } from '../Icon';
 import SwiperNavigation from '../SwiperNavigation';
 import { useDispatch } from 'react-redux';
 import { toggleDetail } from '~/redux/features/mediaDetailSlice';
+import Image from '../Image';
+import images from '~/assets/image';
 
 function HeroSlice() {
     const CustomButton = styled(Button)(({ theme }) => ({
@@ -18,9 +20,9 @@ function HeroSlice() {
             },
         },
     }));
-    const pointDonwLg = useMediaQuery((theme) => theme.breakpoints.down('lg'));
-    const pointDonwMd = useMediaQuery((theme) => theme.breakpoints.down('md'));
-    const pointDonwSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+    const pointDownLg = useMediaQuery((theme) => theme.breakpoints.down('lg'));
+    const pointDownMd = useMediaQuery((theme) => theme.breakpoints.down('md'));
+    const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const dispatch = useDispatch();
 
     const handleOpen = () => {
@@ -67,16 +69,17 @@ function HeroSlice() {
                         >
                             {/* background image */}
                             <Box>
-                                <img
+                                <Image
+                                    fallBack={pointDownSm ? images.noImage2x3 : images.noImage19x6}
                                     loading="lazy"
                                     src={
-                                        pointDonwSm
+                                        pointDownSm
                                             ? `https://image.tmdb.org/t/p/original${item.poster_path}`
                                             : `https://image.tmdb.org/t/p/original${item.backdrop_path}`
                                     }
                                     width={'100%'}
                                     height={'100%'}
-                                    alt={item.name}
+                                    alt={item.title}
                                 />
                             </Box>
                             <Box
@@ -163,11 +166,11 @@ function HeroSlice() {
                                         {/* title */}
                                         <Typography
                                             variant={
-                                                pointDonwSm
+                                                pointDownSm
                                                     ? 'caption'
-                                                    : pointDonwMd
+                                                    : pointDownMd
                                                     ? 'subtitle2'
-                                                    : pointDonwLg
+                                                    : pointDownLg
                                                     ? 'subtitle1'
                                                     : 'h6'
                                             }
@@ -186,7 +189,7 @@ function HeroSlice() {
                                         <Stack direction={'row'} spacing={{ sm: '1vw', xs: '0' }}>
                                             <CustomButton
                                                 variant="contained"
-                                                size={pointDonwMd ? 'small' : pointDonwLg ? 'medium' : 'large'}
+                                                size={pointDownMd ? 'small' : pointDownLg ? 'medium' : 'large'}
                                                 disableElevation
                                                 startIcon={<PlayIcon />}
                                                 sx={{ display: { sm: 'inline-flex', xs: 'none' } }}
@@ -196,7 +199,7 @@ function HeroSlice() {
                                             <CustomButton
                                                 variant="contained"
                                                 color="secondary"
-                                                size={pointDonwMd ? 'small' : pointDonwLg ? 'medium' : 'large'}
+                                                size={pointDownMd ? 'small' : pointDownLg ? 'medium' : 'large'}
                                                 disableElevation
                                                 startIcon={<AboutIcon />}
                                                 onClick={handleOpen}

@@ -6,6 +6,8 @@ import VideoSlice from '../VideoSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { openSelector } from '~/redux/selectors';
 import { toggleDetail } from '~/redux/features/mediaDetailSlice';
+import Image from '../Image';
+import images from '~/assets/image';
 function MovieDetail() {
     const open = useSelector(openSelector);
     const dispatch = useDispatch();
@@ -92,15 +94,16 @@ function MovieDetail() {
                             <Box
                                 sx={{
                                     width: '100%',
-                                    pt: '56.25%',
-                                    backgroundSize: 'cover',
-                                    backgroundRepeat: 'no-repeat',
-                                    position: 'relative',
-                                    backgroundPosition: 'center top',
-                                    backgroundImage:
-                                        'url(https://image.tmdb.org/t/p/original/xFYpUmB01nswPgbzi8EOCT1ZYFu.jpg)',
+                                    aspectRatio: '16/9',
                                 }}
-                            />
+                            >
+                                <Image
+                                    src={`https://image.tmdb.org/t/p/original/xFYpUmB01nswPgbzi8EOCT1ZYFu.jpg`}
+                                    alt={'item.name'}
+                                    fallBack={images.noImage19x6}
+                                    loading="lazy"
+                                />
+                            </Box>
                             <Box
                                 sx={{
                                     position: 'absolute',

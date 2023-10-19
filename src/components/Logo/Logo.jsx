@@ -1,7 +1,7 @@
 // import { Typography } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 import routes from '~/config/routes';
-import MoviLogo from '~/assets/image/MoviLogo.svg';
+import images from '~/assets/image';
 import { Box } from '@mui/material';
 
 function Logo() {
@@ -25,7 +25,7 @@ function Logo() {
                         .COM
                     </Typography>
                 </Typography> */}
-                <img src={MoviLogo} height={'18px'} alt="Logos" />
+                <img src={images.logo} style={{ height: '18px' }} alt="Logos" />
             </NavLink>
         </Box>
     );

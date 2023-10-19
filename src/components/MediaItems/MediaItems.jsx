@@ -4,6 +4,7 @@ import { HeartIcon } from '../Icon';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toggleDetail } from '~/redux/features/mediaDetailSlice';
+import Image from '../Image';
 
 function MediaItems({ item }) {
     const [liked, setLiked] = useState(false);
@@ -38,13 +39,12 @@ function MediaItems({ item }) {
                         },
                     }}
                 >
-                    <img
+                    <Image
                         loading="lazy"
                         src={`https://www.themoviedb.org/t/p/w500${item.poster_path}`}
                         alt={item.title}
                         width={'100%'}
                         height={'100%'}
-                        // effect="blur"
                     />
                 </Box>
                 {/* poster */}

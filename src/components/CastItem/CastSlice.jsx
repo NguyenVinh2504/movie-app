@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/scss';
 import 'swiper/scss/navigation';
 import { Navigation, Autoplay } from 'swiper/modules';
+import Image from '../Image';
 function CastItem({ item }) {
     return (
         <Box sx={{ bgcolor: 'rgba(255,255,255,0.1)', borderRadius: '4px', overflow: 'hidden' }}>
@@ -19,7 +20,7 @@ function CastItem({ item }) {
                     cursor: 'pointer',
                 }}
             >
-                <img
+                <Image
                     src={`https://www.themoviedb.org/t/p/w500${item.profile_path}`}
                     alt={item.title}
                     width={'100%'}

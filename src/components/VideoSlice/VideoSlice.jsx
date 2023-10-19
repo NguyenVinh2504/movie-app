@@ -10,6 +10,8 @@ import { Link } from 'react-router-dom';
 import { video } from './video';
 import { PlayIcon } from '../Icon';
 import SwiperNavigation from '../SwiperNavigation';
+import Image from '../Image';
+import images from '~/assets/image';
 
 function VideoSlice() {
     return (
@@ -33,11 +35,12 @@ function VideoSlice() {
                                     aspectRatio: '16/9',
                                 }}
                             >
-                                <img
+                                <Image
                                     src={`https://img.youtube.com/vi/${item.key}/hqdefault.jpg`}
                                     width={'100%'}
                                     height={'100%'}
                                     alt={item.name}
+                                    fallBack={images.noImage19x6}
                                     loading="lazy"
                                 />
                             </Box>
