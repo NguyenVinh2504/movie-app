@@ -18,6 +18,9 @@ import { menuItems, userMenu } from '~/config/MenuItemsConfig';
 import Logo from '../Logo';
 import { MenuIcon } from '../Icon';
 import AvatarUser from '../Avatar/Avatar';
+import { useDispatch, useSelector } from 'react-redux';
+import { userValue } from '~/redux/selectors';
+import { setUser } from '~/redux/features/userSlice';
 
 const ListCustoms = styled(ListItem)(({ theme }) => ({
     '&:hover': {
@@ -30,12 +33,13 @@ const ListCustoms = styled(ListItem)(({ theme }) => ({
     },
 }));
 
-function SideBar({ open, onClick, onKeyDown, onClose, user, handelSignIn, setUser }) {
+function SideBar({ open, onClick, onKeyDown, onClose }) {
     const props = {
         onClick,
         onKeyDown,
     };
-
+    const user = useSelector(userValue);
+    const dispacth = useDispatch();
     const drawer = (
         <Box sx={{ width: '100%' }} role="presentation" {...props} px={2}>
             <Box sx={{ padding: '20px 16px 40px 16px', position: 'relative' }}>
@@ -48,7 +52,7 @@ function SideBar({ open, onClick, onKeyDown, onClose, user, handelSignIn, setUse
             </Box>
 
             <List>
-                {!user && (
+                {user && (
                     <Box display={{ sm: 'none' }}>
                         <ListItem>
                             <Stack direction={'row'} alignItems={'center'} spacing={2}>
@@ -127,9 +131,9 @@ function SideBar({ open, onClick, onKeyDown, onClose, user, handelSignIn, setUse
                         variant="contained"
                         disableElevation
                         disableRipple
-                        onClick={() => setUser(!user)}
+                        onClick={() => dispacth(setUser(!user))}
                     >
-                        {user ? 'Đăng Nhập' : 'Đăng Xuất'}
+                        {!user ? 'Đăng Nhập' : 'Đăng Xuất'}
                     </Button>
                 </>
             }
