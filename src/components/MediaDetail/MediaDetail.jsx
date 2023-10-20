@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Modal, Box, Typography, Stack, IconButton } from '@mui/material';
+import { Modal, Box, Typography, Stack, IconButton, Fade } from '@mui/material';
 import { CloseIcon, HeartIcon, PlayIcon } from '../Icon';
 import CastSlice from '../CastItem/CastSlice';
 import VideoSlice from '../VideoSlice';
@@ -8,6 +8,17 @@ import { openSelector } from '~/redux/selectors';
 import { toggleDetail } from '~/redux/features/mediaDetailSlice';
 import Image from '../Image';
 import images from '~/assets/image';
+import Episodes from '../Episodes';
+function Container({ headingText, children }) {
+    return (
+        <Box sx={{ marginTop: 3 }}>
+            <Typography variant={'h5'} mb={1} fontWeight={'500'}>
+                {headingText}
+            </Typography>
+            {children}
+        </Box>
+    );
+}
 function MovieDetail() {
     const open = useSelector(openSelector);
     const dispatch = useDispatch();
@@ -15,19 +26,18 @@ function MovieDetail() {
         dispatch(toggleDetail(false));
     };
     return (
-        <div>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
+        <Modal
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            <Fade in={open} timeout={300}>
                 <Box
                     sx={{
                         position: 'fixed',
                         top: '2%',
                         bottom: '2%',
-                        right: '0%',
                         width: { md: '850px', xs: '95%' },
                         left: '50%',
                         display: 'flex',
@@ -37,6 +47,7 @@ function MovieDetail() {
                         overflow: 'hidden',
                         borderRadius: '8px',
                         border: '1px solid rgba(255, 255, 255, 0.3)',
+                        boxShadow: 'rgba(0, 0, 0, 0.75) 0px 3px 10px',
                     }}
                 >
                     <Stack direction={'row'} my={2} justifyContent={'flex-end'} px={2} position={'relative'}>
@@ -57,7 +68,7 @@ function MovieDetail() {
                     {/* container */}
                     <Box
                         sx={{
-                            borderTop: '1px solid rgba(255,255,255,0.6)',
+                            borderTop: '1px solid rgba(255,255,255,0.5)',
                             pb: '20px',
                             overflowY: 'auto',
                             '&::-webkit-scrollbar': {
@@ -116,17 +127,16 @@ function MovieDetail() {
                             />
                         </Box>
                         {/* poster */}
-
-                        {/* thong tin phim */}
-                        <Box sx={{ px: 5 }}>
+                        <Box px={5}>
+                            {/* thong tin phim */}
                             {/* <Stack direction={'row'}>
-                                <Button startIcon={<PlayIcon />} color="primary" variant="contained" disableElevation>
-                                    Xem Phim
-                                </Button>
-                                <IconButton color="neutral">
-                                    <HeartIcon />
-                                </IconButton>
-                            </Stack> */}
+                                        <Button startIcon={<PlayIcon />} color="primary" variant="contained" disableElevation>
+                                            Xem Phim
+                                        </Button>
+                                        <IconButton color="neutral">
+                                            <HeartIcon />
+                                        </IconButton>
+                                    </Stack> */}
                             <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'}>
                                 <Typography variant="h3" fontWeight={'500'}>
                                     Gran Turismo
@@ -144,40 +154,39 @@ function MovieDetail() {
                                 <Typography variant="subtitle2">Đạo diễn: Greta Gerwig</Typography>
                                 <Typography variant="subtitle2">Kịch bản: Greta Gerwig</Typography>
                             </Stack>
-                            <Typography variant="h5" mt={3} fontWeight={'500'}>
-                                Mô tả
-                            </Typography>
-                            <Typography mt={1}>
-                                BARBIE sẽ được nhào nặn và chắp bút bởi nữ đạo diễn kiêm biên kịch từng nhận nhiều Đề cử
-                                Tượng vàng Oscar – Greta Grewig. Hai nhân vật chính Barbie và Ken sẽ được hóa thân bởi
-                                nữ diên viên Margot Robbie và nam thần Ryan Gosling, hứa hẹn sẽ tạo nên “chemistry” đáng
-                                yêu giữa hai nhân vật búp bê nổi tiếng thế giới.v
-                            </Typography>
-                        </Box>
-                        {/* thong tin phim */}
+                            <Container headingText={'Mô tả'}>
+                                <Typography>
+                                    BARBIE sẽ được nhào nặn và chắp bút bởi nữ đạo diễn kiêm biên kịch từng nhận nhiều
+                                    Đề cử Tượng vàng Oscar – Greta Grewig. Hai nhân vật chính Barbie và Ken sẽ được hóa
+                                    thân bởi nữ diên viên Margot Robbie và nam thần Ryan Gosling, hứa hẹn sẽ tạo nên
+                                    “chemistry” đáng yêu giữa hai nhân vật búp bê nổi tiếng thế giới.v
+                                </Typography>
+                            </Container>
+                            {/* thong tin phim */}
 
-                        {/* slice dien vien */}
-                        <Box sx={{ px: 5 }}>
-                            <Typography variant="h5" fontWeight={'500'} mt={3} mb={1}>
-                                Diễn viên
-                            </Typography>
-                            <CastSlice />
-                        </Box>
-                        {/* slice dien vien */}
+                            {/* tap phim */}
+                            <Container headingText={'Tập phim'}>
+                                <Episodes />
+                            </Container>
+                            {/* tap phim */}
 
-                        {/* trailer */}
-                        <Box sx={{ px: 5 }}>
-                            <Typography variant="h5" fontWeight={'500'} mt={3} mb={1}>
-                                Trailer
-                            </Typography>
-                            <VideoSlice />
+                            {/* slice dien vien */}
+                            <Container headingText={'Diễn viên'}>
+                                <CastSlice />
+                            </Container>
+                            {/* slice dien vien */}
+
+                            {/* trailer */}
+                            <Container headingText={'Trailer'}>
+                                <VideoSlice />
+                            </Container>
+                            {/* trailer */}
                         </Box>
-                        {/* trailer */}
                     </Box>
                     {/* container */}
                 </Box>
-            </Modal>
-        </div>
+            </Fade>
+        </Modal>
     );
 }
 

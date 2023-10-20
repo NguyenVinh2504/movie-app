@@ -64,10 +64,10 @@ function MediaItems({ item }) {
                                 variant="subtitle1"
                                 onClick={handleOpen}
                                 sx={{
+                                    fontWeight: '500',
                                     display: '-webkit-box',
                                     overflow: 'hidden',
                                     WebkitLineClamp: 1,
-                                    fontWeight: '500',
                                     textOverflow: 'ellipsis',
                                     WebkitBoxOrient: 'vertical',
                                     whiteSpace: 'normal',

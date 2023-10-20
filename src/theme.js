@@ -123,6 +123,9 @@ const theme = createTheme({
     },
     components: {
         MuiButton: {
+            defaultProps: {
+                disableElevation: true,
+            },
             variants: [
                 {
                     props: { color: 'primary' },
