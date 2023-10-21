@@ -84,6 +84,7 @@ const theme = createTheme({
     movie: {
         topBarHeight: '64px',
         background: '#0c0a0a',
+        backgroundAppBarScroll: '#1f1d1d',
         backgroundGradient:
             'linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4766281512605042) 31%, rgba(0,0,0,1) 92%)',
         action: {

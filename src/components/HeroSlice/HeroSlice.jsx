@@ -10,9 +10,11 @@ import { useDispatch } from 'react-redux';
 import { toggleDetail } from '~/redux/features/mediaDetailSlice';
 import Image from '../Image';
 import images from '~/assets/image';
-
+import uiConfigs from '~/config/ui.config';
 function HeroSlice() {
-    const CustomButton = styled(Button)(({ theme }) => ({
+    const CustomButton = styled((props) => (
+        <Button variant="contained" size={pointDownMd ? 'small' : pointDownLg ? 'medium' : 'large'} {...props} />
+    ))(({ theme }) => ({
         [theme.breakpoints.down('md')]: {
             svg: {
                 height: '20px',
@@ -34,7 +36,6 @@ function HeroSlice() {
                 style={{
                     borderRadius: '20px',
                     overflow: 'hidden',
-                    marginTop: '70px',
                     width: '100%',
                     // boxShadow: pointDonwSm ? ' -2px 0px 15px 2px rgba(75, 73, 73)' : 'none',
                     // border: '1px solid #848383',
@@ -51,44 +52,33 @@ function HeroSlice() {
                         {/* background image */}
                         <Box
                             sx={{
-                                width: '100%',
                                 aspectRatio: { sm: '100/43', xs: '2/3' },
                                 position: 'relative',
                                 borderRadius: '20px',
                                 overflow: 'hidden',
+                                img: {
+                                    objectPosition: 'top',
+                                },
                                 ':before': {
                                     content: '""',
-                                    left: 0,
-                                    top: 0,
-                                    position: 'absolute',
-                                    width: '100%',
-                                    height: '100%',
+                                    ...uiConfigs.style.gradientBgImage,
                                     background: 'linear-gradient(180deg, rgba(0, 0, 0, 0), rgb(0, 0, 0, 1))',
                                 },
                             }}
                         >
                             {/* background image */}
-                            <Box>
-                                <Image
-                                    fallBack={pointDownSm ? images.noImage2x3 : images.noImage19x6}
-                                    loading="lazy"
-                                    src={
-                                        pointDownSm
-                                            ? `https://image.tmdb.org/t/p/original${item.poster_path}`
-                                            : `https://image.tmdb.org/t/p/original${item.backdrop_path}`
-                                    }
-                                    width={'100%'}
-                                    height={'100%'}
-                                    alt={item.title}
-                                />
-                            </Box>
+                            <Image
+                                fallBack={pointDownSm ? images.noImage2x3 : images.noImage19x6}
+                                src={
+                                    pointDownSm
+                                        ? `https://image.tmdb.org/t/p/original${item.poster_path}`
+                                        : `https://image.tmdb.org/t/p/original${item.backdrop_path}`
+                                }
+                                alt={item.title}
+                            />
                             <Box
                                 sx={{
-                                    left: 0,
-                                    top: 0,
-                                    position: 'absolute',
-                                    width: '100%',
-                                    height: '100%',
+                                    ...uiConfigs.style.gradientBgImage,
                                     // background: 'linear-gradient(-90deg, rgba(0, 0, 0, 0) 100%, rgb(0, 0, 0, 1))',
                                 }}
                             ></Box>
@@ -96,11 +86,8 @@ function HeroSlice() {
                                 color="secondNeutral"
                                 sx={{
                                     display: { sm: 'none' },
-                                    position: 'absolute',
-                                    top: '50%',
                                     zIndex: '10',
-                                    left: '50%',
-                                    transform: 'translate(-50%, -50%)',
+                                    ...uiConfigs.style.centerAlight,
                                     svg: {
                                         width: '40px',
                                         height: '40px',
@@ -152,13 +139,7 @@ function HeroSlice() {
                                                 }
                                                 sx={{
                                                     fontWeight: '500',
-                                                    textTransform: 'uppercase',
-                                                    display: '-webkit-box',
-                                                    overflow: 'hidden',
-                                                    WebkitLineClamp: 3,
-                                                    textOverflow: 'ellipsis',
-                                                    WebkitBoxOrient: 'vertical',
-                                                    whiteSpace: 'normal',
+                                                ...uiConfigs.style.typoLines(3),
                                                 }}
                                             >
                                                 {item.title}
@@ -175,32 +156,21 @@ function HeroSlice() {
                                                     : 'h6'
                                             }
                                             sx={{
-                                                display: '-webkit-box',
-                                                overflow: 'hidden',
-                                                WebkitLineClamp: 3,
                                                 fontWeight: '400',
-                                                textOverflow: 'ellipsis',
-                                                WebkitBoxOrient: 'vertical',
-                                                whiteSpace: 'normal',
+                                                ...uiConfigs.style.typoLines(3),
                                             }}
                                         >
                                             {item.overview}
                                         </Typography>
                                         <Stack direction={'row'} spacing={{ sm: '1vw', xs: '0' }}>
                                             <CustomButton
-                                                variant="contained"
-                                                size={pointDownMd ? 'small' : pointDownLg ? 'medium' : 'large'}
-                                                disableElevation
                                                 startIcon={<PlayIcon />}
                                                 sx={{ display: { sm: 'inline-flex', xs: 'none' } }}
                                             >
                                                 Xem Ngay
                                             </CustomButton>
                                             <CustomButton
-                                                variant="contained"
                                                 color="secondary"
-                                                size={pointDownMd ? 'small' : pointDownLg ? 'medium' : 'large'}
-                                                disableElevation
                                                 startIcon={<AboutIcon />}
                                                 onClick={handleOpen}
                                             >

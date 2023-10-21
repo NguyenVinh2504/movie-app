@@ -2,6 +2,7 @@ import HeroSlice from '~/components/HeroSlice';
 import TabItems from '~/components/TabItems';
 import Media from '~/components/Media';
 import { homeTabItems } from '~/config/TabMenuItems';
+import { Container } from '@mui/material';
 function Home() {
     return (
         // <div
@@ -21,8 +22,10 @@ function Home() {
         // </div>
         <>
             <HeroSlice />
-            <TabItems contentItems={homeTabItems} />
-            <Media />
+            <Container maxWidth={'xl'} sx={{ px: '0' }}>
+                <TabItems contentItems={homeTabItems} />
+                <Media />
+            </Container>
         </>
     );
 }

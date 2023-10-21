@@ -3,7 +3,7 @@ import 'swiper/scss';
 import 'swiper/scss/navigation';
 import { Navigation, Autoplay } from 'swiper/modules';
 
-import { Box, IconButton } from '@mui/material';
+import { IconButton } from '@mui/material';
 
 import { Link } from 'react-router-dom';
 
@@ -12,7 +12,7 @@ import { PlayIcon } from '../Icon';
 import SwiperNavigation from '../SwiperNavigation';
 import Image from '../Image';
 import images from '~/assets/image';
-
+import uiConfigs from '~/config/ui.config';
 function VideoSlice() {
     return (
         <SwiperNavigation>
@@ -29,29 +29,17 @@ function VideoSlice() {
                 {video.map((item, index) => (
                     <SwiperSlide key={index}>
                         <Link to={`https://www.youtube.com/watch?v=${item.key}`} target="_blank">
-                            <Box
-                                sx={{
-                                    width: '100%',
-                                    aspectRatio: '16/9',
-                                }}
-                            >
-                                <Image
-                                    src={`https://img.youtube.com/vi/${item.key}/hqdefault.jpg`}
-                                    width={'100%'}
-                                    height={'100%'}
-                                    alt={item.name}
-                                    fallBack={images.noImage19x6}
-                                    loading="lazy"
-                                />
-                            </Box>
+                            <Image
+                                src={`https://img.youtube.com/vi/${item.key}/hqdefault.jpg`}
+                                alt={item.name}
+                                fallBack={images.noImage19x6}
+                                aspectRatio={'16/9'}
+                            />
                             <IconButton
                                 color="secondNeutral"
                                 sx={{
-                                    position: 'absolute',
                                     zIndex: '10',
-                                    top: '50%',
-                                    left: '50%',
-                                    transform: 'translate(-50%, -50%)',
+                                    ...uiConfigs.style.centerAlight,
                                     svg: {
                                         width: '30px',
                                         height: '30px',

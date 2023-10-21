@@ -62,10 +62,11 @@ function Header() {
         <>
             <SideBar open={sidebarOpen} onClick={toggleSidebar} onKeyDown={toggleSidebar} onClose={toggleSidebar} />
             <ScrollAppBar>
-                <AppBar position="fixed" elevation={0}>
+                <AppBar elevation={0} position="sticky">
                     <Toolbar
                         sx={{
                             justifyContent: 'space-between',
+                            borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
                         }}
                     >
                         {/* menu mobile */}

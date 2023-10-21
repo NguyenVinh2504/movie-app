@@ -7,38 +7,22 @@ import 'swiper/scss';
 import 'swiper/scss/navigation';
 import { Navigation, Autoplay } from 'swiper/modules';
 import Image from '../Image';
+import uiConfigs from '~/config/ui.config';
 function CastItem({ item }) {
     return (
         <Box sx={{ bgcolor: 'rgba(255,255,255,0.1)', borderRadius: '4px', overflow: 'hidden' }}>
-            <Box
-                sx={{
-                    // pt: '56.25%',
-                    aspectRatio: '1',
-                    img: {
-                        objectFit: 'cover',
-                    },
-                    cursor: 'pointer',
-                }}
-            >
-                <Image
-                    src={`https://www.themoviedb.org/t/p/w500${item.profile_path}`}
-                    alt={item.title}
-                    width={'100%'}
-                    height={'100%'}
-                    loading="lazy"
-                />
-            </Box>
+            <Image
+                src={`https://www.themoviedb.org/t/p/w500${item.profile_path}`}
+                alt={item.title}
+                aspectRatio={'1'}
+                sx={{ cursor: 'pointer' }}
+            />
             <Stack p={1}>
                 <Typography
                     variant="subtitle2"
                     fontWeight={500}
                     sx={{
-                        display: '-webkit-box',
-                        overflow: 'hidden',
-                        WebkitLineClamp: 1,
-                        textOverflow: 'ellipsis',
-                        WebkitBoxOrient: 'vertical',
-                        whiteSpace: 'normal',
+                        ...uiConfigs.style.typoLines(1),
                         cursor: 'pointer',
                     }}
                 >
@@ -48,12 +32,7 @@ function CastItem({ item }) {
                     variant="subtitle2"
                     fontWeight={300}
                     sx={{
-                        display: '-webkit-box',
-                        overflow: 'hidden',
-                        WebkitLineClamp: 1,
-                        textOverflow: 'ellipsis',
-                        WebkitBoxOrient: 'vertical',
-                        whiteSpace: 'normal',
+                        ...uiConfigs.style.typoLines(1),
                     }}
                 >
                     {item.character}

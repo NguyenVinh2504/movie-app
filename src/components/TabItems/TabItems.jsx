@@ -1,4 +1,4 @@
-import { Tab, Tabs, Container, styled, tabsClasses } from '@mui/material';
+import { Tab, Tabs, styled, tabsClasses, Box } from '@mui/material';
 // import { TabList } from '@mui/lab';
 import { useState } from 'react';
 const StyledTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }) => ({
@@ -38,7 +38,7 @@ function TabItems({ contentItems }) {
     };
 
     return (
-        <Container maxWidth="xl" sx={{ px: '0', mt: 5 }}>
+        <Box sx={{ mt: 5 }}>
             <Tabs
                 variant="scrollable"
                 // allowScrollButtonsMobile
@@ -69,7 +69,7 @@ function TabItems({ contentItems }) {
                     <StyledTab disableRipple key={index} label={item.name} />
                 ))}
             </Tabs>
-        </Container>
+        </Box>
     );
 }
 

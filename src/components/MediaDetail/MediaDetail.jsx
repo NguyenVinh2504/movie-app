@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { Modal, Box, Typography, Stack, IconButton, Fade } from '@mui/material';
+import { Modal, Box, Typography, Stack, IconButton, Fade, useMediaQuery } from '@mui/material';
 import { CloseIcon, HeartIcon, PlayIcon } from '../Icon';
 import CastSlice from '../CastItem/CastSlice';
 import VideoSlice from '../VideoSlice';
@@ -9,6 +9,7 @@ import { toggleDetail } from '~/redux/features/mediaDetailSlice';
 import Image from '../Image';
 import images from '~/assets/image';
 import Episodes from '../Episodes';
+import uiConfigs from '~/config/ui.config';
 function Container({ headingText, children }) {
     return (
         <Box sx={{ marginTop: 3 }}>
@@ -20,6 +21,7 @@ function Container({ headingText, children }) {
     );
 }
 function MovieDetail() {
+    const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const open = useSelector(openSelector);
     const dispatch = useDispatch();
     const handleClose = () => {
@@ -71,17 +73,7 @@ function MovieDetail() {
                             borderTop: '1px solid rgba(255,255,255,0.5)',
                             pb: '20px',
                             overflowY: 'auto',
-                            '&::-webkit-scrollbar': {
-                                width: '8px',
-                            },
-                            '&::-webkit-scrollbar-track': {
-                                backgroundColor: 'transparent',
-                            },
-                            '&::-webkit-scrollbar-thumb': {
-                                backgroundColor: 'rgba(255,255,255,0.5)',
-                                borderRadius: '6px',
-                                width: '8px',
-                            },
+                            ...uiConfigs.style.scroll,
                         }}
                     >
                         {/* poster */}
@@ -89,11 +81,8 @@ function MovieDetail() {
                             <IconButton
                                 color="secondNeutral"
                                 sx={{
-                                    position: 'absolute',
                                     zIndex: '10',
-                                    top: '50%',
-                                    left: '50%',
-                                    transform: 'translate(-50%, -50%)',
+                                    ...uiConfigs.style.centerAlight,
                                     svg: {
                                         width: '40px',
                                         height: '40px',
@@ -102,26 +91,16 @@ function MovieDetail() {
                             >
                                 <PlayIcon />
                             </IconButton>
+
+                            <Image
+                                src={`https://image.tmdb.org/t/p/original/xFYpUmB01nswPgbzi8EOCT1ZYFu.jpg`}
+                                alt={'item.name'}
+                                fallBack={images.noImage19x6}
+                                aspectRatio={'16/9'}
+                            />
                             <Box
                                 sx={{
-                                    width: '100%',
-                                    aspectRatio: '16/9',
-                                }}
-                            >
-                                <Image
-                                    src={`https://image.tmdb.org/t/p/original/xFYpUmB01nswPgbzi8EOCT1ZYFu.jpg`}
-                                    alt={'item.name'}
-                                    fallBack={images.noImage19x6}
-                                    loading="lazy"
-                                />
-                            </Box>
-                            <Box
-                                sx={{
-                                    position: 'absolute',
-                                    top: '0',
-                                    left: '0',
-                                    width: '100%',
-                                    height: '100%',
+                                    ...uiConfigs.style.gradientBgImage,
                                     background: 'linear-gradient(180deg, rgba(12, 10, 10, 0), rgba(12, 10, 10, 1))',
                                 }}
                             />
@@ -138,7 +117,11 @@ function MovieDetail() {
                                         </IconButton>
                                     </Stack> */}
                             <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'}>
-                                <Typography variant="h3" fontWeight={'500'}>
+                                <Typography
+                                    variant={pointDownSm ? 'h4' : 'h3'}
+                                    fontWeight={'500'}
+                                    sx={{ ...uiConfigs.style.typoLines(2) }}
+                                >
                                     Gran Turismo
                                 </Typography>
                                 <Box>
@@ -147,15 +130,19 @@ function MovieDetail() {
                                     </IconButton>
                                 </Box>
                             </Stack>
-                            <Typography variant="subtitle1" mt={1}>
-                                07/21/2023 (US)Phim Hài, Phim Phiêu Lưu, Phim Giả Tượng1h 54m
+                            <Typography variant={pointDownSm ? 'subtitle2' : 'subtitle1'} mt={1}>
+                                07/21/2023 | Phim Hài, Phim Phiêu Lưu, Phim Giả Tượng | 1h 54m
                             </Typography>
                             <Stack direction={'row'} spacing={2}>
-                                <Typography variant="subtitle2">Đạo diễn: Greta Gerwig</Typography>
-                                <Typography variant="subtitle2">Kịch bản: Greta Gerwig</Typography>
+                                <Typography variant={pointDownSm ? 'caption' : 'subtitle2'}>
+                                    Đạo diễn: Greta Gerwig
+                                </Typography>
+                                <Typography variant={pointDownSm ? 'caption' : 'subtitle2'}>
+                                    Kịch bản: Greta Gerwig
+                                </Typography>
                             </Stack>
                             <Container headingText={'Mô tả'}>
-                                <Typography>
+                                <Typography variant={pointDownSm ? 'body2' : 'body1'}>
                                     BARBIE sẽ được nhào nặn và chắp bút bởi nữ đạo diễn kiêm biên kịch từng nhận nhiều
                                     Đề cử Tượng vàng Oscar – Greta Grewig. Hai nhân vật chính Barbie và Ken sẽ được hóa
                                     thân bởi nữ diên viên Margot Robbie và nam thần Ryan Gosling, hứa hẹn sẽ tạo nên

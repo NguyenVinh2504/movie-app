@@ -13,16 +13,8 @@ import {
 import { PlayIcon } from '../Icon';
 import Image from '../Image';
 import { tapPhim } from './taphim';
-
+import uiConfigs from '~/config/ui.config';
 function EpisodesItem() {
-    const typographyLine = {
-        display: '-webkit-box',
-        overflow: 'hidden',
-        WebkitLineClamp: 2,
-        textOverflow: 'ellipsis',
-        WebkitBoxOrient: 'vertical',
-        whiteSpace: 'normal',
-    };
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const ListCustoms = styled(ListItemButton)(({ theme }) => ({
         '&:hover': {
@@ -42,11 +34,10 @@ function EpisodesItem() {
         [theme.breakpoints.down('sm')]: {
             width: '120%',
         },
-        aspectRatio: '16/9',
         position: 'relative',
         width: '45%',
         marginRight: theme.spacing(2),
-        borderRadius: 1,
+        borderRadius: '5px',
         overflow: 'hidden',
     }));
     const CustomIconButton = styled((props) => <IconButton color="secondNeutral" {...props} />)(({ theme }) => ({
@@ -92,7 +83,11 @@ function EpisodesItem() {
                                         <ListItemText
                                             sx={{ width: '100%' }}
                                             primary={
-                                                <Typography variant="body1" fontWeight={500} sx={{ ...typographyLine }}>
+                                                <Typography
+                                                    variant="body1"
+                                                    fontWeight={500}
+                                                    sx={{ ...uiConfigs.style.typoLines(2) }}
+                                                >
                                                     {item.episode_number + '. ' + item.name}
                                                 </Typography>
                                             }

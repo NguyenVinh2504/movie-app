@@ -1,10 +1,11 @@
-import { Box, Typography, Stack, IconButton } from '@mui/material';
+import { Box, Typography, Stack, IconButton, ButtonBase } from '@mui/material';
 import theme from '~/theme';
 import { HeartIcon } from '../Icon';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { toggleDetail } from '~/redux/features/mediaDetailSlice';
 import Image from '../Image';
+import uiConfigs from '~/config/ui.config';
 
 function MediaItems({ item }) {
     const [liked, setLiked] = useState(false);
@@ -26,27 +27,13 @@ function MediaItems({ item }) {
                 }}
             >
                 {/* poster */}
-                <Box
-                    onClick={handleOpen}
-                    sx={{
-                        // pt: '56.25%',
-                        // pt: '150%',
-                        width: '100%',
-                        aspectRatio: '2/3',
-                        cursor: 'pointer',
-                        span: {
-                            display: 'block',
-                        },
-                    }}
-                >
+                <ButtonBase onClick={handleOpen}>
                     <Image
-                        loading="lazy"
+                        aspectRatio={'2/3'}
                         src={`https://www.themoviedb.org/t/p/w500${item.poster_path}`}
                         alt={item.title}
-                        width={'100%'}
-                        height={'100%'}
                     />
-                </Box>
+                </ButtonBase>
                 {/* poster */}
 
                 <Box
@@ -65,20 +52,19 @@ function MediaItems({ item }) {
                                 onClick={handleOpen}
                                 sx={{
                                     fontWeight: '500',
-                                    display: '-webkit-box',
-                                    overflow: 'hidden',
-                                    WebkitLineClamp: 1,
-                                    textOverflow: 'ellipsis',
-                                    WebkitBoxOrient: 'vertical',
-                                    whiteSpace: 'normal',
                                     cursor: 'pointer',
+                                    ...uiConfigs.style.typoLines(1),
                                 }}
                             >
                                 {item.title}
                             </Typography>
                             {/* title */}
                             {/* overview */}
-                            <Typography variant="body2" color={theme.mediaItems.textOverview}>
+                            <Typography
+                                variant="body2"
+                                color={theme.mediaItems.textOverview}
+                                sx={{ ...uiConfigs.style.typoLines(1) }}
+                            >
                                 {item.vote_average.toFixed(1)} • {item.release_date.split('-')[0]}
                             </Typography>
                             {/* overview */}
