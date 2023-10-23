@@ -1,8 +1,15 @@
+import { Box, Typography } from '@mui/material';
+
 function InfoPage() {
     return (
-        <>
-            <h1>Info page</h1>
-        </>
+        <Box>
+            <Typography mb={2} variant="h5">
+                Thong tin ca nhan
+            </Typography>
+            <Box>
+                <Typography variant="h6">Ho ten</Typography>
+            </Box>
+        </Box>
     );
 }
 

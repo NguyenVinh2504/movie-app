@@ -10,7 +10,7 @@ const Image = forwardRef(
                 src={_fallBack || src}
                 alt={alt}
                 {...props}
-                style={{ aspectRatio: aspectRatio, ...sx }}
+                style={{ aspectRatio: aspectRatio, objectFit: 'cover', ...sx }}
                 onError={() => setFallBack(customFallBack)}
             />
         );

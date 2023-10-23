@@ -249,8 +249,6 @@ const theme = createTheme({
         }
         img {
             display: block;
-            object-fit: cover;
-            line-height: 0;
             width: 100%;
             height: 100%;
         }
