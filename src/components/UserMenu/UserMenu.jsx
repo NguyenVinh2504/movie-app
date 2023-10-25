@@ -57,7 +57,7 @@ function UserMenu() {
                         variant: 'outlined',
                         elevation: 0,
                         sx: {
-                            borderColor: '#A6A4A4',
+                            borderColor: 'rgba(255, 255, 255, 0.2)',
                             mt: 2,
                             bgcolor: 'black',
                             color: 'white',
@@ -75,7 +75,7 @@ function UserMenu() {
             >
                 <ListItem>
                     <Stack direction={'row'} alignItems={'center'} spacing={2}>
-                        <Avatar sx={{ bgcolor: 'red' }} alt="H" src="/broken-image.jpg" />
+                        <AvatarUser />
                         <Typography component={'span'}>Hoangvinh250404</Typography>
                     </Stack>
                 </ListItem>

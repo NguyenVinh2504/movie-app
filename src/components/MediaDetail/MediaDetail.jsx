@@ -33,6 +33,11 @@ function MovieDetail() {
             onClose={handleClose}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
+            sx={{
+                '.MuiBackdrop-root': {
+                    backdropFilter: 'blur(2px)',
+                },
+            }}
         >
             <Fade in={open} timeout={300}>
                 <Box
@@ -45,11 +50,12 @@ function MovieDetail() {
                         display: 'flex',
                         flexDirection: 'column',
                         transform: 'translate(-50%, 0)',
-                        bgcolor: '#0c0a0a',
+                        // bgcolor: '#0c0a0a',
+                        bgcolor: '#121212',
                         overflow: 'hidden',
                         borderRadius: '8px',
-                        border: '1px solid rgba(255, 255, 255, 0.3)',
-                        boxShadow: 'rgba(0, 0, 0, 0.75) 0px 3px 10px',
+                        border: '1px solid hsla(0,0%,100%,.1)',
+                        // boxShadow: 'rgba(0, 0, 0, 0.75) 0px 3px 10px',
                     }}
                 >
                     <Stack direction={'row'} my={2} justifyContent={'flex-end'} px={2} position={'relative'}>
@@ -101,7 +107,7 @@ function MovieDetail() {
                             <Box
                                 sx={{
                                     ...uiConfigs.style.gradientBgImage,
-                                    background: 'linear-gradient(180deg, rgba(12, 10, 10, 0), rgba(12, 10, 10, 1))',
+                                    background: 'linear-gradient(180deg, rgba(18,18,18,0), rgb(18,18,18) )',
                                 }}
                             />
                         </Box>

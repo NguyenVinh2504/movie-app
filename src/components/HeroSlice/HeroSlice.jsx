@@ -31,110 +31,109 @@ function HeroSlice() {
         dispatch(toggleDetail(true));
     };
     return (
-        <Container sx={{ maxWidth: { xl: '1856px' } }} disableGutters maxWidth={'xl'}>
-            <SwiperNavigation>
-                <Swiper
-                    style={{
-                        borderRadius: '20px',
-                        overflow: 'hidden',
-                        width: '100%',
-                        // boxShadow: pointDonwSm ? ' -2px 0px 15px 2px rgba(75, 73, 73)' : 'none',
-                        // border: '1px solid #848383',
-                    }}
-                    navigation={true}
-                    modules={[Navigation, Autoplay]}
-                    autoplay={{
-                        delay: 4000,
-                        disableOnInteraction: false,
-                    }}
-                >
-                    {movie.map((item, index) => (
-                        <SwiperSlide key={index}>
+        <SwiperNavigation>
+            <Swiper
+                style={{
+                    borderRadius: '20px',
+                    overflow: 'hidden',
+                    width: '100%',
+                    // boxShadow: pointDonwSm ? ' -2px 0px 15px 2px rgba(75, 73, 73)' : 'none',
+                    // border: '1px solid #848383',
+                }}
+                navigation={true}
+                modules={[Navigation, Autoplay]}
+                autoplay={{
+                    delay: 4000,
+                    disableOnInteraction: false,
+                }}
+            >
+                {movie.map((item, index) => (
+                    <SwiperSlide key={index}>
+                        {/* background image */}
+                        <Box
+                            sx={{
+                                aspectRatio: { sm: '100/43', xs: '2/3' },
+                                position: 'relative',
+                                borderRadius: '20px',
+                                overflow: 'hidden',
+                                img: {
+                                    objectPosition: 'top',
+                                },
+                                ':before': {
+                                    content: '""',
+                                    ...uiConfigs.style.gradientBgImage,
+                                    background: 'linear-gradient(180deg, rgba(0, 0, 0, 0), rgb(0, 0, 0, 1))',
+                                },
+                            }}
+                        >
                             {/* background image */}
+                            <Image
+                                fallBack={pointDownSm ? images.noImage2x3 : images.noImage19x6}
+                                src={
+                                    pointDownSm
+                                        ? `https://image.tmdb.org/t/p/original${item.poster_path}`
+                                        : `https://image.tmdb.org/t/p/original${item.backdrop_path}`
+                                }
+                                alt={item.title}
+                            />
                             <Box
                                 sx={{
-                                    aspectRatio: { sm: '100/43', xs: '2/3' },
-                                    position: 'relative',
-                                    borderRadius: '20px',
-                                    overflow: 'hidden',
-                                    img: {
-                                        objectPosition: 'top',
-                                    },
-                                    ':before': {
-                                        content: '""',
-                                        ...uiConfigs.style.gradientBgImage,
-                                        background: 'linear-gradient(180deg, rgba(0, 0, 0, 0), rgb(0, 0, 0, 1))',
+                                    ...uiConfigs.style.gradientBgImage,
+                                    // background: 'linear-gradient(-90deg, rgba(0, 0, 0, 0) 100%, rgb(0, 0, 0, 1))',
+                                }}
+                            ></Box>
+                            <IconButton
+                                color="secondNeutral"
+                                sx={{
+                                    display: { sm: 'none' },
+                                    zIndex: '10',
+                                    ...uiConfigs.style.centerAlight,
+                                    svg: {
+                                        width: '40px',
+                                        height: '40px',
                                     },
                                 }}
                             >
-                                {/* background image */}
-                                <Image
-                                    fallBack={pointDownSm ? images.noImage2x3 : images.noImage19x6}
-                                    src={
-                                        pointDownSm
-                                            ? `https://image.tmdb.org/t/p/original${item.poster_path}`
-                                            : `https://image.tmdb.org/t/p/original${item.backdrop_path}`
-                                    }
-                                    alt={item.title}
-                                />
-                                <Box
-                                    sx={{
-                                        ...uiConfigs.style.gradientBgImage,
-                                        // background: 'linear-gradient(-90deg, rgba(0, 0, 0, 0) 100%, rgb(0, 0, 0, 1))',
-                                    }}
-                                ></Box>
-                                <IconButton
-                                    color="secondNeutral"
-                                    sx={{
-                                        display: { sm: 'none' },
-                                        zIndex: '10',
-                                        ...uiConfigs.style.centerAlight,
-                                        svg: {
-                                            width: '40px',
-                                            height: '40px',
-                                        },
-                                    }}
-                                >
-                                    <PlayIcon />
-                                </IconButton>
-                                {/* content*/}
-                                <Grid
-                                    container
-                                    sx={{
-                                        position: 'absolute',
-                                        top: '0',
-                                        left: '0',
-                                        width: '100%',
-                                        height: '100%',
-                                        display: 'flex',
-                                        alignItems: { xs: 'flex-end', sm: 'center' },
-                                        paddingLeft: { lg: '80px', sm: '60px', xs: '30px' },
-                                        paddingRight: '15px',
-                                        justifyContent: { sm: 'flex-start' },
-                                    }}
-                                >
-                                    {/* text content */}
-                                    <Grid item lg={6} md={6} sm={8} xs={12}>
-                                        <Stack
-                                            spacing={'1.5vw'}
-                                            alignItems={{ sm: 'flex-start' }}
-                                            textAlign={{ sm: 'left' }}
-                                            marginBottom={{ xs: '50px', sm: '0' }}
-                                        >
-                                            <Box
-                                                sx={{
-                                                    backgroundImage: item.logo
-                                                        ? `url(${item.logo})`
-                                                        : `url(https://www.themoviedb.org/t/p/original/zanKFaGoXMI5p22vj4VB3rvM5Eg.png)`,
-                                                    paddingTop: '30%',
-                                                    width: '80%',
-                                                    backgroundSize: 'contain',
-                                                    backgroundRepeat: 'no-repeat',
-                                                    backgroundPosition: 'left bottom',
-                                                }}
-                                            ></Box>
-                                            {/* title */}
-                                            {/* <Typography
+                                <PlayIcon />
+                            </IconButton>
+                            {/* content*/}
+                            <Grid
+                                container
+                                sx={{
+                                    position: 'absolute',
+                                    top: '0',
+                                    left: '0',
+                                    width: '100%',
+                                    height: '100%',
+                                    display: 'flex',
+                                    alignItems: { xs: 'flex-end', sm: 'center' },
+                                    paddingLeft: { lg: '80px', sm: '60px', xs: '30px' },
+                                    paddingRight: '15px',
+                                    justifyContent: { sm: 'flex-start' },
+                                }}
+                            >
+                                {/* text content */}
+                                <Grid item lg={6} md={6} sm={8} xs={12}>
+                                    <Stack
+                                        spacing={pointDownMd ? 1 : 2}
+                                        alignItems={{ sm: 'flex-start' }}
+                                        textAlign={{ sm: 'left' }}
+                                        marginBottom={{ xs: '50px', sm: '0' }}
+                                    >
+                                        <Box
+                                            sx={{
+                                                backgroundImage: item.logo
+                                                    ? `url(${item.logo})`
+                                                    : `url(https://www.themoviedb.org/t/p/original/zanKFaGoXMI5p22vj4VB3rvM5Eg.png)`,
+                                                paddingTop: '30%',
+                                                width: '80%',
+                                                backgroundSize: 'contain',
+                                                backgroundRepeat: 'no-repeat',
+                                                backgroundPosition: 'left bottom',
+                                            }}
+                                        ></Box>
+                                        {/* title */}
+                                        {/* <Typography
                                                     variant={
                                                         pointDonwSm ? 'h5' : pointDonwMd ? 'h4' : pointDonwLg ? 'h3' : 'h2'
                                                     }
@@ -145,48 +144,47 @@ function HeroSlice() {
                                                 >
                                                     {item.title}
                                                 </Typography> */}
-                                            {/* title */}
-                                            <Typography
-                                                variant={
-                                                    pointDownSm
-                                                        ? 'caption'
-                                                        : pointDownMd
-                                                        ? 'subtitle2'
-                                                        : pointDownLg
-                                                        ? 'subtitle1'
-                                                        : 'h6'
-                                                }
-                                                sx={{
-                                                    fontWeight: '400',
-                                                    ...uiConfigs.style.typoLines(3),
-                                                }}
+                                        {/* title */}
+                                        <Typography
+                                            variant={
+                                                pointDownSm
+                                                    ? 'caption'
+                                                    : pointDownMd
+                                                    ? 'subtitle2'
+                                                    : pointDownLg
+                                                    ? 'subtitle1'
+                                                    : 'h6'
+                                            }
+                                            sx={{
+                                                fontWeight: '400',
+                                                ...uiConfigs.style.typoLines(3),
+                                            }}
+                                        >
+                                            {item.overview}
+                                        </Typography>
+                                        <Stack direction={'row'} spacing={{ sm: '1vw', xs: '0' }}>
+                                            <CustomButton
+                                                startIcon={<PlayIcon />}
+                                                sx={{ display: { sm: 'inline-flex', xs: 'none' } }}
                                             >
-                                                {item.overview}
-                                            </Typography>
-                                            <Stack direction={'row'} spacing={{ sm: '1vw', xs: '0' }}>
-                                                <CustomButton
-                                                    startIcon={<PlayIcon />}
-                                                    sx={{ display: { sm: 'inline-flex', xs: 'none' } }}
-                                                >
-                                                    Xem Ngay
-                                                </CustomButton>
-                                                <CustomButton
-                                                    color="secondary"
-                                                    startIcon={<AboutIcon />}
-                                                    onClick={handleOpen}
-                                                >
-                                                    Chi tiết
-                                                </CustomButton>
-                                            </Stack>
+                                                Xem Ngay
+                                            </CustomButton>
+                                            <CustomButton
+                                                color="secondary"
+                                                startIcon={<AboutIcon />}
+                                                onClick={handleOpen}
+                                            >
+                                                Chi tiết
+                                            </CustomButton>
                                         </Stack>
-                                    </Grid>
+                                    </Stack>
                                 </Grid>
-                            </Box>
-                        </SwiperSlide>
-                    ))}
-                </Swiper>
-            </SwiperNavigation>
-        </Container>
+                            </Grid>
+                        </Box>
+                    </SwiperSlide>
+                ))}
+            </Swiper>
+        </SwiperNavigation>
     );
 }
 

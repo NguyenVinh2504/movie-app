@@ -14,9 +14,9 @@ function Footer() {
             <Toolbar
                 sx={{
                     borderTop: '1px solid rgba(255, 255, 255, 0.2)',
-                    pt: 3,
+                    py: 2,
                     flexWrap: 'wrap',
-                    bgcolor: 'rgba(255,255,255,0.09)',
+                    bgcolor: '#141212',
                 }}
             >
                 <Box width={'100%'}>

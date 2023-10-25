@@ -1,7 +1,11 @@
+import { Typography } from '@mui/material';
+import Media from '~/components/Media';
+
 function FavoriteMovieList() {
     return (
         <>
-            <h1>Favorite Movie</h1>
+            <Typography variant="h6">YOUR FAVORITES</Typography>
+            <Media></Media>
         </>
     );
 }

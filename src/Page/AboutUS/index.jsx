@@ -1,8 +1,8 @@
 import { Box, Container, Typography } from '@mui/material';
 function AboutUs() {
     return (
-        <Container maxWidth={'auto'}>
-            <Box bgcolor={'rgba(255,255,255,0.08)'} p={3} borderRadius={2}>
+        <>
+            <Box bgcolor={'#ffffff08'} p={3} borderRadius={2}>
                 <Typography variant="h4" fontWeight={'500'}>
                     Giới Thiệu
                 </Typography>
@@ -21,7 +21,7 @@ function AboutUs() {
                     biến và được nhiều người sử dụng.
                 </Typography>
             </Box>
-        </Container>
+        </>
     );
 }
 

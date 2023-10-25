@@ -1,5 +1,5 @@
 import { Box, Container, Typography, useMediaQuery } from '@mui/material';
-import Search from '~/Layout/components/Search';
+import Search from './Search';
 import Media from '~/components/Media';
 
 function MediaSearch() {
@@ -13,7 +13,7 @@ function MediaSearch() {
                     </Box>
                 )}
                 <Typography variant={pointDownLg ? 'h5' : 'h4'} fontWeight={500} mb={'4px'} display={'block'}>
-                    Kết quả tìm kiếm của{' '}
+                    Kết quả tìm kiếm của
                 </Typography>
                 <Media />
             </Container>

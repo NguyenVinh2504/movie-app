@@ -7,6 +7,7 @@ import '@fontsource/roboto/700.css';
 const Color = {
     primary: '#ec0101',
     secondary: '#2D2C2C',
+    background: '#0c0a0a',
 };
 const theme = createTheme({
     typography: {
@@ -83,7 +84,7 @@ const theme = createTheme({
     },
     movie: {
         topBarHeight: '64px',
-        background: '#0c0a0a',
+        background: Color.background,
         backgroundAppBarScroll: '#1f1d1d',
         backgroundGradient:
             'linear-gradient(0deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4766281512605042) 31%, rgba(0,0,0,1) 92%)',
@@ -108,7 +109,8 @@ const theme = createTheme({
         },
     },
     mediaItems: {
-        background: 'rgba(255, 255, 255, 0.08)',
+        // background: 'rgba(255, 255, 255, 0.08)',
+        background: '#121212',
         text: 'white',
         textOverview: 'rgba(255, 255, 255, 0.50)',
         iconHeart: Color.primary,
@@ -250,7 +252,7 @@ const theme = createTheme({
         img {
             display: block;
             width: 100%;
-            height: 100%;
+            height: auto;
         }
 
         a {

@@ -7,7 +7,13 @@ import MediaDetail from '~/components/MediaDetail';
 
 function MainLayout() {
     return (
-        <>
+        <Container
+            disableGutters
+            maxWidth="auto"
+            sx={{
+                maxWidth: { xl: '1904px' },
+            }}
+        >
             <MediaDetail />
             <Header />
             {/* <Box sx={{ position: 'fixed', left: '0', right: '0', top: '64px', display: { md: 'none' } }} px={3}>
@@ -24,7 +30,7 @@ function MainLayout() {
                 <Outlet />
             </Container>
             <Footer />
-        </>
+        </Container>
     );
 }
 

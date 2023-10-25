@@ -11,16 +11,6 @@ export const menuItems = [
         title: 'Movie',
         path: config.routes.movie,
         icon: <MovieIcon />,
-        child: [
-            {
-                title: 'Popular',
-                path: config.routes.movie,
-            },
-            {
-                title: 'Top Rate',
-                path: config.routes.topRateMovie,
-            },
-        ],
     },
     {
         title: 'Tv Shows',
