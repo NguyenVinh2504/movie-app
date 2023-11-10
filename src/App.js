@@ -13,7 +13,7 @@ function App() {
                     <Route path={routes.normal} element={<MainLayout />}>
                         {routesPage}
                     </Route>
-                </Routes>
+                </Routes> 
             </div>
         </BrowserRouter>
     );

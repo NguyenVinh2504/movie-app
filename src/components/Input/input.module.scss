@@ -16,11 +16,9 @@
 .wrapper {
     background-color: var(--background-default-input);
     display: flex;
-    // max-width: 400px;
     margin-left: auto;
     width: 100%;
     border-radius: 0.125rem;
-    // min-width: 400px;
     padding: 8px 8px 8px 16px;
     position: relative;
     border: 2px solid transparent;
@@ -60,7 +58,7 @@
 }
 
 .error {
-    border: 1px solid var(--border-error-input);
+    border: 1px solid var(--border-error-input) !important;
 }
 
 .success {

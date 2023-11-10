@@ -21,6 +21,7 @@ import AvatarUser from '../Avatar/Avatar';
 import { useDispatch, useSelector } from 'react-redux';
 import { userValue } from '~/redux/selectors';
 import { setUser } from '~/redux/features/userSlice';
+import config from '~/config';
 
 const ListCustoms = styled(ListItem)(({ theme }) => ({
     '&:hover': {
@@ -46,7 +47,7 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
                 <IconButton sx={{ position: 'absolute', top: '38%', transform: 'translateY(-50%)', p: '0' }}>
                     <MenuIcon />
                 </IconButton>
-                <Stack width="100%" direction="row" justifyContent="center">
+                <Stack width="100%" direction="row" justifyContent="center" sx={{ img: { height: '18px' } }}>
                     <Logo />
                 </Stack>
             </Box>
@@ -126,15 +127,28 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
                     <Divider
                         sx={{ borderColor: 'white', marginBottom: '20px', display: { sm: 'none' }, opacity: '0.3' }}
                     />
-                    <Button
-                        sx={{ width: '100%', display: { sm: 'none' } }}
-                        variant="contained"
-                        disableElevation
-                        disableRipple
-                        onClick={() => dispacth(setUser(!user))}
-                    >
-                        {!user ? 'Đăng Nhập' : 'Đăng Xuất'}
-                    </Button>
+                    {!user ? (
+                        <Button
+                            sx={{ width: '100%', display: { sm: 'none' } }}
+                            variant="contained"
+                            disableElevation
+                            disableRipple
+                            onClick={() => dispacth(setUser(!user))}
+                            href={config.routes.login}
+                        >
+                            Đăng Nhập
+                        </Button>
+                    ) : (
+                        <Button
+                            sx={{ width: '100%', display: { sm: 'none' } }}
+                            variant="contained"
+                            disableElevation
+                            disableRipple
+                            onClick={() => dispacth(setUser(!user))}
+                        >
+                            Đăng Xuất
+                        </Button>
+                    )}
                 </>
             }
         </Box>

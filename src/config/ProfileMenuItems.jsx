@@ -9,8 +9,4 @@ export const profileItems = [
         title: 'Favorite Movie',
         path: config.routes.favorite,
     },
-    {
-        title: 'Favorite Tv Show',
-        path: config.routes.favoriteTvList,
-    },
 ];

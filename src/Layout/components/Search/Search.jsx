@@ -35,6 +35,7 @@ function Search({ round }) {
                 value: searchValue,
                 onChange: handleChange,
             }}
+            placeholder={'Tìm kiếm'}
             iconRightEvent={{
                 onClick: handleClear,
             }}

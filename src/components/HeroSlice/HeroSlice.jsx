@@ -1,4 +1,4 @@
-import { Box, Button, Container, Grid, IconButton, Stack, Typography, styled, useMediaQuery } from '@mui/material';
+import { Box, Button, Grid, IconButton, Stack, Typography, styled, useMediaQuery } from '@mui/material';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/scss';
 import 'swiper/scss/navigation';
@@ -12,19 +12,19 @@ import Image from '../Image';
 import images from '~/assets/image';
 import uiConfigs from '~/config/ui.config';
 function HeroSlice() {
+    const pointDownLg = useMediaQuery((theme) => theme.breakpoints.down('lg'));
+    const pointDownMd = useMediaQuery((theme) => theme.breakpoints.down('md'));
+    const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const CustomButton = styled((props) => (
         <Button variant="contained" size={pointDownMd ? 'small' : pointDownLg ? 'medium' : 'large'} {...props} />
     ))(({ theme }) => ({
         [theme.breakpoints.down('md')]: {
             svg: {
-                height: '20px',
-                width: '20px',
+                height: '1rem',
+                width: '1rem',
             },
         },
     }));
-    const pointDownLg = useMediaQuery((theme) => theme.breakpoints.down('lg'));
-    const pointDownMd = useMediaQuery((theme) => theme.breakpoints.down('md'));
-    const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const dispatch = useDispatch();
 
     const handleOpen = () => {

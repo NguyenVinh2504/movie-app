@@ -8,7 +8,7 @@ function MediaList() {
     return (
         <>
             <HeroSlice />
-            <Container maxWidth={'xl'}>
+            <Container maxWidth={'xl'} sx={{ px: '0' }}>
                 <TabItems contentItems={genres} />
                 <Media />
             </Container>

@@ -20,8 +20,8 @@ function Footer() {
                 }}
             >
                 <Box width={'100%'}>
-                    <CustomStack>
-                        <Logo />
+                    <CustomStack >
+                        <Box sx={{ img: { height: '18px' } }}> <Logo /></Box>
                     </CustomStack>
                     <CustomStack spacing={5}>
                         <Facebook />

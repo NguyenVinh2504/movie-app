@@ -1,6 +1,6 @@
 const routes = {
     normal: '/',
-    home: '/movie-app/',
+    home: '/movie-app',
     aboutUs: '/movie-app/about',
     movie: '/movie-app/movie',
     topRateMovie: '/movie-app/movie/top-rate',
@@ -14,10 +14,14 @@ const routes = {
     //profile
 
     //setting
-    settingProfile: '/movie-app/settings/profile',
-    deleteAccount: '/movie-app/settings/delete-account',
+    settingProfile: '/movie-app/edit-profile',
+    deleteAccount: '/movie-app/edit-profile/delete-account',
     //setting
 
+    //auth
+    account: '/movie-app/account/:accountType',
+    signup: '/movie-app/account/signup',
+    login: '/movie-app/account/login',
     error: '*',
 };
 

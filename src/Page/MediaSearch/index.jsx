@@ -13,7 +13,7 @@ function MediaSearch() {
                     </Box>
                 )}
                 <Typography variant={pointDownLg ? 'h5' : 'h4'} fontWeight={500} mb={'4px'} display={'block'}>
-                    Kết quả tìm kiếm của
+                    Kết quả tìm kiếm: 
                 </Typography>
                 <Media />
             </Container>

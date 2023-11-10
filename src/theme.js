@@ -131,10 +131,33 @@ const theme = createTheme({
             },
             variants: [
                 {
+                    props: { variant: 'pill-outline' },
+                    style: {
+                        borderRadius: '100px',
+                    }
+                },
+                {
+                    props: { color: 'white-outline' },
+                    style: {
+                        border:'1px solid hsla(0,0%,100%,.2)',
+                        backgroundColor: 'hsla(0, 0%, 52%, 0.1)',
+                        lineHeight: '42px',
+                        '&:hover': {
+                        color: 'white',
+                        backgroundColor: 'hsla(0, 0%, 52%, 0.2)',
+                        border:'1px solid hsla(0,0%,100%,.3)',
+                        },
+                        '@media (hover: none)': {
+                            '&:hover': {
+                                backgroundColor: 'hsla(0, 0%, 52%, 0.1)',
+                                border:'1px solid hsla(0,0%,100%,.2)',
+                            },
+                        },
+                    }
+                },
+                {
                     props: { color: 'primary' },
                     style: {
-                        height: '40px',
-                        padding: '0 15px',
                         '&:hover': {
                             backgroundColor: 'rgba(236, 1, 1, 0.80)',
                         },
@@ -151,8 +174,6 @@ const theme = createTheme({
                 {
                     props: { color: 'secondary' },
                     style: {
-                        height: '40px',
-                        padding: '0 15px',
                         '&:hover': {
                             backgroundColor: '#4B4949',
                         },
@@ -164,20 +185,28 @@ const theme = createTheme({
                     },
                 },
                 {
+                    props: { size: 'medium' },
+                    style: {
+                        padding: '0 15px',
+                        lineHeight: '44px',
+                    },
+                },
+                {
                     props: { size: 'large' },
                     style: {
-                        height: '3.125rem',
                         minWidth: '5rem',
-                        padding: '0rem 1.5rem',
+                        padding: '0 1.5rem',
+                        fontSize: '1.25rem',
+                        lineHeight: '50px',
                     },
                 },
                 {
                     props: { size: 'small' },
                     style: {
-                        height: '1.875rem',
                         minWidth: '3rem',
-                        padding: '0rem 0.75rem',
-                        fontSize: '12px',
+                        padding: '0 0.75rem',
+                        fontSize: '0.75rem',
+                        lineHeight: '38px',
                     },
                 },
             ],

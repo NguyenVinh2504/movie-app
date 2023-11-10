@@ -11,6 +11,7 @@ import Settings from '~/Page/Setting/Setting';
 import EditAccount from '~/Page/Setting/EditAccount';
 import DeleteAccount from '~/Page/Setting/DeleteAccount';
 import ErrorPage from '~/Page/ErrorPage/ErrorPage';
+import LoginPage from '~/Page/Login';
 export const routesMainLayout = [
     {
         index: true,
@@ -28,6 +29,10 @@ export const routesMainLayout = [
     {
         path: config.routes.search,
         element: <MediaSearch />,
+    },
+    {
+        path: config.routes.account,
+        element: <LoginPage />,
     },
     {
         path: config.routes.profile,
@@ -48,10 +53,10 @@ export const routesMainLayout = [
         ],
     },
     {
+        path: config.routes.settingProfile,
         element: <Settings />,
         child: [
             {
-                path: config.routes.settingProfile,
                 index: true,
                 element: <EditAccount />,
             },

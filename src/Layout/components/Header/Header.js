@@ -24,6 +24,7 @@ import routes from '~/config/routes';
 import { useDispatch, useSelector } from 'react-redux';
 import { userValue } from '~/redux/selectors';
 import { setUser } from '~/redux/features/userSlice';
+import config from '~/config';
 
 const cx = classNames.bind(styles);
 
@@ -74,8 +75,8 @@ function Header() {
                             <IconButton onClick={toggleSidebar}>
                                 <MenuIcon />
                             </IconButton>
-                            <Box>
-                                <Logo></Logo>
+                            <Box sx={{ img: { height: '18px' } }}>
+                                <Logo/>
                             </Box>
                         </Stack>
                         {/* menu mobile */}
@@ -83,7 +84,7 @@ function Header() {
                         {/* leftheader */}
                         <Stack direction="row" spacing={4} sx={{ color: '#a6a4a4;' }}>
                             {/* logo */}
-                            <Box sx={{ display: { xs: 'none', lg: 'inline-block' } }}>
+                            <Box sx={{ display: { xs: 'none', lg: 'inline-block' }, img: { height: '18px' } }}>
                                 <Logo />
                             </Box>
                             {/* logo */}
@@ -157,15 +158,17 @@ function Header() {
                                     </IconButton>
                                 </Tooltip>
                                 {!user && (
-                                    <Button
-                                        variant="contained"
-                                        disableElevation
-                                        disableRipple
-                                        onClick={() => dispatch(setUser(true))}
-                                        sx={{ display: { xs: 'none', sm: 'inline-block' } }}
-                                    >
-                                        Đăng Nhập
-                                    </Button>
+                                    <NavLink to={config.routes.login}>
+                                        <Button
+                                            variant="contained"
+                                            disableElevation
+                                            disableRipple
+                                            onClick={() => dispatch(setUser(true))}
+                                            sx={{ display: { xs: 'none', sm: 'inline-block' } }}
+                                        >
+                                            Đăng Nhập
+                                        </Button>
+                                    </NavLink>
                                 )}
                                 {user && (
                                     <Box sx={{ display: { xs: 'none', sm: 'inline-block' } }}>
