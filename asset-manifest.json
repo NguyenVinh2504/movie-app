@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/movie-app/static/css/main.27ea875d.css",
-    "main.js": "/movie-app/static/js/main.3497ddc1.js",
+    "main.js": "/movie-app/static/js/main.d3f9195e.js",
     "static/js/787.7c42db31.chunk.js": "/movie-app/static/js/787.7c42db31.chunk.js",
     "static/media/background-login.png": "/movie-app/static/media/background-login.03dee8b54c8d6490b3ff.png",
     "static/media/roboto-latin-500-normal.woff2": "/movie-app/static/media/roboto-latin-500-normal.f25d774ecfe0996f8eb5.woff2",
@@ -63,11 +63,11 @@
     "static/media/roboto-greek-ext-700-normal.woff": "/movie-app/static/media/roboto-greek-ext-700-normal.249853776d22a271b2b5.woff",
     "index.html": "/movie-app/index.html",
     "main.27ea875d.css.map": "/movie-app/static/css/main.27ea875d.css.map",
-    "main.3497ddc1.js.map": "/movie-app/static/js/main.3497ddc1.js.map",
+    "main.d3f9195e.js.map": "/movie-app/static/js/main.d3f9195e.js.map",
     "787.7c42db31.chunk.js.map": "/movie-app/static/js/787.7c42db31.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.27ea875d.css",
-    "static/js/main.3497ddc1.js"
+    "static/js/main.d3f9195e.js"
   ]
 }
