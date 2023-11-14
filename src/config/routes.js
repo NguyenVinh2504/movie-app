@@ -19,9 +19,9 @@ const routes = {
     //setting
 
     //auth
-    account: '/movie-app/account/:accountType',
-    signup: '/movie-app/account/signup',
-    login: '/movie-app/account/login',
+    // account: '/movie-app/account',
+    signup: '/movie-app/signup',
+    login: '/movie-app/login',
     error: '*',
 };
 

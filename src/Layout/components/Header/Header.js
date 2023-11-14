@@ -21,9 +21,8 @@ import Logo from '~/components/Logo';
 import SideBar from '~/components/SideBar';
 import UserMenu from '~/components/UserMenu';
 import routes from '~/config/routes';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { userValue } from '~/redux/selectors';
-import { setUser } from '~/redux/features/userSlice';
 import config from '~/config';
 
 const cx = classNames.bind(styles);
@@ -45,8 +44,9 @@ const ScrollAppBar = ({ children, window }) => {
 
 function Header() {
     const location = useNavigate();
-    const dispatch = useDispatch();
+
     const user = useSelector(userValue);
+    
     const handelSearch = () => {
         location(routes.search);
     };
@@ -75,14 +75,14 @@ function Header() {
                             <IconButton onClick={toggleSidebar}>
                                 <MenuIcon />
                             </IconButton>
-                            <Box sx={{ img: { height: '18px' } }}>
-                                <Logo/>
+                            <Box sx={{ height: '18px' }}>
+                                <Logo />
                             </Box>
                         </Stack>
                         {/* menu mobile */}
 
                         {/* leftheader */}
-                        <Stack direction="row" spacing={4} sx={{ color: '#a6a4a4;' }}>
+                        <Stack direction="row" spacing={4} sx={{ color: '#a6a4a4', alignItems: 'center' }}>
                             {/* logo */}
                             <Box sx={{ display: { xs: 'none', lg: 'inline-block' }, img: { height: '18px' } }}>
                                 <Logo />
@@ -111,7 +111,7 @@ function Header() {
                         {/* leftheader */}
 
                         {/* rightHeader */}
-                        <Stack direction="row" gap={{ xs: 0, sm: 2, lg: 5 }}>
+                        <Stack direction="row" gap={{ xs: 0, sm: 0, lg: 3 }}>
                             {/* search */}
                             <Box
                                 sx={{
@@ -158,17 +158,16 @@ function Header() {
                                     </IconButton>
                                 </Tooltip>
                                 {!user && (
-                                    <NavLink to={config.routes.login}>
-                                        <Button
-                                            variant="contained"
-                                            disableElevation
-                                            disableRipple
-                                            onClick={() => dispatch(setUser(true))}
-                                            sx={{ display: { xs: 'none', sm: 'inline-block' } }}
-                                        >
-                                            Đăng Nhập
-                                        </Button>
-                                    </NavLink>
+                                    <Button
+                                        variant="contained"
+                                        disableElevation
+                                        disableRipple
+                                        to={config.routes.login}
+                                        onClick={()=> location(config.routes.login)}
+                                        sx={{ display: { xs: 'none', sm: 'inline-block' } }}
+                                    >
+                                        Đăng Nhập
+                                    </Button>
                                 )}
                                 {user && (
                                     <Box sx={{ display: { xs: 'none', sm: 'inline-block' } }}>

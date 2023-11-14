@@ -6,6 +6,7 @@ import MediaDetail from '~/components/MediaDetail';
 // import Search from '../components/Search';
 
 function MainLayout() {
+
     return (
         <Container
             disableGutters

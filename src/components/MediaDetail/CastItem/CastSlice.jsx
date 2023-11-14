@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/scss';
 import 'swiper/scss/navigation';
 import { Navigation, Autoplay } from 'swiper/modules';
-import Image from '../Image';
+import Image from '../../Image';
 import uiConfigs from '~/config/ui.config';
 function CastItem({ item }) {
     return (

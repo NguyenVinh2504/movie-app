@@ -1,17 +1,17 @@
-import Home from '~/Page/Home';
-import AboutUs from '~/Page/AboutUS';
-import MediaList from '~/Page/MediaList';
-import MediaSearch from '~/Page/MediaSearch';
+import Home from '~/Page/Home/HomePage';
+import AboutUs from '~/Page/AboutUS/AboutUsPage';
+import MediaList from '~/Page/MediaList/MediaListPage';
+import MediaSearch from '~/Page/MediaSearch/SearchPage';
 import config from '~/config';
-import InfoPage from '~/Page/Profile/Info';
-import FavoriteTvList from '~/Page/Profile/FavoriteTvList';
-import FavoriteMovieList from '~/Page/Profile/FavoriteMovieList';
-import Profile from '~/Page/Profile/Proflie';
-import Settings from '~/Page/Setting/Setting';
-import EditAccount from '~/Page/Setting/EditAccount';
-import DeleteAccount from '~/Page/Setting/DeleteAccount';
+import InfoPage from '~/Page/Profile/Info/InfoPage';
+import FavoriteTvList from '~/Page/Profile/FavoriteTvList/FavoriteTvListPage';
+import FavoriteMovieList from '~/Page/Profile/FavoriteMovieList/FavoriteMovieListPage';
+import Profile from '~/Page/Profile/ProfliePage';
+import Settings from '~/Page/Setting/SettingPage';
+import EditAccount from '~/Page/Setting/EditAccount/EditAccountPage';
+import DeleteAccount from '~/Page/Setting/DeleteAccount/DeleteAccountPage';
 import ErrorPage from '~/Page/ErrorPage/ErrorPage';
-import LoginPage from '~/Page/Login';
+import AuthPage from '~/Page/AuthPage/AuthPage';
 export const routesMainLayout = [
     {
         index: true,
@@ -31,9 +31,32 @@ export const routesMainLayout = [
         element: <MediaSearch />,
     },
     {
-        path: config.routes.account,
-        element: <LoginPage />,
+        path: config.routes.login,
+        element: <AuthPage />,
     },
+    {
+        path: config.routes.signup,
+        element: <AuthPage />,
+    },
+    // {
+    //     path: config.routes.signup,
+    //     element: <AuthPage />,
+    // },
+    // {
+    //     path: config.routes.account,
+    //     element: <AuthPage />,
+    //     child: [
+    //         {
+    //             path: config.routes.login,
+    //             index: true,
+    //             element: <SingIn />,
+    //         },
+    //         {
+    //             path: config.routes.signup,
+    //             element: <SingUp />,
+    //         },
+    //     ],
+    // },
     {
         path: config.routes.profile,
         element: <Profile />,

@@ -2,7 +2,7 @@ import * as React from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { Button } from '@mui/material';
-import { ArrowDownIcon } from '../Icon';
+import { ArrowDownIcon } from '../../Icon';
 import { seasons } from './season';
 
 function ButtonSelector() {

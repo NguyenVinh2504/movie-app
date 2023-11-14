@@ -1,13 +1,32 @@
-import { FacebookRounded, Google } from '@mui/icons-material';
 import { Box, Button, Divider, Stack, Typography, useMediaQuery } from '@mui/material';
+
 import Input from '~/components/Input';
 import config from '~/config';
-import { useFormik } from 'formik';
-import * as Yup from 'yup';
 import { EmailIcon, PasswordIcon, UserIcon } from '../Icon';
 import userApi from '~/api/module/user.api';
+
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+
+import { useState } from 'react';
+
+import { NavLink, useNavigate } from 'react-router-dom';
+
+import { useDispatch } from 'react-redux';
+import { setUser } from '~/redux/features/userSlice';
+import ErrorMessageForm from '../ErrorMessageForm';
+import { toast } from 'react-toastify';
+import ButtonGoogle from '../ButtonGoogle';
+
 function SingUp() {
+    const location = useNavigate();
+
+    const dispatch = useDispatch();
+
+    const [errorMessage, setErrorMessage] = useState();
+
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+
     const formik = useFormik({
         initialValues: {
             name: '',
@@ -31,11 +50,24 @@ function SingUp() {
                 .required('Vui lòng nhập lại mật khẩu'),
         }),
         onSubmit: async (values) => {
+            setErrorMessage(undefined);
             const { response, err } = await userApi.signup(values);
+            if (response) {
+                formik.resetForm();
+                dispatch(setUser(response));
+                location(config.routes.home);
+                toast.success(`Xin chào, ${response.name}`, {
+                    position: 'top-center',
+                });
+            }
+            if (err) {
+                setErrorMessage(err.message);
+            }
         },
     });
     return (
         <Box component={'form'} onSubmit={formik.handleSubmit}>
+            {errorMessage && <ErrorMessageForm>{errorMessage}</ErrorMessageForm>}
             <Stack spacing={2} mt={3}>
                 <Input
                     type="text"
@@ -45,7 +77,7 @@ function SingUp() {
                     onChange={formik.handleChange}
                     error={formik.errors.name !== undefined && formik.touched.name}
                     helperText={formik.touched.name && formik.errors.name}
-                    leftIcon={<UserIcon/>}
+                    leftIcon={<UserIcon />}
                 ></Input>
                 <Input
                     type="text"
@@ -55,7 +87,7 @@ function SingUp() {
                     onChange={formik.handleChange}
                     error={formik.errors.email !== undefined && formik.touched.email}
                     helperText={formik.touched.email && formik.errors.email}
-                    leftIcon={<EmailIcon/>}
+                    leftIcon={<EmailIcon />}
                 ></Input>
                 <Input
                     type="password"
@@ -65,7 +97,7 @@ function SingUp() {
                     onChange={formik.handleChange}
                     error={formik.errors.password !== undefined && formik.touched.password}
                     helperText={formik.touched.password && formik.errors.password}
-                    leftIcon={<PasswordIcon/>}
+                    leftIcon={<PasswordIcon />}
                 ></Input>
                 <Input
                     type="password"
@@ -75,11 +107,16 @@ function SingUp() {
                     onChange={formik.handleChange}
                     error={formik.errors.confirmPassword !== undefined && formik.touched.confirmPassword}
                     helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
-                    leftIcon={<PasswordIcon/>}
+                    leftIcon={<PasswordIcon />}
                 ></Input>
 
                 {/* button */}
-                <Button type={'submit'} variant="contained" sx={{ borderRadius: '100px' }} size={pointDownSm ? 'small' : 'medium'}>
+                <Button
+                    type={'submit'}
+                    variant="contained"
+                    sx={{ borderRadius: '100px' }}
+                    size={pointDownSm ? 'small' : 'medium'}
+                >
                     Đăng Ký Ngay
                 </Button>
                 <Divider
@@ -87,17 +124,12 @@ function SingUp() {
                 >
                     Hoặc
                 </Divider>
-                <Button variant="pill-outline" color="white-outline" startIcon={<Google />} size={pointDownSm ? 'small' : 'medium'}>
-                    <div>Đăng nhập bằng Google</div>
-                </Button>
-                <Button variant="pill-outline" color="white-outline" startIcon={<FacebookRounded />} size={pointDownSm ? 'small' : 'medium'}>
-                    <span>Đăng nhập bằng Facebook</span>
-                </Button>
+                <ButtonGoogle />
             </Stack>
             {/* button */}
             <Stack direction={'row'} justifyContent={'space-between'} mt={2}>
-                <Typography variant="subtitle2" component={'a'} href={config.routes.login}>
-                    Bạn đã có tài khoản? Đăng Nhập
+                <Typography variant="subtitle2">
+                    <NavLink to={config.routes.login}>Bạn đã có tài khoản? Đăng Nhập</NavLink>
                 </Typography>
             </Stack>
         </Box>

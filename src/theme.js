@@ -281,7 +281,7 @@ const theme = createTheme({
         img {
             display: block;
             width: 100%;
-            height: auto;
+            height: 100%;
         }
 
         a {

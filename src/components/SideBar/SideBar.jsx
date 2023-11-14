@@ -12,7 +12,7 @@ import {
     Divider,
     styled,
 } from '@mui/material';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 
 import { menuItems, userMenu } from '~/config/MenuItemsConfig';
 import Logo from '../Logo';
@@ -20,9 +20,10 @@ import { MenuIcon } from '../Icon';
 import AvatarUser from '../Avatar/Avatar';
 import { useDispatch, useSelector } from 'react-redux';
 import { userValue } from '~/redux/selectors';
-import { setUser } from '~/redux/features/userSlice';
+import { loginOut } from '~/redux/features/userSlice';
 import config from '~/config';
-
+import userApi from '~/api/module/user.api';
+import { toast } from 'react-toastify';
 const ListCustoms = styled(ListItem)(({ theme }) => ({
     '&:hover': {
         backgroundColor: theme.listItems.backgroundHover,
@@ -35,12 +36,19 @@ const ListCustoms = styled(ListItem)(({ theme }) => ({
 }));
 
 function SideBar({ open, onClick, onKeyDown, onClose }) {
+    const location = useNavigate();
     const props = {
         onClick,
         onKeyDown,
     };
     const user = useSelector(userValue);
-    const dispacth = useDispatch();
+    const dispatch = useDispatch();
+
+    const handleLogout = async () => {
+        await userApi.logOut();
+        dispatch(loginOut());
+        toast.success('Đăng xuất thành công');
+    };
     const drawer = (
         <Box sx={{ width: '100%' }} role="presentation" {...props} px={2}>
             <Box sx={{ padding: '20px 16px 40px 16px', position: 'relative' }}>
@@ -57,8 +65,8 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
                     <Box display={{ sm: 'none' }}>
                         <ListItem>
                             <Stack direction={'row'} alignItems={'center'} spacing={2}>
-                                <AvatarUser />
-                                <Typography component={'span'}>Hoangvinh250404</Typography>
+                                <AvatarUser alt={user?.name} src={user?.avatar} />
+                                <Typography component={'span'}>{user?.name}</Typography>
                             </Stack>
                         </ListItem>
                         <Divider sx={{ borderColor: 'white', marginY: '20px', opacity: 0.3 }} />
@@ -132,9 +140,9 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
                             sx={{ width: '100%', display: { sm: 'none' } }}
                             variant="contained"
                             disableElevation
+                            children={<NavLink />}
                             disableRipple
-                            onClick={() => dispacth(setUser(!user))}
-                            href={config.routes.login}
+                            onClick={() => location(config.routes.login)}
                         >
                             Đăng Nhập
                         </Button>
@@ -144,7 +152,7 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
                             variant="contained"
                             disableElevation
                             disableRipple
-                            onClick={() => dispacth(setUser(!user))}
+                            onClick={() => handleLogout()}
                         >
                             Đăng Xuất
                         </Button>

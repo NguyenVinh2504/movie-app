@@ -1,12 +1,35 @@
-import { configureStore } from '@reduxjs/toolkit';
-import { mediaDetailSlice, userSlice } from './features';
-const rootReducer = {
-    detailMovie: mediaDetailSlice,
-    user: userSlice,
-};
+import { configureStore, combineReducers } from '@reduxjs/toolkit';
+import { mediaDetailSlice, userSlice, globalLoadingSlice } from './features';
+import storage from 'redux-persist/lib/storage'
+import {
+    persistStore,
+    persistReducer,
+    FLUSH,
+    REHYDRATE,
+    PAUSE,
+    PERSIST,
+    PURGE,
+    REGISTER,
+  } from 'redux-persist'
+const persistConfig = {
+    key: 'root',
+    storage,
+  }
 
-const store = configureStore({
-    reducer: rootReducer,
+  const rootReducer = combineReducers({
+      detailMovie: mediaDetailSlice,
+      user: userSlice,
+      globalLoading: globalLoadingSlice,
+    });
+    const persistedReducer = persistReducer(persistConfig, rootReducer)
+
+export const store = configureStore({
+    reducer: persistedReducer,
+    middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
+      },
+    }),
 });
-
-export default store;
+export const persistor = persistStore(store)

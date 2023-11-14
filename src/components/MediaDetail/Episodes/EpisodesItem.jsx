@@ -10,8 +10,8 @@ import {
     useMediaQuery,
     ListItemButton,
 } from '@mui/material';
-import { PlayIcon } from '../Icon';
-import Image from '../Image';
+import { PlayIcon } from '../../Icon';
+import Image from '../../Image';
 import { tapPhim } from './taphim';
 import uiConfigs from '~/config/ui.config';
 function EpisodesItem() {

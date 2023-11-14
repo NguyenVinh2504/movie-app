@@ -1,11 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import Logo from '~/components/Logo';
-import SingIn from '../SingIn';
-import SingUp from '../SingUp';
-import { useParams } from 'react-router-dom';
 
-function Auth() {
-    let { accountType } = useParams();
+function Auth({ children }) {
     return (
         <Box
             sx={{
@@ -16,21 +12,23 @@ function Auth() {
                 bgcolor: '#ffffff08',
                 // height: '200px',
                 margin: 'auto',
+                opacity: 1,
+                // transform: "translateY(-50%)",
                 border: '1px solid hsla(0,0%,100%,.1)',
                 p: '32px',
-                mt: {xs: 2, sm: 15},
+                mt: { xs: 2, sm: 6 },
                 borderRadius: '0.5rem',
                 animation: `myEffect 0.8s ease-out`,
-                "@keyframes myEffect": {
-                    "from": {
-                      opacity: 0,
-                      transform: "translateY(-50%)"
+                '@keyframes myEffect': {
+                    from: {
+                        opacity: 0,
+                        transform: 'translateY(-50%)',
                     },
-                    "to": {
-                      opacity: 1,
-                      transform: "translateY(0)"
-                    }
-                  },
+                    to: {
+                        opacity: 1,
+                        transform: 'translateY(0)',
+                    },
+                },
             }}
         >
             {/* title */}
@@ -48,8 +46,7 @@ function Auth() {
                 {/* text-heading */}
             </Box>
             {/* title */}
-            {accountType === 'login' && <SingIn></SingIn>}
-            {accountType === 'signup' && <SingUp></SingUp>}
+            {children}
         </Box>
     );
 }

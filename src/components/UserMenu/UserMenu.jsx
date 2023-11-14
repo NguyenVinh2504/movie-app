@@ -1,5 +1,4 @@
 import {
-    Avatar,
     Divider,
     IconButton,
     ListItem,
@@ -15,19 +14,37 @@ import { NavLink } from 'react-router-dom';
 import { userMenu } from '~/config/MenuItemsConfig';
 import { SignOutIcon } from '../Icon';
 import AvatarUser from '../Avatar/Avatar';
+
+//dispatch redux
 import { useDispatch } from 'react-redux';
-import { setUser } from '~/redux/features/userSlice';
+import { loginOut } from '~/redux/features/userSlice';
+
+//selector redux
+import { useSelector } from 'react-redux';
+import { userValue } from '~/redux/selectors';
+import userApi from '~/api/module/user.api';
+import { toast } from 'react-toastify';
 
 function UserMenu() {
-    const [anchorEl, setAnchorEl] = useState(null);
-    const breakpoints = useMediaQuery((theme) => theme.breakpoints.up('sm'));
-    const open = Boolean(anchorEl);
+    const user = useSelector(userValue);
     const dispatch = useDispatch();
+
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+
+    const breakpoints = useMediaQuery((theme) => theme.breakpoints.up('sm'));
+
     function handleClick(event) {
         setAnchorEl(event.currentTarget);
     }
     const handleClose = () => {
         setAnchorEl(null);
+    };
+
+    const handleLogout = async () => {
+        await userApi.logOut();
+        dispatch(loginOut());
+        toast.success('Đăng xuất thành công');
     };
     //close user menu down screen size sm
     if (!breakpoints && open) {
@@ -42,7 +59,7 @@ function UserMenu() {
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
             >
-                <AvatarUser />
+                <AvatarUser alt={user?.name} src={user?.avatar} />
             </IconButton>
             <Menu
                 id="account-menu"
@@ -75,8 +92,8 @@ function UserMenu() {
             >
                 <ListItem>
                     <Stack direction={'row'} alignItems={'center'} spacing={2}>
-                        <AvatarUser />
-                        <Typography component={'span'}>Hoangvinh250404</Typography>
+                        <AvatarUser alt={user?.name} src={user?.avatar} />
+                        <Typography component={'span'}>{user?.name}</Typography>
                     </Stack>
                 </ListItem>
                 <Divider light sx={{ borderColor: 'white', my: 1.5, opacity: 0.3 }} />
@@ -89,7 +106,7 @@ function UserMenu() {
                     </NavLink>
                 ))}
                 <Divider light sx={{ borderColor: 'white', mt: 1.5, mb: '5px', opacity: 0.3 }} />
-                <MenuItem onClick={() => dispatch(setUser(false))}>
+                <MenuItem onClick={() => handleLogout()}>
                     <ListItemIcon>{<SignOutIcon />}</ListItemIcon>
                     Đăng xuất
                 </MenuItem>

@@ -6,18 +6,35 @@ import CssBaseline from '@mui/material/CssBaseline';
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './theme';
 import { Provider } from 'react-redux';
-import store from '~/redux/store';
-
+import { persistor, store } from '~/redux/store';
+import { PersistGate } from 'redux-persist/integration/react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <React.StrictMode>
-        <ThemeProvider theme={theme}>
-            <CssBaseline>
-                <Provider store={store}>
-                    <App />
-                </Provider>
-            </CssBaseline>
-        </ThemeProvider>
+        <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+                <ThemeProvider theme={theme}>
+                    <CssBaseline>
+                        <App />
+                        <ToastContainer
+                            position="bottom-left"
+                            autoClose={3000}
+                            hideProgressBar={true}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss={false}
+                            draggable
+                            style={{ fontSize: '16px' }}
+                            pauseOnHover
+                            theme="dark"
+                        />
+                    </CssBaseline>
+                </ThemeProvider>
+            </PersistGate>
+        </Provider>
     </React.StrictMode>,
 );
 

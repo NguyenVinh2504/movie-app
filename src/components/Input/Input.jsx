@@ -1,4 +1,4 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Stack, Typography } from '@mui/material';
 
 const root = {
     backgroundprimary: '#0c0a0a',
@@ -30,7 +30,7 @@ function Input({
     ...props
 }) {
     return (
-        <Box sx={{ width: '100%' }}>
+        <Stack sx={{ width: '100%' }} spacing={0.5} >
             <Box
                 sx={{
                     backgroundColor: disable ? root.backgroundDisableInput : root.backgroundDefaultInput,
@@ -79,11 +79,11 @@ function Input({
                 )}
             </Box>
             {helperText && (
-                <Typography variant="caption" mt={1} color={root.textErrorInput}>
+                <Typography variant="caption" mt={0} color={root.textErrorInput}>
                     {helperText}
                 </Typography>
             )}
-        </Box>
+        </Stack>
     );
 }
 

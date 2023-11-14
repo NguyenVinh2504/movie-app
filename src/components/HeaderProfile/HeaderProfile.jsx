@@ -1,9 +1,12 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { Box, Stack, Tab, Tabs, Typography, useMediaQuery } from '@mui/material';
 import Image from '~/components/Image';
-import Avatar from '~/components/Avatar';
+import AvatarUser from '~/components/Avatar';
 
+import { useSelector } from 'react-redux';
+import { userValue } from '~/redux/selectors';
 function HeaderProfile({ valueTabItems }) {
+    const user = useSelector(userValue);
     const pointDownMd = useMediaQuery((theme) => theme.breakpoints.down('md'));
     const location = useLocation();
     return (
@@ -44,7 +47,7 @@ function HeaderProfile({ valueTabItems }) {
                             borderRadius: '100px',
                         }}
                     >
-                        <Avatar sx={{ height: '100%', width: '100%' }} />
+                        <AvatarUser sx={{ height: '100%', width: '100%' }} alt={user?.name} src={user?.avatar} />
                     </Box>
                     {/* image avatar */}
 
@@ -54,7 +57,7 @@ function HeaderProfile({ valueTabItems }) {
                         fontWeight={'500'}
                         sx={{ m: { xs: '16px 0 0 0', md: '0 0 16px 16px' } }}
                     >
-                        Hoang Vinh
+                        {user?.name}
                     </Typography>
                     {/* name user */}
                 </Stack>

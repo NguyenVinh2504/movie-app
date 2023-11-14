@@ -1,14 +1,14 @@
 import { memo } from 'react';
 import { Modal, Box, Typography, Stack, IconButton, Fade, useMediaQuery } from '@mui/material';
 import { CloseIcon, HeartIcon, PlayIcon } from '../Icon';
-import CastSlice from '../CastItem/CastSlice';
+import CastSlice from './CastItem/CastSlice';
 import VideoSlice from '../VideoSlice';
 import { useSelector, useDispatch } from 'react-redux';
 import { openSelector } from '~/redux/selectors';
 import { toggleDetail } from '~/redux/features/mediaDetailSlice';
 import Image from '../Image';
 import images from '~/assets/image';
-import Episodes from '../Episodes';
+import Episodes from './Episodes';
 import uiConfigs from '~/config/ui.config';
 function Container({ headingText, children }) {
     return (
