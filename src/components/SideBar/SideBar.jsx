@@ -45,9 +45,14 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
     const dispatch = useDispatch();
 
     const handleLogout = async () => {
-        await userApi.logOut();
-        dispatch(loginOut());
-        toast.success('Đăng xuất thành công');
+        const { response, err } = await userApi.logOut();
+        if (response) {
+            dispatch(loginOut());
+            toast.success('Đăng xuất thành công');
+        }
+        if (err) {
+            toast.error('Đăng xuất không thành công');
+        }
     };
     const drawer = (
         <Box sx={{ width: '100%' }} role="presentation" {...props} px={2}>
@@ -140,7 +145,6 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
                             sx={{ width: '100%', display: { sm: 'none' } }}
                             variant="contained"
                             disableElevation
-                            children={<NavLink />}
                             disableRipple
                             onClick={() => location(config.routes.login)}
                         >

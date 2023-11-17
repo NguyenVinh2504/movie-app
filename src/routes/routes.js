@@ -8,7 +8,7 @@ import FavoriteTvList from '~/Page/Profile/FavoriteTvList/FavoriteTvListPage';
 import FavoriteMovieList from '~/Page/Profile/FavoriteMovieList/FavoriteMovieListPage';
 import Profile from '~/Page/Profile/ProfliePage';
 import Settings from '~/Page/Setting/SettingPage';
-import EditAccount from '~/Page/Setting/EditAccount/EditAccountPage';
+import EditAccount from '~/Page/Profile/EditAccount/EditAccountPage';
 import DeleteAccount from '~/Page/Setting/DeleteAccount/DeleteAccountPage';
 import ErrorPage from '~/Page/ErrorPage/ErrorPage';
 import AuthPage from '~/Page/AuthPage/AuthPage';
@@ -66,6 +66,10 @@ export const routesMainLayout = [
                 element: <InfoPage />,
             },
             {
+                path: config.routes.editProfile,
+                element: <EditAccount />,
+            },
+            {
                 path: config.routes.favorite,
                 element: <FavoriteMovieList />,
             },
@@ -75,20 +79,20 @@ export const routesMainLayout = [
             },
         ],
     },
-    {
-        path: config.routes.settingProfile,
-        element: <Settings />,
-        child: [
-            {
-                index: true,
-                element: <EditAccount />,
-            },
-            {
-                path: config.routes.deleteAccount,
-                element: <DeleteAccount />,
-            },
-        ],
-    },
+    // {
+    //     path: config.routes.settingProfile,
+    //     element: <Settings />,
+    //     child: [
+    //         {
+    //             index: true,
+    //             element: <EditAccount />,
+    //         },
+    //         {
+    //             path: config.routes.deleteAccount,
+    //             element: <DeleteAccount />,
+    //         },
+    //     ],
+    // },
     {
         path: config.routes.error,
         element: <ErrorPage />,

@@ -6,6 +6,10 @@ export const profileItems = [
         path: config.routes.profile,
     },
     {
+        title: 'Edit Profile',
+        path: config.routes.editProfile,
+    },
+    {
         title: 'Favorite Movie',
         path: config.routes.favorite,
     },

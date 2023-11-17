@@ -11,6 +11,7 @@ const routes = {
     profile: '/movie-app/profile',
     favorite: '/movie-app/profile/favorite',
     favoriteTvList: '/movie-app/profile/favorite/tv',
+    editProfile: '/movie-app/profile/edit-profile',
     //profile
 
     //setting

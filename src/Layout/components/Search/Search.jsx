@@ -30,8 +30,8 @@ function Search({ round }) {
             {...props}
             leftIcon={<SearchIcon />}
             rightIcon={<CloseIcon />}
+            ref={inputRef}
             inputEvent={{
-                ref: inputRef,
                 value: searchValue,
                 onChange: handleChange,
             }}

@@ -52,13 +52,22 @@ function HeaderProfile({ valueTabItems }) {
                     {/* image avatar */}
 
                     {/* name user */}
-                    <Typography
-                        variant={pointDownMd ? 'h5' : 'h4'}
-                        fontWeight={'500'}
-                        sx={{ m: { xs: '16px 0 0 0', md: '0 0 16px 16px' } }}
-                    >
-                        {user?.name}
-                    </Typography>
+                    <Stack>
+                        <Typography
+                            variant={pointDownMd ? 'h5' : 'h4'}
+                            fontWeight={'500'}
+                            sx={{ m: { xs: '16px 0 0 0', md: '0 0 0px 16px', textAlign: 'center' } }}
+                        >
+                            {user?.name}
+                        </Typography>
+                        <Typography
+                            variant={pointDownMd ? 'subtitle2' : 'subtitle1'}
+                            fontWeight={'300'}
+                            sx={{ ml: { xs: '0px', md: '16px' }, textAlign: { xs: 'center', md: 'left' } }}
+                        >
+                            {user?.userName}
+                        </Typography>
+                    </Stack>
                     {/* name user */}
                 </Stack>
                 {/* avatar */}

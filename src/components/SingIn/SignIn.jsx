@@ -16,6 +16,7 @@ import { setUser } from '~/redux/features/userSlice';
 import ErrorMessageForm from '../ErrorMessageForm';
 import { toast } from 'react-toastify';
 import ButtonGoogle from '../ButtonGoogle';
+import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
 function SingIn() {
     const location = useNavigate();
 
@@ -27,16 +28,18 @@ function SingIn() {
 
     const formik = useFormik({
         initialValues: {
-            name: '',
+            email: '',
             password: '',
         },
         validationSchema: Yup.object({
-            name: Yup.string().required('Vui lòng nhập tên đăng nhập'),
+            email: Yup.string().required('Vui lòng nhập email đăng nhập'),
             password: Yup.string().required('Vui lòng nhập mật khẩu'),
         }),
         onSubmit: async (values) => {
             setErrorMessage(undefined);
+            dispatch(toggleGlobalLoading(true));
             const { response, err } = await userApi.signin(values);
+            dispatch(toggleGlobalLoading(false));
             if (err) {
                 setErrorMessage(err.message);
             }
@@ -56,12 +59,12 @@ function SingIn() {
             <Stack spacing={2} mt={2}>
                 <Input
                     type="text"
-                    name="name"
-                    placeholder={'Tên đăng nhập'}
-                    value={formik.values.name}
+                    name="email"
+                    placeholder={'Email đăng nhập'}
+                    value={formik.values.email}
                     onChange={formik.handleChange}
-                    error={formik.errors.name !== undefined && formik.touched.name}
-                    helperText={formik.touched.name && formik.errors.name}
+                    error={formik.errors.email !== undefined && formik.touched.email}
+                    helperText={formik.touched.email && formik.errors.email}
                     leftIcon={<UserIcon />}
                 ></Input>
                 <Input

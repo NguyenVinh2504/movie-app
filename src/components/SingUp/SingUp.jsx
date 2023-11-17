@@ -17,6 +17,7 @@ import { setUser } from '~/redux/features/userSlice';
 import ErrorMessageForm from '../ErrorMessageForm';
 import { toast } from 'react-toastify';
 import ButtonGoogle from '../ButtonGoogle';
+import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
 
 function SingUp() {
     const location = useNavigate();
@@ -51,7 +52,9 @@ function SingUp() {
         }),
         onSubmit: async (values) => {
             setErrorMessage(undefined);
+            dispatch(toggleGlobalLoading(true));
             const { response, err } = await userApi.signup(values);
+            dispatch(toggleGlobalLoading(false));
             if (response) {
                 formik.resetForm();
                 dispatch(setUser(response));

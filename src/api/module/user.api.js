@@ -10,12 +10,13 @@ const userEndpoints = {
     logOut: 'auth/logout',
     getInfo: 'user/info',
     refreshToken: 'auth/refresh-token',
+    profileUpdate: 'user/update-profile',
     passwordUpdate: 'user/update-password',
 };
 const userApi = {
-    signin: async ({ name, password }) => {
+    signin: async ({ email, password }) => {
         try {
-            const response = await publicClient.post(userEndpoints.signin, { name, password });
+            const response = await publicClient.post(userEndpoints.signin, { email, password });
             return { response };
         } catch (err) {
             return { err };
@@ -66,6 +67,17 @@ const userApi = {
             const response = await axios.post(`${baseURL}auth/refresh-token`, undefined, {
                 withCredentials: true,
             });
+            return { response };
+        } catch (err) {
+            return { err };
+        }
+    },
+    profileUpdate: async (values) => {
+        try {
+            const response = await privateClient.put(userEndpoints.profileUpdate, {
+                ...values,
+            });
+
             return { response };
         } catch (err) {
             return { err };

@@ -37,7 +37,7 @@ export const userMenu = [
     },
     {
         title: 'Chỉnh sửa thông tin',
-        path: config.routes.settingProfile,
+        path: config.routes.editProfile,
         icon: <EditIcon />,
     },
 ];

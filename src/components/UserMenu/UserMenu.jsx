@@ -42,9 +42,14 @@ function UserMenu() {
     };
 
     const handleLogout = async () => {
-        await userApi.logOut();
-        dispatch(loginOut());
-        toast.success('Đăng xuất thành công');
+        const { response, err } = await userApi.logOut();
+        if (response) {
+            dispatch(loginOut());
+            toast.success('Đăng xuất thành công');
+        }
+        if (err) {
+            toast.error('Đăng xuất không thành công');
+        }
     };
     //close user menu down screen size sm
     if (!breakpoints && open) {

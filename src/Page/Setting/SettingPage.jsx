@@ -1,9 +1,23 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { Box } from '@mui/material';
 import HeaderProfile from '~/components/HeaderProfile';
 import { settingUserItems } from '~/config/SettingUserMenuItems';
+import { useEffect } from 'react';
+import config from '~/config';
+
+import { useSelector } from 'react-redux';
+import { userValue } from '~/redux/selectors';
 
 function Settings() {
+    const user = useSelector(userValue);
+
+    const location = useNavigate();
+
+    useEffect(() => {
+        if (!user) {
+            location(config.routes.login);
+        }
+    }, [location, user]);
     return (
         <>
             <Box
