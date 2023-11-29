@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/movie-app/static/css/main.490821b6.css",
-    "main.js": "/movie-app/static/js/main.aa28d0c6.js",
+    "main.css": "/movie-app/static/css/main.58cbbac8.css",
+    "main.js": "/movie-app/static/js/main.529ad619.js",
     "static/js/787.7c42db31.chunk.js": "/movie-app/static/js/787.7c42db31.chunk.js",
     "static/media/background-login.png": "/movie-app/static/media/background-login.03dee8b54c8d6490b3ff.png",
     "static/media/roboto-latin-500-normal.woff2": "/movie-app/static/media/roboto-latin-500-normal.f25d774ecfe0996f8eb5.woff2",
@@ -52,7 +52,7 @@
     "static/media/roboto-vietnamese-400-normal.woff": "/movie-app/static/media/roboto-vietnamese-400-normal.e0e8ba725ebd107367a8.woff",
     "static/media/roboto-vietnamese-500-normal.woff": "/movie-app/static/media/roboto-vietnamese-500-normal.657896dad292ee9a0a0a.woff",
     "static/media/roboto-vietnamese-700-normal.woff": "/movie-app/static/media/roboto-vietnamese-700-normal.4df79f684fcbca8386bd.woff",
-    "static/media/MoviLogo.svg": "/movie-app/static/media/MoviLogo.27c7ac00adc1106333ab2429b1ffbf26.svg",
+    "static/media/VieJoyLogo-02.svg": "/movie-app/static/media/VieJoyLogo-02.a3eef936fd2dfaf0426e6118bf90ec9a.svg",
     "static/media/roboto-greek-ext-500-normal.woff2": "/movie-app/static/media/roboto-greek-ext-500-normal.6fb9cffb1d3e72bf9293.woff2",
     "static/media/roboto-greek-ext-400-normal.woff2": "/movie-app/static/media/roboto-greek-ext-400-normal.169619821ea93019d1bb.woff2",
     "static/media/roboto-greek-ext-300-normal.woff2": "/movie-app/static/media/roboto-greek-ext-300-normal.35b9d6be04b95f0f0530.woff2",
@@ -62,12 +62,12 @@
     "static/media/roboto-greek-ext-400-normal.woff": "/movie-app/static/media/roboto-greek-ext-400-normal.f708607d2a7290fb8bfa.woff",
     "static/media/roboto-greek-ext-700-normal.woff": "/movie-app/static/media/roboto-greek-ext-700-normal.249853776d22a271b2b5.woff",
     "index.html": "/movie-app/index.html",
-    "main.490821b6.css.map": "/movie-app/static/css/main.490821b6.css.map",
-    "main.aa28d0c6.js.map": "/movie-app/static/js/main.aa28d0c6.js.map",
+    "main.58cbbac8.css.map": "/movie-app/static/css/main.58cbbac8.css.map",
+    "main.529ad619.js.map": "/movie-app/static/js/main.529ad619.js.map",
     "787.7c42db31.chunk.js.map": "/movie-app/static/js/787.7c42db31.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.490821b6.css",
-    "static/js/main.aa28d0c6.js"
+    "static/css/main.58cbbac8.css",
+    "static/js/main.529ad619.js"
   ]
 }
