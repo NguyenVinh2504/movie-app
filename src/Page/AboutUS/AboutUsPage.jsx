@@ -2,7 +2,7 @@ import { Box, Typography } from '@mui/material';
 function AboutUs() {
     return (
         <>
-            <Box bgcolor={'#ffffff08'} p={3} borderRadius={2}>
+            <Box bgcolor={'#ffffff08'} p={3} borderRadius={2} border={'1px solid hsla(0,0%,100%,.1)'}>
                 <Typography variant="h4" fontWeight={'500'}>
                     Giới Thiệu
                 </Typography>

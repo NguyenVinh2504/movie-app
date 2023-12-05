@@ -32,8 +32,12 @@ function AuthPage() {
         //     }}
         // >
         <>
-            {pathname === `${config.routes.login}` && <Auth>{<SingIn />}</Auth>}
-            {pathname === `${config.routes.signup}` && <Auth>{<SingUp />}</Auth>}
+            {pathname === `${config.routes.login}` && (
+                <Auth titleAuth={'Đăng nhập vào tài khoản của bạn'}>{<SingIn />}</Auth>
+            )}
+            {pathname === `${config.routes.signup}` && (
+                <Auth titleAuth={'Chào mừng bạn đến với Viejoy'}>{<SingUp />}</Auth>
+            )}
         </>
         // </Box>
     );

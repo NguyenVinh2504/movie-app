@@ -1,4 +1,5 @@
 import {
+    Box,
     Divider,
     IconButton,
     ListItem,
@@ -9,7 +10,7 @@ import {
     Typography,
     useMediaQuery,
 } from '@mui/material';
-import { useState } from 'react';
+import { memo, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { userMenu } from '~/config/MenuItemsConfig';
 import { SignOutIcon } from '../Icon';
@@ -26,6 +27,7 @@ import userApi from '~/api/module/user.api';
 import { toast } from 'react-toastify';
 
 function UserMenu() {
+    console.log('re user');
     const user = useSelector(userValue);
     const dispatch = useDispatch();
 
@@ -58,13 +60,13 @@ function UserMenu() {
     return (
         <>
             <IconButton
-                sx={{ p: 0 }}
+                sx={{ p: 0, width: '40px' }}
                 onClick={handleClick}
                 aria-controls={open ? 'account-menu' : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
             >
-                <AvatarUser alt={user?.name} src={user?.avatar} />
+                <AvatarUser alt={user?.name} />
             </IconButton>
             <Menu
                 id="account-menu"
@@ -97,7 +99,9 @@ function UserMenu() {
             >
                 <ListItem>
                     <Stack direction={'row'} alignItems={'center'} spacing={2}>
-                        <AvatarUser alt={user?.name} src={user?.avatar} />
+                        <Box sx={{ width: '40px' }}>
+                            <AvatarUser alt={user?.name} src={user?.avatar} />
+                        </Box>
                         <Typography component={'span'}>{user?.name}</Typography>
                     </Stack>
                 </ListItem>
@@ -120,4 +124,4 @@ function UserMenu() {
     );
 }
 
-export default UserMenu;
+export default memo(UserMenu);

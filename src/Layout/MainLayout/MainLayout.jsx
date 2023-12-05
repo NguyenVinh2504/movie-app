@@ -5,18 +5,32 @@ import Footer from '../components/Footer';
 import MediaDetail from '~/components/MediaDetail';
 import GlobalLoading from '~/components/GlobalLoading';
 import { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
+import userApi from '~/api/module/user.api';
+import { setUser, updateUser } from '~/redux/features/userSlice';
+import { openSelector, userValue } from '~/redux/selectors';
 // import Search from '../components/Search';
 
 function MainLayout() {
     const dispatch = useDispatch();
-    dispatch(toggleGlobalLoading(true));
+    const open = useSelector(openSelector);
+    const user = useSelector(userValue);
+    // useEffect(() => {
+    //     const timeout = setTimeout(() => {
+    //         dispatch(toggleGlobalLoading(false));
+    //     }, 3000);
+    //     return () => clearTimeout(timeout);
+    // }, [dispatch]);
     useEffect(() => {
-        const timeout = setTimeout(() => {
-            dispatch(toggleGlobalLoading(false));
-        }, 3000);
-        return () => clearTimeout(timeout);
+        const authUser = async () => {
+            const { response } = await userApi.getInfo();
+            if (response) dispatch(updateUser(response));
+        };
+        if (user) {
+            authUser();
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [dispatch]);
     return (
         <>
@@ -28,7 +42,7 @@ function MainLayout() {
                     maxWidth: { xl: '1904px' },
                 }}
             >
-                <MediaDetail />
+                {open && <MediaDetail />}
                 <Header />
                 {/* <Box sx={{ position: 'fixed', left: '0', right: '0', top: '64px', display: { md: 'none' } }} px={3}>
                         <Search />

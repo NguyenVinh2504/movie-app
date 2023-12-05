@@ -12,6 +12,7 @@ const userEndpoints = {
     refreshToken: 'auth/refresh-token',
     profileUpdate: 'user/update-profile',
     passwordUpdate: 'user/update-password',
+    deleteUser: 'user/delete',
 };
 const userApi = {
     signin: async ({ email, password }) => {
@@ -74,9 +75,16 @@ const userApi = {
     },
     profileUpdate: async (values) => {
         try {
-            const response = await privateClient.put(userEndpoints.profileUpdate, {
-                ...values,
-            });
+            const response = await privateClient.postForm(userEndpoints.profileUpdate, values);
+
+            return { response };
+        } catch (err) {
+            return { err };
+        }
+    },
+    imageUpdate: async (values) => {
+        try {
+            const response = await privateClient.post(userEndpoints.profileUpdate, values);
 
             return { response };
         } catch (err) {
@@ -85,10 +93,21 @@ const userApi = {
     },
     passwordUpdate: async ({ password, newPassword, confirmNewPassword }) => {
         try {
-            const response = await privateClient.put(userEndpoints.passwordUpdate, {
+            const response = await privateClient.patch(userEndpoints.passwordUpdate, {
                 password,
                 newPassword,
                 confirmNewPassword,
+            });
+
+            return { response };
+        } catch (err) {
+            return { err };
+        }
+    },
+    deleteUser: async ({ password }) => {
+        try {
+            const response = await privateClient.patch(userEndpoints.deleteUser, {
+                password,
             });
 
             return { response };

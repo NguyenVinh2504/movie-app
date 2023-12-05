@@ -10,7 +10,7 @@ const userSlice = createSlice({
             state.user = action.payload;
         },
         updateUser: (state, action) => {
-            state.user = { token: state.user.token, ...action.payload };
+            state.user = { token: state?.user?.token, ...action.payload };
         },
         loginOut: (state) => {
             state.user = null;

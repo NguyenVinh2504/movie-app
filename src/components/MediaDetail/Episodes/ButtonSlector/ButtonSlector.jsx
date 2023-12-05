@@ -2,33 +2,34 @@ import * as React from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { Button } from '@mui/material';
-import { ArrowDownIcon } from '../../Icon';
-import { seasons } from './season';
+import { ArrowDownIcon, ArrowUpIcon } from '~/components/Icon';
 
-function ButtonSelector() {
+function ButtonSelector({ seasons, onSeasonNuber }) {
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const [selectedIndex, setSelectedIndex] = React.useState(0);
+    const [selectedIndex, setSelectedIndex] = React.useState(seasons.length - 1);
     const open = Boolean(anchorEl);
+
     const handleClickListItem = (event) => {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleMenuItemClick = (event, index) => {
+    const handleMenuItemClick = (event, index, valueNumberSeason) => {
         setSelectedIndex(index);
+        onSeasonNuber(valueNumberSeason);
         setAnchorEl(null);
     };
 
     const handleClose = () => {
         setAnchorEl(null);
     };
-
+    // console.log('re');
     return (
         <div>
             <Button
                 onClick={handleClickListItem}
                 variant="contained"
                 color="secondary"
-                endIcon={<ArrowDownIcon />}
+                endIcon={open ? <ArrowUpIcon /> : <ArrowDownIcon />}
                 size="medium"
                 sx={{
                     textTransform: 'none',
@@ -43,7 +44,7 @@ function ButtonSelector() {
                     },
                 }}
             >
-                {seasons[selectedIndex].name}
+                {seasons && seasons[selectedIndex]?.name}
             </Button>
             <Menu
                 id="lock-menu"
@@ -72,12 +73,13 @@ function ButtonSelector() {
                     },
                 }}
             >
-                {seasons.map((option, index) => (
+                {seasons?.map((option, index) => (
                     <MenuItem
                         id="account-menu"
-                        key={index}
+                        key={option.season_number}
                         selected={index === selectedIndex}
-                        onClick={(event) => handleMenuItemClick(event, index)}
+                        disabled={index === selectedIndex}
+                        onClick={(event) => handleMenuItemClick(event, index, option.season_number)}
                         sx={{ pr: 5.5 }}
                     >
                         {option.name}
@@ -87,4 +89,4 @@ function ButtonSelector() {
         </div>
     );
 }
-export default ButtonSelector;
+export default React.memo(ButtonSelector);

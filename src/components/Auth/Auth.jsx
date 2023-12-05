@@ -1,7 +1,7 @@
 import { Box, Typography } from '@mui/material';
 import Logo from '~/components/Logo';
 
-function Auth({ children }) {
+function Auth({ titleAuth, children }) {
     return (
         <Box
             sx={{
@@ -34,14 +34,14 @@ function Auth({ children }) {
             {/* title */}
             <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column', gap: 2, mb: 3, mt: 1 }}>
                 {/* logo */}
-                <Box sx={{ img: { height: '25px' } }}>
+                <Box sx={{ img: { height: '40px' } }}>
                     <Logo />
                 </Box>
                 {/* logo */}
 
                 {/* text-heading */}
                 <Typography variant="h5" sx={{ fontWeight: 500 }}>
-                    Sign in to your account
+                    {titleAuth}
                 </Typography>
                 {/* text-heading */}
             </Box>

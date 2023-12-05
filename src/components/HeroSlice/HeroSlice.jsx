@@ -11,6 +11,7 @@ import { toggleDetail } from '~/redux/features/mediaDetailSlice';
 import Image from '../Image';
 import images from '~/assets/image';
 import uiConfigs from '~/config/ui.config';
+import { memo } from 'react';
 function HeroSlice() {
     const pointDownLg = useMediaQuery((theme) => theme.breakpoints.down('lg'));
     const pointDownMd = useMediaQuery((theme) => theme.breakpoints.down('md'));
@@ -188,4 +189,4 @@ function HeroSlice() {
     );
 }
 
-export default HeroSlice;
+export default memo(HeroSlice);

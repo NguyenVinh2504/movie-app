@@ -1,6 +1,7 @@
 import styled from '@emotion/styled';
 import { Facebook, GitHub, Google } from '@mui/icons-material';
 import { Box, Stack, Toolbar, Typography } from '@mui/material';
+import { memo } from 'react';
 import { NavLink } from 'react-router-dom';
 import Logo from '~/components/Logo';
 import { menuItems } from '~/config/MenuItemsConfig';
@@ -20,8 +21,11 @@ function Footer() {
                 }}
             >
                 <Box width={'100%'}>
-                    <CustomStack >
-                        <Box sx={{ img: { height: '18px' } }}> <Logo /></Box>
+                    <CustomStack>
+                        <Box sx={{ img: { height: '30px' } }}>
+                            {' '}
+                            <Logo />
+                        </Box>
                     </CustomStack>
                     <CustomStack spacing={5}>
                         <Facebook />
@@ -51,4 +55,4 @@ function Footer() {
     );
 }
 
-export default Footer;
+export default memo(Footer);

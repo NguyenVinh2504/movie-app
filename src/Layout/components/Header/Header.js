@@ -1,6 +1,6 @@
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
-import { cloneElement, useState } from 'react';
+import { cloneElement, memo, useCallback, useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import Search from '../Search';
 import {
@@ -46,22 +46,24 @@ function Header() {
     const location = useNavigate();
 
     const user = useSelector(userValue);
-    
+
     const handelSearch = () => {
         location(routes.search);
     };
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const toggleSidebar = () => setSidebarOpen(!sidebarOpen);
+    const toggleSidebar = useCallback(() => setSidebarOpen(!sidebarOpen), [sidebarOpen]);
 
     const breakpoints = useMediaQuery((theme) => theme.breakpoints.up('lg'));
     //close side bar up screen size lg
     if (breakpoints && sidebarOpen) {
         setSidebarOpen(!sidebarOpen);
     }
-
+    console.log('re header');
     return (
         <>
-            <SideBar open={sidebarOpen} onClick={toggleSidebar} onKeyDown={toggleSidebar} onClose={toggleSidebar} />
+            {sidebarOpen && (
+                <SideBar open={sidebarOpen} onClick={toggleSidebar} onKeyDown={toggleSidebar} onClose={toggleSidebar} />
+            )}
             <ScrollAppBar>
                 <AppBar elevation={0} position="sticky">
                     <Toolbar
@@ -75,7 +77,7 @@ function Header() {
                             <IconButton onClick={toggleSidebar}>
                                 <MenuIcon />
                             </IconButton>
-                            <Box sx={{ height: '18px' }}>
+                            <Box sx={{ height: '30px' }}>
                                 <Logo />
                             </Box>
                         </Stack>
@@ -84,7 +86,7 @@ function Header() {
                         {/* leftheader */}
                         <Stack direction="row" spacing={4} sx={{ color: '#a6a4a4', alignItems: 'center' }}>
                             {/* logo */}
-                            <Box sx={{ display: { xs: 'none', lg: 'inline-block' }, img: { height: '18px' } }}>
+                            <Box sx={{ display: { xs: 'none', lg: 'inline-block' }, img: { height: '30px' } }}>
                                 <Logo />
                             </Box>
                             {/* logo */}
@@ -163,7 +165,7 @@ function Header() {
                                         disableElevation
                                         disableRipple
                                         to={config.routes.login}
-                                        onClick={()=> location(config.routes.login)}
+                                        onClick={() => location(config.routes.login)}
                                         sx={{ display: { xs: 'none', sm: 'inline-block' } }}
                                     >
                                         Đăng Nhập
@@ -185,4 +187,4 @@ function Header() {
     );
 }
 
-export default Header;
+export default memo(Header);

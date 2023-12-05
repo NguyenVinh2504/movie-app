@@ -1,4 +1,5 @@
 import { Typography } from '@mui/material';
+import { memo } from 'react';
 import Input from '~/components/Input';
 
 function InputProfile({ label, disable, value, onChange, name, error, helperText, ...props }) {
@@ -23,4 +24,4 @@ function InputProfile({ label, disable, value, onChange, name, error, helperText
     );
 }
 
-export default InputProfile;
+export default memo(InputProfile);

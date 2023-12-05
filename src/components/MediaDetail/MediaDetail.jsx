@@ -1,32 +1,53 @@
-import { memo } from 'react';
-import { Modal, Box, Typography, Stack, IconButton, Fade, useMediaQuery } from '@mui/material';
-import { CloseIcon, HeartIcon, PlayIcon } from '../Icon';
-import CastSlice from './CastItem/CastSlice';
-import VideoSlice from '../VideoSlice';
+import { memo, useEffect, useState } from 'react';
+import { Modal, Box, Typography, Stack, IconButton, Fade } from '@mui/material';
+import { CloseIcon } from '../Icon';
+import CastSlice from './CastItem';
+import VideoSlice from './VideoSlice';
 import { useSelector, useDispatch } from 'react-redux';
-import { openSelector } from '~/redux/selectors';
+import { openSelector, paramsDetail } from '~/redux/selectors';
 import { toggleDetail } from '~/redux/features/mediaDetailSlice';
-import Image from '../Image';
-import images from '~/assets/image';
 import Episodes from './Episodes';
 import uiConfigs from '~/config/ui.config';
-function Container({ headingText, children }) {
-    return (
-        <Box sx={{ marginTop: 3 }}>
-            <Typography variant={'h5'} mb={1} fontWeight={'500'}>
-                {headingText}
-            </Typography>
-            {children}
-        </Box>
-    );
-}
+import mediaApi from '~/api/module/media.api';
+import { toast } from 'react-toastify';
+import BannerMovieDetail from './BannerMovieDetail';
+import TitleMovieDetail from './TitleMovieDetail';
+import OverviewMovieDetail from './OverviewMovieDetail';
+
 function MovieDetail() {
-    const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+    const [dataDetail, setDataDetail] = useState({});
+    const [loading, setLoading] = useState(true);
+    const [genres, setGenres] = useState([]);
     const open = useSelector(openSelector);
+    const param = useSelector(paramsDetail);
     const dispatch = useDispatch();
     const handleClose = () => {
         dispatch(toggleDetail(false));
+        setDataDetail({});
     };
+    useEffect(() => {
+        if (param) {
+            // console.log('use');
+            const getDataDetail = async () => {
+                // console.log('get');
+                const { response, err } = await mediaApi.getDetail({
+                    mediaType: param?.mediaType,
+                    mediaId: param?.id,
+                });
+                if (err) toast.error(err.message);
+                if (response) {
+                    setDataDetail({ ...response });
+                    setLoading(false);
+                }
+            };
+            getDataDetail();
+        }
+    }, [param]);
+    // console.log(loading);
+    useEffect(() => {
+        dataDetail?.genres?.map((item) => setGenres((pram) => [...pram, item.name]));
+    }, [dataDetail, dataDetail.genres]);
+    console.log('re detail');
     return (
         <Modal
             open={open}
@@ -34,7 +55,7 @@ function MovieDetail() {
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
             sx={{
-                '.MuiBackdrop-root': {
+                '.MuiModal-root': {
                     backdropFilter: 'blur(2px)',
                 },
             }}
@@ -50,12 +71,10 @@ function MovieDetail() {
                         display: 'flex',
                         flexDirection: 'column',
                         transform: 'translate(-50%, 0)',
-                        // bgcolor: '#0c0a0a',
                         bgcolor: '#121212',
                         overflow: 'hidden',
                         borderRadius: '8px',
                         border: '1px solid hsla(0,0%,100%,.1)',
-                        // boxShadow: 'rgba(0, 0, 0, 0.75) 0px 3px 10px',
                     }}
                 >
                     <Stack direction={'row'} my={2} justifyContent={'flex-end'} px={2} position={'relative'}>
@@ -83,96 +102,33 @@ function MovieDetail() {
                         }}
                     >
                         {/* poster */}
-                        <Box sx={{ position: 'relative' }}>
-                            <IconButton
-                                color="secondNeutral"
-                                sx={{
-                                    zIndex: '10',
-                                    ...uiConfigs.style.centerAlight,
-                                    svg: {
-                                        width: '40px',
-                                        height: '40px',
-                                    },
-                                }}
-                            >
-                                <PlayIcon />
-                            </IconButton>
-
-                            <Image
-                                src={`https://image.tmdb.org/t/p/original/xFYpUmB01nswPgbzi8EOCT1ZYFu.jpg`}
-                                alt={'item.name'}
-                                fallBack={images.noImage19x6}
-                                aspectRatio={'16/9'}
-                            />
-                            <Box
-                                sx={{
-                                    ...uiConfigs.style.gradientBgImage,
-                                    background: 'linear-gradient(180deg, rgba(18,18,18,0), rgb(18,18,18) )',
-                                }}
-                            />
-                        </Box>
+                        <BannerMovieDetail loading={loading} dataDetail={dataDetail} />
                         {/* poster */}
-                        <Box px={5}>
+                        <Box px={5} mt={2}>
                             {/* thong tin phim */}
-                            {/* <Stack direction={'row'}>
-                                        <Button startIcon={<PlayIcon />} color="primary" variant="contained" disableElevation>
-                                            Xem Phim
-                                        </Button>
-                                        <IconButton color="neutral">
-                                            <HeartIcon />
-                                        </IconButton>
-                                    </Stack> */}
-                            <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'}>
-                                <Typography
-                                    variant={pointDownSm ? 'h4' : 'h3'}
-                                    fontWeight={'500'}
-                                    sx={{ ...uiConfigs.style.typoLines(2) }}
-                                >
-                                    Gran Turismo
-                                </Typography>
-                                <Box>
-                                    <IconButton color="neutral">
-                                        <HeartIcon />
-                                    </IconButton>
-                                </Box>
-                            </Stack>
-                            <Typography variant={pointDownSm ? 'subtitle2' : 'subtitle1'} mt={1}>
-                                07/21/2023 | Phim Hài, Phim Phiêu Lưu, Phim Giả Tượng | 1h 54m
-                            </Typography>
-                            <Stack direction={'row'} spacing={2}>
-                                <Typography variant={pointDownSm ? 'caption' : 'subtitle2'}>
-                                    Đạo diễn: Greta Gerwig
-                                </Typography>
-                                <Typography variant={pointDownSm ? 'caption' : 'subtitle2'}>
-                                    Kịch bản: Greta Gerwig
-                                </Typography>
-                            </Stack>
-                            <Container headingText={'Mô tả'}>
-                                <Typography variant={pointDownSm ? 'body2' : 'body1'}>
-                                    BARBIE sẽ được nhào nặn và chắp bút bởi nữ đạo diễn kiêm biên kịch từng nhận nhiều
-                                    Đề cử Tượng vàng Oscar – Greta Grewig. Hai nhân vật chính Barbie và Ken sẽ được hóa
-                                    thân bởi nữ diên viên Margot Robbie và nam thần Ryan Gosling, hứa hẹn sẽ tạo nên
-                                    “chemistry” đáng yêu giữa hai nhân vật búp bê nổi tiếng thế giới.v
-                                </Typography>
-                            </Container>
+                            <TitleMovieDetail loading={loading} dataDetail={dataDetail} genres={genres} />
+                            <OverviewMovieDetail loading={loading} dataDetail={dataDetail} />
                             {/* thong tin phim */}
 
                             {/* tap phim */}
-                            <Container headingText={'Tập phim'}>
-                                <Episodes />
-                            </Container>
+                            {param.mediaType === 'tv' && (
+                                <Episodes
+                                    seasons={dataDetail?.seasons}
+                                    seriesId={dataDetail?.id}
+                                    numberSeasonValue={
+                                        dataDetail?.seasons &&
+                                        dataDetail?.seasons[dataDetail?.seasons?.length - 1]?.season_number
+                                    }
+                                />
+                            )}
                             {/* tap phim */}
 
                             {/* slice dien vien */}
-                            <Container headingText={'Diễn viên'}>
-                                <CastSlice />
-                            </Container>
+                            <CastSlice cast={dataDetail?.credits?.cast} loading={loading} />
                             {/* slice dien vien */}
 
                             {/* trailer */}
-                            <Container headingText={'Trailer'}>
-                                <VideoSlice />
-                            </Container>
+                            <VideoSlice videos={dataDetail?.videos?.results} loading={loading} />
                             {/* trailer */}
                         </Box>
                     </Box>

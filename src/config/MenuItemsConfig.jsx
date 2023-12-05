@@ -3,22 +3,22 @@ import config from '.';
 
 export const menuItems = [
     {
-        title: 'Home',
+        title: 'Trang chủ',
         path: config.routes.home,
         icon: <HomeIcon />,
     },
     {
-        title: 'Movie',
+        title: 'Phim chiếu rạp',
         path: config.routes.movie,
         icon: <MovieIcon />,
     },
     {
-        title: 'Tv Shows',
+        title: 'Phim truyền hình',
         path: config.routes.tv,
         icon: <TvShowIcon />,
     },
     {
-        title: 'About Us',
+        title: 'Giới thiệu',
         path: config.routes.aboutUs,
         icon: <AboutIcon />,
     },

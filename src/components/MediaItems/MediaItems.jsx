@@ -3,11 +3,12 @@ import theme from '~/theme';
 import { HeartIcon } from '../Icon';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { toggleDetail } from '~/redux/features/mediaDetailSlice';
-import Image from '../Image';
+import { getIdDetail, toggleDetail } from '~/redux/features/mediaDetailSlice';
 import uiConfigs from '~/config/ui.config';
-
-function MediaItems({ item }) {
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
+import tmdbConfigs from '~/api/configs/tmdb.configs';
+function MediaItems({ item, mediaType }) {
     const [liked, setLiked] = useState(false);
     const toggleLikebox = () => {
         setLiked(!liked);
@@ -15,6 +16,12 @@ function MediaItems({ item }) {
     const dispatch = useDispatch();
     const handleOpen = () => {
         dispatch(toggleDetail(true));
+        dispatch(
+            getIdDetail({
+                mediaType: mediaType ? mediaType : item.media_type,
+                id: item.id,
+            }),
+        );
     };
     return (
         <>
@@ -27,21 +34,24 @@ function MediaItems({ item }) {
                 }}
             >
                 {/* poster */}
-                <ButtonBase onClick={handleOpen}>
-                    <Image
-                        aspectRatio={'2/3'}
-                        src={`https://www.themoviedb.org/t/p/w500${item.poster_path}`}
-                        alt={item.title}
-                    />
-                </ButtonBase>
+                <Box sx={{ aspectRatio: '2/3' }}>
+                    <ButtonBase onClick={handleOpen}>
+                        <LazyLoadImage
+                            // aspectRatio={'2/3'}
+                            style={{ aspectRatio: '2/3', objectFit: 'cover' }}
+                            src={tmdbConfigs.posterPath(item.poster_path)}
+                            alt={item.title}
+                            effect="blur"
+                            wrapperProps={{
+                                // If you need to, you can tweak the effect transition using the wrapper style.
+                                style: { transitionDelay: '0.5s' },
+                            }}
+                        />
+                    </ButtonBase>
+                </Box>
                 {/* poster */}
 
-                <Box
-                    padding={'15px 15px 15px 15px'}
-                    display={'flex'}
-                    flexDirection={'column'}
-                    justifyContent={'space-between'}
-                >
+                <Box padding={'15px'} display={'flex'} flexDirection={'column'} justifyContent={'space-between'}>
                     {/* info */}
                     <Stack direction={'row'} justifyContent={'space-between'} alignItems={'flex-start'}>
                         {/* text */}
@@ -56,7 +66,7 @@ function MediaItems({ item }) {
                                     ...uiConfigs.style.typoLines(1),
                                 }}
                             >
-                                {item.title}
+                                {item?.title ?? item?.name ?? item?.mediaTitle}
                             </Typography>
                             {/* title */}
                             {/* overview */}
@@ -65,7 +75,8 @@ function MediaItems({ item }) {
                                 color={theme.mediaItems.textOverview}
                                 sx={{ ...uiConfigs.style.typoLines(1) }}
                             >
-                                {item.vote_average.toFixed(1)} • {item.release_date.split('-')[0]}
+                                {item?.vote_average?.toFixed(1)} •{' '}
+                                {item?.release_date?.split('-')[0] ?? item?.first_air_date?.split('-')[0]}
                             </Typography>
                             {/* overview */}
                         </Stack>

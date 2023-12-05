@@ -1,6 +1,6 @@
 import Input from '~/components/Input';
 import { CloseIcon, SearchIcon } from '~/components/Icon';
-import { useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import routes from '~/config/routes';
 function Search({ round }) {
@@ -10,16 +10,20 @@ function Search({ round }) {
 
     const [searchValue, setSearchValue] = useState('');
     const location = useNavigate();
-    const inputRef = useRef();
+
+    useEffect(() => {
+        if (searchValue !== '') {
+            location(routes.search);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchValue]);
     const handleChange = (e) => {
         const searchValue = e.target.value;
         if (!searchValue.startsWith(' ')) {
             setSearchValue(searchValue);
-            location(routes.search);
         }
     };
     const handleClear = () => {
-        inputRef.current.focus();
         setSearchValue('');
     };
     return (
@@ -28,7 +32,6 @@ function Search({ round }) {
             leftIcon={<SearchIcon />}
             rightIcon={<CloseIcon />}
             inputEvent={{
-                ref: inputRef,
                 value: searchValue,
                 onChange: handleChange,
             }}

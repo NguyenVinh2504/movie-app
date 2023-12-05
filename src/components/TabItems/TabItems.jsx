@@ -1,6 +1,6 @@
 import { Tab, Tabs, styled, tabsClasses, Box } from '@mui/material';
 // import { TabList } from '@mui/lab';
-import { useState } from 'react';
+import { memo, useState } from 'react';
 const StyledTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }) => ({
     textTransform: 'none',
     fontWeight: theme.typography.fontWeightRegular,
@@ -31,12 +31,11 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }
         marginRight: theme.spacing(1),
     },
 }));
-function TabItems({ contentItems }) {
+function TabItems({ contentItems, onCurrCategory }) {
     const [value, setValue] = useState(0);
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
-
     return (
         <Box sx={{ mt: 5 }}>
             <Tabs
@@ -44,7 +43,10 @@ function TabItems({ contentItems }) {
                 // allowScrollButtonsMobile
                 aria-label="styled tabs example"
                 value={value}
-                onChange={handleChange}
+                onChange={(event, newValue) => {
+                    handleChange(event, newValue);
+                    onCurrCategory(event, newValue);
+                }}
                 selectionFollowsFocus={true}
                 scrollButtons="auto"
                 sx={{
@@ -73,4 +75,4 @@ function TabItems({ contentItems }) {
     );
 }
 
-export default TabItems;
+export default memo(TabItems);

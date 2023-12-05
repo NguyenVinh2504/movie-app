@@ -20,7 +20,9 @@ function HeaderProfile({ valueTabItems }) {
             >
                 {/* banner */}
                 <Image
-                    src={'https://fullstack.edu.vn/static/media/cover-profile.3fb9fed576da4b28386a.png'}
+                    src={
+                        'https://firebasestorage.googleapis.com/v0/b/movie-app-8766b.appspot.com/o/images%2FBannerVieJoy%20(1).png?alt=media&token=6c3f75e0-4525-4571-90a3-c39209c33353'
+                    }
                     alt={'banner'}
                     sx={{ borderRadius: '16px' }}
                 />
@@ -32,10 +34,11 @@ function HeaderProfile({ valueTabItems }) {
                     sx={{
                         position: 'absolute',
                         left: { md: '38px', xs: '50%' },
-                        bottom: { md: '-70px', xs: '-110px' },
+                        bottom: { md: '-70px', xs: '-130px' },
                         flexDirection: { md: 'row', xs: 'column' },
                         alignItems: { md: 'flex-end', xs: 'center' },
                         transform: { md: 'translateX(0%)', xs: 'translateX(-50%)' },
+                        width: '100%',
                     }}
                 >
                     {/* image avatar */}
@@ -47,16 +50,22 @@ function HeaderProfile({ valueTabItems }) {
                             borderRadius: '100px',
                         }}
                     >
-                        <AvatarUser sx={{ height: '100%', width: '100%' }} alt={user?.name} src={user?.avatar} />
+                        <AvatarUser
+                            sx={{ height: '100%', width: '100%' }}
+                            alt={user?.name}
+                            src={user?.avatar ?? user?.temporaryAvatar}
+                        />
                     </Box>
                     {/* image avatar */}
 
                     {/* name user */}
                     <Stack>
                         <Typography
-                            variant={pointDownMd ? 'h5' : 'h4'}
+                            variant={pointDownMd ? 'h6' : 'h4'}
                             fontWeight={'500'}
-                            sx={{ m: { xs: '16px 0 0 0', md: '0 0 0px 16px', textAlign: 'center' } }}
+                            sx={{
+                                m: { xs: '16px 0 0 0', md: '0 0 0px 16px', textAlign: 'center' },
+                            }}
                         >
                             {user?.name}
                         </Typography>
@@ -79,7 +88,7 @@ function HeaderProfile({ valueTabItems }) {
                 direction={'column'}
                 spacing={2}
                 sx={{
-                    mt: { md: '90px', xs: '130px' },
+                    mt: { md: '90px', xs: '150px' },
                 }}
             >
                 <Box>
@@ -92,7 +101,7 @@ function HeaderProfile({ valueTabItems }) {
                             '& .MuiTabs-indicator': {
                                 bgcolor: 'white',
                             },
-                            pl: { md: valueTabItems[0].title === 'Edit Profile' ? '58px' : '60px', xs: 0 },
+                            pl: { md: valueTabItems[0].title === 'Thông tin cá nhân' ? '36px' : '60px', xs: 0 },
                             borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
                         }}
                     >

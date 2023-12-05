@@ -1,4 +1,4 @@
-import { Box, Button, Grid } from '@mui/material';
+import { Box, Button, Divider, Grid, styled, useMediaQuery } from '@mui/material';
 
 import { useState } from 'react';
 
@@ -16,6 +16,7 @@ import * as Yup from 'yup';
 import { toast } from 'react-toastify';
 
 import isEqual from 'lodash.isequal';
+import AvatarEdit from './AvatarEdit/AvatarEdit';
 function EditAccount() {
     const [disable, setDisable] = useState(true);
 
@@ -24,8 +25,8 @@ function EditAccount() {
 
     const formik = useFormik({
         initialValues: {
-            name: user?.name,
-            phone: user?.phone,
+            name: user?.name ?? '',
+            phone: user?.phone ?? '',
         },
         validationSchema: Yup.object({
             name: Yup.string().min(8, 'Tên đăng nhập phải tối thiểu 8 kí tự').required('Không được để trống'),
@@ -54,10 +55,22 @@ function EditAccount() {
     const handleDisable = () => {
         setDisable(!disable);
     };
+
+    const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+    const CustomButton = styled((props) => (
+        <Button variant="contained" size={pointDownSm ? 'small' : 'medium'} {...props} />
+    ))(() => ({}));
+
     return (
-        <Box component={'form'} onSubmit={formik.handleSubmit} bgcolor={'#141212'} p={2} borderRadius={2}>
-            <Grid container spacing={2}>
-                <Grid item xs={6}>
+        <Box
+            component={'form'}
+            onSubmit={formik.handleSubmit}
+            bgcolor={'#141212'}
+            borderRadius={2}
+            border={'1px solid hsla(0,0%,100%,.1)'}
+        >
+            <Grid container spacing={2} p={2}>
+                <Grid item xs={12} sm={6}>
                     <InputProfile
                         name="name"
                         disable={disable}
@@ -68,11 +81,11 @@ function EditAccount() {
                         helperText={formik.touched.name && formik.errors.name}
                     />
                 </Grid>
-                <Grid item xs={6}>
-                    <InputProfile disable={true} label={'User Name'} value={user?.userName} />
+                <Grid item xs={12} sm={6}>
+                    <InputProfile disable={true} label={'User Name'} value={user?.userName ?? ''} />
                 </Grid>
                 <Grid item xs={12}>
-                    <InputProfile disable={true} label={'Email'} value={user?.email} />
+                    <InputProfile disable={true} label={'Email'} value={user?.email ?? ''} />
                 </Grid>
                 <Grid item xs={12}>
                     <InputProfile
@@ -85,22 +98,18 @@ function EditAccount() {
                         helperText={formik.touched.phone && formik.errors.phone}
                     />
                 </Grid>
+                <Grid item xs={12}>
+                    <AvatarEdit />
+                </Grid>
             </Grid>
-            <Box mt={2} justifyContent={'flex-end'} display={'flex'}>
-                {disable && (
-                    <Button onClick={handleDisable} variant="contained">
-                        Chỉnh sửa
-                    </Button>
-                )}
+            <Divider />
+            <Box p={2} justifyContent={'flex-end'} display={'flex'}>
+                {disable && <CustomButton onClick={handleDisable}>Chỉnh sửa</CustomButton>}
+                {!disable && <CustomButton type="submit">Lưu chỉnh sửa</CustomButton>}
                 {!disable && (
-                    <Button variant="contained" type="submit">
-                        Lưu chỉnh sửa
-                    </Button>
-                )}
-                {!disable && (
-                    <Button variant="contained" sx={{ ml: 2 }} onClick={handleCannel}>
+                    <CustomButton sx={{ ml: 2 }} onClick={handleCannel}>
                         Hủy chỉnh sửa
-                    </Button>
+                    </CustomButton>
                 )}
             </Box>
         </Box>

@@ -1,12 +1,12 @@
 // import { Typography } from '@mui/material';
-import { NavLink } from 'react-router-dom';
 import routes from '~/config/routes';
 import images from '~/assets/image';
+import { memo } from 'react';
 
 function Logo() {
     return (
-            <NavLink to={routes.home}>
-                {/* <Typography
+        <a href={routes.home}>
+            {/* <Typography
                     variant="h5"
                     sx={{
                         color: 'primary.main',
@@ -23,9 +23,9 @@ function Logo() {
                         .COM
                     </Typography>
                 </Typography> */}
-                <img src={images.logo} alt="Logos" />
-            </NavLink>
+            <img src={images.logo} alt="Logos" />
+        </a>
     );
 }
 
-export default Logo;
+export default memo(Logo);

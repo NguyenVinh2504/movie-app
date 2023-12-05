@@ -24,6 +24,7 @@ import { loginOut } from '~/redux/features/userSlice';
 import config from '~/config';
 import userApi from '~/api/module/user.api';
 import { toast } from 'react-toastify';
+import { memo } from 'react';
 const ListCustoms = styled(ListItem)(({ theme }) => ({
     '&:hover': {
         backgroundColor: theme.listItems.backgroundHover,
@@ -60,7 +61,7 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
                 <IconButton sx={{ position: 'absolute', top: '38%', transform: 'translateY(-50%)', p: '0' }}>
                     <MenuIcon />
                 </IconButton>
-                <Stack width="100%" direction="row" justifyContent="center" sx={{ img: { height: '18px' } }}>
+                <Stack width="100%" direction="row" justifyContent="center" sx={{ img: { height: '30px' } }}>
                     <Logo />
                 </Stack>
             </Box>
@@ -70,8 +71,12 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
                     <Box display={{ sm: 'none' }}>
                         <ListItem>
                             <Stack direction={'row'} alignItems={'center'} spacing={2}>
-                                <AvatarUser alt={user?.name} src={user?.avatar} />
-                                <Typography component={'span'}>{user?.name}</Typography>
+                                <Box sx={{ width: '50px' }}>
+                                    <AvatarUser alt={user?.name} />
+                                </Box>
+                                <Typography component={'span'} fontWeight={500}>
+                                    {user?.name}
+                                </Typography>
                             </Stack>
                         </ListItem>
                         <Divider sx={{ borderColor: 'white', marginY: '20px', opacity: 0.3 }} />
@@ -165,6 +170,7 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
             }
         </Box>
     );
+    console.log('re s');
     return (
         <Drawer
             anchor={'left'}
@@ -183,4 +189,4 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
     );
 }
 
-export default SideBar;
+export default memo(SideBar);

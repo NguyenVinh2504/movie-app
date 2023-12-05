@@ -188,14 +188,21 @@ export function SignOutIcon() {
 
 export function PlayIcon() {
     return (
+        // <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        //     <path
+        //         stroke="#fff"
+        //         strokeLinecap="round"
+        //         strokeLinejoin="round"
+        //         strokeMiterlimit="10"
+        //         strokeWidth="1.5"
+        //         d="M4 12V8.44c0-4.42 3.13-6.23 6.96-4.02l3.09 1.78 3.09 1.78c3.83 2.21 3.83 5.83 0 8.04l-3.09 1.78-3.09 1.78C7.13 21.79 4 19.98 4 15.56V12z"
+        //     ></path>
+        //     //{' '}
+        // </svg>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
             <path
-                stroke="#fff"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeMiterlimit="10"
-                strokeWidth="1.5"
-                d="M4 12V8.44c0-4.42 3.13-6.23 6.96-4.02l3.09 1.78 3.09 1.78c3.83 2.21 3.83 5.83 0 8.04l-3.09 1.78-3.09 1.78C7.13 21.79 4 19.98 4 15.56V12z"
+                fill="#fff"
+                d="M7.778 3.269a1.821 1.821 0 00-1.846-.035A1.83 1.83 0 005 4.83v13.394c0 .662.358 1.27.932 1.594a1.83 1.83 0 001.846-.034l10.958-6.697a1.827 1.827 0 000-3.12L7.778 3.269z"
             ></path>
         </svg>
     );
@@ -245,6 +252,20 @@ export function ArrowDownIcon() {
         </svg>
     );
 }
+export function ArrowUpIcon() {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path
+                stroke="#fff"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeMiterlimit="10"
+                strokeWidth="1.5"
+                d="M19.92 15.05L13.4 8.53c-.77-.77-2.03-.77-2.8 0l-6.52 6.52"
+            ></path>
+        </svg>
+    );
+}
 export function GoogleIcon() {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -258,13 +279,7 @@ export function GoogleIcon() {
 
 export function EmailIcon() {
     return (
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
             <path
                 stroke="#fff"
                 strokeLinecap="round"
@@ -287,13 +302,7 @@ export function EmailIcon() {
 
 export function PasswordIcon() {
     return (
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            fill="none"
-            viewBox="0 0 24 24"
-        >
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
             <path
                 stroke="#fff"
                 strokeLinecap="round"
@@ -311,3 +320,50 @@ export function PasswordIcon() {
         </svg>
     );
 }
+
+export function PhotoIcon() {
+    return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+            <path
+                fill="#fff"
+                d="M18 6c-.61 0-1.17-.35-1.45-.89l-.72-1.45C15.37 2.75 14.17 2 13.15 2h-2.29c-1.03 0-2.23.75-2.69 1.66l-.72 1.45C7.17 5.65 6.61 6 6 6 3.83 6 2.11 7.83 2.25 9.99l.52 8.26C2.89 20.31 4 22 6.76 22h10.48c2.76 0 3.86-1.69 3.99-3.75l.52-8.26A3.753 3.753 0 0018 6zm-7.5 1.25h3c.41 0 .75.34.75.75s-.34.75-.75.75h-3c-.41 0-.75-.34-.75-.75s.34-.75.75-.75zM12 18.12c-1.86 0-3.38-1.51-3.38-3.38 0-1.87 1.51-3.38 3.38-3.38 1.87 0 3.38 1.51 3.38 3.38 0 1.87-1.52 3.38-3.38 3.38z"
+            ></path>
+        </svg>
+    );
+}
+export const SvgSpinners3DotsBounce = () => (
+    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24">
+        <circle cx="4" cy="12" r="3" fill="#ec0101">
+            <animate
+                id="svgSpinners3DotsBounce0"
+                attributeName="cy"
+                begin="0;svgSpinners3DotsBounce1.end+0.25s"
+                calcMode="spline"
+                dur="0.6s"
+                keySplines=".33,.66,.66,1;.33,0,.66,.33"
+                values="12;6;12"
+            ></animate>
+        </circle>
+        <circle cx="12" cy="12" r="3" fill="#ec0101">
+            <animate
+                attributeName="cy"
+                begin="svgSpinners3DotsBounce0.begin+0.1s"
+                calcMode="spline"
+                dur="0.6s"
+                keySplines=".33,.66,.66,1;.33,0,.66,.33"
+                values="12;6;12"
+            ></animate>
+        </circle>
+        <circle cx="20" cy="12" r="3" fill="#ec0101">
+            <animate
+                id="svgSpinners3DotsBounce1"
+                attributeName="cy"
+                begin="svgSpinners3DotsBounce0.begin+0.2s"
+                calcMode="spline"
+                dur="0.6s"
+                keySplines=".33,.66,.66,1;.33,0,.66,.33"
+                values="12;6;12"
+            ></animate>
+        </circle>
+    </svg>
+);

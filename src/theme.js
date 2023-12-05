@@ -125,6 +125,26 @@ const theme = createTheme({
         },
     },
     components: {
+        MuiSkeleton: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: '#2d2c2c',
+                },
+            },
+        },
+        MuiDivider: {
+            styleOverrides: {
+                root: {
+                    borderColor: 'rgba(255, 255, 255, 0.2)',
+                    '::before': {
+                        borderColor: 'rgba(255, 255, 255, 0.2)',
+                    },
+                    '::after': {
+                        borderColor: 'rgba(255, 255, 255, 0.2)',
+                    },
+                },
+            },
+        },
         MuiButton: {
             defaultProps: {
                 disableElevation: true,
@@ -134,26 +154,26 @@ const theme = createTheme({
                     props: { variant: 'pill-outline' },
                     style: {
                         borderRadius: '100px',
-                    }
+                    },
                 },
                 {
                     props: { color: 'white-outline' },
                     style: {
-                        border:'1px solid hsla(0,0%,100%,.2)',
+                        border: '1px solid hsla(0,0%,100%,.2)',
                         backgroundColor: 'hsla(0, 0%, 52%, 0.1)',
                         lineHeight: '42px',
                         '&:hover': {
-                        color: 'white',
-                        backgroundColor: 'hsla(0, 0%, 52%, 0.2)',
-                        border:'1px solid hsla(0,0%,100%,.3)',
+                            color: 'white',
+                            backgroundColor: 'hsla(0, 0%, 52%, 0.2)',
+                            border: '1px solid hsla(0,0%,100%,.3)',
                         },
                         '@media (hover: none)': {
                             '&:hover': {
                                 backgroundColor: 'hsla(0, 0%, 52%, 0.1)',
-                                border:'1px solid hsla(0,0%,100%,.2)',
+                                border: '1px solid hsla(0,0%,100%,.2)',
                             },
                         },
-                    }
+                    },
                 },
                 {
                     props: { color: 'primary' },

@@ -12,10 +12,10 @@ const routes = {
     favorite: '/movie-app/profile/favorite',
     favoriteTvList: '/movie-app/profile/favorite/tv',
     editProfile: '/movie-app/profile/edit-profile',
+    settingProfile: '/movie-app/profile/setting-profile',
     //profile
 
     //setting
-    settingProfile: '/movie-app/edit-profile',
     deleteAccount: '/movie-app/edit-profile/delete-account',
     //setting
 

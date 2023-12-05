@@ -1,6 +1,6 @@
 import { Box, Stack, Typography } from '@mui/material';
 import { forwardRef } from 'react';
-
+import { memo } from 'react';
 const root = {
     backgroundprimary: '#0c0a0a',
     primary: '#ec0101',
@@ -42,7 +42,7 @@ const Input = forwardRef(
                         pointerEvents: disable && 'none',
                         display: 'flex',
                         width: '100%',
-                        borderRadius: round ? '100px' : '0.125rem',
+                        borderRadius: round ? '100px' : 1,
                         position: 'relative',
                         border: `1px solid ${
                             disable
@@ -98,4 +98,4 @@ const Input = forwardRef(
     },
 );
 
-export default Input;
+export default memo(Input);
