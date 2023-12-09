@@ -4,28 +4,33 @@ import uiConfigs from '~/config/ui.config';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import tmdbConfigs from '~/api/configs/tmdb.configs';
 import { memo } from 'react';
-function BannerMovieDetail({ loading, dataDetail }) {
+import { Link } from 'react-router-dom';
+function BannerMovieDetail({ loading, dataDetail, mediaType }) {
     return (
-        <Box sx={{ position: 'relative', overflow: 'hidden', aspectRatio: '16/9' }}>
+        <Box sx={{ position: 'relative', overflow: 'hidden', aspectRatio: '16/9', pl: 1 }}>
             {loading ? (
                 <>
                     <Skeleton variant="rectangular" width={'100%'} height={'100%'} />
                 </>
             ) : (
                 <>
-                    <IconButton
-                        color="secondNeutral"
-                        sx={{
-                            zIndex: '10',
-                            ...uiConfigs.style.centerAlight,
-                            svg: {
-                                width: '40px',
-                                height: '40px',
-                            },
-                        }}
-                    >
-                        <PlayIcon />
-                    </IconButton>
+                    {mediaType === 'movie' && (
+                        <Link to={`https://vidsrc.to/embed/movie/${dataDetail.id}`}>
+                            <IconButton
+                                color="secondNeutral"
+                                sx={{
+                                    zIndex: '10',
+                                    ...uiConfigs.style.centerAlight,
+                                    svg: {
+                                        width: '40px',
+                                        height: '40px',
+                                    },
+                                }}
+                            >
+                                <PlayIcon />
+                            </IconButton>
+                        </Link>
+                    )}
                     <LazyLoadImage
                         style={{ objectFit: 'cover' }}
                         src={tmdbConfigs.backdropPath(dataDetail.backdrop_path)}

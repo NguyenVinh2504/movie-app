@@ -1,4 +1,4 @@
-import { Box, Typography, Stack, IconButton, ButtonBase } from '@mui/material';
+import { Box, Typography, Stack, IconButton } from '@mui/material';
 import theme from '~/theme';
 import { HeartIcon } from '../Icon';
 import { useState } from 'react';
@@ -8,6 +8,7 @@ import uiConfigs from '~/config/ui.config';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import tmdbConfigs from '~/api/configs/tmdb.configs';
+import images from '~/assets/image';
 function MediaItems({ item, mediaType }) {
     const [liked, setLiked] = useState(false);
     const toggleLikebox = () => {
@@ -15,13 +16,15 @@ function MediaItems({ item, mediaType }) {
     };
     const dispatch = useDispatch();
     const handleOpen = () => {
-        dispatch(toggleDetail(true));
-        dispatch(
-            getIdDetail({
-                mediaType: mediaType ? mediaType : item.media_type,
-                id: item.id,
-            }),
-        );
+        if (item.media_type !== 'person') {
+            dispatch(toggleDetail(true));
+            dispatch(
+                getIdDetail({
+                    mediaType: mediaType ? mediaType : item.media_type,
+                    id: item.id,
+                }),
+            );
+        }
     };
     return (
         <>
@@ -34,20 +37,25 @@ function MediaItems({ item, mediaType }) {
                 }}
             >
                 {/* poster */}
-                <Box sx={{ aspectRatio: '2/3' }}>
-                    <ButtonBase onClick={handleOpen}>
-                        <LazyLoadImage
-                            // aspectRatio={'2/3'}
-                            style={{ aspectRatio: '2/3', objectFit: 'cover' }}
-                            src={tmdbConfigs.posterPath(item.poster_path)}
-                            alt={item.title}
-                            effect="blur"
-                            wrapperProps={{
-                                // If you need to, you can tweak the effect transition using the wrapper style.
-                                style: { transitionDelay: '0.5s' },
-                            }}
-                        />
-                    </ButtonBase>
+                <Box
+                    sx={{ aspectRatio: '2/3', width: '100%', height: '100%', cursor: 'pointer' }}
+                    component={'button'}
+                    onClick={handleOpen}
+                >
+                    <LazyLoadImage
+                        // aspectRatio={'2/3'}
+                        style={{ objectFit: 'cover' }}
+                        src={
+                            item.poster_path ?? item.profile_path
+                                ? tmdbConfigs.posterPath(item?.poster_path ?? item?.profile_path)
+                                : images.noImage19x6
+                        }
+                        alt={item.title}
+                        effect="blur"
+                        wrapperProps={{
+                            style: { transitionDelay: '0.5s' },
+                        }}
+                    />
                 </Box>
                 {/* poster */}
 

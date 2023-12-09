@@ -1,5 +1,5 @@
 import HeroSlice from '~/components/HeroSlice';
-import { Container, Stack } from '@mui/material';
+import { Button, Container, Stack } from '@mui/material';
 import { homeTabItems } from '~/config/HoneTabMenuItems/HomeTabMenuItems';
 import TabItems from '~/components/TabItems';
 import Media from '~/components/Media';
@@ -51,18 +51,23 @@ function Home() {
         },
         [currCategory],
     );
-    useEffect(() => {
-        if (medias.length !== 0 && isLoading === false) {
-            const handleScroll = () => {
-                if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 800) {
-                    setCurrPage(currPage + 1);
-                }
-            };
-            window.addEventListener('scroll', handleScroll);
-            return () => window.removeEventListener('scroll', handleScroll);
-        }
-    }, [currPage, isLoading, medias]);
-    console.log('re home');
+    // useEffect(() => {
+    //     if (medias.length !== 0 && isLoading === false) {
+    //         const handleScroll = () => {
+    //             if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 800) {
+    //                 setCurrPage(currPage + 1);
+    //             }
+    //         };
+    //         window.addEventListener('scroll', handleScroll);
+    //         return () => window.removeEventListener('scroll', handleScroll);
+    //     }
+    // }, [currPage, isLoading, medias]);
+    // useEffect(() => {
+    //     isLoading && window.scrollTo(0, document.body.scrollHeight);
+    // }, [isLoading]);
+    const handleLoadingMore = () => {
+        setCurrPage(currPage + 1);
+    };
     return (
         <>
             <HeroSlice />
@@ -72,6 +77,13 @@ function Home() {
                 {isLoading && (
                     <Stack mt={2} alignItems={'center'}>
                         <SvgSpinners3DotsBounce />
+                    </Stack>
+                )}
+                {!isLoading && (
+                    <Stack mt={2} justifyContent={'center'} flexDirection={'row'}>
+                        <Button variant="contained" color="secondary" onClick={handleLoadingMore}>
+                            Loading More
+                        </Button>
                     </Stack>
                 )}
             </Container>

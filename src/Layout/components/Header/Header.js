@@ -1,7 +1,7 @@
 import classNames from 'classnames/bind';
 import styles from './Header.module.scss';
 import { cloneElement, memo, useCallback, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import Search from '../Search';
 import {
     Badge,
@@ -20,7 +20,6 @@ import { menuItems } from '~/config/MenuItemsConfig';
 import Logo from '~/components/Logo';
 import SideBar from '~/components/SideBar';
 import UserMenu from '~/components/UserMenu';
-import routes from '~/config/routes';
 import { useSelector } from 'react-redux';
 import { userValue } from '~/redux/selectors';
 import config from '~/config';
@@ -43,13 +42,8 @@ const ScrollAppBar = ({ children, window }) => {
 };
 
 function Header() {
-    const location = useNavigate();
-
     const user = useSelector(userValue);
 
-    const handelSearch = () => {
-        location(routes.search);
-    };
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const toggleSidebar = useCallback(() => setSidebarOpen(!sidebarOpen), [sidebarOpen]);
 
@@ -129,9 +123,11 @@ function Header() {
                                     display: { xs: 'block', lg: 'none' },
                                 }}
                             >
-                                <IconButton disableRipple color="neutral" onClick={handelSearch}>
-                                    <SearchIcon />
-                                </IconButton>
+                                <NavLink to={config.routes.search}>
+                                    <IconButton disableRipple color="neutral">
+                                        <SearchIcon />
+                                    </IconButton>
+                                </NavLink>
                             </Box>
 
                             {/* user menu */}
@@ -160,16 +156,16 @@ function Header() {
                                     </IconButton>
                                 </Tooltip>
                                 {!user && (
-                                    <Button
-                                        variant="contained"
-                                        disableElevation
-                                        disableRipple
-                                        to={config.routes.login}
-                                        onClick={() => location(config.routes.login)}
-                                        sx={{ display: { xs: 'none', sm: 'inline-block' } }}
-                                    >
-                                        Đăng Nhập
-                                    </Button>
+                                    <NavLink to={config.routes.login}>
+                                        <Button
+                                            variant="contained"
+                                            disableElevation
+                                            disableRipple
+                                            sx={{ display: { xs: 'none', sm: 'inline-block' } }}
+                                        >
+                                            Đăng Nhập
+                                        </Button>
+                                    </NavLink>
                                 )}
                                 {user && (
                                     <Box sx={{ display: { xs: 'none', sm: 'inline-block' } }}>

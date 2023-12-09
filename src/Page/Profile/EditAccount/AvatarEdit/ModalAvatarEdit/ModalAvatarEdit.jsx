@@ -17,6 +17,7 @@ function ModalAvatarEdit({ open, handleClose }) {
     const [avatar, setAvatar] = useState();
     const [imageUpload, setImageUpload] = useState();
     const dispatch = useDispatch();
+    console.log(avatar);
     useEffect(() => {
         return () => {
             avatar && URL.revokeObjectURL(avatar.preview);
@@ -115,7 +116,7 @@ function ModalAvatarEdit({ open, handleClose }) {
         <>
             <Modal
                 open={open}
-                onClose={handleClose}
+                onClose={() => handleClose()}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
             >
@@ -157,7 +158,7 @@ function ModalAvatarEdit({ open, handleClose }) {
                             >
                                 Thay đổi ảnh đại diện
                             </Typography>
-                            <IconButton color="neutral" onClick={handleClose}>
+                            <IconButton color="neutral" onClick={() => handleClose()}>
                                 <CloseIcon />
                             </IconButton>
                         </Stack>

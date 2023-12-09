@@ -1,26 +1,33 @@
 import Input from '~/components/Input';
 import { CloseIcon, SearchIcon } from '~/components/Icon';
 import { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import routes from '~/config/routes';
+import { createSearchParams, useNavigate } from 'react-router-dom';
+import config from '~/config';
 function Search({ round }) {
     const props = {
         round,
     };
-
     const [searchValue, setSearchValue] = useState('');
     const location = useNavigate();
 
     useEffect(() => {
-        if (searchValue !== '') {
-            location(routes.search);
-        }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [searchValue]);
     const handleChange = (e) => {
         const searchValue = e.target.value;
         if (!searchValue.startsWith(' ')) {
             setSearchValue(searchValue);
+            if (searchValue.trim()) {
+                location({
+                    pathname: config.routes.search,
+                    search: `?${createSearchParams({ query: searchValue })}`,
+                });
+            } else if (!searchValue.trim()) {
+                location({
+                    pathname: config.routes.search,
+                    search: null,
+                });
+            }
         }
     };
     const handleClear = () => {

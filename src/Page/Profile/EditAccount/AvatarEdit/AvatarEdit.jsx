@@ -8,7 +8,8 @@ function AvatarEdit() {
     const handleOpen = useCallback(() => {
         setOpen(true);
     }, []);
-    const handleClose = useCallback(() => {
+    const handleClose = useCallback((ourRequestToken) => {
+        // ourRequestToken.cancel('Huy cap nhat avatar');
         setOpen(false);
     }, []);
     return (
@@ -26,7 +27,7 @@ function AvatarEdit() {
                     <Avatar />
                 </IconButton>
             </Stack>
-            <ModalAvatarEdit handleClose={handleClose} open={open} />
+            {open && <ModalAvatarEdit handleClose={handleClose} open={open} />}
         </>
     );
 }

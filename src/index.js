@@ -10,7 +10,6 @@ import { persistor, store } from '~/redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import MediaDetail from './components/MediaDetail';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     // <React.StrictMode>
@@ -36,7 +35,7 @@ root.render(
             </ThemeProvider>
         </PersistGate>
     </Provider>,
-    // </React.StrictMode>,
+    /* </React.StrictMode>, */
 );
 
 // If you want to start measuring performance in your app, pass a function

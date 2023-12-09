@@ -48,6 +48,7 @@ function EpisodesItem({ item, dataSeason }) {
         },
         position: 'absolute',
         opacity: '0',
+        zIndex: '1',
         transition: '0.3s all ease-in-out',
         top: '50%',
         left: '50%',

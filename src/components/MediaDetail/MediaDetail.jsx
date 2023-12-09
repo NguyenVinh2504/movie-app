@@ -47,7 +47,6 @@ function MovieDetail() {
     useEffect(() => {
         dataDetail?.genres?.map((item) => setGenres((pram) => [...pram, item.name]));
     }, [dataDetail, dataDetail.genres]);
-    console.log('re detail');
     return (
         <Modal
             open={open}
@@ -77,7 +76,14 @@ function MovieDetail() {
                         border: '1px solid hsla(0,0%,100%,.1)',
                     }}
                 >
-                    <Stack direction={'row'} my={2} justifyContent={'flex-end'} px={2} position={'relative'}>
+                    <Stack
+                        direction={'row'}
+                        my={2}
+                        justifyContent={'flex-end'}
+                        alignItems={'center'}
+                        px={2}
+                        position={'relative'}
+                    >
                         <Typography
                             variant="h4"
                             textAlign={'center'}
@@ -102,7 +108,7 @@ function MovieDetail() {
                         }}
                     >
                         {/* poster */}
-                        <BannerMovieDetail loading={loading} dataDetail={dataDetail} />
+                        <BannerMovieDetail loading={loading} dataDetail={dataDetail} mediaType={param.mediaType} />
                         {/* poster */}
                         <Box px={5} mt={2}>
                             {/* thong tin phim */}

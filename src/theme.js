@@ -20,7 +20,7 @@ const theme = createTheme({
         h2: {
             fontSize: '3.75rem',
             fontStyle: 'normal',
-            lineHeight: '3.5rem' /* 116.667% */,
+            lineHeight: '4.25rem' /* 116.667% */,
             letterSpacing: '-0.03125rem',
         },
         h3: {

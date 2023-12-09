@@ -40,7 +40,11 @@ privateClient.interceptors.response.use(
         return response;
     },
     (err) => {
-        throw err?.response?.data ?? { message: 'Không có kết nối' };
+        if (axios.isCancel(err)) {
+            throw err;
+        } else {
+            throw err?.response?.data ?? { message: 'Không thể lấy dữ liệu' };
+        }
     },
 );
 

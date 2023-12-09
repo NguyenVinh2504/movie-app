@@ -30,6 +30,7 @@ const Input = forwardRef(
             rightIcon,
             iconRightEvent,
             inputEvent,
+            iconLeftEvent,
             ...props
         },
         ref,
@@ -68,9 +69,11 @@ const Input = forwardRef(
                     }}
                 >
                     {leftIcon && (
-                        <Box component={'span'} sx={{ display: 'flex', alignItems: 'center' }}>
-                            {leftIcon}
-                        </Box>
+                        <button {...iconLeftEvent}>
+                            <Box component={'span'} sx={{ display: 'flex', alignItems: 'center' }}>
+                                {leftIcon}
+                            </Box>
+                        </button>
                     )}
                     <input
                         placeholder={placeholder}

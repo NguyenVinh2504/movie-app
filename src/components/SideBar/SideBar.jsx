@@ -12,7 +12,7 @@ import {
     Divider,
     styled,
 } from '@mui/material';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import { menuItems, userMenu } from '~/config/MenuItemsConfig';
 import Logo from '../Logo';
@@ -37,7 +37,6 @@ const ListCustoms = styled(ListItem)(({ theme }) => ({
 }));
 
 function SideBar({ open, onClick, onKeyDown, onClose }) {
-    const location = useNavigate();
     const props = {
         onClick,
         onKeyDown,
@@ -146,15 +145,16 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
                         sx={{ borderColor: 'white', marginBottom: '20px', display: { sm: 'none' }, opacity: '0.3' }}
                     />
                     {!user ? (
-                        <Button
-                            sx={{ width: '100%', display: { sm: 'none' } }}
-                            variant="contained"
-                            disableElevation
-                            disableRipple
-                            onClick={() => location(config.routes.login)}
-                        >
-                            Đăng Nhập
-                        </Button>
+                        <NavLink to={config.routes.login}>
+                            <Button
+                                sx={{ width: '100%', display: { sm: 'none' } }}
+                                variant="contained"
+                                disableElevation
+                                disableRipple
+                            >
+                                Đăng Nhập
+                            </Button>
+                        </NavLink>
                     ) : (
                         <Button
                             sx={{ width: '100%', display: { sm: 'none' } }}

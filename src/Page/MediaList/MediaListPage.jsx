@@ -1,5 +1,5 @@
 import HeroSlice from '~/components/HeroSlice';
-import { Container, Stack } from '@mui/material';
+import { Button, Container, Stack } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import TabItems from '~/components/TabItems';
@@ -17,7 +17,9 @@ function MediaListPage() {
     const [isLoading, setIsLoading] = useState(true);
     const { mediaType } = useParams();
     useEffect(() => {
-        window.scrollTo(0, 0);
+        // window.scrollTo(0, 0);
+        setCurrPage(1);
+        setMedias([]);
     }, [mediaType]);
     useEffect(() => {
         const getMedias = async () => {
@@ -39,39 +41,49 @@ function MediaListPage() {
             }
         };
         const fetchData = async () => {
+            setIsLoading(true);
             const { response, err } = await getMedias();
             if (err) toast.error(err.message);
             if (response) {
                 setIsLoading(false);
-                if (response.results.length === 0) setIsLoading(true);
-                if (currPage !== 1) setMedias((m) => [...m, ...response.results]);
-                else setMedias([...response.results]);
+                // if (response.results.length === 0) setIsLoading(true);
+                if (currPage !== 1) {
+                    setMedias((m) => [...m, ...response.results]);
+                } else {
+                    setMedias([...response.results]);
+                }
             }
         };
         fetchData();
     }, [currCategory, currPage, mediaType]);
+    // useEffect(() => {
+    //     isLoading && window.scrollTo(0, document.body.scrollHeight);
+    // }, [isLoading]);
     const handleCurrCategory = useCallback(
         (event, newValue) => {
             if (currCategory === newValue) return;
-            setIsLoading(true);
             setMedias([]);
             setCurrPage(1);
             setCurrCategory(newValue);
         },
         [currCategory],
     );
-    useEffect(() => {
-        if (medias.length !== 0 && isLoading === false) {
-            const handleScroll = () => {
-                if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 800) {
-                    setIsLoading(true);
-                    setCurrPage(currPage + 1);
-                }
-            };
-            window.addEventListener('scroll', handleScroll);
-            return () => window.removeEventListener('scroll', handleScroll);
-        }
-    }, [currPage, isLoading, medias]);
+    const handleLoadingMore = () => {
+        // setIsLoading(true);
+        setCurrPage(currPage + 1);
+    };
+    // useEffect(() => {
+    //     if (medias.length !== 0 && isLoading === false) {
+    //         const handleScroll = () => {
+    //             if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 800) {
+    //                 setIsLoading(true);
+    //                 setCurrPage(currPage + 1);
+    //             }
+    //         };
+    //         window.addEventListener('scroll', handleScroll);
+    //         return () => window.removeEventListener('scroll', handleScroll);
+    //     }
+    // }, [currPage, isLoading, medias]);
     return (
         <>
             <HeroSlice />
@@ -84,6 +96,13 @@ function MediaListPage() {
                 {isLoading && (
                     <Stack mt={2} alignItems={'center'}>
                         <SvgSpinners3DotsBounce />
+                    </Stack>
+                )}
+                {!isLoading && (
+                    <Stack mt={2} justifyContent={'center'} flexDirection={'row'}>
+                        <Button variant="contained" color="secondary" onClick={handleLoadingMore}>
+                            Loading More
+                        </Button>
                     </Stack>
                 )}
             </Container>

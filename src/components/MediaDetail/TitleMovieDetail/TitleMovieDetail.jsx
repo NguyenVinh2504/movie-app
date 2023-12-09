@@ -39,6 +39,8 @@ function TitleMovieDetail({ loading, dataDetail, genres }) {
                     display={'flex'}
                     alignItems={'center'}
                     mt={1}
+                    height={'24px'}
+                    overflow={'hidden'}
                     sx={{
                         'h6:not(:first-of-type)': {
                             '::before': {
@@ -46,16 +48,19 @@ function TitleMovieDetail({ loading, dataDetail, genres }) {
                                 mx: 0.5,
                             },
                         },
+                        h6: {
+                            ...uiConfigs.style.typoLines(1),
+                        },
                     }}
                 >
                     <Typography variant={pointDownSm ? 'subtitle2' : 'subtitle1'}>
-                        {`${dataDetail.vote_average.toFixed(1) || dataDetail.mediaRate.toFixed(1)}`}
+                        {`${dataDetail?.vote_average?.toFixed(1) ?? dataDetail?.mediaRate?.toFixed(1)}`}
                     </Typography>
                     <Typography variant={pointDownSm ? 'subtitle2' : 'subtitle1'}>
-                        {dataDetail.release_date || dataDetail.first_air_date}
+                        {dataDetail.release_date ?? dataDetail.first_air_date ?? 'Không có ngày'}
                     </Typography>
                     <Typography variant={pointDownSm ? 'subtitle2' : 'subtitle1'}>{genres.join(', ')}</Typography>
-                    {dataDetail.runtime && (
+                    {dataDetail?.runtime?.toString() && (
                         <Typography variant={pointDownSm ? 'subtitle2' : 'subtitle1'}>
                             {dataDetail.runtime} minutes
                         </Typography>

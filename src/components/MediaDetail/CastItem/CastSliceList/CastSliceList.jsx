@@ -13,15 +13,17 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 function CastItem({ item }) {
     return (
         <Box sx={{ bgcolor: 'rgba(255,255,255,0.1)', borderRadius: '4px', overflow: 'hidden' }}>
-            <LazyLoadImage
-                effect="blur"
-                wrapperProps={{
-                    style: { transitionDelay: '0.5s' },
-                }}
-                src={item.profile_path ? tmdbConfigs.posterPath(item.profile_path) : images.noImage2x3}
-                alt={item.title}
-                style={{ cursor: 'pointer', aspectRatio: 1, objectFit: 'cover' }}
-            />
+            <Box sx={{ aspectRatio: 1, cursor: 'pointer' }}>
+                <LazyLoadImage
+                    effect="blur"
+                    wrapperProps={{
+                        style: { transitionDelay: '0.5s' },
+                    }}
+                    src={item.profile_path ? tmdbConfigs.posterPath(item.profile_path) : images.noImage2x3}
+                    alt={item.title}
+                    style={{ objectFit: 'cover' }}
+                />
+            </Box>
             <Stack p={1}>
                 <Typography
                     variant="subtitle2"

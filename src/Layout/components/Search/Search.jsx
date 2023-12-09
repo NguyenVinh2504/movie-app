@@ -1,47 +1,48 @@
 import Input from '~/components/Input';
 import { CloseIcon, SearchIcon } from '~/components/Icon';
-import { useState, useRef, useEffect, memo } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import routes from '~/config/routes';
+import { useState, useEffect, memo } from 'react';
+import { createSearchParams, useLocation, useNavigate } from 'react-router-dom';
 import config from '~/config';
+// import { useDebounce } from '~/Hooks';
 function Search({ round }) {
     const props = {
         round,
     };
 
     const [searchValue, setSearchValue] = useState('');
-    const [toPageSearch, setToPageSearch] = useState(false);
+    // const [toPageSearch, setToPageSearch] = useState(false);
     const location = useNavigate();
-    const inputRef = useRef();
-    let { pathname } = useLocation();
-
+    const { pathname } = useLocation();
+    // const debounce = useDebounce(searchValue, 100);
+    // useEffect(() => {
+    //     if (pathname !== config.routes.search) setToPageSearch(false);
+    // }, [pathname]);
+    // useEffect(() => {
+    //     if (debounce !== '') setToPageSearch(true);
+    // }, [debounce]);
     useEffect(() => {
-        console.log('reess');
-        if (toPageSearch) {
-            location(routes.search);
+        if (!searchValue.trim() && pathname === config.routes.search) {
+            location(config.routes.home);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [toPageSearch]);
-    // useEffect(() => {
-    //     if (pathname !== config.routes.search && searchValue !== '') {
-    //         console.log('set');
-    //         // setToPageSearch(false);
-    //     }
-    // }, [pathname, searchValue]);
-    const handleChange = (e) => {
-        const searchValue = e.target.value;
-        if (!searchValue.startsWith(' ')) {
-            setToPageSearch(true);
-            setSearchValue(searchValue);
+    }, [searchValue]);
+
+    useEffect(() => {
+        if (searchValue.trim()) {
+            location({
+                pathname: config.routes.search,
+                search: `?${createSearchParams({ query: searchValue })}`,
+            });
         }
-        if (searchValue === '') {
-            location(routes.home);
-            setToPageSearch(false);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [searchValue]);
+    const handleChange = (e) => {
+        const value = e.target.value;
+        if (!value.startsWith(' ')) {
+            setSearchValue(value);
         }
     };
-
     const handleClear = () => {
-        inputRef.current.focus();
         setSearchValue('');
     };
     return (
@@ -49,7 +50,7 @@ function Search({ round }) {
             {...props}
             leftIcon={<SearchIcon />}
             rightIcon={<CloseIcon />}
-            ref={inputRef}
+            // ref={inputRef}
             inputEvent={{
                 value: searchValue,
                 onChange: handleChange,
