@@ -10,10 +10,10 @@ function App() {
                     <Route path={routes.home} element={<MainLayout />}>
                         {routesPage}
                     </Route>
-                    <Route path={routes.normal} element={<MainLayout />}>
+                    {/* <Route path={routes.normal} element={<MainLayout />}>
                         {routesPage}
-                    </Route>
-                </Routes> 
+                    </Route> */}
+                </Routes>
             </div>
         </BrowserRouter>
     );

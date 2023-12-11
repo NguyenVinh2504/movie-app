@@ -3,12 +3,12 @@ import Header from '../components/Header';
 import { Container } from '@mui/material';
 import Footer from '../components/Footer';
 import MediaDetail from '~/components/MediaDetail';
-import GlobalLoading from '~/components/GlobalLoading';
+// import GlobalLoading from '~/components/GlobalLoading';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
+// import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
 import userApi from '~/api/module/user.api';
-import { setUser, updateUser } from '~/redux/features/userSlice';
+import { updateUser } from '~/redux/features/userSlice';
 import { openSelector, userValue } from '~/redux/selectors';
 // import Search from '../components/Search';
 

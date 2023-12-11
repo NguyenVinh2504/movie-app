@@ -1,28 +1,28 @@
 const routes = {
     normal: '/',
-    home: '/movie-app',
-    aboutUs: '/movie-app/about',
-    movie: '/movie-app/movie',
-    topRateMovie: '/movie-app/movie/top-rate',
-    tv: '/movie-app/tv',
-    mediaList: '/movie-app/:mediaType',
-    search: '/movie-app/search',
+    home: '/',
+    aboutUs: '/about',
+    movie: '/movie',
+    topRateMovie: '/movie/top-rate',
+    tv: '/tv',
+    mediaList: '/:mediaType',
+    search: '/search',
     //profile
-    profile: '/movie-app/profile',
-    favorite: '/movie-app/profile/favorite',
-    favoriteTvList: '/movie-app/profile/favorite/tv',
-    editProfile: '/movie-app/profile/edit-profile',
-    settingProfile: '/movie-app/profile/setting-profile',
+    profile: '/profile',
+    favorite: '/profile/favorite',
+    favoriteTvList: '/profile/favorite/tv',
+    editProfile: '/profile/edit-profile',
+    settingProfile: '/profile/setting-profile',
     //profile
 
     //setting
-    deleteAccount: '/movie-app/edit-profile/delete-account',
+    deleteAccount: '/edit-profile/delete-account',
     //setting
 
     //auth
     // account: '/movie-app/account',
-    signup: '/movie-app/signup',
-    login: '/movie-app/login',
+    signup: '/signup',
+    login: '/login',
     error: '*',
 };
 
