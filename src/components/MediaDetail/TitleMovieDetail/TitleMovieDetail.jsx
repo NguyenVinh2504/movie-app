@@ -39,8 +39,8 @@ function TitleMovieDetail({ loading, dataDetail, genres }) {
                     display={'flex'}
                     alignItems={'center'}
                     mt={1}
-                    height={'24px'}
                     overflow={'hidden'}
+                    flexWrap={'wrap'}
                     sx={{
                         'h6:not(:first-of-type)': {
                             '::before': {

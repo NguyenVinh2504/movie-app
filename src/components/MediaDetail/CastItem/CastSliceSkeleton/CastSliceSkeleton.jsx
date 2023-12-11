@@ -23,6 +23,9 @@ function CastSliceSkeleton({ cast }) {
         <Swiper
             modules={[Navigation, Autoplay]}
             spaceBetween={8}
+            simulateTouch={false}
+            shortSwipes={false}
+            preventInteractionOnTransition={false}
             breakpoints={{
                 0: {
                     slidesPerView: 3,

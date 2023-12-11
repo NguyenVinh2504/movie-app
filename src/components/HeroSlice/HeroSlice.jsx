@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import { getIdDetail, toggleDetail } from '~/redux/features/mediaDetailSlice';
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import mediaApi from '~/api/module/media.api';
 import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
@@ -30,18 +30,15 @@ function HeroSlice() {
 
     const dispatch = useDispatch();
 
-    const handleOpen = useCallback(
-        (item) => {
-            dispatch(toggleDetail(true));
-            dispatch(
-                getIdDetail({
-                    mediaType: item.media_type ?? mediaType,
-                    id: item.id,
-                }),
-            );
-        },
-        [dispatch, mediaType],
-    );
+    const handleOpen = (item) => {
+        dispatch(toggleDetail(true));
+        dispatch(
+            getIdDetail({
+                mediaType: item.media_type ?? mediaType,
+                id: item.id,
+            }),
+        );
+    };
     return <HeroSliceList onOpen={handleOpen} medias={medias} isLoading={isLoading} />;
 }
 

@@ -6,7 +6,6 @@ import Media from '~/components/Media';
 import { toast } from 'react-toastify';
 import mediaApi from '~/api/module/media.api';
 import { memo, useCallback, useEffect, useState } from 'react';
-import { SvgSpinners3DotsBounce } from '~/components/Icon';
 function Home() {
     const [medias, setMedias] = useState([]);
     const [currPage, setCurrPage] = useState(1);
@@ -74,11 +73,6 @@ function Home() {
             <Container maxWidth={'xl'} sx={{ px: '0' }}>
                 <TabItems contentItems={homeTabItems} onCurrCategory={handleCurrCategory} />
                 <Media medias={medias} isLoading={isLoading} mediaType={homeTabItems[currCategory].mediaType} />
-                {isLoading && (
-                    <Stack mt={2} alignItems={'center'}>
-                        <SvgSpinners3DotsBounce />
-                    </Stack>
-                )}
                 {!isLoading && (
                     <Stack mt={2} justifyContent={'center'} flexDirection={'row'}>
                         <Button variant="contained" color="secondary" onClick={handleLoadingMore}>

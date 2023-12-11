@@ -9,6 +9,8 @@ function VideoSliceSkeleton() {
     return (
         <Swiper
             spaceBetween={5}
+            simulateTouch={false}
+            shortSwipes={false}
             breakpoints={{
                 600: {
                     slidesPerView: 3,

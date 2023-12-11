@@ -1,6 +1,7 @@
 import MediaItems from '../MediaItems';
-import { Grid, Box } from '@mui/material';
+import { Grid, Box, Stack } from '@mui/material';
 import MediaItemSekeleton from '../MediaItemSekeleton';
+import { SvgSpinners3DotsBounce } from '../Icon';
 function Media({ medias, isLoading, mediaType }) {
     return (
         <Box sx={{ px: '0', mt: '1rem' }}>
@@ -11,6 +12,11 @@ function Media({ medias, isLoading, mediaType }) {
                     </Grid>
                 ))}
                 {isLoading && <MediaItemSekeleton cardNumber={10} />}
+                {isLoading && (
+                    <Stack mt={2} alignItems={'center'} width={'100%'}>
+                        <SvgSpinners3DotsBounce />
+                    </Stack>
+                )}
             </Grid>
         </Box>
     );

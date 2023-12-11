@@ -38,24 +38,47 @@ function MediaItems({ item, mediaType }) {
             >
                 {/* poster */}
                 <Box
-                    sx={{ aspectRatio: '2/3', width: '100%', height: '100%', cursor: 'pointer' }}
+                    sx={{
+                        width: '100%',
+                        aspectRatio: '2/3',
+                        overflow: 'hidden',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        cursor: 'pointer',
+                    }}
                     component={'button'}
                     onClick={handleOpen}
                 >
-                    <LazyLoadImage
-                        // aspectRatio={'2/3'}
-                        style={{ objectFit: 'cover' }}
-                        src={
-                            item.poster_path ?? item.profile_path
-                                ? tmdbConfigs.posterPath(item?.poster_path ?? item?.profile_path)
-                                : images.noImage19x6
-                        }
-                        alt={item.title}
-                        effect="blur"
-                        wrapperProps={{
-                            style: { transitionDelay: '0.5s' },
+                    <Box
+                        sx={{
+                            transition: 'all 0.5s ease ',
+                            width: '100%',
+                            height: '100%',
+                            ':hover': {
+                                height: '105%',
+                            },
+                            '@media (hover: none)': {
+                                '&:hover': {
+                                    height: '100%',
+                                },
+                            },
                         }}
-                    />
+                    >
+                        <LazyLoadImage
+                            style={{ objectFit: 'cover' }}
+                            src={
+                                item.poster_path ?? item.profile_path
+                                    ? tmdbConfigs.posterPath(item?.poster_path ?? item?.profile_path)
+                                    : images.noImage19x6
+                            }
+                            alt={item.title}
+                            effect="blur"
+                            wrapperProps={{
+                                style: { transitionDelay: '0.5s' },
+                            }}
+                        />
+                    </Box>
                 </Box>
                 {/* poster */}
 

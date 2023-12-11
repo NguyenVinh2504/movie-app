@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import TabItems from '~/components/TabItems';
 import Media from '~/components/Media';
-import { SvgSpinners3DotsBounce } from '~/components/Icon';
 import mediaApi from '~/api/module/media.api';
 import { useParams } from 'react-router-dom';
 import { MovieTabItems } from '~/config/MovieTabMenuItems/MovieTabMenuItems';
@@ -93,11 +92,6 @@ function MediaListPage() {
                     onCurrCategory={handleCurrCategory}
                 />
                 <Media medias={medias} isLoading={isLoading} mediaType={mediaType} />
-                {isLoading && (
-                    <Stack mt={2} alignItems={'center'}>
-                        <SvgSpinners3DotsBounce />
-                    </Stack>
-                )}
                 {!isLoading && (
                     <Stack mt={2} justifyContent={'center'} flexDirection={'row'}>
                         <Button variant="contained" color="secondary" onClick={handleLoadingMore}>

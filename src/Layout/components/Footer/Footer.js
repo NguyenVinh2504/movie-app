@@ -35,7 +35,7 @@ function Footer() {
                     <Container maxWidth="auto" sx={{ maxWidth: '700px' }}>
                         <Grid container fontSize={'16px'} spacing={2}>
                             {menuItems.map((item, index) => (
-                                <Grid item key={index} xs={6} md textAlign={'center'}>
+                                <Grid item key={index} xs={12} md textAlign={'center'}>
                                     <NavLink
                                         // className={(nav) => cx({ active: nav.isActive }, 'menu')}
                                         to={item.path}

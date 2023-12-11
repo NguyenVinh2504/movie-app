@@ -2,12 +2,13 @@ import { Box, Button, Grid, IconButton, Stack, Typography, styled, useMediaQuery
 import { SwiperSlide, Swiper } from 'swiper/react';
 import 'swiper/scss';
 import 'swiper/scss/navigation';
+import 'swiper/css/effect-fade';
 import { AboutIcon, PlayIcon } from '~/components/Icon';
 import uiConfigs from '~/config/ui.config';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import tmdbConfigs from '~/api/configs/tmdb.configs';
 import HeroSliceSkeleton from '../HeroSliceSkeleton';
-import { Autoplay, Navigation } from 'swiper/modules';
+import { Autoplay, EffectFade, Navigation } from 'swiper/modules';
 import SwiperNavigation from '~/components/SwiperNavigation';
 
 function HeroSliceList({ isLoading, medias, onOpen }) {
@@ -24,6 +25,7 @@ function HeroSliceList({ isLoading, medias, onOpen }) {
             },
         },
     }));
+    console.log('reeeee');
     return (
         <>
             <SwiperNavigation>
@@ -36,11 +38,13 @@ function HeroSliceList({ isLoading, medias, onOpen }) {
                         // border: '1px solid #848383',
                     }}
                     navigation={true}
-                    modules={[Navigation, Autoplay]}
+                    effect={'fade'}
+                    modules={[Navigation, Autoplay, EffectFade]}
                     autoplay={{
-                        delay: 4000,
+                        delay: 3000,
                         disableOnInteraction: false,
                     }}
+                    simulateTouch={false}
                 >
                     {!isLoading &&
                         medias?.map((item) => (

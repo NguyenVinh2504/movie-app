@@ -5,7 +5,6 @@ import { useSearchParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import mediaApi from '~/api/module/media.api';
-import { SvgSpinners3DotsBounce } from '~/components/Icon';
 import { usePrevious } from '~/Hooks';
 
 function MediaSearch() {
@@ -72,11 +71,6 @@ function MediaSearch() {
                     Kết quả tìm kiếm: {query}
                 </Typography>
                 <Media medias={dataSearch} isLoading={isLoading} />
-                {isLoading && (
-                    <Stack mt={2} alignItems={'center'}>
-                        <SvgSpinners3DotsBounce />
-                    </Stack>
-                )}
                 {!isLoading && moreButton && query !== null && (
                     <Stack mt={2} justifyContent={'center'} flexDirection={'row'}>
                         <Button variant="contained" color="secondary" onClick={handleLoadingMore}>
