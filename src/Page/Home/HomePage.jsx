@@ -34,7 +34,7 @@ function Home() {
             if (response) {
                 setIsLoading(false);
                 if (response.total_pages === currPage) return;
-                else if (response.results.length === 0) setIsLoading(true);
+                else if (response?.results?.length === 0) setIsLoading(true);
                 else if (currPage !== 1) setMedias((m) => [...m, ...response.results]);
                 else setMedias([...response.results]);
             }
