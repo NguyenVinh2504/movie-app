@@ -73,5 +73,5 @@
         "react-app-rewired": "^2.2.1",
         "sass": "^1.67.0"
     },
-    "proxy": "http://localhost:2504"
+    "proxy": "https://viejoy-api.onrender.com"
 }
