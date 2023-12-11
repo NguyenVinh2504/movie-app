@@ -1,5 +1,11 @@
-import 'dotenv/config.js';
-
 export const env = {
-    FIRE_BASE_API_KEY: process.env.FIRE_BASE_API_KEY,
+    API_URL_DEV: process.env.REACT_APP_API_URL_DEV,
+    API_URL_PROD: process.env.REACT_APP_API_URL_PROD,
+    FIRE_BASE_API_KEY: process.env.REACT_APP_FIRE_BASE_API_KEY,
+    AUTH_DOMAIN: process.env.REACT_APP_AUTHDOMAIN,
+    PROJECT_ID: process.env.REACT_APP_PROJECTID,
+    STORAGE_BUCKET: process.env.REACT_APP_STORAGEBUCKET,
+    MESSAGING_SENDER_ID: process.env.REACT_APP_MESSAGINGSENDERID,
+    APPID: process.env.REACT_APP_APPID,
+    MEASUREMENT_ID: process.env.REACT_APP_MEASUREMENTID,
 };
