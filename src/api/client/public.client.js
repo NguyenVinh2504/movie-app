@@ -3,11 +3,10 @@ import queryString from 'query-string';
 import { API_ROOT } from '~/utils/constants';
 
 const baseURL = `${API_ROOT}/api/v1/`;
-console.log(API_ROOT);
 
 const publicClient = axios.create({
     baseURL,
-    // withCredentials: true,
+    withCredentials: true,
     paramsSerializer: {
         encode: (params) => queryString.stringify(params),
     },
