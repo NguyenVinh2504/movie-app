@@ -1,10 +1,12 @@
 import axios from 'axios';
 import queryString from 'query-string';
 import { API_ROOT } from '~/utils/constants';
+axios.defaults.withCredentials = true;
 
 const baseURL = `${API_ROOT}/api/v1/`;
 const publicClient = axios.create({
     baseURL,
+    withCredentials: true,
     paramsSerializer: {
         encode: (params) => queryString.stringify(params),
     },
