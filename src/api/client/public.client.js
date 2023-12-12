@@ -3,7 +3,6 @@ import queryString from 'query-string';
 import { API_ROOT } from '~/utils/constants';
 
 const baseURL = `${API_ROOT}/api/v1/`;
-
 const publicClient = axios.create({
     baseURL,
     withCredentials: true,

@@ -55,10 +55,10 @@ function MediaSearch() {
     useEffect(() => {
         if (currPage === totalPage) {
             setMoreButton(false);
-        } else {
+        } else if (query !== null) {
             setMoreButton(true);
         }
-    }, [currPage, totalPage]);
+    }, [currPage, query, totalPage]);
     return (
         <Container maxWidth={'auto'} sx={{ px: '0' }}>
             <Container maxWidth={'xl'}>

@@ -25,7 +25,6 @@ function HeroSliceList({ isLoading, medias, onOpen }) {
             },
         },
     }));
-    console.log('reeeee');
     return (
         <>
             <SwiperNavigation>

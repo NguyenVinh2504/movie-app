@@ -52,7 +52,6 @@ function Header() {
     if (breakpoints && sidebarOpen) {
         setSidebarOpen(!sidebarOpen);
     }
-    console.log('re header');
     return (
         <>
             {sidebarOpen && (
@@ -131,7 +130,12 @@ function Header() {
                             </Box>
 
                             {/* user menu */}
-                            <Stack direction={'row'} spacing={3} alignItems={'center'}>
+                            <Stack
+                                direction={'row'}
+                                spacing={3}
+                                alignItems={'center'}
+                                sx={{ display: { xs: 'none', sm: 'flex' } }}
+                            >
                                 {/* <IconButton
                                     disableRipple
                                     sx={{
@@ -142,14 +146,14 @@ function Header() {
                                     <HeartIcon />
                                 </IconButton> */}
 
-                                <Tooltip title="Thông báo" arrow>
-                                    <IconButton
-                                        disableRipple
-                                        color="neutral"
-                                        sx={{
-                                            display: { xs: 'none', lg: 'inline-flex' },
-                                        }}
-                                    >
+                                <Tooltip
+                                    title="Thông báo"
+                                    arrow
+                                    sx={{
+                                        display: { xs: 'none', lg: 'inline-flex' },
+                                    }}
+                                >
+                                    <IconButton disableRipple color="neutral">
                                         <Badge badgeContent={999} color="primary" variant="dot">
                                             <NotificationIcon />
                                         </Badge>
@@ -157,18 +161,13 @@ function Header() {
                                 </Tooltip>
                                 {!user && (
                                     <NavLink to={config.routes.login}>
-                                        <Button
-                                            variant="contained"
-                                            disableElevation
-                                            disableRipple
-                                            sx={{ display: { xs: 'none', sm: 'inline-block' } }}
-                                        >
+                                        <Button variant="contained" disableElevation disableRipple>
                                             Đăng Nhập
                                         </Button>
                                     </NavLink>
                                 )}
                                 {user && (
-                                    <Box sx={{ display: { xs: 'none', sm: 'inline-block' } }}>
+                                    <Box>
                                         <UserMenu />
                                     </Box>
                                 )}

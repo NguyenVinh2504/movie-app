@@ -27,7 +27,6 @@ import userApi from '~/api/module/user.api';
 import { toast } from 'react-toastify';
 
 function UserMenu() {
-    console.log('re user');
     const user = useSelector(userValue);
     const dispatch = useDispatch();
 
