@@ -19,13 +19,15 @@ function HeaderProfile({ valueTabItems }) {
                 }}
             >
                 {/* banner */}
-                <Image
-                    src={
-                        'https://firebasestorage.googleapis.com/v0/b/movie-app-8766b.appspot.com/o/images%2FBannerVieJoy%20(1).png?alt=media&token=6c3f75e0-4525-4571-90a3-c39209c33353'
-                    }
-                    alt={'banner'}
-                    sx={{ borderRadius: '16px' }}
-                />
+                <Box sx={{ aspectRatio: '1536/431', width: '100%' }}>
+                    <Image
+                        alt={'banner'}
+                        src={
+                            'https://firebasestorage.googleapis.com/v0/b/movie-app-8766b.appspot.com/o/images%2FBannerVieJoy%20(1).png?alt=media&token=6c3f75e0-4525-4571-90a3-c39209c33353'
+                        }
+                        sx={{ borderRadius: '16px' }}
+                    />
+                </Box>
                 {/* banner */}
 
                 {/* avatar */}

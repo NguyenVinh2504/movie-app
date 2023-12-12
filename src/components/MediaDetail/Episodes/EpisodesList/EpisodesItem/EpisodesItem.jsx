@@ -15,7 +15,7 @@ import uiConfigs from '~/config/ui.config';
 import images from '~/assets/image';
 import tmdbConfigs from '~/api/configs/tmdb.configs';
 import { memo } from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import Image from '~/components/Image';
 function EpisodesItem({ item, dataSeason }) {
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const ListCustoms = styled(ListItemButton)(({ theme }) => ({
@@ -64,13 +64,8 @@ function EpisodesItem({ item, dataSeason }) {
     const CustomImage = ({ item }) => {
         return (
             <Box sx={{ aspectRatio: '16/9' }}>
-                <LazyLoadImage
-                    effect="blur"
+                <Image
                     alt={item.name}
-                    wrapperProps={{
-                        style: { transitionDelay: '0.5s' },
-                    }}
-                    style={{ objectFit: 'cover' }}
                     src={
                         item?.still_path || dataSeason.poster_path
                             ? tmdbConfigs.posterPath(item?.still_path ?? dataSeason.poster_path)

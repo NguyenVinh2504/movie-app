@@ -5,10 +5,10 @@ import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getIdDetail, toggleDetail } from '~/redux/features/mediaDetailSlice';
 import uiConfigs from '~/config/ui.config';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import tmdbConfigs from '~/api/configs/tmdb.configs';
 import images from '~/assets/image';
+import Image from '../Image';
 function MediaItems({ item, mediaType }) {
     const [liked, setLiked] = useState(false);
     const toggleLikebox = () => {
@@ -65,18 +65,13 @@ function MediaItems({ item, mediaType }) {
                             },
                         }}
                     >
-                        <LazyLoadImage
-                            style={{ objectFit: 'cover' }}
+                        <Image
                             src={
                                 item.poster_path ?? item.profile_path
                                     ? tmdbConfigs.posterPath(item?.poster_path ?? item?.profile_path)
                                     : images.noImage19x6
                             }
                             alt={item.title}
-                            effect="blur"
-                            wrapperProps={{
-                                style: { transitionDelay: '0.5s' },
-                            }}
                         />
                     </Box>
                 </Box>

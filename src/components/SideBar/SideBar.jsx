@@ -170,12 +170,12 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
             }
         </Box>
     );
-    console.log('re s');
     return (
         <Drawer
             anchor={'left'}
             open={open}
             onClose={onClose}
+            transitionDuration={800}
             sx={{
                 '& .MuiDrawer-paper': {
                     width: { xs: '92%', sm: '45%', md: '32%' },

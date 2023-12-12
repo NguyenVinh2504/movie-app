@@ -9,19 +9,14 @@ import { memo } from 'react';
 import tmdbConfigs from '~/api/configs/tmdb.configs';
 import images from '~/assets/image';
 import SwiperNavigation from '~/components/SwiperNavigation';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import Image from '~/components/Image';
 function CastItem({ item }) {
     return (
         <Box sx={{ bgcolor: 'rgba(255,255,255,0.1)', borderRadius: '4px', overflow: 'hidden' }}>
             <Box sx={{ aspectRatio: 1, cursor: 'pointer' }}>
-                <LazyLoadImage
-                    effect="blur"
-                    wrapperProps={{
-                        style: { transitionDelay: '0.5s' },
-                    }}
+                <Image
                     src={item.profile_path ? tmdbConfigs.posterPath(item.profile_path) : images.noImage2x3}
                     alt={item.title}
-                    style={{ objectFit: 'cover' }}
                 />
             </Box>
             <Stack p={1}>

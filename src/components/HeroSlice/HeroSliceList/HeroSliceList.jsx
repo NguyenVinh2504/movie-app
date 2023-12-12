@@ -5,11 +5,11 @@ import 'swiper/scss/navigation';
 import 'swiper/css/effect-fade';
 import { AboutIcon, PlayIcon } from '~/components/Icon';
 import uiConfigs from '~/config/ui.config';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import tmdbConfigs from '~/api/configs/tmdb.configs';
 import HeroSliceSkeleton from '../HeroSliceSkeleton';
 import { Autoplay, EffectFade, Navigation } from 'swiper/modules';
 import SwiperNavigation from '~/components/SwiperNavigation';
+import Image from '~/components/Image';
 
 function HeroSliceList({ isLoading, medias, onOpen }) {
     const pointDownLg = useMediaQuery((theme) => theme.breakpoints.down('lg'));
@@ -68,16 +68,11 @@ function HeroSliceList({ isLoading, medias, onOpen }) {
                                     }}
                                 >
                                     {/* background image */}
-                                    <LazyLoadImage
+                                    <Image
                                         src={tmdbConfigs.backdropPath(
                                             pointDownSm ? item.poster_path : item.backdrop_path,
                                         )}
                                         alt={item.title}
-                                        style={{ objectFit: 'cover' }}
-                                        effect="blur"
-                                        wrapperProps={{
-                                            style: { transitionDelay: '0.5s' },
-                                        }}
                                     />
                                     <Box
                                         sx={{

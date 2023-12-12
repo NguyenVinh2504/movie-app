@@ -1,10 +1,10 @@
 import { Box, IconButton, Skeleton } from '@mui/material';
 import { PlayIcon } from '~/components/Icon';
 import uiConfigs from '~/config/ui.config';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
 import tmdbConfigs from '~/api/configs/tmdb.configs';
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
+import Image from '~/components/Image';
 function BannerMovieDetail({ loading, dataDetail, mediaType }) {
     return (
         <Box sx={{ position: 'relative', overflow: 'hidden', aspectRatio: '16/9', pl: 1 }}>
@@ -31,16 +31,7 @@ function BannerMovieDetail({ loading, dataDetail, mediaType }) {
                             </IconButton>
                         </Link>
                     )}
-                    <LazyLoadImage
-                        style={{ objectFit: 'cover' }}
-                        src={tmdbConfigs.backdropPath(dataDetail.backdrop_path)}
-                        alt={dataDetail.title}
-                        effect="blur"
-                        wrapperProps={{
-                            // If you need to, you can tweak the effect transition using the wrapper style.
-                            style: { transitionDelay: '0.5s' },
-                        }}
-                    />
+                    <Image src={tmdbConfigs.backdropPath(dataDetail.backdrop_path)} alt={dataDetail.title} />
                     <Box
                         sx={{
                             ...uiConfigs.style.gradientBgImage,

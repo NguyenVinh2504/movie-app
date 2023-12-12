@@ -54,9 +54,9 @@ function Header() {
     }
     return (
         <>
-            {sidebarOpen && (
-                <SideBar open={sidebarOpen} onClick={toggleSidebar} onKeyDown={toggleSidebar} onClose={toggleSidebar} />
-            )}
+            {/* {sidebarOpen && ( */}
+            <SideBar open={sidebarOpen} onClick={toggleSidebar} onKeyDown={toggleSidebar} onClose={toggleSidebar} />
+            {/* )} */}
             <ScrollAppBar>
                 <AppBar elevation={0} position="sticky">
                     <Toolbar

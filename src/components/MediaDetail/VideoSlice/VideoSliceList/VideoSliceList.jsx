@@ -2,14 +2,14 @@ import { Link } from 'react-router-dom';
 import { SwiperSlide } from 'swiper/react';
 import tmdbConfigs from '~/api/configs/tmdb.configs';
 import images from '~/assets/image';
-import { IconButton } from '@mui/material';
+import { Box, IconButton } from '@mui/material';
 import uiConfigs from '~/config/ui.config';
 import { PlayIcon } from '~/components/Icon';
 import SwiperNavigation from '~/components/SwiperNavigation';
 import { Swiper } from 'swiper/react';
 import { Autoplay, Navigation } from 'swiper/modules';
 import { memo } from 'react';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
+import Image from '~/components/Image';
 
 function VideoSliceList({ videos }) {
     return (
@@ -28,15 +28,12 @@ function VideoSliceList({ videos }) {
                     {videos?.map((item, index) => (
                         <SwiperSlide key={index}>
                             <Link to={tmdbConfigs.youtubePath(item.key)} target="_blank">
-                                <LazyLoadImage
-                                    src={item.key ? tmdbConfigs.thumbnailYtb(item.key) : images.noImage19x6}
-                                    alt={item.name}
-                                    style={{ aspectRatio: '16/9', objectFit: 'cover' }}
-                                    effect="blur"
-                                    wrapperProps={{
-                                        style: { transitionDelay: '0.5s' },
-                                    }}
-                                />
+                                <Box sx={{ aspectRatio: '16/9' }}>
+                                    <Image
+                                        src={item.key ? tmdbConfigs.thumbnailYtb(item.key) : images.noImage19x6}
+                                        alt={item.name}
+                                    />
+                                </Box>
                                 <IconButton
                                     color="secondNeutral"
                                     sx={{
