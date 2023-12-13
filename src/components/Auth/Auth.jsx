@@ -40,7 +40,7 @@ function Auth({ titleAuth, children }) {
                 {/* logo */}
 
                 {/* text-heading */}
-                <Typography variant="h5" sx={{ fontWeight: 500 }}>
+                <Typography variant="h5" sx={{ fontWeight: 500 }} textAlign={'center'}>
                     {titleAuth}
                 </Typography>
                 {/* text-heading */}

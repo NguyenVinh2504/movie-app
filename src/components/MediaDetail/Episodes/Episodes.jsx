@@ -62,7 +62,11 @@ function Episodes({ seasons, seriesId, numberSeasonValue }) {
                 Array(4)
                     .fill(0)
                     .map((item, index) => (
-                        <Skeleton variant={'rectangular'} key={index} height={'160px'} sx={{ my: 2 }} />
+                        <Skeleton
+                            variant={'rounded'}
+                            key={index}
+                            sx={{ my: 2, height: { xs: '110px', sm: '160px' } }}
+                        />
                     ))}
             {!isLoading && <EpisodesList dataSeason={seasonDetailValue} visible={visible} />}
             {/* them tap phim */}

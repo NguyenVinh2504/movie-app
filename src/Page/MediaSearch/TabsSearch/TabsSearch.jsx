@@ -17,7 +17,7 @@ function TabsSearch({ value, onListItemClick }) {
             <List component="nav" aria-label="main mailbox folders" sx={{ py: 2 }}>
                 {menuItemsSearch.map((item, index) => (
                     <ListItemButton selected={value === index} onClick={() => onListItemClick(index)} key={index}>
-                        <ListItemIcon>{item.icon}</ListItemIcon>
+                        <Box sx={{ pr: 1 }}>{item.icon}</Box>
                         <ListItemText primary={item.title} />
                     </ListItemButton>
                 ))}

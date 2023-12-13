@@ -36,7 +36,11 @@ function SingUp() {
             confirmPassword: '',
         },
         validationSchema: Yup.object({
-            name: Yup.string().min(8, 'Tên đăng nhập phải tối thiểu 8 kí tự').required('Vui lòng nhập tên đăng nhập'),
+            name: Yup.string()
+                .min(8, 'Tên đăng nhập phải tối thiểu 8 kí tự')
+                .required('Vui lòng nhập tên đăng nhập')
+                .trim('Không được có khoảng trống')
+                .strict(),
             email: Yup.string().email('Định dạng email không đúng').required('Vui lòng nhập email'),
             password: Yup.string()
                 .min(8, 'Mật khẩu phải chưa ít nhất 8 kí tự')

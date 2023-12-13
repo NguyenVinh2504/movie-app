@@ -119,7 +119,7 @@ function EpisodesItem({ item, dataSeason }) {
                                 </Stack>
                             }
                             secondary={
-                                <Typography variant="body2" mt={2}>
+                                <Typography variant="body2" mt={2} textAlign={'justify'}>
                                     {item.overview}
                                 </Typography>
                             }
@@ -162,7 +162,7 @@ function EpisodesItem({ item, dataSeason }) {
                                 </Stack>
                             }
                             secondary={
-                                <Typography variant="subtitle2" mt={1} fontWeight={300}>
+                                <Typography variant="subtitle2" mt={1} fontWeight={300} textAlign={'justify'}>
                                     {item.overview}
                                 </Typography>
                             }

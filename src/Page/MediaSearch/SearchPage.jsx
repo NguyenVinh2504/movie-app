@@ -24,8 +24,11 @@ function MediaSearch() {
     const query = searchParams.get('query');
     const prevQuery = usePrevious(query);
     useEffect(() => {
-        if (query !== null) setIsLoading(true);
-        // setMoreButton(false);
+        if (query !== null) {
+            setIsLoading(true);
+        } else if (query === null) {
+            setIsLoading(false);
+        }
         const getDataSearch = async () => {
             // console.log('get');
             const { response, err } = await mediaApi.search({
@@ -57,6 +60,11 @@ function MediaSearch() {
     const handleLoadingMore = () => {
         setCurrPage(currPage + 1);
     };
+    // useEffect(() => {
+    //     if (query === null) {
+    //         setIsLoading(false);
+    //     }
+    // }, [query]);
     useEffect(() => {
         if (currPage === totalPage) {
             setMoreButton(false);
@@ -97,14 +105,16 @@ function MediaSearch() {
                 )}
                 {/* tab type search mobile*/}
                 <Grid item xs={12} sm={8} md={9} lg={9.5} xl={10}>
-                    <Typography variant={pointDownLg ? 'h5' : 'h4'} fontWeight={500} mb={2} display={'block'}>
-                        Kết quả tìm kiếm: {query}
-                    </Typography>
+                    {query && (
+                        <Typography variant={pointDownLg ? 'h5' : 'h4'} fontWeight={500} mb={2} display={'block'}>
+                            Kết quả tìm kiếm: {query}
+                        </Typography>
+                    )}
                     <Media medias={dataSearch} isLoading={isLoading} mediaType={menuItemsSearch[selectedIndex].type} />
                     {!isLoading && moreButton && query !== null && (
                         <Stack mt={2} justifyContent={'center'} flexDirection={'row'}>
                             <Button variant="contained" color="secondary" onClick={handleLoadingMore}>
-                                Loading More
+                                See More
                             </Button>
                         </Stack>
                     )}
