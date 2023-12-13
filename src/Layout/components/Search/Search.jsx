@@ -1,7 +1,7 @@
 import Input from '~/components/Input';
 import { CloseIcon, SearchIcon } from '~/components/Icon';
-import { useState, useEffect, memo } from 'react';
-import { createSearchParams, useLocation, useNavigate } from 'react-router-dom';
+import { useState, memo } from 'react';
+import { createSearchParams, useNavigate } from 'react-router-dom';
 import config from '~/config';
 // import { useDebounce } from '~/Hooks';
 function Search({ round }) {
@@ -12,7 +12,6 @@ function Search({ round }) {
     const [searchValue, setSearchValue] = useState('');
     // const [toPageSearch, setToPageSearch] = useState(false);
     const location = useNavigate();
-    const { pathname } = useLocation();
     // const debounce = useDebounce(searchValue, 100);
     // useEffect(() => {
     //     if (pathname !== config.routes.search) setToPageSearch(false);
@@ -20,26 +19,33 @@ function Search({ round }) {
     // useEffect(() => {
     //     if (debounce !== '') setToPageSearch(true);
     // }, [debounce]);
-    useEffect(() => {
-        if (!searchValue.trim() && pathname === config.routes.search) {
-            location(config.routes.home);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchValue]);
+    // useEffect(() => {
+    //     if (!searchValue.trim() && pathname === config.routes.search) {
+    //         location(config.routes.home);
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [searchValue]);
 
-    useEffect(() => {
-        if (searchValue.trim()) {
-            location({
-                pathname: config.routes.search,
-                search: `?${createSearchParams({ query: searchValue })}`,
-            });
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [searchValue]);
+    // useEffect(() => {
+    //     if (searchValue.trim()) {
+    //         location({
+    //             pathname: config.routes.search,
+    //             search: `?${createSearchParams({ query: searchValue })}`,
+    //         });
+    //     }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [searchValue]);
     const handleChange = (e) => {
         const value = e.target.value;
-        if (!value.startsWith(' ')) {
+        if (!value.startsWith(' ') && value.trim()) {
             setSearchValue(value);
+            location({
+                pathname: config.routes.search,
+                search: `?${createSearchParams({ query: value })}`,
+            });
+        } else {
+            setSearchValue(value);
+            location(config.routes.home);
         }
     };
     const handleClear = () => {

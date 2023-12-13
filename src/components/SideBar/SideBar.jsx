@@ -170,7 +170,6 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
             }
         </Box>
     );
-    console.log('r');
     return (
         <Drawer
             anchor={'left'}

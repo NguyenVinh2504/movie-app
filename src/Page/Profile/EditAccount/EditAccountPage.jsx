@@ -34,10 +34,13 @@ function EditAccount() {
         }),
         enableReinitialize: true,
         onSubmit: async (values) => {
-            const checkValue = isEqual(formik.initialValues, values);
+            const checkValue = isEqual(formik.initialValues, { name: values.name.trim(), phone: values.phone.trim() });
             setDisable(!disable);
             if (!checkValue) {
-                const { response, err } = await userApi.profileUpdate({ name: values.name, phone: values.phone });
+                const { response, err } = await userApi.profileUpdate({
+                    name: values.name.trim(),
+                    phone: values.phone.trim(),
+                });
                 if (response) {
                     toast.success('Cập nhật thông tin thành công');
                     dispatch(updateUser(response));

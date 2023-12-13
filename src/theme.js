@@ -268,6 +268,18 @@ const theme = createTheme({
                 },
             ],
         },
+        MuiListItemButton: {
+            styleOverrides: {
+                root: {
+                    '&.Mui-selected': {
+                        backgroundColor: `${Color.primary}!important`,
+                    },
+                    ':hover': {
+                        backgroundColor: Color.secondary,
+                    },
+                },
+            },
+        },
         MuiCssBaseline: {
             styleOverrides: `
             * {
