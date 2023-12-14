@@ -23,7 +23,7 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }
         backgroundColor: theme.button.neutralButton.solid.active,
     },
     [theme.breakpoints.down('sm')]: {
-        fontSize: theme.typography.pxToRem(12),
+        fontSize: theme.typography.pxToRem(13),
         // backgroundColor: 'red',
         padding: '0px 10px 0px 10px',
         minHeight: '32px',

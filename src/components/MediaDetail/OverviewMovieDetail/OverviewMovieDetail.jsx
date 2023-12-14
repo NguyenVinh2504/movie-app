@@ -24,13 +24,12 @@ function OverviewMovieDetail({ loading, dataDetail }) {
                     <Box ref={bodyText}>
                         <Typography
                             variant={pointDownSm ? 'body2' : 'body1'}
-                            textAlign={'justify'}
-                            sx={{ ...uiConfigs.style.typoLines(!seeMore && heightBody > 51.2 ? 2 : 'none') }}
+                            sx={{ ...uiConfigs.style.typoLines(!seeMore && heightBody > 41.6 ? 2 : 'none') }}
                         >
                             {dataDetail.overview}
                         </Typography>
                     </Box>
-                    {heightBody > 51.2 && (
+                    {heightBody > 41.6 && (
                         <ButtonBase onClick={() => setSeeMore(!seeMore)}>
                             <Typography variant={pointDownSm ? 'body2' : 'body1'} fontWeight={'500'}>
                                 {seeMore ? 'Ẩn bớt' : 'Xem Thêm'}

@@ -119,7 +119,7 @@ function EpisodesItem({ item, dataSeason }) {
                                 </Stack>
                             }
                             secondary={
-                                <Typography variant="body2" mt={2} textAlign={'justify'}>
+                                <Typography variant="body2" mt={2}>
                                     {item.overview}
                                 </Typography>
                             }
@@ -133,7 +133,7 @@ function EpisodesItem({ item, dataSeason }) {
                 >
                     <CustomDivider />
                     <ListCustoms sx={{ px: 0, py: 3 }}>
-                        <Typography variant="h6" width={'20%'} textAlign={'center'}>
+                        <Typography variant="h5" width={'20%'} textAlign={'center'}>
                             {item.episode_number}
                         </Typography>
                         <CustomBox>
@@ -143,26 +143,27 @@ function EpisodesItem({ item, dataSeason }) {
                             <CustomImage item={item}></CustomImage>
                         </CustomBox>
                         <ListItemText
-                            sx={{ width: '100%' }}
+                            sx={{
+                                width: '100%',
+                                // '& .MuiListItemText-primary': {
+                                //     display: 'flex',
+                                // },
+                            }}
                             primary={
                                 <Stack direction={'row'} justifyContent={'space-between'}>
-                                    <Typography variant="h6" width={'80%'}>
+                                    <Typography variant="h6" width={'80%'} fontWeight={500}>
                                         {item.name}
                                     </Typography>
+
                                     {item.runtime && (
-                                        <Typography
-                                            variant="subtitle1"
-                                            fontWeight={500}
-                                            width={'20%'}
-                                            textAlign={'end'}
-                                        >
+                                        <Typography variant="h6" fontWeight={500} width={'20%'} textAlign={'end'}>
                                             {item.runtime + ' phút'}
                                         </Typography>
                                     )}
                                 </Stack>
                             }
                             secondary={
-                                <Typography variant="subtitle2" mt={1} fontWeight={300} textAlign={'justify'}>
+                                <Typography variant="body1" mt={1} fontWeight={400}>
                                     {item.overview}
                                 </Typography>
                             }
