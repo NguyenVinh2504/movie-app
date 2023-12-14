@@ -8,7 +8,7 @@ import {
     MenuItem,
     Stack,
     Typography,
-    useMediaQuery,
+    // useMediaQuery,
 } from '@mui/material';
 import { memo, useState } from 'react';
 import { NavLink } from 'react-router-dom';
@@ -33,7 +33,7 @@ function UserMenu() {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
-    const breakpoints = useMediaQuery((theme) => theme.breakpoints.up('sm'));
+    // const breakpoints = useMediaQuery((theme) => theme.breakpoints.up('sm'));
 
     function handleClick(event) {
         setAnchorEl(event.currentTarget);
@@ -53,13 +53,13 @@ function UserMenu() {
         }
     };
     //close user menu down screen size sm
-    if (!breakpoints && open) {
-        setAnchorEl(null);
-    }
+    // if (!breakpoints && open) {
+    //     setAnchorEl(null);
+    // }
     return (
         <>
             <IconButton
-                sx={{ p: 0, width: '40px' }}
+                sx={{ p: 0, width: { xs: '30px', sm: '40px' } }}
                 onClick={handleClick}
                 aria-controls={open ? 'account-menu' : undefined}
                 aria-haspopup="true"

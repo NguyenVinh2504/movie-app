@@ -15,7 +15,7 @@ import {
     useScrollTrigger,
     useMediaQuery,
 } from '@mui/material';
-import { MenuIcon, NotificationIcon, SearchIcon } from '~/components/Icon';
+import { MenuIcon, NotificationIcon, SearchIcon, UserIcon } from '~/components/Icon';
 import { menuItems } from '~/config/MenuItemsConfig';
 import Logo from '~/components/Logo';
 import SideBar from '~/components/SideBar';
@@ -48,6 +48,7 @@ function Header() {
     const toggleSidebar = useCallback(() => setSidebarOpen(!sidebarOpen), [sidebarOpen]);
 
     const breakpoints = useMediaQuery((theme) => theme.breakpoints.up('lg'));
+    const ponitDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     //close side bar up screen size lg
     if (breakpoints && sidebarOpen) {
         setSidebarOpen(!sidebarOpen);
@@ -132,9 +133,9 @@ function Header() {
                             {/* user menu */}
                             <Stack
                                 direction={'row'}
-                                spacing={3}
+                                spacing={ponitDownSm ? 1 : 3}
                                 alignItems={'center'}
-                                sx={{ display: { xs: 'none', sm: 'flex' } }}
+                                sx={{ display: { xs: 'flex', sm: 'flex' } }}
                             >
                                 {/* <IconButton
                                     disableRipple
@@ -159,11 +160,22 @@ function Header() {
                                         </Badge>
                                     </IconButton>
                                 </Tooltip>
-                                {!user && (
+                                {!user && !ponitDownSm && (
                                     <NavLink to={config.routes.login}>
                                         <Button variant="contained" disableElevation disableRipple>
                                             Đăng Nhập
                                         </Button>
+                                    </NavLink>
+                                )}
+                                {!user && ponitDownSm && (
+                                    <NavLink to={config.routes.login}>
+                                        <IconButton
+                                            variant="contained"
+                                            size="small"
+                                            sx={{ border: '1px solid hsla(0,0%,100%,.2)' }}
+                                        >
+                                            <UserIcon />
+                                        </IconButton>
                                     </NavLink>
                                 )}
                                 {user && (

@@ -38,15 +38,13 @@ function MovieDetail() {
                 if (response) {
                     setDataDetail({ ...response });
                     setLoading(false);
+                    response?.genres?.map((item) => setGenres((pram) => [...pram, item.name]));
                 }
             };
             getDataDetail();
         }
     }, [param]);
     // console.log(loading);
-    useEffect(() => {
-        dataDetail?.genres?.map((item) => setGenres((pram) => [...pram, item.name]));
-    }, [dataDetail, dataDetail.genres]);
     return (
         <Modal
             open={open}

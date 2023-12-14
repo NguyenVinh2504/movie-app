@@ -100,7 +100,7 @@ function EpisodesItem({ item, dataSeason }) {
                                         sx={{ width: '100%' }}
                                         primary={
                                             <Typography
-                                                variant="body1"
+                                                variant="subtitle1"
                                                 fontWeight={500}
                                                 sx={{ ...uiConfigs.style.typoLines(2) }}
                                             >
@@ -109,7 +109,7 @@ function EpisodesItem({ item, dataSeason }) {
                                         }
                                         secondary={
                                             item.runtime && (
-                                                <Typography variant="body2" fontWeight={300}>
+                                                <Typography variant="subtitle2" fontWeight={400}>
                                                     {item.runtime + ' phút'}
                                                 </Typography>
                                             )
@@ -156,7 +156,7 @@ function EpisodesItem({ item, dataSeason }) {
                                     </Typography>
 
                                     {item.runtime && (
-                                        <Typography variant="h6" fontWeight={500} width={'20%'} textAlign={'end'}>
+                                        <Typography variant="body1" fontWeight={400} width={'20%'} textAlign={'end'}>
                                             {item.runtime + ' phút'}
                                         </Typography>
                                     )}

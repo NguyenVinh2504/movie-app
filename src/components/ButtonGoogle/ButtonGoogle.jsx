@@ -7,7 +7,6 @@ import { toast } from 'react-toastify';
 import userApi from '~/api/module/user.api';
 import config from '~/config';
 import { app } from '~/firebase';
-import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
 import { setUser } from '~/redux/features/userSlice';
 
 function ButtonGoogle() {
@@ -23,7 +22,6 @@ function ButtonGoogle() {
 
             const result = await signInWithPopup(auth, provider);
             const { displayName, email, uid, photoURL } = result.user;
-            dispatch(toggleGlobalLoading(true));
             const { response, err } = await userApi.loginGoogle({
                 name: displayName,
                 email,
@@ -31,7 +29,6 @@ function ButtonGoogle() {
                 password: `${uid}@`,
                 confirmPassword: `${uid}@`,
             });
-            dispatch(toggleGlobalLoading(false));
             if (response) {
                 dispatch(setUser(response));
                 location(config.routes.home);
