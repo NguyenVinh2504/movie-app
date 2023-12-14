@@ -1,4 +1,4 @@
-import { Box, List, ListItemButton, ListItemIcon, ListItemText, Typography } from '@mui/material';
+import { Box, List, ListItemButton, ListItemText, Typography } from '@mui/material';
 import { memo } from 'react';
 import menuItemsSearch from '~/config/MenuItemsSearch';
 

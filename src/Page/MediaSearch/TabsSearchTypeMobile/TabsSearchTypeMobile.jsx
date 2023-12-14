@@ -25,7 +25,7 @@ function TabsSearchTypeMobile({ value, onListItemClick }) {
                     sx={{
                         color: '#a6a4a4',
                         '&.Mui-selected': {
-                            color: 'White',
+                            color: 'White !important',
                         },
                         '&:hover': {
                             color: '#fff',
