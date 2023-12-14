@@ -10,7 +10,7 @@ function TitleMovieDetail({ loading, dataDetail, genres }) {
                 {!loading ? (
                     <>
                         <Typography
-                            variant={pointDownSm ? 'h4' : 'h3'}
+                            variant={pointDownSm ? 'h4' : 'h2'}
                             fontWeight={'500'}
                             sx={{ ...uiConfigs.style.typoLines(2) }}
                         >

@@ -114,7 +114,7 @@ function HeroSliceList({ isLoading, medias, onOpen }) {
                                         {/* text content */}
                                         <Grid item lg={6} md={6} sm={8} xs={12}>
                                             <Stack
-                                                spacing={pointDownMd ? 1 : 2}
+                                                spacing={1}
                                                 alignItems={{ sm: 'flex-start' }}
                                                 textAlign={{ sm: 'left' }}
                                                 marginBottom={{ xs: '50px', sm: '0' }}
@@ -135,12 +135,12 @@ function HeroSliceList({ isLoading, medias, onOpen }) {
                                                 <Typography
                                                     variant={
                                                         pointDownSm
-                                                            ? 'h5'
+                                                            ? 'h6'
                                                             : pointDownMd
-                                                            ? 'h4'
+                                                            ? 'h5'
                                                             : pointDownLg
-                                                            ? 'h3'
-                                                            : 'h2'
+                                                            ? 'h2'
+                                                            : 'h1'
                                                     }
                                                     sx={{
                                                         fontWeight: '500',
@@ -152,13 +152,7 @@ function HeroSliceList({ isLoading, medias, onOpen }) {
                                                 {/* title */}
                                                 <Typography
                                                     variant={
-                                                        pointDownSm
-                                                            ? 'caption'
-                                                            : pointDownMd
-                                                            ? 'subtitle2'
-                                                            : pointDownLg
-                                                            ? 'subtitle1'
-                                                            : 'h6'
+                                                        pointDownMd ? 'subtitle2' : pointDownLg ? 'subtitle1' : 'h6'
                                                     }
                                                     sx={{
                                                         fontWeight: '400',

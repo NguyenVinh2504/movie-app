@@ -90,11 +90,11 @@ function SingIn() {
             </Stack>
             {/* button */}
             <Stack direction={'row'} justifyContent={'space-between'} mt={2}>
-                <Typography variant="subtitle2">
+                <Typography variant={pointDownSm ? 'subtitle2' : 'subtitle1'}>
                     <NavLink to={config.routes.signup}>Bạn chưa có tài khoản?</NavLink>
                 </Typography>
                 <NavLink>
-                    <Typography variant="subtitle2">Quên mật khẩu</Typography>
+                    <Typography variant={pointDownSm ? 'subtitle2' : 'subtitle1'}>Quên mật khẩu</Typography>
                 </NavLink>
             </Stack>
         </Box>

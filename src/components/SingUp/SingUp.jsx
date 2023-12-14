@@ -135,7 +135,7 @@ function SingUp() {
             </Stack>
             {/* button */}
             <Stack direction={'row'} justifyContent={'space-between'} mt={2}>
-                <Typography variant="subtitle2">
+                <Typography variant={pointDownSm ? 'subtitle2' : 'subtitle1'}>
                     <NavLink to={config.routes.login}>Bạn đã có tài khoản? Đăng Nhập</NavLink>
                 </Typography>
             </Stack>

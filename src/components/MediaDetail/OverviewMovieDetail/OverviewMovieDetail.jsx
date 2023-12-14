@@ -14,7 +14,7 @@ function OverviewMovieDetail({ loading, dataDetail }) {
     }, [loading]);
     return (
         <Box sx={{ marginTop: 3 }}>
-            <Typography variant={'h5'} mb={1} fontWeight={'500'}>
+            <Typography variant={pointDownSm ? 'h6' : 'h5'} mb={1} fontWeight={'500'}>
                 Mô tả
             </Typography>
             {loading ? (
@@ -25,12 +25,12 @@ function OverviewMovieDetail({ loading, dataDetail }) {
                         <Typography
                             variant={pointDownSm ? 'body2' : 'body1'}
                             textAlign={'justify'}
-                            sx={{ ...uiConfigs.style.typoLines(!seeMore && heightBody > 48 ? 2 : 'none') }}
+                            sx={{ ...uiConfigs.style.typoLines(!seeMore && heightBody > 51.2 ? 2 : 'none') }}
                         >
                             {dataDetail.overview}
                         </Typography>
                     </Box>
-                    {heightBody > 48 && (
+                    {heightBody > 51.2 && (
                         <ButtonBase onClick={() => setSeeMore(!seeMore)}>
                             <Typography variant={pointDownSm ? 'body2' : 'body1'} fontWeight={'500'}>
                                 {seeMore ? 'Ẩn bớt' : 'Xem Thêm'}
