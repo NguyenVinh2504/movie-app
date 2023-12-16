@@ -24,6 +24,7 @@ function ButtonAddFavorite({ item, mediaType }) {
     }, [item, user?.favorites]);
 
     const addFavorite = async (item) => {
+        if (!user) return toast.error('Vui lòng đăng nhập');
         if (liked) {
             removeFavorite(item);
             return;
@@ -39,6 +40,7 @@ function ButtonAddFavorite({ item, mediaType }) {
         };
         const { response, err } = await favoriteApi.addFavorite(newFavorite);
         if (err) {
+            toast.error(err);
         }
         if (response) {
             dispatch(updateUser(response));
