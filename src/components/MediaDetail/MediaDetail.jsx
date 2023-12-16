@@ -110,7 +110,12 @@ function MovieDetail() {
                         {/* poster */}
                         <Box px={5} mt={2}>
                             {/* thong tin phim */}
-                            <TitleMovieDetail loading={loading} dataDetail={dataDetail} genres={genres} />
+                            <TitleMovieDetail
+                                loading={loading}
+                                dataDetail={dataDetail}
+                                genres={genres}
+                                mediaType={param?.mediaType}
+                            />
                             <OverviewMovieDetail loading={loading} dataDetail={dataDetail} />
                             {/* thong tin phim */}
 

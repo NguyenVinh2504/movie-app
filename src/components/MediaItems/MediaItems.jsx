@@ -1,7 +1,5 @@
-import { Box, Typography, Stack, IconButton } from '@mui/material';
+import { Box, Typography, Stack } from '@mui/material';
 import theme from '~/theme';
-import { HeartIcon } from '../Icon';
-import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { getIdDetail, toggleDetail } from '~/redux/features/mediaDetailSlice';
 import uiConfigs from '~/config/ui.config';
@@ -9,11 +7,8 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 import tmdbConfigs from '~/api/configs/tmdb.configs';
 import images from '~/assets/image';
 import Image from '../Image';
+import ButtonAddFavorite from '../ButtonAddFavorite';
 function MediaItems({ item, mediaType }) {
-    const [liked, setLiked] = useState(false);
-    const toggleLikebox = () => {
-        setLiked(!liked);
-    };
     const dispatch = useDispatch();
     const handleOpen = () => {
         if (item.media_type !== 'person') {
@@ -21,7 +16,7 @@ function MediaItems({ item, mediaType }) {
             dispatch(
                 getIdDetail({
                     mediaType: mediaType ? mediaType : item.media_type,
-                    id: item.id,
+                    id: item.id ?? item.mediaId,
                 }),
             );
         }
@@ -108,13 +103,7 @@ function MediaItems({ item, mediaType }) {
                         </Stack>
                         {/* text */}
                         {/* yeu thich */}
-                        <IconButton
-                            color="neutral"
-                            onClick={toggleLikebox}
-                            sx={{ svg: { fill: liked ? theme.mediaItems.iconHeart : 'transparent' } }}
-                        >
-                            <HeartIcon stroke={liked ? theme.mediaItems.iconHeart : '#fff'} />
-                        </IconButton>
+                        <ButtonAddFavorite item={item} mediaType={mediaType} />
                         {/* yeu thich */}
                     </Stack>
                     {/* info */}

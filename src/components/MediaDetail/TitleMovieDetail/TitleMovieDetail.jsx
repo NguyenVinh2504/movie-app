@@ -1,8 +1,8 @@
-import { Box, Typography, Stack, IconButton, useMediaQuery, Skeleton } from '@mui/material';
+import { Box, Typography, Stack, useMediaQuery, Skeleton } from '@mui/material';
 import { memo } from 'react';
-import { HeartIcon } from '~/components/Icon';
+import ButtonAddFavorite from '~/components/ButtonAddFavorite';
 import uiConfigs from '~/config/ui.config';
-function TitleMovieDetail({ loading, dataDetail, genres }) {
+function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     return (
         <>
@@ -17,9 +17,7 @@ function TitleMovieDetail({ loading, dataDetail, genres }) {
                             {dataDetail?.title ?? dataDetail?.name}
                         </Typography>
                         <Box>
-                            <IconButton color="neutral">
-                                <HeartIcon />
-                            </IconButton>
+                            <ButtonAddFavorite item={dataDetail} mediaType={mediaType} />
                         </Box>
                     </>
                 )}
@@ -70,9 +68,9 @@ function TitleMovieDetail({ loading, dataDetail, genres }) {
                     <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
                         <Typography variant="subtitle2">{`${
                             dataDetail?.vote_average?.toFixed(1) ?? dataDetail?.mediaRate?.toFixed(1)
-                        } • ${dataDetail.release_date ?? dataDetail.first_air_date ?? 'Không có ngày'} • ${
-                            dataDetail.runtime ?? ''
-                        } minutes`}</Typography>
+                        } • ${dataDetail.release_date ?? dataDetail.first_air_date ?? 'Không có ngày'} ${
+                            dataDetail.runtime ? ` • ${dataDetail.runtime} minutes` : ''
+                        }`}</Typography>
                         <Typography variant="subtitle2">{genres.join(', ')}</Typography>
                     </Box>
                 </>
