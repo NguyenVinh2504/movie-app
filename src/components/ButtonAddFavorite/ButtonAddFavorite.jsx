@@ -1,31 +1,32 @@
 import { IconButton, Tooltip } from '@mui/material';
 import theme from '~/theme';
 import { HeartIcon } from '../Icon';
-import { useEffect, useState } from 'react';
+// import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 import { updateUser } from '~/redux/features/userSlice';
 import favoriteApi from '~/api/module/favorite.api';
 import { toast } from 'react-toastify';
 import { userValue } from '~/redux/selectors';
+import { memo } from 'react';
 
 function ButtonAddFavorite({ item, mediaType }) {
     const user = useSelector(userValue);
-    const [liked, setLiked] = useState(false);
+    // const [liked, setLiked] = useState(false);
     const dispatch = useDispatch();
+    const checkedLike = user?.favorites?.some((favorite) => favorite.mediaId === item.id || item.mediaId);
 
-    useEffect(() => {
-        const checkedLike = user?.favorites?.some((favorite) => favorite.mediaId === item.id || item.mediaId);
-        if (checkedLike) {
-            setLiked(true);
-        } else {
-            setLiked(false);
-        }
-    }, [item, user?.favorites]);
+    // useEffect(() => {
+    //     if (checkedLike) {
+    //         setLiked(true);
+    //     } else {
+    //         setLiked(false);
+    //     }
+    // }, [item, user?.favorites]);
 
     const addFavorite = async (item) => {
         if (!user) return toast.error('Vui lòng đăng nhập');
-        if (liked) {
+        if (checkedLike) {
             removeFavorite(item);
             return;
         }
@@ -40,7 +41,7 @@ function ButtonAddFavorite({ item, mediaType }) {
         };
         const { response, err } = await favoriteApi.addFavorite(newFavorite);
         if (err) {
-            toast.error(err);
+            toast.error(err.message);
         }
         if (response) {
             dispatch(updateUser(response));
@@ -67,12 +68,12 @@ function ButtonAddFavorite({ item, mediaType }) {
                 onClick={() => {
                     addFavorite(item);
                 }}
-                sx={{ svg: { fill: liked ? theme.mediaItems.iconHeart : 'transparent' } }}
+                sx={{ svg: { fill: checkedLike ? theme.mediaItems.iconHeart : 'transparent' } }}
             >
-                <HeartIcon stroke={liked ? theme.mediaItems.iconHeart : '#fff'} />
+                <HeartIcon stroke={checkedLike ? theme.mediaItems.iconHeart : '#fff'} />
             </IconButton>
         </Tooltip>
     );
 }
 
-export default ButtonAddFavorite;
+export default memo(ButtonAddFavorite);

@@ -1,6 +1,5 @@
-// import Skeleton, { SkeletonTheme } from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
-import { Box, Typography, Grid, Skeleton } from '@mui/material';
+import { Box, Grid, Skeleton, Stack } from '@mui/material';
 import theme from '~/theme';
 import { memo } from 'react';
 
@@ -20,14 +19,13 @@ function MediaItemSekeleton({ cardNumber }) {
                     <Box sx={{ aspectRatio: '2/3' }}>
                         <Skeleton variant="rectangular" style={{ height: '100%' }} />
                     </Box>
-                    <Box sx={{ p: '15px' }}>
-                        <Typography variant="subtitle1">
-                            <Skeleton variant="rounded" />
-                        </Typography>
-                        <Typography variant="body2" mt={1}>
-                            <Skeleton variant="rounded" width={'40%'} />
-                        </Typography>
-                    </Box>
+                    <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'} p={'15px'}>
+                        <Box width={'70%'}>
+                            <Skeleton variant="rounded" width={'100%'} height={'20px'} sx={{ mb: 0.5 }} />
+                            <Skeleton variant="rounded" width={'50%'} height={'18px'} />
+                        </Box>
+                        <Skeleton variant="circular" width={'40px'} height={'40px'} />
+                    </Stack>
                 </Box>
             </Grid>
         ));
