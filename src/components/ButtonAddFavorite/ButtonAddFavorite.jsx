@@ -76,7 +76,7 @@ function ButtonAddFavorite({ item, mediaType }) {
         }
     };
     return (
-        <Tooltip title={'Thêm phim yêu thích'}>
+        <Tooltip title={liked ? 'Hủy yêu thích' : 'Yêu thích'}>
             <IconButton
                 ref={btnRef}
                 color="neutral"

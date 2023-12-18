@@ -24,7 +24,6 @@ privateClient.interceptors.request.use(async (config) => {
     const decodeToken = jwtDecode(token);
     if (decodeToken.exp < date.getTime() / 1000) {
         const { response } = await userApi.refreshToken();
-
         const refreshUser = {
             ...user,
             token: response.data.accessToken,

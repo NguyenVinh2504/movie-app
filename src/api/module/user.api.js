@@ -2,6 +2,9 @@ import axios from 'axios';
 import privateClient from '../client/private.client';
 import publicClient from '../client/public.client';
 import { API_ROOT } from '~/utils/constants';
+import { toast } from 'react-toastify';
+import { store } from '~/redux/store';
+import { setUser } from '~/redux/features/userSlice';
 const baseURL = `${API_ROOT}/api/v1/`;
 axios.defaults.withCredentials = true;
 const userEndpoints = {
@@ -71,7 +74,8 @@ const userApi = {
             });
             return { response };
         } catch (err) {
-            return { err };
+            toast.error('Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại');
+            store.dispatch(setUser(null));
         }
     },
     profileUpdate: async (values) => {
