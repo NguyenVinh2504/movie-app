@@ -8,31 +8,34 @@ import { updateUser } from '~/redux/features/userSlice';
 import favoriteApi from '~/api/module/favorite.api';
 import { toast } from 'react-toastify';
 import { userValue } from '~/redux/selectors';
-import { memo, useRef, useState } from 'react';
+import { memo, useEffect, useMemo, useRef, useState } from 'react';
 
 function ButtonAddFavorite({ item, mediaType }) {
     const user = useSelector(userValue);
-    const [liked, setLiked] = useState(false);
+    const checkedLike = useMemo(() => {
+        if (user?.favorites) {
+            return user.favorites.some((favorite) => favorite?.mediaId === item.id || item.mediaId);
+        }
+    }, [item, user?.favorites]);
+    const [liked, setLiked] = useState(checkedLike);
     const dispatch = useDispatch();
-    const checkedLike = user?.favorites?.some((favorite) => favorite.mediaId === item.id || item.mediaId);
 
-    // useEffect(() => {
-    //     if (checkedLike) {
-    //         setLiked(true);
-    //     } else {
-    //         setLiked(false);
-    //     }
-    // }, [item, user?.favorites]);
+    useEffect(() => {
+        if (checkedLike) {
+            setLiked(true);
+        } else {
+            setLiked(false);
+        }
+    }, [checkedLike, user?.favorites]);
     let btnRef = useRef();
     const addFavorite = async (item) => {
         if (!user) return toast.error('Vui lòng đăng nhập');
-        if (checkedLike) {
-            removeFavorite(item);
-            setLiked(false);
-            return;
-        }
         if (btnRef.current) {
             btnRef.current.setAttribute('disabled', 'disabled');
+        }
+        if (liked) {
+            removeFavorite(item);
+            return;
         }
         const newFavorite = {
             media_type: item.media_type ?? mediaType,
@@ -48,19 +51,17 @@ function ButtonAddFavorite({ item, mediaType }) {
             toast.error(err.message);
         }
         if (response) {
-            dispatch(updateUser(response));
-            toast.success('Đã thêm vào mục yêu thích');
             if (btnRef.current) {
                 btnRef.current.removeAttribute('disabled');
             }
+            dispatch(updateUser(response));
+            toast.success('Đã thêm vào mục yêu thích');
         }
     };
     const removeFavorite = async (item) => {
+        setLiked(false);
         const favorite = user?.favorites?.find((e) => e.mediaId === (item.id || item.mediaId));
-        const { response, err } = await favoriteApi.removeFavorite(favorite._id);
-        if (btnRef.current) {
-            btnRef.current.setAttribute('disabled', 'disabled');
-        }
+        const { response, err } = await favoriteApi.removeFavorite(favorite?._id);
         if (err) {
             toast.success(err);
         }
@@ -82,9 +83,9 @@ function ButtonAddFavorite({ item, mediaType }) {
                 onClick={() => {
                     addFavorite(item);
                 }}
-                sx={{ svg: { fill: checkedLike || liked ? theme.mediaItems.iconHeart : 'transparent' } }}
+                sx={{ svg: { fill: liked ? theme.mediaItems.iconHeart : 'transparent' } }}
             >
-                <HeartIcon stroke={checkedLike || liked ? theme.mediaItems.iconHeart : '#fff'} />
+                <HeartIcon stroke={liked ? theme.mediaItems.iconHeart : '#fff'} />
             </IconButton>
         </Tooltip>
     );
