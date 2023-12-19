@@ -16,8 +16,8 @@ function ModalAvatarEdit({ open, handleClose }) {
     const user = useSelector(userValue);
     const [avatar, setAvatar] = useState();
     const [imageUpload, setImageUpload] = useState();
+    const [disabled, setDisabled] = useState();
     const dispatch = useDispatch();
-    console.log(avatar);
     useEffect(() => {
         return () => {
             avatar && URL.revokeObjectURL(avatar.preview);
@@ -41,6 +41,7 @@ function ModalAvatarEdit({ open, handleClose }) {
             if (btnUpdateRef.current) {
                 btnUpdateRef.current.setAttribute('disabled', 'disabled');
             }
+            setDisabled(true);
             const id = toast.loading('Đang tải ảnh đại diện');
             const compressedFile = await imageCompression(imageUpload, options);
             const formDate = new FormData();
@@ -58,6 +59,7 @@ function ModalAvatarEdit({ open, handleClose }) {
                     isLoading: false,
                     autoClose: 3000,
                 });
+                setDisabled(false);
                 setAvatar(null);
                 setImageUpload(null);
                 if (btnUpdateRef.current) {
@@ -71,6 +73,7 @@ function ModalAvatarEdit({ open, handleClose }) {
                     isLoading: false,
                     autoClose: 3000,
                 });
+                setDisabled(false);
                 setAvatar(null);
                 setImageUpload(null);
                 if (btnUpdateRef.current) {
@@ -86,6 +89,7 @@ function ModalAvatarEdit({ open, handleClose }) {
                 btnRemoveRef.current.setAttribute('disabled', 'disabled');
             }
             const id = toast.loading('Đang xóa ảnh đại diện');
+            setDisabled(true);
             const { response, err } = await userApi.profileUpdate({ avatar: user.avatar });
             if (response) {
                 dispatch(updateUser(response));
@@ -95,6 +99,7 @@ function ModalAvatarEdit({ open, handleClose }) {
                     isLoading: false,
                     autoClose: 3000,
                 });
+                setDisabled(false);
                 if (btnRemoveRef.current) {
                     btnRemoveRef.current.removeAttribute('disabled');
                 }
@@ -106,6 +111,7 @@ function ModalAvatarEdit({ open, handleClose }) {
                     isLoading: false,
                     autoClose: 3000,
                 });
+                setDisabled(false);
                 if (btnRemoveRef.current) {
                     btnRemoveRef.current.removeAttribute('disabled');
                 }
@@ -114,12 +120,7 @@ function ModalAvatarEdit({ open, handleClose }) {
     };
     return (
         <>
-            <Modal
-                open={open}
-                onClose={() => handleClose()}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
+            <Modal open={open} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
                 {/* container */}
                 <Fade in={open} timeout={300}>
                     <Box
@@ -158,7 +159,7 @@ function ModalAvatarEdit({ open, handleClose }) {
                             >
                                 Thay đổi ảnh đại diện
                             </Typography>
-                            <IconButton color="neutral" onClick={() => handleClose()}>
+                            <IconButton color="neutral" onClick={() => handleClose()} disabled={disabled}>
                                 <CloseIcon />
                             </IconButton>
                         </Stack>

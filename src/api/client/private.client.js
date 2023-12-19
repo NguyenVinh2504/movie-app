@@ -24,12 +24,14 @@ privateClient.interceptors.request.use(async (config) => {
     const decodeToken = jwtDecode(token);
     if (decodeToken.exp < date.getTime() / 1000) {
         const { response } = await userApi.refreshToken();
-        const refreshUser = {
-            ...user,
-            token: response.data.accessToken,
-        };
-        store.dispatch(setUser(refreshUser));
-        config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+        if (response) {
+            const refreshUser = {
+                ...user,
+                token: response.data.accessToken,
+            };
+            store.dispatch(setUser(refreshUser));
+            config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+        }
     }
     return config;
 });

@@ -127,6 +127,47 @@ const theme = createTheme({
         },
     },
     components: {
+        MuiPopover: {
+            defaultProps: {
+                elevation: 0
+            },
+            styleOverrides: {
+                root: {
+                    '& .MuiPopover-paper': {
+                        // backgroundColor: '#141212',
+                        backgroundColor: Color.background,
+                        border: '1px solid hsla(0,0%,100%,.1)',
+                        color: 'white',
+                        borderRadius: 8
+                    },
+                },
+            },
+        },
+        MuiDialog: {
+            styleOverrides: {
+                root: {
+                    '& .MuiDialog-paper': {
+                        backgroundColor: Color.background,
+                    },
+                },
+            },
+        },
+        MuiDialogTitle: {
+            styleOverrides: {
+                root: {
+                    color: 'white',
+                    fontWeight: '500',
+                },
+            },
+        },
+        MuiDialogContentText: {
+            styleOverrides: {
+                root: {
+                    color: 'white',
+                    fontWeight: '400',
+                },
+            },
+        },
         MuiSkeleton: {
             styleOverrides: {
                 root: {

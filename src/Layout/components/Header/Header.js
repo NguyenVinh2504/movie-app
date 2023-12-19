@@ -4,18 +4,16 @@ import { cloneElement, memo, useCallback, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import Search from '../Search';
 import {
-    Badge,
     Box,
     Button,
     IconButton,
     Stack,
-    Tooltip,
     AppBar,
     Toolbar,
     useScrollTrigger,
     useMediaQuery,
 } from '@mui/material';
-import { MenuIcon, NotificationIcon, SearchIcon, UserIcon } from '~/components/Icon';
+import { MenuIcon, SearchIcon, UserIcon } from '~/components/Icon';
 import { menuItems } from '~/config/MenuItemsConfig';
 import Logo from '~/components/Logo';
 import SideBar from '~/components/SideBar';
@@ -23,6 +21,7 @@ import UserMenu from '~/components/UserMenu';
 import { useSelector } from 'react-redux';
 import { userValue } from '~/redux/selectors';
 import config from '~/config';
+import Notification from './Notification/Notification';
 
 const cx = classNames.bind(styles);
 
@@ -107,11 +106,11 @@ function Header() {
                         {/* leftheader */}
 
                         {/* rightHeader */}
-                        <Stack direction="row" gap={{ xs: 0, sm: 0, lg: 3 }}>
+                        <Stack direction="row" gap={{ xs: 1, lg: 3 }} alignItems={'center'}>
                             {/* search */}
                             <Box
                                 sx={{
-                                    display: { xs: 'none', lg: 'flex' },
+                                    display: { xs: 'none', lg: 'block' },
                                     width: '380px',
                                 }}
                             >
@@ -130,36 +129,12 @@ function Header() {
                                 </NavLink>
                             </Box>
 
-                            {/* user menu */}
-                            <Stack
-                                direction={'row'}
-                                spacing={ponitDownSm ? 1 : 3}
-                                alignItems={'center'}
-                                sx={{ display: { xs: 'flex', sm: 'flex' } }}
-                            >
-                                {/* <IconButton
-                                    disableRipple
-                                    sx={{
-                                        display: { xs: 'none', lg: 'inline-flex' },
-                                    }}
-                                    color="neutral"
-                                >
-                                    <HeartIcon />
-                                </IconButton> */}
-
-                                <Tooltip
-                                    title="Thông báo"
-                                    arrow
-                                    sx={{
-                                        display: { xs: 'none', lg: 'inline-flex' },
-                                    }}
-                                >
-                                    <IconButton disableRipple color="neutral">
-                                        <Badge badgeContent={999} color="primary" variant="dot">
-                                            <NotificationIcon />
-                                        </Badge>
-                                    </IconButton>
-                                </Tooltip>
+                                {/* user menu */}
+                                <Box sx={{
+                                    display: { xs: 'none', sm: 'flex' },
+                                }}>
+                                    <Notification />
+                                </Box>
                                 {!user && !ponitDownSm && (
                                     <NavLink to={config.routes.login}>
                                         <Button variant="contained" disableElevation disableRipple>
@@ -185,7 +160,6 @@ function Header() {
                                 )}
                             </Stack>
                             {/* user menu */}
-                        </Stack>
                         {/* rightHeader */}
                     </Toolbar>
                 </AppBar>

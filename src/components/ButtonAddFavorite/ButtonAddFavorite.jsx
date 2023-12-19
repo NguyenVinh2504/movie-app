@@ -8,16 +8,19 @@ import { updateUser } from '~/redux/features/userSlice';
 import favoriteApi from '~/api/module/favorite.api';
 import { toast } from 'react-toastify';
 import { userValue } from '~/redux/selectors';
-import { memo, useEffect, useMemo, useRef, useState } from 'react';
+import { memo, useEffect, useMemo, useState } from 'react';
+import { useConfirm } from 'material-ui-confirm';
 
 function ButtonAddFavorite({ item, mediaType }) {
     const user = useSelector(userValue);
+    const confirm = useConfirm();
     const checkedLike = useMemo(() => {
         if (user?.favorites) {
             return user.favorites.some((favorite) => favorite?.mediaId === item.id || item.mediaId);
         }
     }, [item, user?.favorites]);
     const [liked, setLiked] = useState(checkedLike);
+    const [disabled, setDisabled] = useState(false);
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -27,12 +30,9 @@ function ButtonAddFavorite({ item, mediaType }) {
             setLiked(false);
         }
     }, [checkedLike, user?.favorites]);
-    let btnRef = useRef();
     const addFavorite = async (item) => {
         if (!user) return toast.error('Vui lòng đăng nhập');
-        if (btnRef.current) {
-            btnRef.current.setAttribute('disabled', 'disabled');
-        }
+        setDisabled(true);
         if (liked) {
             removeFavorite(item);
             return;
@@ -47,46 +47,50 @@ function ButtonAddFavorite({ item, mediaType }) {
         };
         setLiked(true);
         const { response, err } = await favoriteApi.addFavorite(newFavorite);
+        setDisabled(false);
         if (err) {
             toast.error(err.message);
         }
         if (response) {
-            if (btnRef.current) {
-                btnRef.current.removeAttribute('disabled');
-            }
             dispatch(updateUser(response));
             toast.success('Đã thêm vào mục yêu thích');
         }
     };
-    const removeFavorite = async (item) => {
-        setLiked(false);
-        const favorite = user?.favorites?.find((e) => e.mediaId === (item.id || item.mediaId));
-        const { response, err } = await favoriteApi.removeFavorite(favorite?._id);
-        if (err) {
-            toast.success(err);
-        }
-        if (response) {
-            const newUser = { ...user };
-            newUser.favorites = newUser?.favorites?.filter((f) => f.mediaId !== (item.mediaId || item.id));
-            dispatch(updateUser(newUser));
-            toast.success(response.removeFavorite);
-            if (btnRef.current) {
-                btnRef.current.removeAttribute('disabled');
-            }
-        }
+    const removeFavorite = (item) => {
+        confirm({ title: 'Xóa phim yêu thích?', description: 'Phim sẽ được xóa khỏi mục yêu thích.' })
+            .then(async () => {
+                setLiked(false);
+                const favorite = user?.favorites?.find((e) => e.mediaId === (item.id || item.mediaId));
+                const { response, err } = await favoriteApi.removeFavorite(favorite?._id);
+                setDisabled(false);
+                if (err) {
+                    toast.success(err);
+                }
+                if (response) {
+                    const newUser = { ...user };
+                    newUser.favorites = newUser?.favorites?.filter((f) => f.mediaId !== (item.mediaId || item.id));
+                    dispatch(updateUser(newUser));
+                    toast.success(response.removeFavorite);
+                }
+            })
+            .catch(() => {
+                setDisabled(false);
+            });
     };
     return (
         <Tooltip title={liked ? 'Hủy yêu thích' : 'Yêu thích'}>
-            <IconButton
-                ref={btnRef}
-                color="neutral"
-                onClick={() => {
-                    addFavorite(item);
-                }}
-                sx={{ svg: { fill: liked ? theme.mediaItems.iconHeart : 'transparent' } }}
-            >
-                <HeartIcon stroke={liked ? theme.mediaItems.iconHeart : '#fff'} />
-            </IconButton>
+            <span>
+                <IconButton
+                    color="neutral"
+                    disabled={disabled}
+                    onClick={() => {
+                        addFavorite(item);
+                    }}
+                    sx={{ svg: { fill: liked ? theme.mediaItems.iconHeart : 'transparent' } }}
+                >
+                    <HeartIcon stroke={liked ? theme.mediaItems.iconHeart : '#fff'} />
+                </IconButton>
+            </span>
         </Tooltip>
     );
 }

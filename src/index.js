@@ -10,28 +10,39 @@ import { persistor, store } from '~/redux/store';
 import { PersistGate } from 'redux-persist/integration/react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { ConfirmProvider } from 'material-ui-confirm';
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     // <React.StrictMode>
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
             <ThemeProvider theme={theme}>
-                <CssBaseline>
-                    <App />
-                    <ToastContainer
-                        position="bottom-left"
-                        autoClose={3000}
-                        hideProgressBar={true}
-                        newestOnTop={false}
-                        closeOnClick
-                        rtl={false}
-                        pauseOnFocusLoss={false}
-                        draggable
-                        style={{ fontSize: '16px' }}
-                        pauseOnHover
-                        theme="dark"
-                    />
-                </CssBaseline>
+                <ConfirmProvider
+                    defaultOptions={{
+                        allowClose: false,
+                        confirmationButtonProps: { color: 'secondary', variant: 'contained' },
+                        cancellationButtonProps: { color: 'secondary', variant: 'contained' },
+                        confirmationText: 'Xác nhận',
+                        cancellationText: 'Hủy',
+                    }}
+                >
+                    <CssBaseline>
+                        <App />
+                        <ToastContainer
+                            position="bottom-left"
+                            autoClose={3000}
+                            hideProgressBar={true}
+                            newestOnTop={false}
+                            closeOnClick
+                            rtl={false}
+                            pauseOnFocusLoss={false}
+                            draggable
+                            style={{ fontSize: '16px' }}
+                            pauseOnHover
+                            theme="dark"
+                        />
+                    </CssBaseline>
+                </ConfirmProvider>
             </ThemeProvider>
         </PersistGate>
     </Provider>,

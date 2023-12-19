@@ -49,6 +49,7 @@ function UserMenu() {
             toast.success('Đăng xuất thành công');
         }
         if (err) {
+            console.log(err);
             toast.error('Đăng xuất không thành công');
         }
     };
@@ -79,18 +80,21 @@ function UserMenu() {
                     paper: {
                         variant: 'outlined',
                         elevation: 0,
-                        sx: {
-                            borderColor: 'rgba(255, 255, 255, 0.2)',
-                            mt: 2,
-                            bgcolor: 'black',
-                            color: 'white',
-                            '.MuiMenuItem-root': {
-                                ':hover': {
-                                    background: 'rgba(255, 255, 255, 0.10)',
-                                },
-                                ':active': {
-                                    background: (theme) => theme.palette.primary.main,
-                                },
+                    },
+
+                }}
+                sx={{
+                    '& .MuiMenu-paper': {
+                        borderColor: 'rgba(255, 255, 255, 0.2)',
+                        mt: 2,
+                        bgcolor: 'black',
+                        color: 'white',
+                        '.MuiMenuItem-root': {
+                            ':hover': {
+                                background: 'rgba(255, 255, 255, 0.10)',
+                            },
+                            ':active': {
+                                background: (theme) => theme.palette.primary.main,
                             },
                         },
                     },
