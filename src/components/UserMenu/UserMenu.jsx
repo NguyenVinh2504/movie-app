@@ -44,14 +44,11 @@ function UserMenu() {
     };
 
     const handleLogout = async () => {
-        const { response, err } = await userApi.logOut();
+        const { response } = await userApi.logOut();
         if (response) {
             dispatch(loginOut());
             dispatch(removeAccessToken());
             toast.success('Đăng xuất thành công');
-        }
-        if (err) {
-            toast.error('Đăng xuất không thành công');
         }
     };
     //close user menu down screen size sm
