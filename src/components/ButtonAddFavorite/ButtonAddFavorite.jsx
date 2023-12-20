@@ -46,11 +46,8 @@ function ButtonAddFavorite({ item, mediaType }) {
             release_date: item.release_date ?? item.first_air_date,
         };
         setLiked(true);
-        const { response, err } = await favoriteApi.addFavorite(newFavorite);
+        const { response } = await favoriteApi.addFavorite(newFavorite);
         setDisabled(false);
-        if (err) {
-            toast.error(err.message);
-        }
         if (response) {
             dispatch(updateUser(response));
             toast.success('Đã thêm vào mục yêu thích');

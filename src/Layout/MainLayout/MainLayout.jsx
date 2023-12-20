@@ -8,23 +8,36 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
 import userApi from '~/api/module/user.api';
-import { updateUser } from '~/redux/features/userSlice';
-import { accessToken, openSelector,} from '~/redux/selectors';
+import { loginOut, updateUser } from '~/redux/features/userSlice';
+import { accessToken, openSelector } from '~/redux/selectors';
+import { removeAccessToken } from '~/redux/features/authSlice';
+import { useConfirm } from 'material-ui-confirm';
 // import Search from '../components/Search';
 
 function MainLayout() {
     const dispatch = useDispatch();
+    const confirm = useConfirm();
     const open = useSelector(openSelector);
     const token = useSelector(accessToken);
     useEffect(() => {
         const authUser = async () => {
-            const { response } = await userApi.getInfo();
+            const { response, err } = await userApi.getInfo();
             if (response) dispatch(updateUser(response));
+            if (err) {
+                confirm({
+                    title: 'Vui lòng đăng nhập lại',
+                    description: 'Phiên đăng nhập đã hết hạn',
+                    hideCancelButton: true,
+                }).then(async () => {
+                    dispatch(loginOut());
+                    dispatch(removeAccessToken());
+                });
+            }
         };
         if (token) {
             authUser();
         }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

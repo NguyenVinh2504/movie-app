@@ -53,12 +53,12 @@ function ButtonSelector({ seasons, onSeasonNuber }) {
                 onClose={handleClose}
                 sx={{
                     '.MuiPaper-root': {
-                        borderColor: '#A6A4A4',
+                        borderColor: '#2d2c2c',
                         mt: 2,
                         bgcolor: '#2D2C2C',
                         color: 'white',
                         '.Mui-selected': {
-                            background: 'rgba(255, 255, 255, 0.10)!important',
+                            background: 'rgba(255, 255, 255, 0.2)!important',
                         },
                         '.MuiMenuItem-root': {
                             ':hover': {
