@@ -5,6 +5,7 @@ import { API_ROOT } from '~/utils/constants';
 import { toast } from 'react-toastify';
 import { store } from '~/redux/store';
 import { loginOut } from '~/redux/features/userSlice';
+import { removeAccessToken } from '~/redux/features/authSlice';
 const baseURL = `${API_ROOT}/api/v1/`;
 axios.defaults.withCredentials = true;
 const userEndpoints = {
@@ -76,6 +77,7 @@ const userApi = {
         } catch (err) {
             toast.error('Phiên đăng nhập đã hết hạn, vui lòng đăng nhập lại');
             store.dispatch(loginOut());
+            store.dispatch(removeAccessToken());
             return { err };
         }
     },

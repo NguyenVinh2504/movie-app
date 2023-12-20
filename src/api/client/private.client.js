@@ -4,7 +4,7 @@ import { API_ROOT } from '~/utils/constants';
 import { jwtDecode } from 'jwt-decode';
 import userApi from '~/api/module/user.api';
 import { store } from '~/redux/store';
-import { setUser } from '~/redux/features/userSlice';
+import { setAccessToken } from '~/redux/features/authSlice';
 const baseURL = `${API_ROOT}/api/v1/`;
 const privateClient = axios.create({
     baseURL,
@@ -18,19 +18,16 @@ const privateClient = axios.create({
 });
 
 privateClient.interceptors.request.use(async (config) => {
-    const { token, ...user } = store.getState().user.user;
-    config.headers.Authorization = `Bearer ${token}`;
+    const accessToken  = store.getState().auth.accessToken;
+    config.headers.Authorization = `Bearer ${accessToken}`;
     let date = new Date();
-    const decodeToken = jwtDecode(token);
+    const decodeToken = jwtDecode(accessToken);
     if (decodeToken.exp < date.getTime() / 1000) {
         const { response } = await userApi.refreshToken();
         if (response) {
-            const refreshUser = {
-                ...user,
-                token: response.data.accessToken,
-            };
-            store.dispatch(setUser(refreshUser));
-            config.headers.Authorization = `Bearer ${response.data.accessToken}`;
+            const newAccessToken = response.data.accessToken;
+            store.dispatch(setAccessToken(newAccessToken));
+            config.headers.Authorization = `Bearer ${newAccessToken}`;
         }
     }
     return config;

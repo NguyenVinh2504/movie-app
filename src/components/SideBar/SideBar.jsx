@@ -25,6 +25,7 @@ import config from '~/config';
 import userApi from '~/api/module/user.api';
 import { toast } from 'react-toastify';
 import { memo } from 'react';
+import { removeAccessToken } from '~/redux/features/authSlice';
 const ListCustoms = styled(ListItem)(({ theme }) => ({
     '&:hover': {
         backgroundColor: theme.listItems.backgroundHover,
@@ -48,6 +49,7 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
         const { response, err } = await userApi.logOut();
         if (response) {
             dispatch(loginOut());
+            dispatch(removeAccessToken());
             toast.success('Đăng xuất thành công');
         }
         if (err) {

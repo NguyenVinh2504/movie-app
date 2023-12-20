@@ -9,29 +9,23 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
 import userApi from '~/api/module/user.api';
 import { updateUser } from '~/redux/features/userSlice';
-import { openSelector, userValue } from '~/redux/selectors';
+import { accessToken, openSelector,} from '~/redux/selectors';
 // import Search from '../components/Search';
 
 function MainLayout() {
     const dispatch = useDispatch();
     const open = useSelector(openSelector);
-    const user = useSelector(userValue);
-    // useEffect(() => {
-    //     const timeout = setTimeout(() => {
-    //         dispatch(toggleGlobalLoading(false));
-    //     }, 3000);
-    //     return () => clearTimeout(timeout);
-    // }, [dispatch]);
+    const token = useSelector(accessToken);
     useEffect(() => {
         const authUser = async () => {
             const { response } = await userApi.getInfo();
             if (response) dispatch(updateUser(response));
         };
-        if (user) {
+        if (token) {
             authUser();
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [dispatch]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     return (
         <>

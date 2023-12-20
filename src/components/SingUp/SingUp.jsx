@@ -17,7 +17,7 @@ import { setUser } from '~/redux/features/userSlice';
 import ErrorMessageForm from '../ErrorMessageForm';
 import { toast } from 'react-toastify';
 import ButtonGoogle from '../ButtonGoogle';
-import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
+import { setAccessToken } from '~/redux/features/authSlice';
 
 function SingUp() {
     const location = useNavigate();
@@ -56,13 +56,13 @@ function SingUp() {
         }),
         onSubmit: async (values) => {
             setErrorMessage(undefined);
-            dispatch(toggleGlobalLoading(true));
+            location(config.routes.home);
             const { response, err } = await userApi.signup(values);
-            dispatch(toggleGlobalLoading(false));
             if (response) {
                 formik.resetForm();
-                dispatch(setUser(response));
-                location(config.routes.home);
+                const { token,...user } = response
+                dispatch(setUser(user));
+                dispatch(setAccessToken(token));
                 toast.success(`Xin chào, ${response.name}`, {
                     position: 'top-center',
                 });

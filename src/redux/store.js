@@ -1,17 +1,18 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
-import { mediaDetailSlice, userSlice, globalLoadingSlice } from './features';
+import { mediaDetailSlice, userSlice, globalLoadingSlice, authSlice } from './features';
 import storage from 'redux-persist/lib/storage';
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 const persistConfig = {
     key: 'root',
     storage,
-    blacklist: ['globalLoading', 'detailMovie'],
+    blacklist: ['globalLoading', 'detailMovie', 'user'],
 };
 
 const rootReducer = combineReducers({
     detailMovie: mediaDetailSlice,
     user: userSlice,
     globalLoading: globalLoadingSlice,
+    auth: authSlice
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 

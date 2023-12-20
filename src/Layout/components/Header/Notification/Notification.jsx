@@ -18,7 +18,7 @@ import { usePopupState, bindPopover, bindToggle } from 'material-ui-popup-state/
 import Image from '~/components/Image';
 
 function Notification() {
-    const breakpoints = useMediaQuery((theme) => theme.breakpoints.down('lg'));
+    const breakpoints = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const popupState = usePopupState({
         variant: 'popover',
         popupId: 'demoPopover',

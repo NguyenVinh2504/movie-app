@@ -25,6 +25,7 @@ import { useSelector } from 'react-redux';
 import { userValue } from '~/redux/selectors';
 import userApi from '~/api/module/user.api';
 import { toast } from 'react-toastify';
+import { removeAccessToken } from '~/redux/features/authSlice';
 
 function UserMenu() {
     const user = useSelector(userValue);
@@ -46,10 +47,10 @@ function UserMenu() {
         const { response, err } = await userApi.logOut();
         if (response) {
             dispatch(loginOut());
+            dispatch(removeAccessToken());
             toast.success('Đăng xuất thành công');
         }
         if (err) {
-            console.log(err);
             toast.error('Đăng xuất không thành công');
         }
     };
