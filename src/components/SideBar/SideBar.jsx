@@ -46,14 +46,11 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
     const dispatch = useDispatch();
 
     const handleLogout = async () => {
-        const { response, err } = await userApi.logOut();
+        const { response } = await userApi.logOut();
         if (response) {
             dispatch(loginOut());
             dispatch(removeAccessToken());
             toast.success('Đăng xuất thành công');
-        }
-        if (err) {
-            toast.error('Đăng xuất không thành công');
         }
     };
     const drawer = (

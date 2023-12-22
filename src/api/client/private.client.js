@@ -4,7 +4,9 @@ import { API_ROOT } from '~/utils/constants';
 import { jwtDecode } from 'jwt-decode';
 import userApi from '~/api/module/user.api';
 import { store } from '~/redux/store';
-import { setAccessToken } from '~/redux/features/authSlice';
+import { removeAccessToken, setAccessToken } from '~/redux/features/authSlice';
+import { loginOut } from '~/redux/features/userSlice';
+import { toast } from 'react-toastify';
 const baseURL = `${API_ROOT}/api/v1/`;
 const privateClient = axios.create({
     baseURL,
@@ -18,7 +20,7 @@ const privateClient = axios.create({
 });
 
 privateClient.interceptors.request.use(async (config) => {
-    const accessToken  = store.getState().auth.accessToken;
+    const accessToken = store.getState().auth.accessToken;
     config.headers.Authorization = `Bearer ${accessToken}`;
     let date = new Date();
     const decodeToken = jwtDecode(accessToken);
@@ -41,6 +43,10 @@ privateClient.interceptors.response.use(
     (err) => {
         if (axios.isCancel(err)) {
             throw err;
+        } else if (err.response.status === 401) {
+            toast.error('Phiên đăng nhập đã hết hạn')
+            store.dispatch(loginOut())
+            store.dispatch(removeAccessToken())
         } else {
             throw err?.response?.data ?? { message: 'Không thể lấy dữ liệu' };
         }

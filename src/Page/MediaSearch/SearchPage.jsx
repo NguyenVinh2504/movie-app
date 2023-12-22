@@ -3,7 +3,6 @@ import Search from './Search';
 import Media from '~/components/Media';
 import { useSearchParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 import mediaApi from '~/api/module/media.api';
 import { usePrevious } from '~/Hooks';
 import menuItemsSearch from '~/config/MenuItemsSearch';
@@ -31,12 +30,11 @@ function MediaSearch() {
         }
         const getDataSearch = async () => {
             // console.log('get');
-            const { response, err } = await mediaApi.search({
+            const { response } = await mediaApi.search({
                 mediaType: menuItemsSearch[selectedIndex].type,
                 query: query,
                 page: currPage,
             });
-            if (err) toast.error(err.message);
             if (response) {
                 setIsLoading(false);
                 if (currPage !== 1) {

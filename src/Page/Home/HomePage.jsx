@@ -3,7 +3,6 @@ import { Button, Container, Stack } from '@mui/material';
 import { homeTabItems } from '~/config/HoneTabMenuItems/HomeTabMenuItems';
 import TabItems from '~/components/TabItems';
 import Media from '~/components/Media';
-import { toast } from 'react-toastify';
 import mediaApi from '~/api/module/media.api';
 import { memo, useCallback, useEffect, useState } from 'react';
 function Home() {
@@ -29,8 +28,7 @@ function Home() {
         };
         const fetchData = async () => {
             setIsLoading(true);
-            const { response, err } = await getMedias();
-            if (err) toast.error(err.message);
+            const { response } = await getMedias();
             if (response) {
                 setIsLoading(false);
                 if (response.total_pages === currPage) return;
@@ -44,6 +42,7 @@ function Home() {
     const handleCurrCategory = useCallback(
         (event, newValue) => {
             if (currCategory === newValue) return;
+            setIsLoading(true);
             setMedias([]);
             setCurrPage(1);
             setCurrCategory(newValue);

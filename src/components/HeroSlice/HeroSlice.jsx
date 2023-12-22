@@ -2,7 +2,6 @@ import { useDispatch } from 'react-redux';
 import { getIdDetail, toggleDetail } from '~/redux/features/mediaDetailSlice';
 import { memo, useEffect, useState } from 'react';
 import mediaApi from '~/api/module/media.api';
-import { toast } from 'react-toastify';
 import { useParams } from 'react-router-dom';
 import HeroSliceList from './HeroSliceList';
 function HeroSlice() {
@@ -14,12 +13,11 @@ function HeroSlice() {
         setIsLoading(true);
         setMedias([]);
         const getDataSearch = async () => {
-            const { response, err } = await mediaApi.getListTrending({
+            const { response } = await mediaApi.getListTrending({
                 mediaType: mediaType ?? 'all',
                 timeWindow: 'day',
                 page: 1,
             });
-            if (err) toast.error(err.message);
             if (response) {
                 setIsLoading(false);
                 setMedias([...response.results]);

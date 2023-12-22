@@ -2,7 +2,6 @@ import { Box, Divider, IconButton, Skeleton, Typography, useMediaQuery } from '@
 import ButtonSelector from './ButtonSlector';
 import { memo, useCallback, useEffect, useState } from 'react';
 import mediaApi from '~/api/module/media.api';
-import { toast } from 'react-toastify';
 import { ArrowDownIcon, ArrowUpIcon } from '~/components/Icon';
 import EpisodesList from './EpisodesList';
 
@@ -25,11 +24,10 @@ function Episodes({ seasons, seriesId, numberSeasonValue }) {
 
     useEffect(() => {
         const getDataDetailSeason = async () => {
-            const { response, err } = await mediaApi.getDetailSeason({
+            const { response } = await mediaApi.getDetailSeason({
                 series_id: seriesId,
                 season_number: numberSeason ?? numberSeasonValue,
             });
-            if (err) toast.error(err.message);
             if (response) {
                 // console.log('set tap');
                 setSeasonDetailValue({ ...response });

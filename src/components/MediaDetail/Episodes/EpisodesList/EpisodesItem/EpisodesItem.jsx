@@ -83,7 +83,7 @@ function EpisodesItem({ item, dataSeason }) {
                     href={`https://vidsrc.to/embed/tv/${item.show_id}/${item.season_number}/${item.episode_number}`}
                 >
                     <CustomDivider />
-                    <ListItemButton sx={{ px: 0, py: 2 }}>
+                    <ListItemButton sx={{ px: 1, py: 2 }}>
                         <ListItemText
                             primary={
                                 <Stack direction={'row'} height={'100%'} alignItems={'center'}>
@@ -127,12 +127,13 @@ function EpisodesItem({ item, dataSeason }) {
                     </ListItemButton>
                 </Box>
             ) : (
+                // pc-table
                 <Box
                     component={'a'}
                     href={`https://vidsrc.to/embed/tv/${item.show_id}/${item.season_number}/${item.episode_number}`}
                 >
                     <CustomDivider />
-                    <ListCustoms sx={{ px: 0, py: 3 }}>
+                    <ListCustoms sx={{ px: 1, py: 3 }}>
                         <Typography variant="h5" width={'20%'} textAlign={'center'}>
                             {item.episode_number}
                         </Typography>

@@ -56,18 +56,17 @@ function ButtonAddFavorite({ item, mediaType }) {
     const removeFavorite = (item) => {
         confirm({ title: 'Xóa phim yêu thích?', description: 'Phim sẽ được xóa khỏi mục yêu thích.' })
             .then(async () => {
+                setDisabled(false);
                 setLiked(false);
                 const favorite = user?.favorites?.find((e) => e.mediaId === (item.id || item.mediaId));
                 const { response, err } = await favoriteApi.removeFavorite(favorite?._id);
-                setDisabled(false);
-                if (err) {
-                    toast.success(err);
-                }
                 if (response) {
                     const newUser = { ...user };
                     newUser.favorites = newUser?.favorites?.filter((f) => f.mediaId !== (item.mediaId || item.id));
                     dispatch(updateUser(newUser));
                     toast.success(response.removeFavorite);
+                } else if (err) {
+                    setLiked(true)
                 }
             })
             .catch(() => {

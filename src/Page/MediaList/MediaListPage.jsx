@@ -1,7 +1,6 @@
 import HeroSlice from '~/components/HeroSlice';
 import { Button, Container, Stack } from '@mui/material';
 import { useCallback, useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
 import TabItems from '~/components/TabItems';
 import Media from '~/components/Media';
 import mediaApi from '~/api/module/media.api';
@@ -41,8 +40,7 @@ function MediaListPage() {
         };
         const fetchData = async () => {
             setIsLoading(true);
-            const { response, err } = await getMedias();
-            if (err) toast.error(err.message);
+            const { response } = await getMedias();
             if (response) {
                 setIsLoading(false);
                 // if (response.results.length === 0) setIsLoading(true);
@@ -61,6 +59,7 @@ function MediaListPage() {
     const handleCurrCategory = useCallback(
         (event, newValue) => {
             if (currCategory === newValue) return;
+            setIsLoading(true)
             setMedias([]);
             setCurrPage(1);
             setCurrCategory(newValue);

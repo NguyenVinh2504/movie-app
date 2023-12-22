@@ -9,7 +9,6 @@ import { toggleDetail } from '~/redux/features/mediaDetailSlice';
 import Episodes from './Episodes';
 import uiConfigs from '~/config/ui.config';
 import mediaApi from '~/api/module/media.api';
-import { toast } from 'react-toastify';
 import BannerMovieDetail from './BannerMovieDetail';
 import TitleMovieDetail from './TitleMovieDetail';
 import OverviewMovieDetail from './OverviewMovieDetail';
@@ -30,11 +29,10 @@ function MovieDetail() {
             // console.log('use');
             const getDataDetail = async () => {
                 // console.log('get');
-                const { response, err } = await mediaApi.getDetail({
+                const { response } = await mediaApi.getDetail({
                     mediaType: param?.mediaType,
                     mediaId: param?.id,
                 });
-                if (err) toast.error(err.message);
                 if (response) {
                     setDataDetail({ ...response });
                     setLoading(false);
