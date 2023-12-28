@@ -1,6 +1,7 @@
 import { NavLink, useLocation } from 'react-router-dom';
 import { Box, Stack, Tab, Tabs, Typography, useMediaQuery } from '@mui/material';
 import Image from '~/components/Image';
+import uiConfigs from '~/config/ui.config';
 import AvatarUser from '~/components/Avatar';
 
 import { useSelector } from 'react-redux';
@@ -19,14 +20,16 @@ function HeaderProfile({ valueTabItems }) {
                 }}
             >
                 {/* banner */}
-                <Box sx={{ aspectRatio: '1536/431', width: '100%' }}>
-                    <Image
-                        alt={'banner'}
-                        src={
-                            'https://firebasestorage.googleapis.com/v0/b/movie-app-8766b.appspot.com/o/images%2FBannerVieJoy%20(1).png?alt=media&token=6c3f75e0-4525-4571-90a3-c39209c33353'
-                        }
-                        sx={{ borderRadius: '16px' }}
-                    />
+                <Box sx={{ pt: 'calc(431/1536*100%)' }}>
+                    <Box sx={{ ...uiConfigs.style.positionFullSize }}>
+                        <Image
+                            alt={'banner'}
+                            src={
+                                'https://firebasestorage.googleapis.com/v0/b/movie-app-8766b.appspot.com/o/images%2FBannerVieJoy%20(1).png?alt=media&token=6c3f75e0-4525-4571-90a3-c39209c33353'
+                            }
+                            sx={{ borderRadius: '16px' }}
+                        />
+                    </Box>
                 </Box>
                 {/* banner */}
 

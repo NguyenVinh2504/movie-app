@@ -1,4 +1,4 @@
-import { Box, Stack, Typography } from '@mui/material';
+import { Paper, Stack, Typography } from '@mui/material';
 
 import UpdatePassword from './UpdatePassword/UpdatePassword';
 import DeleteUser from './DeleteUser/DeleteUser';
@@ -13,9 +13,9 @@ function SettingCategory({ children }) {
 
 function ContainerSetting({ children }) {
     return (
-        <Box bgcolor={'#141212'} borderRadius={2} border={'1px solid hsla(0,0%,100%,.1)'}>
+        <Paper>
             {children}
-        </Box>
+        </Paper>
     );
 }
 function EditAccount() {

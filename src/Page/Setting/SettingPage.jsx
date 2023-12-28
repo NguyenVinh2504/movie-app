@@ -1,6 +1,6 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Box } from '@mui/material';
-import HeaderProfile from '~/components/HeaderProfile';
+import HeaderProfile from '~/Page/Profile/HeaderProfile';
 import { settingUserItems } from '~/config/SettingUserMenuItems';
 import { useEffect } from 'react';
 import config from '~/config';

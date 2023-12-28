@@ -5,7 +5,7 @@ import uiConfigs from '~/config/ui.config';
 function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     return (
-        <>
+        <Box sx={{p: 2}}>
             <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'} spacing={2}>
                 {!loading && (
                     <>
@@ -75,7 +75,7 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
                     </Box>
                 </>
             )}
-        </>
+        </Box>
     );
 }
 

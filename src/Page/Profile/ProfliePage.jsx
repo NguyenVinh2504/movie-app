@@ -1,7 +1,7 @@
 import { Outlet, useNavigate } from 'react-router-dom';
 import { Box } from '@mui/material';
 import { profileItems } from '~/config/ProfileMenuItems';
-import HeaderProfile from '~/components/HeaderProfile';
+import HeaderProfile from '~/Page/Profile/HeaderProfile';
 
 import { useSelector } from 'react-redux';
 import { userValue } from '~/redux/selectors';

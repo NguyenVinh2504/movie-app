@@ -8,6 +8,13 @@ const uiConfigs = {
             whiteSpace: 'normal',
             textOverflow: 'ellipsis',
         }),
+        positionFullSize: {
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            width: '100%',
+            height: '100%',
+        },
         centerAlight: {
             position: 'absolute',
             top: '50%',

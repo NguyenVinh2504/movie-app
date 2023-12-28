@@ -1,5 +1,5 @@
 import { Box, Stack, Skeleton } from '@mui/material';
-
+import uiConfigs from '~/config/ui.config';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/scss';
 import 'swiper/scss/navigation';
@@ -8,8 +8,8 @@ import { memo } from 'react';
 function CastItem({ item }) {
     return (
         <Box>
-            <Box sx={{ aspectRatio: '1' }}>
-                <Skeleton variant="rectangular" height={'100%'} width={'100%'} />
+            <Box sx={{ position: 'relative', pt: '100%' }}>
+                <Skeleton variant="rectangular" style={{ ...uiConfigs.style.positionFullSize }} />
             </Box>
             <Stack spacing={1} mt={1}>
                 <Skeleton variant="rounded" height={'20px'} />

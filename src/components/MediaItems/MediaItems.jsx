@@ -35,7 +35,9 @@ function MediaItems({ item, mediaType }) {
                 <Box
                     sx={{
                         width: '100%',
-                        aspectRatio: '2/3',
+                        // aspectRatio: '2/3',
+                        position: 'relative',
+                        paddingTop: '150%',
                         overflow: 'hidden',
                         display: 'flex',
                         justifyContent: 'center',
@@ -47,6 +49,9 @@ function MediaItems({ item, mediaType }) {
                 >
                     <Box
                         sx={{
+                            position: 'absolute',
+                            top: 0,
+                            left: 0,
                             transition: 'all 0.5s ease ',
                             width: '100%',
                             height: '100%',

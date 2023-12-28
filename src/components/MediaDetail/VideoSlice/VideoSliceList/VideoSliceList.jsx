@@ -28,11 +28,13 @@ function VideoSliceList({ videos }) {
                     {videos?.map((item, index) => (
                         <SwiperSlide key={index}>
                             <Link to={tmdbConfigs.youtubePath(item.key)} target="_blank">
-                                <Box sx={{ aspectRatio: '16/9' }}>
-                                    <Image
-                                        src={item.key ? tmdbConfigs.thumbnailYtb(item.key) : images.noImage19x6}
-                                        alt={item.name}
-                                    />
+                                <Box sx={{ pt: 'calc(9/16*100%)', position: 'relative' }}>
+                                    <Box sx={{ ...uiConfigs.style.positionFullSize }}>
+                                        <Image
+                                            src={item.key ? tmdbConfigs.thumbnailYtb(item.key) : images.noImage19x6}
+                                            alt={item.name}
+                                        />
+                                    </Box>
                                 </Box>
                                 <IconButton
                                     color="secondNeutral"

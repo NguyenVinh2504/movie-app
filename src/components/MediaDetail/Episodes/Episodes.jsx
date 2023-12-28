@@ -1,4 +1,4 @@
-import { Box, Divider, IconButton, Skeleton, Typography, useMediaQuery } from '@mui/material';
+import { Divider, IconButton, Paper, Skeleton, Typography, useMediaQuery } from '@mui/material';
 import ButtonSelector from './ButtonSlector';
 import { memo, useCallback, useEffect, useState } from 'react';
 import mediaApi from '~/api/module/media.api';
@@ -52,7 +52,7 @@ function Episodes({ seasons, seriesId, numberSeasonValue }) {
         }
     }, [seasonDetailValue.episodes?.length, visible]);
     return (
-        <Box mt={3}>
+        <Paper sx={{ mt: 1, p: 2 }}>
             <Typography variant={pointDownSm ? 'h6' : 'h5'} mb={1} fontWeight={'500'}>
                 Tập phim
             </Typography>
@@ -91,7 +91,7 @@ function Episodes({ seasons, seriesId, numberSeasonValue }) {
                 )}
             </Divider>
             {/* them tap phim */}
-        </Box>
+        </Paper>
     );
 }
 

@@ -1,5 +1,5 @@
 import { memo, useEffect, useState } from 'react';
-import { Modal, Box, Typography, Stack, IconButton, Fade } from '@mui/material';
+import { Modal, Box, Typography, Stack, IconButton, Fade, Paper } from '@mui/material';
 import { CloseIcon } from '../Icon';
 import CastSlice from './CastItem';
 import VideoSlice from './VideoSlice';
@@ -104,16 +104,22 @@ function MovieDetail() {
                         }}
                     >
                         {/* poster */}
-                        <BannerMovieDetail loading={loading} dataDetail={dataDetail} mediaType={param.mediaType} />
                         {/* poster */}
-                        <Box px={5} mt={2}>
-                            {/* thong tin phim */}
-                            <TitleMovieDetail
-                                loading={loading}
-                                dataDetail={dataDetail}
-                                genres={genres}
-                                mediaType={param?.mediaType}
-                            />
+                        <Box px={1} mt={0}>
+                            <Paper>
+                                <BannerMovieDetail
+                                    loading={loading}
+                                    dataDetail={dataDetail}
+                                    mediaType={param.mediaType}
+                                />
+                                {/* thong tin phim */}
+                                <TitleMovieDetail
+                                    loading={loading}
+                                    dataDetail={dataDetail}
+                                    genres={genres}
+                                    mediaType={param?.mediaType}
+                                />
+                            </Paper>
                             <OverviewMovieDetail loading={loading} dataDetail={dataDetail} />
                             {/* thong tin phim */}
 

@@ -1,4 +1,4 @@
-import { Box, Divider, ListItemText, Typography } from '@mui/material';
+import { Box, Divider, ListItemText, Paper, Typography } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { userValue } from '~/redux/selectors';
 function InfoPage() {
@@ -26,11 +26,8 @@ function InfoPage() {
         );
     };
     return (
-        <Box
+        <Paper
             spacing={1}
-            bgcolor={'#141212'}
-            borderRadius={2}
-            border={'1px solid hsla(0,0%,100%,.1)'}
             overflow={'hidden'}
         >
             <Item primaryText={'Họ và tên:'} secondaryText={user?.name} />
@@ -40,7 +37,7 @@ function InfoPage() {
             <Item primaryText={'User Name:'} secondaryText={user?.userName} />
             <Divider variant="middle" />
             <Item primaryText={'Điện thoại:'} secondaryText={user?.phone === '' ? 'Không có' : user?.phone} />
-        </Box>
+        </Paper>
     );
 }
 

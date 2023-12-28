@@ -6,7 +6,7 @@ const root = {
     primary: '#ec0101',
     //input
     backgroundDefaultInput: '#2d2c2c',
-    backgroundDisableInput: '#242222',
+    backgroundDisableInput: '#232222',
     textDefaultInput: '#848383',
     textErrorInput: '#eb3942',
     textValueInput: '#edebeb',

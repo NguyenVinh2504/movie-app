@@ -112,7 +112,7 @@ const theme = createTheme({
     },
     mediaItems: {
         // background: 'rgba(255, 255, 255, 0.08)',
-        background: '#121212',
+        background: '#141212',
         text: 'white',
         textOverview: 'rgba(255, 255, 255, 0.50)',
         iconHeart: Color.primary,
@@ -127,6 +127,26 @@ const theme = createTheme({
         },
     },
     components: {
+        MuiPaper: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: '#141212',
+                    borderRadius: '8px',
+                    border: '1px solid hsla(0,0%,100%,.1)',
+                    color: 'white'
+                }
+            }
+        },
+        MuiAppBar: {
+            defaultProps: {
+                elevation: 0
+            },
+            styleOverrides: {
+                root: {
+                    backgroundColor: Color.background
+                }
+            }
+        },
         MuiPopover: {
             defaultProps: {
                 elevation: 0

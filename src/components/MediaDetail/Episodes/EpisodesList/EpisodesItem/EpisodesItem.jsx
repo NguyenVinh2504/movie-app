@@ -63,15 +63,17 @@ function EpisodesItem({ item, dataSeason }) {
     }));
     const CustomImage = ({ item }) => {
         return (
-            <Box sx={{ aspectRatio: '16/9' }}>
-                <Image
-                    alt={item.name}
-                    src={
-                        item?.still_path || dataSeason.poster_path
-                            ? tmdbConfigs.posterPath(item?.still_path ?? dataSeason.poster_path)
-                            : images.noImage19x6
-                    }
-                />
+            <Box sx={{ pt: 'calc(9/16*100%)', position: 'relative' }}>
+                <Box sx={{ ...uiConfigs.style.positionFullSize }}>
+                    <Image
+                        alt={item.name}
+                        src={
+                            item?.still_path || dataSeason.poster_path
+                                ? tmdbConfigs.posterPath(item?.still_path ?? dataSeason.poster_path)
+                                : images.noImage19x6
+                        }
+                    />
+                </Box>
             </Box>
         );
     };
@@ -80,6 +82,7 @@ function EpisodesItem({ item, dataSeason }) {
             {pointDownSm ? (
                 <Box
                     component={'a'}
+                    target="_blank"
                     href={`https://vidsrc.to/embed/tv/${item.show_id}/${item.season_number}/${item.episode_number}`}
                 >
                     <CustomDivider />
@@ -130,6 +133,7 @@ function EpisodesItem({ item, dataSeason }) {
                 // pc-table
                 <Box
                     component={'a'}
+                    target="_blank"
                     href={`https://vidsrc.to/embed/tv/${item.show_id}/${item.season_number}/${item.episode_number}`}
                 >
                     <CustomDivider />

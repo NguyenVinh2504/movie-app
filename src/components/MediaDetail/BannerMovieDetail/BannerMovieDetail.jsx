@@ -7,7 +7,7 @@ import { Link } from 'react-router-dom';
 import Image from '~/components/Image';
 function BannerMovieDetail({ loading, dataDetail, mediaType }) {
     return (
-        <Box sx={{ position: 'relative', overflow: 'hidden', aspectRatio: '16/9', pl: 1 }}>
+        <Box sx={{ position: 'relative', overflow: 'hidden', pt: 'calc(9/16*100%)', pl: 0 }}>
             {loading ? (
                 <>
                     <Skeleton variant="rectangular" width={'100%'} height={'100%'} />
@@ -15,7 +15,7 @@ function BannerMovieDetail({ loading, dataDetail, mediaType }) {
             ) : (
                 <>
                     {mediaType === 'movie' && (
-                        <Link to={`https://vidsrc.to/embed/movie/${dataDetail.id}`}>
+                        <Link to={`https://vidsrc.to/embed/movie/${dataDetail.id}`} target="_blank">
                             <IconButton
                                 color="secondNeutral"
                                 sx={{
@@ -31,7 +31,9 @@ function BannerMovieDetail({ loading, dataDetail, mediaType }) {
                             </IconButton>
                         </Link>
                     )}
-                    <Image src={tmdbConfigs.backdropPath(dataDetail.backdrop_path)} alt={dataDetail.title} />
+                    <Box sx={{ ...uiConfigs.style.positionFullSize }}>
+                        <Image src={tmdbConfigs.backdropPath(dataDetail.backdrop_path)} alt={dataDetail.title} />
+                    </Box>
                     <Box
                         sx={{
                             ...uiConfigs.style.gradientBgImage,

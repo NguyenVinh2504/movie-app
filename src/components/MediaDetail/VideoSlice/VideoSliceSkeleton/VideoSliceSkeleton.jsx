@@ -1,7 +1,7 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/scss';
 import 'swiper/scss/navigation';
-
+import uiConfigs from '~/config/ui.config';
 import { Skeleton, Box } from '@mui/material';
 
 import { memo } from 'react';
@@ -21,8 +21,8 @@ function VideoSliceSkeleton() {
                 .fill(0)
                 .map((item, index) => (
                     <SwiperSlide key={index}>
-                        <Box sx={{ aspectRatio: '16/9' }}>
-                            <Skeleton variant="rounded" height={'100%'} />
+                        <Box sx={{ pt: 'calc(9/16*100%)', position: 'relative' }}>
+                            <Skeleton variant="rounded" sx={{ ...uiConfigs.style.positionFullSize }} />
                         </Box>
                     </SwiperSlide>
                 ))}

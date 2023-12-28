@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Grid, styled, useMediaQuery } from '@mui/material';
+import { Box, Button, Divider, Grid, Paper, styled, useMediaQuery } from '@mui/material';
 
 import { useState } from 'react';
 
@@ -65,12 +65,9 @@ function EditAccount() {
     ))(() => ({}));
 
     return (
-        <Box
+        <Paper
             component={'form'}
             onSubmit={formik.handleSubmit}
-            bgcolor={'#141212'}
-            borderRadius={2}
-            border={'1px solid hsla(0,0%,100%,.1)'}
         >
             <Grid container spacing={2} p={2}>
                 <Grid item xs={12} sm={6}>
@@ -115,7 +112,7 @@ function EditAccount() {
                     </CustomButton>
                 )}
             </Box>
-        </Box>
+        </Paper>
     );
 }
 

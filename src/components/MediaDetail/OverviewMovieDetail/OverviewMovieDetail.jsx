@@ -1,5 +1,5 @@
 import { memo, useEffect, useRef, useState } from 'react';
-import { Box, Typography, useMediaQuery, Skeleton } from '@mui/material';
+import { Box, Typography, useMediaQuery, Skeleton, Paper } from '@mui/material';
 import uiConfigs from '~/config/ui.config';
 function OverviewMovieDetail({ loading, dataDetail }) {
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
@@ -12,7 +12,7 @@ function OverviewMovieDetail({ loading, dataDetail }) {
         }
     }, [loading]);
     return (
-        <Box sx={{ marginTop: 3 }}>
+        <Paper sx={{ mt: 1, p: 2 }}>
             <Typography variant={pointDownSm ? 'h6' : 'h5'} fontWeight={'500'}>
                 Mô tả
             </Typography>
@@ -34,7 +34,7 @@ function OverviewMovieDetail({ loading, dataDetail }) {
                     )}
                 </Box>
             )}
-        </Box>
+        </Paper>
     );
 }
 

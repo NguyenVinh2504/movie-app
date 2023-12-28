@@ -13,11 +13,13 @@ import Image from '~/components/Image';
 function CastItem({ item }) {
     return (
         <Box sx={{ bgcolor: 'rgba(255,255,255,0.1)', borderRadius: '4px', overflow: 'hidden' }}>
-            <Box sx={{ aspectRatio: 1, cursor: 'pointer' }}>
-                <Image
-                    src={item.profile_path ? tmdbConfigs.posterPath(item.profile_path) : images.noImage2x3}
-                    alt={item.title}
-                />
+            <Box sx={{ position: 'relative', pt: '100%' }}>
+                <Box sx={{ ...uiConfigs.style.positionFullSize, cursor: 'pointer' }}>
+                    <Image
+                        src={item.profile_path ? tmdbConfigs.posterPath(item.profile_path) : images.noImage2x3}
+                        alt={item.title}
+                    />
+                </Box>
             </Box>
             <Stack p={1}>
                 <Typography
