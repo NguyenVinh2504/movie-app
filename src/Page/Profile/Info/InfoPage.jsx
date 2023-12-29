@@ -26,7 +26,7 @@ function InfoPage() {
         );
     };
     return (
-        <Paper
+        <Paper variant='outlined'
             spacing={1}
             overflow={'hidden'}
         >

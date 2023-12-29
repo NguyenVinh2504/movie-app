@@ -99,19 +99,20 @@ function MovieDetail() {
                         sx={{
                             borderTop: '1px solid rgba(255,255,255,0.5)',
                             pb: '20px',
+                            pt: 1,
                             overflowY: 'auto',
                             ...uiConfigs.style.scroll,
                         }}
                     >
-                        {/* poster */}
-                        {/* poster */}
                         <Box px={1} mt={0}>
-                            <Paper>
+                            <Paper variant='outlined' sx={{overflow: 'hidden'}}>
+                                {/* poster */}
                                 <BannerMovieDetail
                                     loading={loading}
                                     dataDetail={dataDetail}
                                     mediaType={param.mediaType}
                                 />
+                                {/* poster */}
                                 {/* thong tin phim */}
                                 <TitleMovieDetail
                                     loading={loading}

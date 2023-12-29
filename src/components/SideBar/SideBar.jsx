@@ -19,13 +19,14 @@ import Logo from '../Logo';
 import { MenuIcon } from '../Icon';
 import AvatarUser from '../Avatar/Avatar';
 import { useDispatch, useSelector } from 'react-redux';
-import { userValue } from '~/redux/selectors';
+import { refreshToken, userValue } from '~/redux/selectors';
 import { loginOut } from '~/redux/features/userSlice';
 import config from '~/config';
 import userApi from '~/api/module/user.api';
 import { toast } from 'react-toastify';
 import { memo } from 'react';
-import { removeAccessToken } from '~/redux/features/authSlice';
+import { removeToken } from '~/redux/features/authSlice';
+import { logOut } from '~/utils/logOut';
 const ListCustoms = styled(ListItem)(({ theme }) => ({
     '&:hover': {
         backgroundColor: theme.listItems.backgroundHover,
@@ -43,16 +44,17 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
         onKeyDown,
     };
     const user = useSelector(userValue);
+    const getRefreshToken = useSelector(refreshToken);
     const dispatch = useDispatch();
 
-    const handleLogout = async () => {
-        const { response } = await userApi.logOut();
-        if (response) {
-            dispatch(loginOut());
-            dispatch(removeAccessToken());
-            toast.success('Đăng xuất thành công');
-        }
-    };
+    // const handleLogout = async () => {
+    //     const { response } = await userApi.logOut();
+    //     if (response) {
+    //         dispatch(loginOut());
+    //         dispatch(removeToken());
+    //         toast.success('Đăng xuất thành công');
+    //     }
+    // };
     const drawer = (
         <Box sx={{ width: '100%' }} role="presentation" {...props} px={2}>
             <Box sx={{ padding: '20px 16px 40px 16px', position: 'relative' }}>
@@ -160,7 +162,7 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
                             variant="contained"
                             disableElevation
                             disableRipple
-                            onClick={() => handleLogout()}
+                            onClick={() => logOut({ userApi, getRefreshToken, dispatch, loginOut, removeToken, toast })}
                         >
                             Đăng Xuất
                         </Button>

@@ -1,7 +1,7 @@
 import { Paper, Typography } from '@mui/material';
 function AboutUs() {
     return (
-        <Paper sx={{p: 3}} >
+        <Paper variant='outlined' sx={{p: 3}} >
             <Typography variant="h4" fontWeight={'500'}>
                 Giới Thiệu
             </Typography>

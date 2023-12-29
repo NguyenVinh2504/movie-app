@@ -128,14 +128,17 @@ const theme = createTheme({
     },
     components: {
         MuiPaper: {
-            styleOverrides: {
-                root: {
-                    backgroundColor: '#141212',
-                    borderRadius: '8px',
-                    border: '1px solid hsla(0,0%,100%,.1)',
-                    color: 'white'
-                }
-            }
+            variants: [
+                {
+                    props: { variant: 'outlined' },
+                    style: {
+                        backgroundColor: '#141212',
+                        borderRadius: '8px',
+                        border: '1px solid hsla(0,0%,100%,.1)',
+                        color: 'white'
+                    },
+                },
+            ],
         },
         MuiAppBar: {
             defaultProps: {

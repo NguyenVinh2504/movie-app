@@ -20,7 +20,7 @@ function Profile() {
         <Box
             sx={{
                 width: { md: '850px', lg: '1100px', xl: '100%' },
-                maxWidth: '1536px',
+                maxWidth: '1400px',
                 m: 'auto',
                 // bgcolor: (theme) => theme.palette.secondary.main,
             }}

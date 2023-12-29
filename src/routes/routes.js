@@ -1,6 +1,6 @@
 import Home from '~/Page/Home/HomePage';
 import AboutUs from '~/Page/AboutUS/AboutUsPage';
-import MediaSearch from '~/Page/MediaSearch/SearchPage';
+import SearchPage from '~/Page/SearchPage/SearchPage';
 import config from '~/config';
 import InfoPage from '~/Page/Profile/Info/InfoPage';
 import FavoriteMovieList from '~/Page/Profile/FavoriteMovieList/FavoriteMovieListPage';
@@ -9,7 +9,7 @@ import EditAccount from '~/Page/Profile/EditAccount/EditAccountPage';
 import ErrorPage from '~/Page/ErrorPage/ErrorPage';
 import AuthPage from '~/Page/AuthPage/AuthPage';
 import SettingProfile from '~/Page/Profile/SettingProfile/SettingProfile';
-import MediaListPage from '~/Page/MediaList/MediaListPage';
+import MediaListPage from '~/Page/MediaListPage/MediaListPage';
 export const routesMainLayout = [
     {
         index: true,
@@ -26,7 +26,7 @@ export const routesMainLayout = [
     },
     {
         path: config.routes.search,
-        element: <MediaSearch />,
+        element: <SearchPage />,
     },
     {
         path: config.routes.login,

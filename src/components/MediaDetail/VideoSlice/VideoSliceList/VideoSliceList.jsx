@@ -29,7 +29,7 @@ function VideoSliceList({ videos }) {
                         <SwiperSlide key={index}>
                             <Link to={tmdbConfigs.youtubePath(item.key)} target="_blank">
                                 <Box sx={{ pt: 'calc(9/16*100%)', position: 'relative' }}>
-                                    <Box sx={{ ...uiConfigs.style.positionFullSize }}>
+                                    <Box sx={{ ...uiConfigs.style.positionFullSize, borderRadius: 1, overflow: 'hidden' }}>
                                         <Image
                                             src={item.key ? tmdbConfigs.thumbnailYtb(item.key) : images.noImage19x6}
                                             alt={item.name}

@@ -94,7 +94,7 @@ function MediaListPage() {
                 {!isLoading && (
                     <Stack mt={2} justifyContent={'center'} flexDirection={'row'}>
                         <Button variant="contained" color="secondary" onClick={handleLoadingMore}>
-                            See More
+                            View More
                         </Button>
                     </Stack>
                 )}

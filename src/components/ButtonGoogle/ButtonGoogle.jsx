@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 import userApi from '~/api/module/user.api';
 import config from '~/config';
 import { app } from '~/firebase';
-import { setAccessToken } from '~/redux/features/authSlice';
+import { setToken } from '~/redux/features/authSlice';
 import { setUser } from '~/redux/features/userSlice';
 
 function ButtonGoogle() {
@@ -32,9 +32,9 @@ function ButtonGoogle() {
                 confirmPassword: `${uid}@`,
             });
             if (response) {
-                const { token,...user } = response
+                const { accessToken, refreshToken, ...user } = response;
                 dispatch(setUser(user));
-                dispatch(setAccessToken(token));
+                dispatch(setToken({ accessToken, refreshToken }));
                 toast.success(`Xin chào, ${response.name}`, {
                     position: 'top-center',
                 });

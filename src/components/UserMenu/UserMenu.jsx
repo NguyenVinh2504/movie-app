@@ -22,13 +22,15 @@ import { loginOut } from '~/redux/features/userSlice';
 
 //selector redux
 import { useSelector } from 'react-redux';
-import { userValue } from '~/redux/selectors';
+import { refreshToken, userValue } from '~/redux/selectors';
 import userApi from '~/api/module/user.api';
 import { toast } from 'react-toastify';
-import { removeAccessToken } from '~/redux/features/authSlice';
+import { removeToken } from '~/redux/features/authSlice';
+import { logOut } from '~/utils/logOut';
 
 function UserMenu() {
     const user = useSelector(userValue);
+    const getRefreshToken = useSelector(refreshToken);
     const dispatch = useDispatch();
 
     const [anchorEl, setAnchorEl] = useState(null);
@@ -43,14 +45,14 @@ function UserMenu() {
         setAnchorEl(null);
     };
 
-    const handleLogout = async () => {
-        const { response } = await userApi.logOut();
-        if (response) {
-            dispatch(loginOut());
-            dispatch(removeAccessToken());
-            toast.success('Đăng xuất thành công');
-        }
-    };
+    // const handleLogout = async () => {
+    //     const { response } = await userApi.logOut({ refreshToken: getRefreshToken });
+    //     if (response) {
+    //         dispatch(loginOut());
+    //         dispatch(removeToken());
+    //         toast.success('Đăng xuất thành công');
+    //     }
+    // };
     //close user menu down screen size sm
     // if (!breakpoints && open) {
     //     setAnchorEl(null);
@@ -79,7 +81,6 @@ function UserMenu() {
                         variant: 'outlined',
                         elevation: 0,
                     },
-
                 }}
                 sx={{
                     '& .MuiMenu-paper': {
@@ -116,7 +117,9 @@ function UserMenu() {
                     </NavLink>
                 ))}
                 <Divider light sx={{ borderColor: 'white', mt: 1.5, mb: '5px', opacity: 0.3 }} />
-                <MenuItem onClick={() => handleLogout()}>
+                <MenuItem
+                    onClick={() => logOut({ userApi, getRefreshToken, dispatch, loginOut, removeToken, toast })}
+                >
                     <ListItemIcon>{<SignOutIcon />}</ListItemIcon>
                     Đăng xuất
                 </MenuItem>

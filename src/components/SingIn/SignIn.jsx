@@ -17,7 +17,7 @@ import ErrorMessageForm from '../ErrorMessageForm';
 import { toast } from 'react-toastify';
 import ButtonGoogle from '../ButtonGoogle';
 import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
-import { setAccessToken } from '~/redux/features/authSlice';
+import { setToken } from '~/redux/features/authSlice';
 function SingIn() {
     const location = useNavigate();
 
@@ -45,9 +45,9 @@ function SingIn() {
                 setErrorMessage(err.message);
             }
             if (response) {
-                const { token,...user } = response
+                const { accessToken, refreshToken, ...user } = response;
                 dispatch(setUser(user));
-                dispatch(setAccessToken(token));
+                dispatch(setToken({ accessToken, refreshToken}));
                 location(config.routes.home);
                 formik.resetForm();
                 toast.success(`Xin chào, ${response.name}`, {

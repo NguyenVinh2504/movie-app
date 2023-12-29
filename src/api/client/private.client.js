@@ -4,7 +4,7 @@ import { API_ROOT } from '~/utils/constants';
 import { jwtDecode } from 'jwt-decode';
 import userApi from '~/api/module/user.api';
 import { store } from '~/redux/store';
-import { removeAccessToken, setAccessToken } from '~/redux/features/authSlice';
+import { removeToken, setToken } from '~/redux/features/authSlice';
 import { loginOut } from '~/redux/features/userSlice';
 import { toast } from 'react-toastify';
 const baseURL = `${API_ROOT}/api/v1/`;
@@ -27,9 +27,9 @@ privateClient.interceptors.request.use(async (config) => {
     if (decodeToken.exp < date.getTime() / 1000) {
         const { response } = await userApi.refreshToken();
         if (response) {
-            const newAccessToken = response.data.accessToken;
-            store.dispatch(setAccessToken(newAccessToken));
-            config.headers.Authorization = `Bearer ${newAccessToken}`;
+            const { accessToken, refreshToken } = response.data;
+            store.dispatch(setToken({ accessToken, refreshToken }));
+            config.headers.Authorization = `Bearer ${accessToken}`;
         }
     }
     return config;
@@ -46,7 +46,7 @@ privateClient.interceptors.response.use(
         } else if (err.response.status === 401) {
             toast.error('Phiên đăng nhập đã hết hạn')
             store.dispatch(loginOut())
-            store.dispatch(removeAccessToken())
+            store.dispatch(removeToken())
         } else {
             throw err?.response?.data ?? { message: 'Không thể lấy dữ liệu' };
         }

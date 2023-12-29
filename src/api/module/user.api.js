@@ -48,7 +48,7 @@ const userApi = {
     },
     logOut: async () => {
         try {
-            const response = await privateClient.post(userEndpoints.logOut, undefined, {
+            const response = await privateClient.post(userEndpoints.logOut, {
                 withCredentials: true,
             });
             return { response };

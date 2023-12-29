@@ -9,7 +9,7 @@ import menuItemsSearch from '~/config/MenuItemsSearch';
 import TabsSearchTypeMobile from './TabsSearchTypeMobile';
 import TabsSearch from './TabsSearch';
 
-function MediaSearch() {
+function SearchPage() {
     const pointDownLg = useMediaQuery((theme) => theme.breakpoints.down('lg'));
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const [dataSearch, setDataSearch] = useState([]);
@@ -112,7 +112,7 @@ function MediaSearch() {
                     {!isLoading && moreButton && query !== null && (
                         <Stack mt={2} justifyContent={'center'} flexDirection={'row'}>
                             <Button variant="contained" color="secondary" onClick={handleLoadingMore}>
-                                See More
+                                View More
                             </Button>
                         </Stack>
                     )}
@@ -122,4 +122,4 @@ function MediaSearch() {
     );
 }
 
-export default MediaSearch;
+export default SearchPage;

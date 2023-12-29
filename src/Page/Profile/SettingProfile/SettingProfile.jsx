@@ -13,7 +13,7 @@ function SettingCategory({ children }) {
 
 function ContainerSetting({ children }) {
     return (
-        <Paper>
+        <Paper variant='outlined'>
             {children}
         </Paper>
     );

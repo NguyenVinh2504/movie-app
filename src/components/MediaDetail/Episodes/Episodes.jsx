@@ -52,7 +52,7 @@ function Episodes({ seasons, seriesId, numberSeasonValue }) {
         }
     }, [seasonDetailValue.episodes?.length, visible]);
     return (
-        <Paper sx={{ mt: 1, p: 2 }}>
+        <Paper variant='outlined' sx={{ mt: 1, p: 2 }}>
             <Typography variant={pointDownSm ? 'h6' : 'h5'} mb={1} fontWeight={'500'}>
                 Tập phim
             </Typography>

@@ -7,7 +7,7 @@ import VideoSliceSkeleton from './VideoSliceSkeleton';
 function VideoSlice({ videos, loading }) {
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     return (
-        <Paper sx={{ mt: 1, p: 2 }}>
+        <Paper variant='outlined' sx={{ mt: 1, p: 2 }}>
             <Typography variant={pointDownSm ? 'h6' : 'h5'} mb={1} fontWeight={'500'}>
                 Trailer
             </Typography>

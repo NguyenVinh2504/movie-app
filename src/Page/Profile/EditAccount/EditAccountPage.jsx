@@ -65,7 +65,7 @@ function EditAccount() {
     ))(() => ({}));
 
     return (
-        <Paper
+        <Paper variant='outlined'
             component={'form'}
             onSubmit={formik.handleSubmit}
         >

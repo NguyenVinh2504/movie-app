@@ -12,7 +12,7 @@ function OverviewMovieDetail({ loading, dataDetail }) {
         }
     }, [loading]);
     return (
-        <Paper sx={{ mt: 1, p: 2 }}>
+        <Paper variant='outlined' sx={{ mt: 1, p: 2 }}>
             <Typography variant={pointDownSm ? 'h6' : 'h5'} fontWeight={'500'}>
                 Mô tả
             </Typography>
