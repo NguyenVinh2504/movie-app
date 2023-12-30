@@ -25,10 +25,9 @@ function SearchPage() {
     useEffect(() => {
         if (query !== null) {
             setIsLoading(true);
-        }
-        else if (query === null) {
+        } else if (query === null) {
             setIsLoading(false);
-            setMoreButton(false)
+            setMoreButton(false);
         }
         const getDataSearch = async () => {
             const { response } = await mediaApi.search({
@@ -57,7 +56,7 @@ function SearchPage() {
         };
         if (prevQuery !== query) {
             setCurrPage(1);
-            setMoreButton(false)
+            setMoreButton(false);
             setDataSearch([]);
         }
         const timer = setTimeout(() => {
@@ -90,6 +89,7 @@ function SearchPage() {
         (index) => {
             if (selectedIndex === index) return;
             setDataSearch([]);
+            setCurrPage(1);
             setSelectedIndex(index);
         },
         [selectedIndex],
