@@ -65,9 +65,9 @@ const userApi = {
             return { err };
         }
     },
-    refreshToken: async () => {
+    refreshToken: async ({ refreshToken }) => {
         try {
-            const response = await axios.post(`${baseURL}auth/refresh-token`, undefined, {
+            const response = await axios.post(`${baseURL}auth/refresh-token`, { refreshToken }, {
                 withCredentials: true,
             });
             return { response };

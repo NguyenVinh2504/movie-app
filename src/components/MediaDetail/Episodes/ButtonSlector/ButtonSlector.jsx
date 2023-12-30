@@ -6,7 +6,7 @@ import { ArrowDownIcon, ArrowUpIcon } from '~/components/Icon';
 
 function ButtonSelector({ seasons, onSeasonNuber }) {
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const [selectedIndex, setSelectedIndex] = React.useState(seasons.length - 1);
+    const [selectedIndex, setSelectedIndex] = React.useState(0);
     const open = Boolean(anchorEl);
 
     const handleClickListItem = (event) => {

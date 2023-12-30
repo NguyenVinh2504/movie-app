@@ -20,12 +20,12 @@ const privateClient = axios.create({
 });
 
 privateClient.interceptors.request.use(async (config) => {
-    const accessToken = store.getState().auth.accessToken;
+    const { accessToken, refreshToken } = store.getState().auth;
     config.headers.Authorization = `Bearer ${accessToken}`;
     let date = new Date();
     const decodeToken = jwtDecode(accessToken);
     if (decodeToken.exp < date.getTime() / 1000) {
-        const { response } = await userApi.refreshToken();
+        const { response } = await userApi.refreshToken({ refreshToken });
         if (response) {
             const { accessToken, refreshToken } = response.data;
             store.dispatch(setToken({ accessToken, refreshToken }));

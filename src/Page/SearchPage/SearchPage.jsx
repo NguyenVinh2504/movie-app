@@ -16,20 +16,21 @@ function SearchPage() {
     const [currPage, setCurrPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [moreButton, setMoreButton] = useState(false);
-    const [totalPage, setTotalPage] = useState(null);
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     let [searchParams] = useSearchParams();
     const query = searchParams.get('query');
     const prevQuery = usePrevious(query);
+
     useEffect(() => {
         if (query !== null) {
             setIsLoading(true);
-        } else if (query === null) {
+        }
+        else if (query === null) {
             setIsLoading(false);
+            setMoreButton(false)
         }
         const getDataSearch = async () => {
-            // console.log('get');
             const { response } = await mediaApi.search({
                 mediaType: menuItemsSearch[selectedIndex].type,
                 query: query,
@@ -39,21 +40,32 @@ function SearchPage() {
                 setIsLoading(false);
                 if (currPage !== 1) {
                     setDataSearch((m) => [...m, ...response.results]);
-                    setTotalPage(response.total_pages);
+                    if (currPage === response.total_pages) {
+                        setMoreButton(false);
+                    } else {
+                        setMoreButton(true);
+                    }
                 } else {
+                    if (currPage === response.total_pages) {
+                        setMoreButton(false);
+                    } else {
+                        setMoreButton(true);
+                    }
                     setDataSearch([...response.results]);
-                    setTotalPage(response.total_pages);
                 }
             }
         };
         if (prevQuery !== query) {
             setCurrPage(1);
+            setMoreButton(false)
             setDataSearch([]);
         }
         const timer = setTimeout(() => {
             if (query !== null) getDataSearch();
         }, [1000]);
-        return () => clearTimeout(timer);
+        return () => {
+            clearTimeout(timer);
+        };
     }, [currPage, prevQuery, query, selectedIndex]);
     const handleLoadingMore = () => {
         setCurrPage(currPage + 1);
@@ -63,13 +75,16 @@ function SearchPage() {
     //         setIsLoading(false);
     //     }
     // }, [query]);
-    useEffect(() => {
-        if (currPage === totalPage) {
-            setMoreButton(false);
-        } else if (query !== null) {
-            setMoreButton(true);
-        }
-    }, [currPage, query, totalPage]);
+    // useEffect(() => {
+    //     console.log(currPage, totalPage);
+    //     if (currPage === totalPage) {
+    //         console.log('true');
+    //         setMoreButton(false);
+    //     }
+    //     // else if (query !== null) {
+    //     //     setMoreButton(true);
+    //     // }
+    // }, [currPage, query, totalPage]);
 
     const handleListItemClick = useCallback(
         (index) => {
@@ -79,7 +94,6 @@ function SearchPage() {
         },
         [selectedIndex],
     );
-
     return (
         <Container maxWidth={'xl'}>
             {pointDownLg && (
@@ -109,7 +123,7 @@ function SearchPage() {
                         </Typography>
                     )}
                     <Media medias={dataSearch} isLoading={isLoading} mediaType={menuItemsSearch[selectedIndex].type} />
-                    {!isLoading && moreButton && query !== null && (
+                    {moreButton && (
                         <Stack mt={2} justifyContent={'center'} flexDirection={'row'}>
                             <Button variant="contained" color="secondary" onClick={handleLoadingMore}>
                                 View More

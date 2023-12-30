@@ -24,6 +24,7 @@ function Episodes({ seasons, seriesId, numberSeasonValue }) {
 
     useEffect(() => {
         const getDataDetailSeason = async () => {
+            console.log('chay function');
             const { response } = await mediaApi.getDetailSeason({
                 series_id: seriesId,
                 season_number: numberSeason ?? numberSeasonValue,
@@ -34,7 +35,7 @@ function Episodes({ seasons, seriesId, numberSeasonValue }) {
                 setIsLoading(false);
             }
         };
-        if (numberSeasonValue) getDataDetailSeason();
+        if (numberSeasonValue !== undefined) getDataDetailSeason();
     }, [numberSeason, numberSeasonValue, seriesId]);
 
     const handleShowMoreItems = () => {
@@ -52,7 +53,7 @@ function Episodes({ seasons, seriesId, numberSeasonValue }) {
         }
     }, [seasonDetailValue.episodes?.length, visible]);
     return (
-        <Paper variant='outlined' sx={{ mt: 1, p: 2 }}>
+        <Paper variant="outlined" sx={{ mt: 1, p: 2 }}>
             <Typography variant={pointDownSm ? 'h6' : 'h5'} mb={1} fontWeight={'500'}>
                 Tập phim
             </Typography>
