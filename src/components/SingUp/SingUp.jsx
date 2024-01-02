@@ -8,13 +8,10 @@ import userApi from '~/api/module/user.api';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 
-import { useState } from 'react';
-
 import { NavLink, useNavigate } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 import { setUser } from '~/redux/features/userSlice';
-import ErrorMessageForm from '../ErrorMessageForm';
 import { toast } from 'react-toastify';
 import ButtonGoogle from '../ButtonGoogle';
 import { setToken } from '~/redux/features/authSlice';
@@ -23,8 +20,6 @@ function SingUp() {
     const location = useNavigate();
 
     const dispatch = useDispatch();
-
-    const [errorMessage, setErrorMessage] = useState();
 
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
@@ -54,11 +49,10 @@ function SingUp() {
                 .oneOf([Yup.ref('password')], 'Nhập lại mật khẩu chưa chính xác')
                 .required('Vui lòng nhập lại mật khẩu'),
         }),
-        onSubmit: async (values) => {
-            setErrorMessage(undefined);
-            location(config.routes.home);
+        onSubmit: async (values, action) => {
             const { response, err } = await userApi.signup(values);
             if (response) {
+                location(config.routes.home);
                 formik.resetForm();
                 const { accessToken, refreshToken, ...user } = response;
                 dispatch(setUser(user));
@@ -68,13 +62,14 @@ function SingUp() {
                 });
             }
             if (err) {
-                setErrorMessage(err.message);
+                if (err.message === 'ISEXISTS') {
+                    action.setErrors({ email: 'Email này đã được đăng ký' });
+                }
             }
         },
     });
     return (
         <Box component={'form'} onSubmit={formik.handleSubmit}>
-            {errorMessage && <ErrorMessageForm>{errorMessage}</ErrorMessageForm>}
             <Stack spacing={2} mt={3}>
                 <Input
                     type="text"

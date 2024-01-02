@@ -18,9 +18,9 @@ const FormEmail = ({ openOtp, errorMessage, setErrorMessage, onSubmitOTP, onReSe
         validationSchema: Yup.object({
             otp: Yup.string().required('Vui lòng nhập mã OTP'),
         }),
-        onSubmit: async (values) => {
+        onSubmit: async (values, actions) => {
             const { otp } = values;
-            onSubmitOTP(otp.toString());
+            onSubmitOTP(otp.toString(), actions);
         },
     });
     useEffect(() => {

@@ -72,7 +72,7 @@ const theme = createTheme({
             lineHeight: '1.48',
         },
         caption: {
-            fontSize: '0.625rem',
+            fontSize: '0.75rem',
             fontStyle: 'normal',
             fontWeight: 400,
             lineHeight: '1.6',

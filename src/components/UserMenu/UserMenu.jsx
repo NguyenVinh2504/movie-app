@@ -11,7 +11,7 @@ import {
     // useMediaQuery,
 } from '@mui/material';
 import { memo, useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { userMenu } from '~/config/MenuItemsConfig';
 import { SignOutIcon } from '../Icon';
 import AvatarUser from '../Avatar/Avatar';
@@ -32,7 +32,7 @@ function UserMenu() {
     const user = useSelector(userValue);
     const getRefreshToken = useSelector(refreshToken);
     const dispatch = useDispatch();
-
+    const navigate = useNavigate()
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
@@ -118,7 +118,7 @@ function UserMenu() {
                 ))}
                 <Divider light sx={{ borderColor: 'white', mt: 1.5, mb: '5px', opacity: 0.3 }} />
                 <MenuItem
-                    onClick={() => logOut({ userApi, getRefreshToken, dispatch, loginOut, removeToken, toast })}
+                    onClick={() => logOut({ userApi, getRefreshToken, dispatch, loginOut, removeToken, toast, navigate })}
                 >
                     <ListItemIcon>{<SignOutIcon />}</ListItemIcon>
                     Đăng xuất

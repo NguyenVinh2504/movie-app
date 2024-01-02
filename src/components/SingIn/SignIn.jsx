@@ -9,11 +9,9 @@ import userApi from '~/api/module/user.api';
 import { useFormik } from 'formik';
 
 import * as Yup from 'yup';
-import { useState } from 'react';
 
 import { useDispatch } from 'react-redux';
 import { setUser } from '~/redux/features/userSlice';
-import ErrorMessageForm from '../ErrorMessageForm';
 import { toast } from 'react-toastify';
 import ButtonGoogle from '../ButtonGoogle';
 import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
@@ -22,8 +20,6 @@ function SingIn() {
     const location = useNavigate();
 
     const dispatch = useDispatch();
-
-    const [errorMessage, setErrorMessage] = useState();
 
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
@@ -36,13 +32,16 @@ function SingIn() {
             email: Yup.string().required('Vui lòng nhập email đăng nhập'),
             password: Yup.string().required('Vui lòng nhập mật khẩu'),
         }),
-        onSubmit: async (values) => {
-            setErrorMessage(undefined);
+        onSubmit: async (values, action) => {
             dispatch(toggleGlobalLoading(true));
             const { response, err } = await userApi.signin(values);
             dispatch(toggleGlobalLoading(false));
             if (err) {
-                setErrorMessage(err.message);
+                if (err.message === 'INVALID_PASSWORD') {
+                    action.setErrors({ password: 'Mật khẩu chưa chính xác' });
+                } else if (err.message === 'INVALID_EMAIL') {
+                    action.setErrors({ email: 'Không tìm thấy email' });
+                }
             }
             if (response) {
                 const { accessToken, refreshToken, ...user } = response;
@@ -58,7 +57,6 @@ function SingIn() {
     });
     return (
         <Box component={'form'} onSubmit={formik.handleSubmit}>
-            {errorMessage && <ErrorMessageForm>{errorMessage}</ErrorMessageForm>}
             <Stack spacing={2} mt={2}>
                 <Input
                     type="text"

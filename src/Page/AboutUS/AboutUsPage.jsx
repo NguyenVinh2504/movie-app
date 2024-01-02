@@ -1,4 +1,5 @@
 import { Paper, Typography } from '@mui/material';
+
 function AboutUs() {
     return (
         <Paper variant="outlined" sx={{ p: 3 }}>

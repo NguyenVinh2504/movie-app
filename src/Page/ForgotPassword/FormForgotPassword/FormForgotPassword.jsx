@@ -18,10 +18,9 @@ function FormForgotPassword() {
     });
     const location = useNavigate();
     const { email, newPassword } = formValue;
-    const handleSubmitEmail = useCallback(async (email) => {
+    const handleSubmitEmail = useCallback(async (email, actions) => {
         const { response, err } = await userApi.checkEmail({ email });
         if (response) {
-            setErrorMessage(false);
             setOpenPass(true);
             setOpenEmail(false);
             setFormValue({
@@ -30,7 +29,7 @@ function FormForgotPassword() {
         }
         if (err) {
             if (err.statusCode === 404) {
-                setErrorMessage('Không tìm thấy Email này');
+                actions.setErrors({email: 'Không tìm thấy Email này'})
             }
         }
     }, []);
@@ -49,15 +48,14 @@ function FormForgotPassword() {
     );
 
     const handleSubmitOTP = useCallback(
-        async (otp) => {
+        async (otp, actions) => {
             const { response, err } = await userApi.forgotPassword({ email, otp, newPassword });
             if (response) {
-                setErrorMessage(false);
                 location(config.routes.login);
             }
             if (err) {
                 if (err.statusCode === 401) {
-                    setErrorMessage('Mã OTP không hợp lệ');
+                    actions.setErrors({otp: 'Mã OTP không hợp lệ'})
                 }
             }
         },
@@ -67,10 +65,8 @@ function FormForgotPassword() {
 
     const handleReSendOTP = useCallback(
         async (setCountdown) => {
-            setErrorMessage(false);
             const { response } = await userApi.sendEmail({ email });
             if (response) {
-                setErrorMessage(false);
                 setCountdown(120);
             }
         },

@@ -16,8 +16,8 @@ const FormEmail = ({ openEmail, errorMessage, setOpenOtp, setOpenEmail, onSubmit
         validationSchema: Yup.object({
             // email: Yup.string().email('Định dạng email không đúng').required('Vui lòng nhập email'),
         }),
-        onSubmit: async (values) => {
-            onSubmitEmail(values.email)
+        onSubmit: async (values, actions) => {
+            onSubmitEmail(values.email, actions)
         },
     });
     return (
