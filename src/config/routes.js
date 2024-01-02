@@ -23,6 +23,8 @@ const routes = {
     // account: '/movie-app/account',
     signup: '/signup',
     login: '/login',
+
+    forgotPassword: '/forgot-password',
     error: '*',
 };
 

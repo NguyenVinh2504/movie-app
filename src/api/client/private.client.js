@@ -18,18 +18,20 @@ const privateClient = axios.create({
         encode: (params) => queryString.stringify(params),
     },
 });
-
+let refreshTokenRequest = null
 privateClient.interceptors.request.use(async (config) => {
     const { accessToken, refreshToken } = store.getState().auth;
     config.headers.Authorization = `Bearer ${accessToken}`;
     let date = new Date();
     const decodeToken = jwtDecode(accessToken);
     if (decodeToken.exp < date.getTime() / 1000) {
-        const { response } = await userApi.refreshToken({ refreshToken });
+        refreshTokenRequest = refreshTokenRequest ? refreshTokenRequest : userApi.refreshToken({ refreshToken });
+        const { response } = await refreshTokenRequest;
         if (response) {
             const { accessToken, refreshToken } = response.data;
             store.dispatch(setToken({ accessToken, refreshToken }));
             config.headers.Authorization = `Bearer ${accessToken}`;
+            refreshTokenRequest = null
         }
     }
     return config;
@@ -43,7 +45,7 @@ privateClient.interceptors.response.use(
     (err) => {
         if (axios.isCancel(err)) {
             throw err;
-        } else if (err.response.status === 401) {
+        } else if (err?.response?.status === 401) {
             toast.error('Phiên đăng nhập đã hết hạn')
             store.dispatch(loginOut())
             store.dispatch(removeToken())

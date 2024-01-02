@@ -14,6 +14,9 @@ const userEndpoints = {
     profileUpdate: 'user/update-profile',
     passwordUpdate: 'user/update-password',
     deleteUser: 'user/delete',
+    checkEmail: 'user/check-email',
+    sendEmail: 'user/send-email',
+    forgotPassword: 'user/forgot-password'
 };
 const userApi = {
     signin: async ({ email, password }) => {
@@ -110,6 +113,40 @@ const userApi = {
         try {
             const response = await privateClient.patch(userEndpoints.deleteUser, {
                 password,
+            });
+
+            return { response };
+        } catch (err) {
+            return { err };
+        }
+    },
+    checkEmail: async ({ email }) => {
+        try {
+            const response = await publicClient.post(userEndpoints.checkEmail, {
+                email,
+            });
+
+            return { response };
+        } catch (err) {
+            return { err };
+        }
+    },
+    sendEmail: async ({ email }) => {
+        try {
+            const response = await publicClient.post(userEndpoints.sendEmail, {
+                email,
+            });
+
+            return { response };
+        } catch (err) {
+            return { err };
+        }
+    },
+    forgotPassword: async ({ email, otp, newPassword }) => {
+        try {
+            console.log(newPassword);
+            const response = await publicClient.post(userEndpoints.forgotPassword, {
+                email, otp, newPassword
             });
 
             return { response };

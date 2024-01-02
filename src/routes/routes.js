@@ -10,6 +10,7 @@ import ErrorPage from '~/Page/ErrorPage/ErrorPage';
 import AuthPage from '~/Page/AuthPage/AuthPage';
 import SettingProfile from '~/Page/Profile/SettingProfile/SettingProfile';
 import MediaListPage from '~/Page/MediaListPage/MediaListPage';
+import ForgotPassword from '~/Page/ForgotPassword/ForgotPassword';
 export const routesMainLayout = [
     {
         index: true,
@@ -35,6 +36,10 @@ export const routesMainLayout = [
     {
         path: config.routes.signup,
         element: <AuthPage />,
+    },
+    {
+        path: config.routes.forgotPassword,
+        element: <ForgotPassword />,
     },
     // {
     //     path: config.routes.signup,

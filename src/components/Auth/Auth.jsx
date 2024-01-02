@@ -14,6 +14,7 @@ function Auth({ titleAuth, children }) {
                 margin: 'auto',
                 opacity: 1,
                 // transform: "translateY(-50%)",
+                overflow: 'hidden',
                 border: '1px solid hsla(0,0%,100%,.1)',
                 p: '32px',
                 mt: { xs: 2, sm: 6 },

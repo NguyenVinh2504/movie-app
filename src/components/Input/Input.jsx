@@ -81,6 +81,11 @@ const Input = forwardRef(
                         {...inputEvent}
                         {...props}
                         ref={ref}
+                        style={{
+                            'input[type="number" i]': {
+                                'writing-mode': 'horizontal-tb !important',
+                            },
+                        }}
                         autoComplete="off"
                     ></input>
                     {rightIcon && (

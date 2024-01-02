@@ -47,7 +47,7 @@ function SingIn() {
             if (response) {
                 const { accessToken, refreshToken, ...user } = response;
                 dispatch(setUser(user));
-                dispatch(setToken({ accessToken, refreshToken}));
+                dispatch(setToken({ accessToken, refreshToken }));
                 location(config.routes.home);
                 formik.resetForm();
                 toast.success(`Xin chào, ${response.name}`, {
@@ -96,9 +96,9 @@ function SingIn() {
                 <Typography variant={pointDownSm ? 'subtitle2' : 'subtitle1'}>
                     <NavLink to={config.routes.signup}>Bạn chưa có tài khoản?</NavLink>
                 </Typography>
-                <NavLink>
-                    <Typography variant={pointDownSm ? 'subtitle2' : 'subtitle1'}>Quên mật khẩu</Typography>
-                </NavLink>
+                <Typography variant={pointDownSm ? 'subtitle2' : 'subtitle1'}>
+                    <NavLink to={config.routes.forgotPassword}>Quên mật khẩu</NavLink>
+                </Typography>
             </Stack>
         </Box>
     );

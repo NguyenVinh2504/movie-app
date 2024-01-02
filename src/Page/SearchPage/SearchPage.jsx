@@ -37,19 +37,14 @@ function SearchPage() {
             });
             if (response) {
                 setIsLoading(false);
+                if (currPage === response.total_pages) {
+                    setMoreButton(false);
+                } else {
+                    setMoreButton(true);
+                }
                 if (currPage !== 1) {
                     setDataSearch((m) => [...m, ...response.results]);
-                    if (currPage === response.total_pages) {
-                        setMoreButton(false);
-                    } else {
-                        setMoreButton(true);
-                    }
                 } else {
-                    if (currPage === response.total_pages) {
-                        setMoreButton(false);
-                    } else {
-                        setMoreButton(true);
-                    }
                     setDataSearch([...response.results]);
                 }
             }
@@ -69,27 +64,13 @@ function SearchPage() {
     const handleLoadingMore = () => {
         setCurrPage(currPage + 1);
     };
-    // useEffect(() => {
-    //     if (query === null) {
-    //         setIsLoading(false);
-    //     }
-    // }, [query]);
-    // useEffect(() => {
-    //     console.log(currPage, totalPage);
-    //     if (currPage === totalPage) {
-    //         console.log('true');
-    //         setMoreButton(false);
-    //     }
-    //     // else if (query !== null) {
-    //     //     setMoreButton(true);
-    //     // }
-    // }, [currPage, query, totalPage]);
 
     const handleListItemClick = useCallback(
         (index) => {
             if (selectedIndex === index) return;
             setDataSearch([]);
             setCurrPage(1);
+            setMoreButton(false)
             setSelectedIndex(index);
         },
         [selectedIndex],
