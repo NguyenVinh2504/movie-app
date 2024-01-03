@@ -5,8 +5,8 @@ export const logOut = async ({ userApi, dispatch, loginOut, removeToken, toast, 
     if (response) {
         dispatch(loginOut());
         dispatch(removeToken());
-        navigate(config.routes.home)
         navigate(0)
+        navigate(config.routes.home)
         toast.success('Đăng xuất thành công');
     }
 };
