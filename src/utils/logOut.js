@@ -4,6 +4,7 @@ export const logOut = async ({ userApi, dispatch, loginOut, removeToken, toast, 
     const id = toast.loading('Đang đăng xuất...');
     const { response, err } = await userApi.logOut();
     if (response) {
+<<<<<<< HEAD
         // navigate(config.routes.home)
         setTimeout(() => {
             dispatch(loginOut())
@@ -24,5 +25,12 @@ export const logOut = async ({ userApi, dispatch, loginOut, removeToken, toast, 
             isLoading: false,
             autoClose: 3000,
         });
+=======
+        dispatch(loginOut());
+        dispatch(removeToken());
+        navigate(0)
+        navigate(config.routes.home)
+        toast.success('Đăng xuất thành công');
+>>>>>>> 2814174d3d07d697bf99ed71e240edf04d2bea22
     }
 };
