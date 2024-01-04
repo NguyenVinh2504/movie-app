@@ -1,6 +1,22 @@
 import { Paper, Typography } from '@mui/material';
-
+// import { useEffect } from 'react';
+// import { useDispatch, useSelector } from 'react-redux';
+// import userApi from '~/api/module/user.api';
+// import { updateUser } from '~/redux/features/userSlice';
+// import { accessToken } from '~/redux/selectors';
 function AboutUs() {
+    // const dispatch = useDispatch();
+    //     const token = useSelector(accessToken);
+    //     useEffect(() => {
+    //         const authUser = async () => {
+    //             const { response } = await userApi.getInfo();
+    //             if (response) dispatch(updateUser(response));
+    //         };
+    //         if (token) {
+    //             authUser();
+    //         }
+    //         // eslint-disable-next-line react-hooks/exhaustive-deps
+    //     }, []);
     return (
         <Paper variant="outlined" sx={{ p: 3 }}>
             <Typography variant="h4" fontWeight={'500'}>

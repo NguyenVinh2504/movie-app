@@ -24,6 +24,7 @@ function SearchPage() {
 
     useEffect(() => {
         if (query !== null) {
+            setMoreButton(false);
             setIsLoading(true);
         } else if (query === null) {
             setIsLoading(false);

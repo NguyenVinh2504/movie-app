@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import { globalLoadingValue } from '~/redux/selectors';
 
 function GlobalLoading() {
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const globalLoading = useSelector(globalLoadingValue);
     useEffect(() => {
         if (globalLoading) {
@@ -13,7 +13,7 @@ function GlobalLoading() {
         } else {
             setTimeout(() => {
                 setIsLoading(false);
-            }, 1000);
+            }, 2000);
         }
     }, [globalLoading]);
     return (
@@ -33,10 +33,10 @@ function GlobalLoading() {
                 alignItems: 'center',
             }}
         >
-            <Box sx={{ width: { xs: '60%', sm: 'auto' } }}>
+            <Box sx={{ width: { xs: '30%', sm: 'auto' } }}>
                 <img src={images.logo} alt="Logos" loading="lazy" />
             </Box>
-            <Box
+            {/* <Box
                 sx={{
                     width: '120px',
                     height: '60px',
@@ -58,7 +58,7 @@ function GlobalLoading() {
                         '90%,100%': { transform: 'translate(calc(var(--s,1)*30px))' },
                     },
                 }}
-            ></Box>
+            ></Box> */}
         </Box>
     );
 }

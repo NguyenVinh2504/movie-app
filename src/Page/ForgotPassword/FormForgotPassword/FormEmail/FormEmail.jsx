@@ -2,19 +2,18 @@ import React, { memo } from 'react';
 import { Box, Button, Stack, useMediaQuery } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import ErrorMessageForm from '~/components/ErrorMessageForm';
 import { EmailIcon } from '~/components/Icon';
 import Input from '~/components/Input';
 import uiConfigs from '~/config/ui.config';
 
-const FormEmail = ({ openEmail, errorMessage, setOpenOtp, setOpenEmail, onSubmitEmail }) => {
+const FormEmail = ({ openEmail, errorMessage, onSubmitEmail }) => {
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const formik = useFormik({
         initialValues: {
             email: '',
         },
         validationSchema: Yup.object({
-            // email: Yup.string().email('Định dạng email không đúng').required('Vui lòng nhập email'),
+            email: Yup.string().email('Định dạng email không đúng').required('Vui lòng nhập email'),
         }),
         onSubmit: async (values, actions) => {
             onSubmitEmail(values.email, actions)
@@ -31,7 +30,6 @@ const FormEmail = ({ openEmail, errorMessage, setOpenOtp, setOpenEmail, onSubmit
                 transition: 'all 1s ease 0s',
             }}
         >
-            {errorMessage && <ErrorMessageForm>{errorMessage}</ErrorMessageForm>}
             <Stack spacing={2} mt={2} alignItems={'flex-end'}>
                 <Input
                     type="text"

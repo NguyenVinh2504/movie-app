@@ -32,7 +32,7 @@ function UserMenu() {
     const user = useSelector(userValue);
     const getRefreshToken = useSelector(refreshToken);
     const dispatch = useDispatch();
-    const navigate = useNavigate()
+    const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
@@ -44,6 +44,17 @@ function UserMenu() {
     const handleClose = () => {
         setAnchorEl(null);
     };
+    // const token = useSelector(accessToken);
+    // const test = () => {
+    //     const authUser = async () => {
+    //         const { response } = await userApi.getInfo();
+    //         if (response) dispatch(updateUser(response));
+    //     };
+    //     if (token) {
+    //         authUser();
+    //     }
+    // };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
 
     // const handleLogout = async () => {
     //     const { response } = await userApi.logOut({ refreshToken: getRefreshToken });
@@ -118,7 +129,10 @@ function UserMenu() {
                 ))}
                 <Divider light sx={{ borderColor: 'white', mt: 1.5, mb: '5px', opacity: 0.3 }} />
                 <MenuItem
-                    onClick={() => logOut({ userApi, getRefreshToken, dispatch, loginOut, removeToken, toast, navigate })}
+                    onClick={() => {
+                        logOut({ userApi, getRefreshToken, dispatch, loginOut, removeToken, toast, navigate });
+                        // test();
+                    }}
                 >
                     <ListItemIcon>{<SignOutIcon />}</ListItemIcon>
                     Đăng xuất
