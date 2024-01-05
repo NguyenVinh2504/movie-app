@@ -9,11 +9,13 @@ function GlobalLoading() {
     const globalLoading = useSelector(globalLoadingValue);
     useEffect(() => {
         if (globalLoading) {
+            document.querySelector('body').style.cssText = 'overflow: hidden';
             setIsLoading(true);
         } else {
             setTimeout(() => {
+                document.querySelector('body').removeAttribute('style');
                 setIsLoading(false);
-            }, 2000);
+            }, 3000);
         }
     }, [globalLoading]);
     return (
@@ -33,7 +35,7 @@ function GlobalLoading() {
                 alignItems: 'center',
             }}
         >
-            <Box sx={{ width: { xs: '30%', sm: 'auto' } }}>
+            <Box sx={{ width: { xs: '45%', sm: 'auto' } }}>
                 <img src={images.logo} alt="Logos" loading="lazy" />
             </Box>
             {/* <Box

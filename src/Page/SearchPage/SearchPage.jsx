@@ -23,14 +23,16 @@ function SearchPage() {
     const prevQuery = usePrevious(query);
 
     useEffect(() => {
-        if (query !== null) {
+        // if (query !== null) {
+        //     setMoreButton(false);
+        //     setIsLoading(true);
+        // } else if (query === null) {
+        //     setIsLoading(false);
+        //     setMoreButton(false);
+        // }
+        const getDataSearch = async () => {
             setMoreButton(false);
             setIsLoading(true);
-        } else if (query === null) {
-            setIsLoading(false);
-            setMoreButton(false);
-        }
-        const getDataSearch = async () => {
             const { response } = await mediaApi.search({
                 mediaType: menuItemsSearch[selectedIndex].type,
                 query: query,
