@@ -15,7 +15,7 @@ function GlobalLoading() {
             setTimeout(() => {
                 document.querySelector('body').removeAttribute('style');
                 setIsLoading(false);
-            }, 3000);
+            }, 2500);
         }
     }, [globalLoading]);
     return (
