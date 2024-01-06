@@ -4,7 +4,8 @@ import { API_ROOT } from '~/utils/constants';
 import { jwtDecode } from 'jwt-decode';
 import userApi from '~/api/module/user.api';
 import { store } from '~/redux/store';
-import { setToken } from '~/redux/features/authSlice';
+import { removeToken, setToken } from '~/redux/features/authSlice';
+import { loginOut } from '~/redux/features/userSlice';
 // import { loginOut } from '~/redux/features/userSlice';
 // import { toast } from 'react-toastify';
 const baseURL = `${API_ROOT}/api/v1/`;
@@ -49,11 +50,11 @@ privateClient.interceptors.response.use(
         if (axios.isCancel(err)) {
             throw err;
         }
-        // else if (err?.response?.status === 401) {
-        //     toast.error('Phiên đăng nhập đã hết hạn')
-        //     store.dispatch(loginOut())
-        //     store.dispatch(removeToken())
-        // }
+        else if (err?.response?.status === 401) {
+            store.dispatch(loginOut())
+            store.dispatch(removeToken())
+            throw err?.response?.data ?? { message: 'Không thể lấy dữ liệu' };
+        }
         else {
             throw err?.response?.data ?? { message: 'Không thể lấy dữ liệu' };
         }
