@@ -24,7 +24,8 @@ function MainLayout() {
             if (response) {
                 dispatch(updateUser(response));
                 dispatch(toggleGlobalLoading(false));
-            } else if (err) {
+            } 
+            if (err) {
                 dispatch(toggleGlobalLoading(false));
             }
         };

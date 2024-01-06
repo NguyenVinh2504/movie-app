@@ -14,7 +14,6 @@ import { useDispatch } from 'react-redux';
 import { setUser } from '~/redux/features/userSlice';
 import { toast } from 'react-toastify';
 import ButtonGoogle from '../ButtonGoogle';
-import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
 import { setToken } from '~/redux/features/authSlice';
 function SingIn() {
     const location = useNavigate();
@@ -33,9 +32,7 @@ function SingIn() {
             password: Yup.string().required('Vui lòng nhập mật khẩu'),
         }),
         onSubmit: async (values, action) => {
-            dispatch(toggleGlobalLoading(true));
             const { response, err } = await userApi.signin(values);
-            dispatch(toggleGlobalLoading(false));
             if (err) {
                 if (err.message === 'INVALID_PASSWORD') {
                     action.setErrors({ password: 'Mật khẩu chưa chính xác' });
