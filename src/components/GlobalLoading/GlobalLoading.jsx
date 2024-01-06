@@ -3,6 +3,7 @@ import images from '~/assets/image';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { globalLoadingValue } from '~/redux/selectors';
+import uiConfigs from '~/config/ui.config';
 import theme from '~/theme';
 
 function GlobalLoading() {
@@ -30,8 +31,7 @@ function GlobalLoading() {
                     position: 'fixed',
                     opacity: isLoading ? 1 : 0,
                     transition: `opacity 0.3s ${theme.transitions.easing.easeOut}`,
-                    width: '100vw',
-                    height: '100vh',
+                    ...uiConfigs.style.positionFullSize,
                     zIndex: '10000',
                     background: 'black',
                     flexDirection: 'column',
@@ -44,7 +44,9 @@ function GlobalLoading() {
                 <Box sx={{ width: { xs: '45%', sm: 'auto' }, mt: { xs: '-40%', sm: '0' } }}>
                     <img src={images.logo} alt="Logos" loading="lazy" />
                 </Box>
-                <Typography position={'absolute'} bottom={0} mb={5} variant='subtitle2'>Powered by Nguyen Vinh</Typography>
+                <Typography position={'absolute'} bottom={0} mb={2} variant="subtitle2">
+                    Powered by Nguyen Vinh
+                </Typography>
                 {/* <Box
                 sx={{
                     width: '110px',
