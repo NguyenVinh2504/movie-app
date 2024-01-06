@@ -244,6 +244,10 @@ const theme = createTheme({
                 {
                     props: { color: 'primary' },
                     style: {
+                        "&.Mui-disabled": {
+                            background: "#930505",
+                            color: 'rgba(255, 255, 255, 0.80)'
+                        },
                         '&:hover': {
                             backgroundColor: 'rgba(236, 1, 1, 0.80)',
                         },
@@ -299,6 +303,13 @@ const theme = createTheme({
         },
         MuiIconButton: {
             variants: [
+                {
+                    props: { disabled: true },
+                    style: {
+                        backgroundColor: 'rgba(255, 255, 255, 0.2)',
+                    }
+
+                },
                 {
                     props: { color: 'neutral' },
                     style: {

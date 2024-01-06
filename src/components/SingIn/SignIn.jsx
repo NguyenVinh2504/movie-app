@@ -15,7 +15,7 @@ import { setUser } from '~/redux/features/userSlice';
 import { toast } from 'react-toastify';
 import ButtonGoogle from '../ButtonGoogle';
 import { setToken } from '~/redux/features/authSlice';
-function SingIn() {
+function SingIn({ setIsLoading }) {
     const location = useNavigate();
 
     const dispatch = useDispatch();
@@ -32,8 +32,10 @@ function SingIn() {
             password: Yup.string().required('Vui lòng nhập mật khẩu'),
         }),
         onSubmit: async (values, action) => {
+            setIsLoading(true);
             const { response, err } = await userApi.signin(values);
             if (err) {
+                setIsLoading(false);
                 if (err.message === 'INVALID_PASSWORD') {
                     action.setErrors({ password: 'Mật khẩu chưa chính xác' });
                 } else if (err.message === 'INVALID_EMAIL') {
@@ -41,6 +43,7 @@ function SingIn() {
                 }
             }
             if (response) {
+                setIsLoading(false);
                 const { accessToken, refreshToken, ...user } = response;
                 dispatch(setUser(user));
                 dispatch(setToken({ accessToken, refreshToken }));

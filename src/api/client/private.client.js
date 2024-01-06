@@ -45,7 +45,7 @@ privateClient.interceptors.response.use(
         return response;
     },
     (err) => {
-        console.log(err);
+        // console.log(err);
         if (axios.isCancel(err)) {
             throw err;
         }

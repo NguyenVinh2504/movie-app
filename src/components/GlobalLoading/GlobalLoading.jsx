@@ -17,7 +17,7 @@ function GlobalLoading() {
             setTimeout(() => {
                 document.querySelector('body').removeAttribute('style');
                 setIsLoading(false);
-            }, 2000);
+            }, 1500);
         }
     }, [globalLoading]);
     const handleonAnimationEnd = () => {
@@ -44,7 +44,7 @@ function GlobalLoading() {
                 <Box sx={{ width: { xs: '45%', sm: 'auto' }, mt: { xs: '-40%', sm: '0' } }}>
                     <img src={images.logo} alt="Logos" loading="lazy" />
                 </Box>
-                <Typography position={'absolute'} bottom={0} mb={1} variant='subtitle2'>Powered by Nguyen Vinh</Typography>
+                <Typography position={'absolute'} bottom={0} mb={5} variant='subtitle2'>Powered by Nguyen Vinh</Typography>
                 {/* <Box
                 sx={{
                     width: '110px',

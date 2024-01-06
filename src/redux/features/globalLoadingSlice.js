@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 const detailMovie = createSlice({
     name: 'globalLoading',
     initialState: {
-        toggleGlobalLoading: false,
+        toggleGlobalLoading: true,
     },
     reducers: {
         toggleGlobalLoading: (state, action) => {

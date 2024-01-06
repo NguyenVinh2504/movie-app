@@ -1,11 +1,12 @@
-import { Box, Typography } from '@mui/material';
+import { Box, LinearProgress, Typography } from '@mui/material';
 import Logo from '~/components/Logo';
 
-function Auth({ titleAuth, children }) {
+function Auth({ titleAuth, children, isLoading }) {
     return (
         <Box
             sx={{
                 display: 'flex',
+                position: 'relative',
                 flexDirection: 'column',
                 width: '100%',
                 maxWidth: '35rem',
@@ -32,6 +33,13 @@ function Auth({ titleAuth, children }) {
                 },
             }}
         >
+            {isLoading && (
+                <LinearProgress
+                    sx={{ position: 'absolute', top: 0, left: 0, width: '100%', backgroundColor: 'secondary.main' }}
+                    color="primary"
+                    variant="indeterminate"
+                />
+            )}
             {/* title */}
             <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column', gap: 2, mb: 3, mt: 1 }}>
                 {/* logo */}

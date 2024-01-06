@@ -49,14 +49,13 @@ const FormEmail = ({ openOtp, errorMessage, setErrorMessage, onSubmitOTP, onReSe
         >
             {errorMessage && <ErrorMessageForm>{errorMessage}</ErrorMessageForm>}
             <Stack spacing={2} mt={2} alignItems={'flex-end'}>
-                <Box sx={{width: '100%'}}>
+                <Box sx={{ width: '100%' }}>
                     <Input
                         type="number"
                         name="otp"
                         inputEvent={{
                             disabled: countdown === 0,
                         }}
-                        disable={countdown === 0}
                         placeholder={'Nhập mã OTP'}
                         value={formik.values.otp}
                         onChange={formik.handleChange}
@@ -64,8 +63,12 @@ const FormEmail = ({ openOtp, errorMessage, setErrorMessage, onSubmitOTP, onReSe
                         helperText={formik.touched.otp && formik.errors.otp}
                         leftIcon={<PasswordIcon />}
                     ></Input>
-                    <ButtonBase disabled={countdown !== 0} onClick={() => onReSendOTP(setCountdown)}>
-                        <Typography variant="subtitle2" mt={1}>
+                    <ButtonBase
+                        disabled={countdown !== 0}
+                        onClick={() => onReSendOTP(setCountdown)}
+                        disable={countdown !== 0}
+                    >
+                        <Typography variant="subtitle2" mt={1} color={countdown !== 0 ? '#a6a4a4' : `white`}>
                             {countdown === 0 ? 'Gửi mã OTP mới' : `Gửi mã OTP mới (sau ${countdown} giây)`}
                         </Typography>
                     </ButtonBase>
@@ -73,6 +76,7 @@ const FormEmail = ({ openOtp, errorMessage, setErrorMessage, onSubmitOTP, onReSe
                 {/* button */}
                 <Button
                     variant="contained"
+                    disabled={countdown === 0}
                     size={pointDownSm ? 'small' : 'medium'}
                     type="submit"
                 >

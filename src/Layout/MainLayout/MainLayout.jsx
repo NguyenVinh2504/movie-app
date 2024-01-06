@@ -19,12 +19,11 @@ function MainLayout() {
     // const token = useSelector(accessToken);
     useEffect(() => {
         const authUser = async () => {
-            dispatch(toggleGlobalLoading(true));
             const { response, err } = await userApi.getInfo();
             if (response) {
                 dispatch(updateUser(response));
                 dispatch(toggleGlobalLoading(false));
-            } 
+            }
             if (err) {
                 dispatch(toggleGlobalLoading(false));
             }
