@@ -18,7 +18,7 @@ function GlobalLoading() {
             setTimeout(() => {
                 document.querySelector('body').removeAttribute('style');
                 setIsLoading(false);
-            }, 1500);
+            }, 500);
         }
     }, [globalLoading]);
     const handleonAnimationEnd = () => {
@@ -41,7 +41,7 @@ function GlobalLoading() {
                 }}
                 onTransitionEnd={handleonAnimationEnd}
             >
-                <Box sx={{ width: { xs: '45%', sm: 'auto' }, mt: { xs: '-40%', sm: '0' } }}>
+                <Box sx={{ width: { xs: '45%', sm: 'auto' }, mt: { xs: '-20%', sm: '0' } }}>
                     <img src={images.logo} alt="Logos" loading="lazy" />
                 </Box>
                 <Typography position={'absolute'} bottom={0} mb={2} variant="subtitle2">
