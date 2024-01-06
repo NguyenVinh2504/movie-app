@@ -264,6 +264,10 @@ const theme = createTheme({
                 {
                     props: { color: 'secondary' },
                     style: {
+                        "&.Mui-disabled": {
+                            background: Color.secondary,
+                            color: 'white'
+                        },
                         '&:hover': {
                             backgroundColor: '#4B4949',
                         },

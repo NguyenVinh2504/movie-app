@@ -11,8 +11,10 @@ import { toast } from 'react-toastify';
 
 import Input from '~/components/Input';
 import Label from '~/components/LabelSetting';
+import { useState } from 'react';
 
 function UpdatePassword() {
+    const [disable, setDisabled] = useState(false);
     const formik = useFormik({
         initialValues: {
             password: '',
@@ -36,12 +38,15 @@ function UpdatePassword() {
                 .required('Vui lòng nhập lại mật khẩu mới'),
         }),
         onSubmit: async (values) => {
+            setDisabled(true);
             const { response, err } = await userApi.passwordUpdate(values);
 
             if (response) {
+                setDisabled(false);
                 toast.success('Cập nhật mật khẩu thành công');
             }
             if (err) {
+                setDisabled(false);
                 toast.error(err.message);
             }
         },
@@ -89,7 +94,7 @@ function UpdatePassword() {
                 </Stack>
                 <Divider />
                 <Box p={2}>
-                    <Button variant="contained" type="submit" color="secondary">
+                    <Button variant="contained" type="submit" color="secondary" disabled={disable}>
                         Cập nhật
                     </Button>
                 </Box>

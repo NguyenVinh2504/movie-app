@@ -24,7 +24,7 @@ import { loginOut } from '~/redux/features/userSlice';
 import config from '~/config';
 import userApi from '~/api/module/user.api';
 import { toast } from 'react-toastify';
-import { memo } from 'react';
+import { memo, useState } from 'react';
 import { removeToken } from '~/redux/features/authSlice';
 import { logOut } from '~/utils/logOut';
 const ListCustoms = styled(ListItem)(({ theme }) => ({
@@ -46,6 +46,7 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
     const user = useSelector(userValue);
     const getRefreshToken = useSelector(refreshToken);
     const dispatch = useDispatch();
+    const [disable, setDisabled] = useState(false);
 
     // const handleLogout = async () => {
     //     const { response } = await userApi.logOut();
@@ -162,7 +163,8 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
                             variant="contained"
                             disableElevation
                             disableRipple
-                            onClick={() => logOut({ userApi, getRefreshToken, dispatch, loginOut, removeToken, toast })}
+                            disabled={disable}
+                            onClick={() => logOut({ userApi, getRefreshToken, dispatch, loginOut, removeToken, toast, setDisabled })}
                         >
                             Đăng Xuất
                         </Button>

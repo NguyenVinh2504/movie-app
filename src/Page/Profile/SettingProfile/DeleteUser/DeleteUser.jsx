@@ -18,6 +18,7 @@ import { setUser } from '~/redux/features/userSlice';
 
 function DeleteUser() {
     const [inputPassword, setInputPassword] = useState(false);
+    const [disable, setDisabled] = useState(false);
     const dispatch = useDispatch();
 
     const formik = useFormik({
@@ -28,14 +29,17 @@ function DeleteUser() {
             password: Yup.string().required('Vui lòng nhập mật khẩu'),
         }),
         onSubmit: async (values) => {
+            setDisabled(true);
             setInputPassword(!inputPassword);
             const { response, err } = await userApi.deleteUser(values);
 
             if (response) {
+                setDisabled(false);
                 toast.success('Xóa tài khoản thành công');
                 dispatch(setUser(null));
             }
             if (err) {
+                setDisabled(false);
                 toast.error(err.message);
             }
         },
@@ -63,7 +67,7 @@ function DeleteUser() {
                     )}
                     {inputPassword && (
                         <Box sx={{ mt: 1, display: 'flex', gap: 1 }}>
-                            <Button variant="contained" color="secondary" type={'submit'}>
+                            <Button disabled={disable} variant="contained" color="secondary" type={'submit'}>
                                 Xác nhận
                             </Button>
                             <Button

@@ -31,6 +31,7 @@ import { logOut } from '~/utils/logOut';
 function UserMenu() {
     const user = useSelector(userValue);
     const getRefreshToken = useSelector(refreshToken);
+    const [disable, setDisabled] = useState(false);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState(null);
@@ -129,8 +130,23 @@ function UserMenu() {
                 ))}
                 <Divider light sx={{ borderColor: 'white', mt: 1.5, mb: '5px', opacity: 0.3 }} />
                 <MenuItem
+                    disabled={disable}
+                    sx={{
+                        '&.Mui-disabled': {
+                            opacity: 1,
+                        },
+                    }}
                     onClick={() => {
-                        logOut({ userApi, getRefreshToken, dispatch, loginOut, removeToken, toast, navigate });
+                        logOut({
+                            userApi,
+                            getRefreshToken,
+                            dispatch,
+                            loginOut,
+                            removeToken,
+                            toast,
+                            navigate,
+                            setDisabled,
+                        });
                         // test();
                     }}
                 >

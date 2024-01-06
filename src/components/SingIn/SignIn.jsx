@@ -15,7 +15,9 @@ import { setUser } from '~/redux/features/userSlice';
 import { toast } from 'react-toastify';
 import ButtonGoogle from '../ButtonGoogle';
 import { setToken } from '~/redux/features/authSlice';
+import { useState } from 'react';
 function SingIn({ setIsLoading }) {
+    const [disable, setDisabled] = useState(false);
     const location = useNavigate();
 
     const dispatch = useDispatch();
@@ -33,8 +35,10 @@ function SingIn({ setIsLoading }) {
         }),
         onSubmit: async (values, action) => {
             setIsLoading(true);
+            setDisabled(true);
             const { response, err } = await userApi.signin(values);
             if (err) {
+                setDisabled(false);
                 setIsLoading(false);
                 if (err.message === 'INVALID_PASSWORD') {
                     action.setErrors({ password: 'Mật khẩu chưa chính xác' });
@@ -43,6 +47,7 @@ function SingIn({ setIsLoading }) {
                 }
             }
             if (response) {
+                setDisabled(false);
                 setIsLoading(false);
                 const { accessToken, refreshToken, ...user } = response;
                 dispatch(setUser(user));
@@ -81,6 +86,7 @@ function SingIn({ setIsLoading }) {
                 {/* button */}
                 <Button
                     variant="contained"
+                    disabled={disable}
                     size={pointDownSm ? 'small' : 'medium'}
                     sx={{ borderRadius: '100px' }}
                     type="submit"

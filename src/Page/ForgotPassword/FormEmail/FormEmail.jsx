@@ -6,7 +6,7 @@ import { EmailIcon } from '~/components/Icon';
 import Input from '~/components/Input';
 import uiConfigs from '~/config/ui.config';
 
-const FormEmail = ({ openEmail, errorMessage, onSubmitEmail }) => {
+const FormEmail = ({ openEmail, onSubmitEmail }) => {
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const formik = useFormik({
         initialValues: {

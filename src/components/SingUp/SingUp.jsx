@@ -15,8 +15,10 @@ import { setUser } from '~/redux/features/userSlice';
 import { toast } from 'react-toastify';
 import ButtonGoogle from '../ButtonGoogle';
 import { setToken } from '~/redux/features/authSlice';
+import { useState } from 'react';
 
 function SingUp({ setIsLoading }) {
+    const [disable, setDisabled] = useState(false);
     const location = useNavigate();
 
     const dispatch = useDispatch();
@@ -50,9 +52,11 @@ function SingUp({ setIsLoading }) {
                 .required('Vui lòng nhập lại mật khẩu'),
         }),
         onSubmit: async (values, action) => {
+            setDisabled(true);
             setIsLoading(true);
             const { response, err } = await userApi.signup(values);
             if (response) {
+                setDisabled(false);
                 setIsLoading(false);
                 location(config.routes.home);
                 formik.resetForm();
@@ -64,6 +68,7 @@ function SingUp({ setIsLoading }) {
                 });
             }
             if (err) {
+                setDisabled(false);
                 setIsLoading(false);
                 if (err.message === 'ISEXISTS') {
                     action.setErrors({ email: 'Email này đã được đăng ký' });
@@ -118,6 +123,7 @@ function SingUp({ setIsLoading }) {
                 {/* button */}
                 <Button
                     type={'submit'}
+                    disabled={disable}
                     variant="contained"
                     sx={{ borderRadius: '100px' }}
                     size={pointDownSm ? 'small' : 'medium'}
