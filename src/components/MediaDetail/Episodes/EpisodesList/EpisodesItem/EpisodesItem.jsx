@@ -16,6 +16,7 @@ import images from '~/assets/image';
 import tmdbConfigs from '~/api/configs/tmdb.configs';
 import { memo } from 'react';
 import Image from '~/components/Image';
+import config from '~/config';
 function EpisodesItem({ item, dataSeason }) {
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const ListCustoms = styled(ListItemButton)(({ theme }) => ({
@@ -80,11 +81,7 @@ function EpisodesItem({ item, dataSeason }) {
     return (
         <>
             {pointDownSm ? (
-                <Box
-                    component={'a'}
-                    target="_blank"
-                    href={`https://vidsrc.to/embed/tv/${item.show_id}/${item.season_number}/${item.episode_number}`}
-                >
+                <Box component={'a'} target="_blank" href={config.routes.watchMovie}>
                     <CustomDivider />
                     <ListItemButton sx={{ px: 1, py: 2 }}>
                         <ListItemText
@@ -107,13 +104,13 @@ function EpisodesItem({ item, dataSeason }) {
                                                 fontWeight={500}
                                                 sx={{ ...uiConfigs.style.typoLines(2) }}
                                             >
-                                                {item.episode_number + '. ' + item.name}
+                                                {`${item?.episode_number}. ${item?.name || 'N/A'}`}
                                             </Typography>
                                         }
                                         secondary={
                                             item.runtime && (
                                                 <Typography variant="subtitle2" fontWeight={400}>
-                                                    {item.runtime + ' phút'}
+                                                    {`${item.runtime || 'N/A'} ${!item.runtime ? '' : 'minutes'}`}
                                                 </Typography>
                                             )
                                         }
@@ -131,15 +128,11 @@ function EpisodesItem({ item, dataSeason }) {
                 </Box>
             ) : (
                 // pc-table
-                <Box
-                    component={'a'}
-                    target="_blank"
-                    href={`https://vidsrc.to/embed/tv/${item.show_id}/${item.season_number}/${item.episode_number}`}
-                >
+                <Box component={'a'} target="_blank" href={config.routes.watchMovie}>
                     <CustomDivider />
                     <ListCustoms sx={{ px: 1, py: 3 }}>
                         <Typography variant="h5" width={'20%'} textAlign={'center'}>
-                            {item.episode_number}
+                            {item.episode_number || 'N/A'}
                         </Typography>
                         <CustomBox>
                             <CustomIconButton>
@@ -157,19 +150,19 @@ function EpisodesItem({ item, dataSeason }) {
                             primary={
                                 <Stack direction={'row'} justifyContent={'space-between'}>
                                     <Typography variant="h6" width={'80%'} fontWeight={500}>
-                                        {item.name}
+                                        {`${item?.name || 'N/A'}`}
                                     </Typography>
 
                                     {item.runtime && (
                                         <Typography variant="body1" fontWeight={400} width={'20%'} textAlign={'end'}>
-                                            {item.runtime + ' phút'}
+                                            {`${item.runtime || 'N/A'} ${!item.runtime ? '' : 'minutes'}`}
                                         </Typography>
                                     )}
                                 </Stack>
                             }
                             secondary={
                                 <Typography variant="body1" mt={1} fontWeight={400}>
-                                    {item.overview}
+                                    {item.overview || 'N/A'}
                                 </Typography>
                             }
                         />

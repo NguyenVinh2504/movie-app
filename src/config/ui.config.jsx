@@ -1,5 +1,21 @@
 const uiConfigs = {
     style: {
+        transformIn: `
+            from {
+                transform: translateX(-200%);
+            }
+            to {
+                transform: translateX(0);
+            }       
+        `,
+        transformOut: `
+            from {
+                transform: translateX(0);
+            }
+            to {
+                transform: translateX(200%);
+            }       
+        `,
         typoLines: (lines) => ({
             display: '-webkit-box',
             overflow: 'hidden',

@@ -1,13 +1,18 @@
 // import { useRouteError } from 'react-router-dom';
 
+import { Box, Button } from '@mui/material';
 import { NavLink } from 'react-router-dom';
+import images from '~/assets/image';
 
 export default function ErrorPage() {
     return (
-        <div id="error-page">
-            <h1>Oops!</h1>
-            <p>Sorry, an unexpected error has occurred.</p>
-            <NavLink to={'/'}>Go home</NavLink>
-        </div>
+        <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+            <Box px={2} sx={{ width: { xs: '100%', sm: '50%' } }}>
+                <img src={images.notFoundPage} alt="notFound" />
+            </Box>
+            <Button variant="contained">
+                <NavLink to={'/'}>Về Trang Chủ</NavLink>
+            </Button>
+        </Box>
     );
 }

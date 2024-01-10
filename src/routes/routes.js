@@ -11,6 +11,7 @@ import AuthPage from '~/Page/AuthPage/AuthPage';
 import SettingProfile from '~/Page/Profile/SettingProfile/SettingProfile';
 import MediaListPage from '~/Page/MediaListPage/MediaListPage';
 import ForgotPassword from '~/Page/ForgotPassword/ForgotPassword';
+import WatchMovie from '~/Page/WatchMovie/WatchMovie';
 export const routesMainLayout = [
     {
         index: true,
@@ -96,6 +97,10 @@ export const routesMainLayout = [
     //         },
     //     ],
     // },
+    {
+        path: config.routes.watchMovie,
+        element: <WatchMovie />,
+    },
     {
         path: config.routes.error,
         element: <ErrorPage />,

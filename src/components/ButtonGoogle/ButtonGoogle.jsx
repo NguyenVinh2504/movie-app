@@ -10,20 +10,27 @@ import { app } from '~/firebase';
 import { setToken } from '~/redux/features/authSlice';
 import { setUser } from '~/redux/features/userSlice';
 
-function ButtonGoogle() {
+function ButtonGoogle({ setIsLoading }) {
     const location = useNavigate();
 
     const dispatch = useDispatch();
 
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-    const handleGoogleClick = async () => {
+    const signInGoogle = async () => {
         try {
             const provider = new GoogleAuthProvider();
             const auth = getAuth(app);
-
             const result = await signInWithPopup(auth, provider);
+            return { result };
+        } catch (error) {
+            return { error };
+        }
+    };
+    const handleGoogleClick = async () => {
+        setIsLoading(true);
+        const { result, error } = await signInGoogle();
+        if (result) {
             const { displayName, email, uid, photoURL } = result.user;
-            location(config.routes.home);
             const { response, err } = await userApi.loginGoogle({
                 name: displayName,
                 email,
@@ -32,6 +39,7 @@ function ButtonGoogle() {
                 confirmPassword: `${uid}@`,
             });
             if (response) {
+                location(config.routes.home);
                 const { accessToken, refreshToken, ...user } = response;
                 dispatch(setUser(user));
                 dispatch(setToken({ accessToken, refreshToken }));
@@ -44,7 +52,9 @@ function ButtonGoogle() {
                     position: 'top-center',
                 });
             }
-        } catch (error) {
+        }
+        if (error) {
+            setIsLoading(false);
             console.log(error);
         }
     };

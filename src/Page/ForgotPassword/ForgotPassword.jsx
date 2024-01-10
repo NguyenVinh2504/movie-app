@@ -25,7 +25,7 @@ const ForgotPassword = () => {
         setIsLoading(true);
         const { response, err } = await userApi.checkEmail({ email });
         if (response) {
-            setOpenPass(true);
+            // setOpenPass(true);
             setOpenEmail(false);
             setIsLoading(false);
             setFormValue({
@@ -33,9 +33,9 @@ const ForgotPassword = () => {
             });
         }
         if (err) {
+            setIsLoading(false);
             if (err.statusCode === 404) {
                 actions.setErrors({ email: 'Không tìm thấy Email này' });
-                setIsLoading(false);
             }
         }
     }, []);
@@ -44,11 +44,10 @@ const ForgotPassword = () => {
         async ({ newPassword }) => {
             setIsLoading(true);
             const { response } = await userApi.sendEmail({ email });
+            setIsLoading(false);
             if (response) {
                 setErrorMessage(false);
                 setOpenPass(false);
-                setIsLoading(false);
-                setOpenOtp(true);
                 setFormValue((prev) => ({ newPassword, ...prev }));
             }
         },
@@ -59,13 +58,12 @@ const ForgotPassword = () => {
         async (otp, actions) => {
             setIsLoading(true);
             const { response, err } = await userApi.forgotPassword({ email, otp, newPassword });
+            setIsLoading(false);
             if (response) {
-                setIsLoading(false);
                 location(config.routes.login);
             }
             if (err) {
                 if (err.statusCode === 401) {
-                    setIsLoading(false);
                     actions.setErrors({ otp: 'Mã OTP không hợp lệ' });
                 }
             }
@@ -78,8 +76,8 @@ const ForgotPassword = () => {
         async (setCountdown) => {
             setIsLoading(true);
             const { response } = await userApi.sendEmail({ email });
+            setIsLoading(false);
             if (response) {
-                setIsLoading(false);
                 setCountdown(120);
             }
         },
@@ -93,9 +91,15 @@ const ForgotPassword = () => {
                     setOpenEmail={setOpenEmail}
                     setOpenOtp={setOpenOtp}
                     errorMessage={errorMessage}
+                    setOpenPass={setOpenPass}
                     onSubmitEmail={handleSubmitEmail}
                 />
-                <FormPassword openPass={openPass} onSubmitPass={handleSubmitPass} openOtp={openOtp} />
+                <FormPassword
+                    openPass={openPass}
+                    onSubmitPass={handleSubmitPass}
+                    setOpenOtp={setOpenOtp}
+                    openOtp={openOtp}
+                />
                 <FormOTP
                     openOtp={openOtp}
                     setErrorMessage={setErrorMessage}

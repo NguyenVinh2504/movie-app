@@ -36,7 +36,7 @@ function InfoPage() {
             <Divider variant="middle" />
             <Item primaryText={'User Name:'} secondaryText={user?.userName} />
             <Divider variant="middle" />
-            <Item primaryText={'Điện thoại:'} secondaryText={user?.phone === '' ? 'Không có' : user?.phone} />
+            <Item primaryText={'Điện thoại:'} secondaryText={user?.phone || 'Không có'} />
         </Paper>
     );
 }

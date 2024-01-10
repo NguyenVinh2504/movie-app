@@ -12,6 +12,7 @@ function MediaListPage() {
     const [medias, setMedias] = useState([]);
     const [currPage, setCurrPage] = useState(1);
     const [currCategory, setCurrCategory] = useState(0);
+    const [moreButton, setMoreButton] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const { mediaType } = useParams();
     useEffect(() => {
@@ -39,11 +40,16 @@ function MediaListPage() {
             }
         };
         const fetchData = async () => {
+            setMoreButton(false);
             setIsLoading(true);
             const { response } = await getMedias();
             if (response) {
                 setIsLoading(false);
-                // if (response.results.length === 0) setIsLoading(true);
+                if (currPage === response?.total_pages) {
+                    setMoreButton(false);
+                } else {
+                    setMoreButton(true);
+                }
                 if (currPage !== 1) {
                     setMedias((m) => [...m, ...response.results]);
                 } else {
@@ -59,8 +65,9 @@ function MediaListPage() {
     const handleCurrCategory = useCallback(
         (event, newValue) => {
             if (currCategory === newValue) return;
-            setIsLoading(true)
+            setIsLoading(true);
             setMedias([]);
+            setMoreButton(false);
             setCurrPage(1);
             setCurrCategory(newValue);
         },
@@ -91,7 +98,7 @@ function MediaListPage() {
                     onCurrCategory={handleCurrCategory}
                 />
                 <Media medias={medias} isLoading={isLoading} mediaType={mediaType} />
-                {!isLoading && (
+                {moreButton && (
                     <Stack mt={2} justifyContent={'center'} flexDirection={'row'}>
                         <Button variant="contained" color="secondary" onClick={handleLoadingMore}>
                             View More

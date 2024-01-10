@@ -8,6 +8,7 @@ import { memo, useCallback, useEffect, useState } from 'react';
 function Home() {
     const [medias, setMedias] = useState([]);
     const [currPage, setCurrPage] = useState(1);
+    const [moreButton, setMoreButton] = useState(false);
     const [currCategory, setCurrCategory] = useState(0);
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
@@ -27,10 +28,16 @@ function Home() {
             }
         };
         const fetchData = async () => {
+            setMoreButton(false);
             setIsLoading(true);
             const { response } = await getMedias();
             if (response) {
                 setIsLoading(false);
+                if (currPage === response?.total_pages) {
+                    setMoreButton(false);
+                } else {
+                    setMoreButton(true);
+                }
                 if (response.total_pages === currPage) return;
                 else if (response?.results?.length === 0) setIsLoading(true);
                 else if (currPage !== 1) setMedias((m) => [...m, ...response.results]);
@@ -43,6 +50,7 @@ function Home() {
         (event, newValue) => {
             if (currCategory === newValue) return;
             setIsLoading(true);
+            setMoreButton(false)
             setMedias([]);
             setCurrPage(1);
             setCurrCategory(newValue);
@@ -72,7 +80,7 @@ function Home() {
             <Container maxWidth={'xl'} sx={{ px: '0' }}>
                 <TabItems contentItems={homeTabItems} onCurrCategory={handleCurrCategory} />
                 <Media medias={medias} isLoading={isLoading} mediaType={homeTabItems[currCategory].mediaType} />
-                {!isLoading && (
+                {moreButton && (
                     <Stack mt={2} justifyContent={'center'} flexDirection={'row'}>
                         <Button variant="contained" color="secondary" onClick={handleLoadingMore}>
                             View More

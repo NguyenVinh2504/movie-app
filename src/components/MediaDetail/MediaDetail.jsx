@@ -131,7 +131,7 @@ function MovieDetail() {
                                     seriesId={dataDetail?.id}
                                     numberSeasonValue={
                                         dataDetail?.seasons &&
-                                        dataDetail?.seasons[0].season_number
+                                        dataDetail?.seasons[0]?.season_number
                                     }
                                 />
                             )}

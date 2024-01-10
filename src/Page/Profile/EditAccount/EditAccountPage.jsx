@@ -34,12 +34,14 @@ function EditAccount() {
         }),
         enableReinitialize: true,
         onSubmit: async (values) => {
-            const checkValue = isEqual(formik.initialValues, { name: values.name.trim(), phone: values.phone.trim() });
+            const { phone } = values;
+            const name = values.name.trim();
+            const checkValue = isEqual(formik.initialValues, { name, phone });
             setDisable(!disable);
             if (!checkValue) {
                 const { response, err } = await userApi.profileUpdate({
-                    name: values.name.trim(),
-                    phone: values.phone.trim(),
+                    name,
+                    phone,
                 });
                 if (response) {
                     toast.success('Cập nhật thông tin thành công');
@@ -65,10 +67,7 @@ function EditAccount() {
     ))(() => ({}));
 
     return (
-        <Paper variant='outlined'
-            component={'form'}
-            onSubmit={formik.handleSubmit}
-        >
+        <Paper variant="outlined" component={'form'} onSubmit={formik.handleSubmit}>
             <Grid container spacing={2} p={2}>
                 <Grid item xs={12} sm={6}>
                     <InputProfile
@@ -92,6 +91,9 @@ function EditAccount() {
                         disable={disable}
                         label={'Số điện thoại'}
                         name="phone"
+                        inputEvent={{
+                            type: 'number',
+                        }}
                         value={formik.values.phone}
                         onChange={formik.handleChange}
                         error={formik.errors.phone !== undefined && formik.touched.phone}

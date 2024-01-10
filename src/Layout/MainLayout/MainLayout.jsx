@@ -8,9 +8,10 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
 import userApi from '~/api/module/user.api';
-import { updateUser } from '~/redux/features/userSlice';
+import { loginOut, updateUser } from '~/redux/features/userSlice';
 import { openSelector } from '~/redux/selectors';
 import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
+import { removeToken } from '~/redux/features/authSlice';
 // import Search from '../components/Search';
 
 function MainLayout() {
@@ -25,6 +26,8 @@ function MainLayout() {
                 dispatch(toggleGlobalLoading(false));
             }
             if (err) {
+                dispatch(loginOut());
+                dispatch(removeToken());
                 dispatch(toggleGlobalLoading(false));
             }
         };

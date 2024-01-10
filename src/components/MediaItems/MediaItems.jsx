@@ -8,6 +8,7 @@ import tmdbConfigs from '~/api/configs/tmdb.configs';
 import images from '~/assets/image';
 import Image from '../Image';
 import ButtonAddFavorite from '../ButtonAddFavorite';
+import { memo } from 'react';
 function MediaItems({ item, mediaType }) {
     const dispatch = useDispatch();
     const handleOpen = () => {
@@ -92,18 +93,42 @@ function MediaItems({ item, mediaType }) {
                                     ...uiConfigs.style.typoLines(1),
                                 }}
                             >
-                                {item?.title ?? item?.name ?? item?.mediaTitle}
+                                {item?.title || item?.name || item?.mediaTitle || 'N/A'}
                             </Typography>
                             {/* title */}
                             {/* overview */}
-                            <Typography
-                                variant="body2"
-                                color={theme.mediaItems.textOverview}
-                                sx={{ ...uiConfigs.style.typoLines(1) }}
+                            <Box
+                                alignItems={'center'}
+                                overflow={'hidden'}
+                                sx={{
+                                    display: 'flex',
+                                    'p:not(:first-of-type)': {
+                                        '::before': {
+                                            content: '"•"',
+                                            mx: 0.5,
+                                        },
+                                    },
+                                }}
                             >
-                                {item?.vote_average?.toFixed(1)} •{' '}
-                                {item?.release_date?.split('-')[0] ?? item?.first_air_date?.split('-')[0]}
-                            </Typography>
+                                {item.vote_average ? (
+                                    <Typography
+                                        variant="body2"
+                                        color={theme.mediaItems.textOverview}
+                                        sx={{ ...uiConfigs.style.typoLines(1) }}
+                                    >
+                                        {item?.vote_average?.toFixed(1)}
+                                    </Typography>
+                                ) : undefined}
+                                {item.release_date || item.first_air_date ? (
+                                    <Typography
+                                        variant="body2"
+                                        color={theme.mediaItems.textOverview}
+                                        sx={{ ...uiConfigs.style.typoLines(1) }}
+                                    >
+                                        {item?.release_date?.split('-')[0] || item?.first_air_date?.split('-')[0]}
+                                    </Typography>
+                                ) : undefined}
+                            </Box>
                             {/* overview */}
                         </Stack>
                         {/* text */}
@@ -132,4 +157,4 @@ function MediaItems({ item, mediaType }) {
     );
 }
 
-export default MediaItems;
+export default memo(MediaItems);

@@ -98,7 +98,7 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
                                                 primary={
                                                     <Box gap={3} display={'flex'} alignItems={'center'}>
                                                         {item.icon}
-                                                        <Typography>{item.title}</Typography>
+                                                        <Typography textTransform="uppercase">{item.title}</Typography>
                                                     </Box>
                                                 }
                                             />

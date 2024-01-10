@@ -7,7 +7,7 @@ const menuItemsSearch = [
         type: 'movie',
     },
     {
-        title: 'Tv shows',
+        title: 'Tv Shows',
         icon: <TvShowIcon />,
         type: 'tv',
     },

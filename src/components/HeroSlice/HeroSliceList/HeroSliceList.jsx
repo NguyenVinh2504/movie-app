@@ -10,6 +10,8 @@ import HeroSliceSkeleton from '../HeroSliceSkeleton';
 import { Autoplay, EffectFade, Navigation } from 'swiper/modules';
 import SwiperNavigation from '~/components/SwiperNavigation';
 import Image from '~/components/Image';
+import config from '~/config';
+import { NavLink } from 'react-router-dom';
 
 function HeroSliceList({ isLoading, medias, onOpen }) {
     const pointDownLg = useMediaQuery((theme) => theme.breakpoints.down('lg'));
@@ -49,7 +51,9 @@ function HeroSliceList({ isLoading, medias, onOpen }) {
                         medias?.map((item) => (
                             <SwiperSlide key={item.id}>
                                 {/* background image */}
-                                <Box sx={{position: 'relative', pt: {sm: 'calc(43/100*100%)', xs: 'calc(3/2*100%)'}}}>
+                                <Box
+                                    sx={{ position: 'relative', pt: { sm: 'calc(43/100*100%)', xs: 'calc(3/2*100%)' } }}
+                                >
                                     <Box
                                         sx={{
                                             top: 0,
@@ -65,7 +69,8 @@ function HeroSliceList({ isLoading, medias, onOpen }) {
                                             ':before': {
                                                 content: '""',
                                                 ...uiConfigs.style.gradientBgImage,
-                                                background: 'linear-gradient(180deg, rgba(0, 0, 0, 0), rgb(0, 0, 0, 1))',
+                                                background:
+                                                    'linear-gradient(180deg, rgba(0, 0, 0, 0), rgb(0, 0, 0, 1))',
                                             },
                                         }}
                                     >
@@ -85,6 +90,9 @@ function HeroSliceList({ isLoading, medias, onOpen }) {
                                         ></Box>
                                         <IconButton
                                             color="secondNeutral"
+                                            component={'a'}
+                                            target="_blank"
+                                            href={config.routes.watchMovie}
                                             sx={{
                                                 display: { sm: 'none' },
                                                 zIndex: '10',
@@ -170,11 +178,8 @@ function HeroSliceList({ isLoading, medias, onOpen }) {
                                                         <CustomButton
                                                             startIcon={<PlayIcon />}
                                                             sx={{ display: { sm: 'inline-flex', xs: 'none' } }}
-                                                            component={'a'}
-                                                            target="_blank"
-                                                            href={`https://vidsrc.to/embed/movie/${item.id}`}
                                                         >
-                                                            Xem Ngay
+                                                            <NavLink to={config.routes.watchMovie}>Xem Ngay</NavLink>
                                                         </CustomButton>
                                                         <CustomButton
                                                             color="secondary"

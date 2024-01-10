@@ -30,7 +30,7 @@ function CastItem({ item }) {
                         cursor: 'pointer',
                     }}
                 >
-                    {item?.name}
+                    {item?.name || 'N/A'}
                 </Typography>
                 <Typography
                     variant="subtitle2"
@@ -39,7 +39,7 @@ function CastItem({ item }) {
                         ...uiConfigs.style.typoLines(1),
                     }}
                 >
-                    {item?.character}
+                    {item?.character || 'N/A'}
                 </Typography>
             </Stack>
         </Box>

@@ -36,12 +36,12 @@ function Auth({ titleAuth, children, isLoading }) {
         >
             {isLoading && (
                 <LinearProgress
-                    sx={{ position: 'absolute', top: 0, left: 0, width: '100%', backgroundColor: 'secondary.main' }}
+                    sx={{ position: 'absolute', top: 0, left: 0, width: '100%', backgroundColor: 'secondary.main', zIndex: 3 }}
                     color="primary"
                     variant="indeterminate"
                 />
             )}
-            {isLoading && <Box sx={{ ...uiConfigs.style.positionFullSize, bgcolor: 'rgba(0, 0, 0, 0.2)', zIndex: 100 }}></Box>}
+            {isLoading && <Box sx={{ ...uiConfigs.style.positionFullSize, bgcolor: 'rgba(0, 0, 0, 0.2)', zIndex: 2 }}></Box>}
             {/* title */}
             <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column', gap: 2, mb: 3, mt: 1 }}>
                 {/* logo */}

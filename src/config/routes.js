@@ -25,6 +25,8 @@ const routes = {
     login: '/login',
 
     forgotPassword: '/forgot-password',
+
+    watchMovie: '/watch',
     error: '*',
 };
 

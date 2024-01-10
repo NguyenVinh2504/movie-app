@@ -5,6 +5,7 @@ import tmdbConfigs from '~/api/configs/tmdb.configs';
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
 import Image from '~/components/Image';
+import config from '~/config';
 function BannerMovieDetail({ loading, dataDetail, mediaType }) {
     return (
         <Box sx={{ position: 'relative', overflow: 'hidden', pt: 'calc(9/16*100%)', pl: 0 }}>
@@ -15,7 +16,7 @@ function BannerMovieDetail({ loading, dataDetail, mediaType }) {
             ) : (
                 <>
                     {mediaType === 'movie' && (
-                        <Link to={`https://vidsrc.to/embed/movie/${dataDetail.id}`} target="_blank">
+                        <Link to={config.routes.watchMovie} target="_blank">
                             <IconButton
                                 color="secondNeutral"
                                 sx={{

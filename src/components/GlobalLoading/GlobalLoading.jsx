@@ -16,22 +16,23 @@ function GlobalLoading() {
             setIsLoading(true);
         } else {
             setTimeout(() => {
-                document.querySelector('body').removeAttribute('style');
                 setIsLoading(false);
+                document.querySelector('body').removeAttribute('style');
             }, 500);
         }
     }, [globalLoading]);
-    const handleonAnimationEnd = () => {
+    const handleOnAnimationEnd = () => {
         if (!isLoading) setRender(false);
     };
     return (
         shouldRender && (
             <Box
                 sx={{
-                    position: 'fixed',
                     opacity: isLoading ? 1 : 0,
                     transition: `opacity 0.3s ${theme.transitions.easing.easeOut}`,
                     ...uiConfigs.style.positionFullSize,
+                    position: 'fixed',
+                    bottom: 0,
                     zIndex: '10000',
                     background: 'black',
                     flexDirection: 'column',
@@ -39,7 +40,7 @@ function GlobalLoading() {
                     justifyContent: 'center',
                     alignItems: 'center',
                 }}
-                onTransitionEnd={handleonAnimationEnd}
+                onTransitionEnd={handleOnAnimationEnd}
             >
                 <Box sx={{ width: { xs: '45%', sm: 'auto' }, mt: { xs: '-20%', sm: '0' } }}>
                     <img src={images.logo} alt="Logos" loading="lazy" />

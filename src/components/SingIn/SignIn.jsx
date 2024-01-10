@@ -93,7 +93,7 @@ function SingIn({ setIsLoading }) {
                 >
                     Đăng Nhập
                 </Button>
-                <ButtonGoogle />
+                <ButtonGoogle setIsLoading={setIsLoading} />
             </Stack>
             {/* button */}
             <Stack direction={'row'} justifyContent={'space-between'} mt={2}>

@@ -12,7 +12,7 @@ function OverviewMovieDetail({ loading, dataDetail }) {
         }
     }, [loading]);
     return (
-        <Paper variant='outlined' sx={{ mt: 1, p: 2 }}>
+        <Paper variant="outlined" sx={{ mt: 1, p: 2 }}>
             <Typography variant={pointDownSm ? 'h6' : 'h5'} fontWeight={'500'}>
                 Mô tả
             </Typography>
@@ -25,7 +25,9 @@ function OverviewMovieDetail({ loading, dataDetail }) {
                         variant={pointDownSm ? 'body2' : 'body1'}
                         sx={{ ...uiConfigs.style.typoLines(seeMore ? 'none' : 2) }}
                     >
-                        {dataDetail.overview}
+                        {dataDetail.overview !== '' || dataDetail.overview === null
+                            ? dataDetail.overview
+                            : 'Không có nội dung'}
                     </Typography>
                     {heightBody && (
                         <Typography variant={pointDownSm ? 'body2' : 'body1'} fontWeight={'500'}>

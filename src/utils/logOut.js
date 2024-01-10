@@ -1,6 +1,6 @@
 // import config from "~/config";
 
-export const logOut = async ({ userApi, dispatch, loginOut, removeToken, toast, navigate, setDisabled = ()=>{} }) => {
+export const logOut = async ({ userApi, dispatch, loginOut, removeToken, toast, navigate, setDisabled = () => { } }) => {
     const id = toast.loading('Đang đăng xuất...');
     setDisabled(true)
     const { response, err } = await userApi.logOut();
@@ -21,6 +21,8 @@ export const logOut = async ({ userApi, dispatch, loginOut, removeToken, toast, 
     }
     if (err) {
         setDisabled(false)
+        dispatch(loginOut())
+        dispatch(removeToken())
         toast.update(id, {
             render: 'Đăng xuất không thành công',
             type: 'error',

@@ -1,4 +1,3 @@
-
 function PageWrapper({ children }) {
     return <>{children}</>;
 }

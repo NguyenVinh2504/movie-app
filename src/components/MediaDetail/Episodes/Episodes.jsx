@@ -23,8 +23,11 @@ function Episodes({ seasons, seriesId, numberSeasonValue }) {
     }, []);
 
     useEffect(() => {
+        if (numberSeasonValue === undefined) {
+            setIsLoading(false);
+            return
+        }
         const getDataDetailSeason = async () => {
-            console.log('chay function');
             const { response } = await mediaApi.getDetailSeason({
                 series_id: seriesId,
                 season_number: numberSeason ?? numberSeasonValue,
@@ -35,7 +38,7 @@ function Episodes({ seasons, seriesId, numberSeasonValue }) {
                 setIsLoading(false);
             }
         };
-        if (numberSeasonValue !== undefined) getDataDetailSeason();
+        getDataDetailSeason();
     }, [numberSeason, numberSeasonValue, seriesId]);
 
     const handleShowMoreItems = () => {
@@ -57,7 +60,7 @@ function Episodes({ seasons, seriesId, numberSeasonValue }) {
             <Typography variant={pointDownSm ? 'h6' : 'h5'} mb={1} fontWeight={'500'}>
                 Tập phim
             </Typography>
-            {seasons && <ButtonSelector seasons={seasons} onSeasonNuber={handleSetSeasonNumber} />}
+            {seasons?.length !== 0 && <ButtonSelector seasons={seasons} onSeasonNuber={handleSetSeasonNumber} />}
             {isLoading &&
                 Array(4)
                     .fill(0)
