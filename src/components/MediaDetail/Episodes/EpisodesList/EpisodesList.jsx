@@ -6,7 +6,7 @@ function EpisodesList({ visible, dataSeason }) {
     const { episodes } = dataSeason;
     return (
         <List>
-            {episodes?.slice(0, visible).map((item, index) => (
+            {episodes?.slice(0, visible)?.map((item, index) => (
                 <EpisodesItem key={index} index={index} item={item} dataSeason={dataSeason} />
             ))}
         </List>

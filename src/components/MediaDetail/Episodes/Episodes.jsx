@@ -4,6 +4,7 @@ import { memo, useCallback, useEffect, useState } from 'react';
 import mediaApi from '~/api/module/media.api';
 import { ArrowDownIcon, ArrowUpIcon } from '~/components/Icon';
 import EpisodesList from './EpisodesList';
+import { isEmpty } from 'lodash';
 
 function Episodes({ seasons, seriesId, numberSeasonValue }) {
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
@@ -12,7 +13,7 @@ function Episodes({ seasons, seriesId, numberSeasonValue }) {
     const [seasonDetailValue, setSeasonDetailValue] = useState({});
     const [visible, setVisible] = useState(4);
     const [moreButton, setMoreButton] = useState(false);
-    // console.log('mou tap', seasons, numberSeasonValue);
+    console.log('mou tap', seasons, undefined?.length !== 0);
 
     const handleSetSeasonNumber = useCallback((number) => {
         setNumberSeason(number);
@@ -21,14 +22,16 @@ function Episodes({ seasons, seriesId, numberSeasonValue }) {
         setMoreButton(false);
         setIsLoading(true);
     }, []);
-
     useEffect(() => {
-        if (numberSeasonValue === undefined) {
+        if (seasons) {
             setIsLoading(false);
-            return
         }
+    }, [seasons]);
+    useEffect(() => {
+        // console.log(isLoading);
         const getDataDetailSeason = async () => {
-            const { response } = await mediaApi.getDetailSeason({
+            setIsLoading(true);
+            const { response, err } = await mediaApi.getDetailSeason({
                 series_id: seriesId,
                 season_number: numberSeason ?? numberSeasonValue,
             });
@@ -37,13 +40,17 @@ function Episodes({ seasons, seriesId, numberSeasonValue }) {
                 setSeasonDetailValue({ ...response });
                 setIsLoading(false);
             }
+            if (err) {
+                // console.log('set tap');
+                setIsLoading(false);
+            }
         };
-        getDataDetailSeason();
+        if (numberSeasonValue !== undefined) getDataDetailSeason();
     }, [numberSeason, numberSeasonValue, seriesId]);
 
     const handleShowMoreItems = () => {
-        if (visible < seasonDetailValue.episodes?.length) {
-            setVisible((props) => props + 4);
+        if (visible < seasonDetailValue?.episodes?.length) {
+            setVisible(seasonDetailValue?.episodes?.length);
         }
     };
     const handleHideMoreItems = () => {
@@ -51,16 +58,17 @@ function Episodes({ seasons, seriesId, numberSeasonValue }) {
         setMoreButton(false);
     };
     useEffect(() => {
-        if (visible >= seasonDetailValue.episodes?.length) {
+        if (visible >= seasonDetailValue?.episodes?.length) {
             setMoreButton(true);
         }
-    }, [seasonDetailValue.episodes?.length, visible]);
+    }, [seasonDetailValue?.episodes?.length, visible]);
     return (
         <Paper variant="outlined" sx={{ mt: 1, p: 2 }}>
             <Typography variant={pointDownSm ? 'h6' : 'h5'} mb={1} fontWeight={'500'}>
                 Tập phim
             </Typography>
-            {seasons?.length !== 0 && <ButtonSelector seasons={seasons} onSeasonNuber={handleSetSeasonNumber} />}
+            {!isLoading && isEmpty(seasonDetailValue) && <Typography variant={'body1'}>Không có nội dung</Typography>}
+            {!isEmpty(seasons) && <ButtonSelector seasons={seasons} onSeasonNuber={handleSetSeasonNumber} />}
             {isLoading &&
                 Array(4)
                     .fill(0)
@@ -71,29 +79,33 @@ function Episodes({ seasons, seriesId, numberSeasonValue }) {
                             sx={{ my: 2, height: { xs: '110px', sm: '160px' } }}
                         />
                     ))}
-            {!isLoading && <EpisodesList dataSeason={seasonDetailValue} visible={visible} />}
+            {!isLoading && !isEmpty(seasonDetailValue) && (
+                <EpisodesList dataSeason={seasonDetailValue} visible={visible} />
+            )}
             {/* them tap phim */}
-            <Divider>
-                {moreButton ? (
-                    <IconButton
-                        onClick={handleHideMoreItems}
-                        color="secondNeutral"
-                        size="large"
-                        sx={{ border: '1px solid rgba(255, 255, 255, 0.5)' }}
-                    >
-                        <ArrowUpIcon />
-                    </IconButton>
-                ) : (
-                    <IconButton
-                        onClick={handleShowMoreItems}
-                        color="secondNeutral"
-                        size="large"
-                        sx={{ border: '1px solid rgba(255, 255, 255, 0.5)' }}
-                    >
-                        <ArrowDownIcon />
-                    </IconButton>
-                )}
-            </Divider>
+            {!isEmpty(seasonDetailValue) && (
+                <Divider>
+                    {moreButton ? (
+                        <IconButton
+                            onClick={handleHideMoreItems}
+                            color="secondNeutral"
+                            size="large"
+                            sx={{ border: '1px solid rgba(255, 255, 255, 0.5)' }}
+                        >
+                            <ArrowUpIcon />
+                        </IconButton>
+                    ) : (
+                        <IconButton
+                            onClick={handleShowMoreItems}
+                            color="secondNeutral"
+                            size="large"
+                            sx={{ border: '1px solid rgba(255, 255, 255, 0.5)' }}
+                        >
+                            <ArrowDownIcon />
+                        </IconButton>
+                    )}
+                </Divider>
+            )}
             {/* them tap phim */}
         </Paper>
     );

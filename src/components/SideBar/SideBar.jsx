@@ -27,15 +27,8 @@ import { toast } from 'react-toastify';
 import { memo, useState } from 'react';
 import { removeToken } from '~/redux/features/authSlice';
 import { logOut } from '~/utils/logOut';
-const ListCustoms = styled(ListItem)(({ theme }) => ({
-    '&:hover': {
-        backgroundColor: theme.listItems.backgroundHover,
-    },
-    '@media (hover: none)': {
-        '&:hover': {
-            backgroundColor: 'unset',
-        },
-    },
+const ListButtonCustoms = styled(ListItemButton)(() => ({
+    borderRadius: 8,
 }));
 
 function SideBar({ open, onClick, onKeyDown, onClose }) {
@@ -84,26 +77,16 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
                         {userMenu.map((item, index) => (
                             <NavLink to={item.path} key={index} end>
                                 {({ isActive }) => (
-                                    <ListCustoms
-                                        disablePadding
-                                        sx={{
-                                            borderRadius: '0.25rem',
-                                            backgroundColor: isActive
-                                                ? (theme) => theme.listItems.backgroundActive
-                                                : 'unset',
-                                        }}
-                                    >
-                                        <ListItemButton disableRipple>
-                                            <ListItemText
-                                                primary={
-                                                    <Box gap={3} display={'flex'} alignItems={'center'}>
-                                                        {item.icon}
-                                                        <Typography textTransform="uppercase">{item.title}</Typography>
-                                                    </Box>
-                                                }
-                                            />
-                                        </ListItemButton>
-                                    </ListCustoms>
+                                    <ListButtonCustoms selected={isActive}>
+                                        <ListItemText
+                                            primary={
+                                                <Box gap={3} display={'flex'} alignItems={'center'}>
+                                                    {item.icon}
+                                                    <Typography textTransform="uppercase">{item.title}</Typography>
+                                                </Box>
+                                            }
+                                        />
+                                    </ListButtonCustoms>
                                 )}
                             </NavLink>
                         ))}
@@ -113,29 +96,16 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
                 {menuItems.map((item, index) => (
                     <NavLink to={item.path} key={index} end>
                         {({ isActive }) => (
-                            <ListCustoms
-                                disablePadding
-                                sx={{
-                                    borderRadius: '0.25rem',
-                                    backgroundColor: isActive ? (theme) => theme.listItems.backgroundActive : 'unset',
-                                    // ':hover': {
-                                    //     backgroundColor: !isActive
-                                    //         ? (theme) => theme.movie.action.backgroundHover
-                                    //         : 'rgb(236, 1, 1, 0.8)',
-                                    // },
-                                }}
-                            >
-                                <ListItemButton disableRipple>
-                                    <ListItemText
-                                        primary={
-                                            <Box gap={3} display={'flex'} alignItems={'center'}>
-                                                {item.icon}
-                                                <Typography textTransform="uppercase">{item.title}</Typography>
-                                            </Box>
-                                        }
-                                    />
-                                </ListItemButton>
-                            </ListCustoms>
+                            <ListButtonCustoms selected={isActive}>
+                                <ListItemText
+                                    primary={
+                                        <Box gap={3} display={'flex'} alignItems={'center'}>
+                                            {item.icon}
+                                            <Typography textTransform="uppercase">{item.title}</Typography>
+                                        </Box>
+                                    }
+                                />
+                            </ListButtonCustoms>
                         )}
                     </NavLink>
                 ))}
@@ -164,7 +134,17 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
                             disableElevation
                             disableRipple
                             disabled={disable}
-                            onClick={() => logOut({ userApi, getRefreshToken, dispatch, loginOut, removeToken, toast, setDisabled })}
+                            onClick={() =>
+                                logOut({
+                                    userApi,
+                                    getRefreshToken,
+                                    dispatch,
+                                    loginOut,
+                                    removeToken,
+                                    toast,
+                                    setDisabled,
+                                })
+                            }
                         >
                             Đăng Xuất
                         </Button>

@@ -46,7 +46,7 @@ const uiConfigs = {
         },
         scroll: {
             '&::-webkit-scrollbar': {
-                width: '8px',
+                width: {xs: '0px',sm: '8px'},
             },
             '&::-webkit-scrollbar-track': {
                 backgroundColor: 'transparent',
@@ -54,7 +54,7 @@ const uiConfigs = {
             '&::-webkit-scrollbar-thumb': {
                 backgroundColor: 'rgba(255,255,255,0.5)',
                 borderRadius: '6px',
-                width: '8px',
+                width: {xs: '0px',sm: '8px'},
             },
         },
     },

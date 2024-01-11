@@ -1,14 +1,17 @@
-import React, { memo, useState } from 'react';
-import { Box, Button, Stack, keyframes, useMediaQuery } from '@mui/material';
+import React, { memo } from 'react';
+import { Box, Button, Stack, useMediaQuery } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { EmailIcon } from '~/components/Icon';
 import Input from '~/components/Input';
-import uiConfigs from '~/config/ui.config';
+// import style from './FormEmail.module.css';
+// import classNames from 'classnames/bind';
 
-const FormEmail = ({ openEmail, onSubmitEmail, setOpenPass }) => {
-    const transformOut = keyframes`${uiConfigs.style.transformOut}`;
-    const [shouldRender, setRender] = useState(true);
+// const cx = classNames.bind(style);
+
+const FormEmail = ({ openEmail, onSubmitEmail }) => {
+    // const transformOut = keyframes`${uiConfigs.style.transformOut}`;
+    // const [shouldRender, setRender] = useState(true);
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const formik = useFormik({
         initialValues: {
@@ -22,26 +25,48 @@ const FormEmail = ({ openEmail, onSubmitEmail, setOpenPass }) => {
         },
     });
 
-    const handleOnAnimationEnd = () => {
-        if (!openEmail) {
-            console.log('mat email');
-            setRender(false);
-            setOpenPass(true)
-        }
-    };
+    // const handleOnTransitionEnd = () => {
+    //     console.log('mat email');
+    //     // if (!openEmail) {
+    //     //     console.log('mat email 1');
+    //     //     setRender(false);
+    //     // }
+    // };
+    // useEffect(() => {
+    //     if (!shouldRender) {
+    //         setOpenPass(true);
+    //         console.log('tắt');
+    //     }
+    // }, [setOpenPass, shouldRender]);
+    // useEffect(() => {
+    //     let timer;
+    //     if (!openEmail) {
+    //         timer = setTimeout(() => {
+    //             setRender(false);
+    //         }, [1000]);
+    //     }
+    //     return () => clearTimeout(timer);
+    // }, [openEmail, setOpenPass]);
+    console.log(openEmail);
     return (
-        shouldRender && (
+        // shouldRender && (
+            // <div
+            //     className={cx('normal', {
+            //         submit: !openEmail,
+            //     })}
+            // >
             <Box
                 component={'form'}
                 onSubmit={formik.handleSubmit}
-                sx={{
-                    // transform: openEmail ? 'translateX(0)' : 'translateX(200%)',
-                    // // ...uiConfigs.style.positionFullSize,
-                    // // position: openEmail ? 'relative' : 'absolute',
-                    // transition: 'all 1s ease 0s',
-                    animation: `${!openEmail && transformOut} 1.5s`,
-                }}
-                onAnimationEnd={handleOnAnimationEnd}
+                sx={
+                    {
+                        height: '100%',
+                        // // position: openEmail ? 'relative' : 'absolute',
+                        // transition: 'all 1s ease 0s',
+                        // display: openEmail ? 'block' : 'none',
+                        // animation: `${!openEmail && transformOut} 1.5s`,
+                    }
+                }
             >
                 <Stack spacing={2} mt={2} alignItems={'flex-end'}>
                     <Input
@@ -61,7 +86,8 @@ const FormEmail = ({ openEmail, onSubmitEmail, setOpenPass }) => {
                 </Stack>
                 {/* button */}
             </Box>
-        )
+            // </div>
+        // )
     );
 };
 

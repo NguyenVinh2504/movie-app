@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Button, ButtonBase, Stack, Typography, keyframes, useMediaQuery } from '@mui/material';
+import { Box, Button, ButtonBase, Stack, Typography, useMediaQuery } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import ErrorMessageForm from '~/components/ErrorMessageForm';
 import { PasswordIcon } from '~/components/Icon';
 import Input from '~/components/Input';
-import uiConfigs from '~/config/ui.config';
+// import uiConfigs from '~/config/ui.config';
 // import uiConfigs from '~/config/ui.config';
 
-const transformIn = keyframes`${uiConfigs.style.transformIn}`;
-const transformOut = keyframes`${uiConfigs.style.transformOut}`;
+// const transformIn = keyframes`${uiConfigs.style.transformIn}`;
+// const transformOut = keyframes`${uiConfigs.style.transformOut}`;
 
 const FormEmail = ({ openOtp, errorMessage, setErrorMessage, onSubmitOTP, onReSendOTP }) => {
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const [countdown, setCountdown] = useState(120);
-    const [shouldRender, setRender] = useState(openOtp);
+    // const [shouldRender, setRender] = useState(false);
+    // const [inAnimation, setInAnimation] = useState(false);
 
     const formik = useFormik({
         initialValues: {
@@ -42,22 +43,28 @@ const FormEmail = ({ openOtp, errorMessage, setErrorMessage, onSubmitOTP, onReSe
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [countdown, openOtp]);
 
-    useEffect(() => {
-        if (openOtp) setRender(true);
-    }, [openOtp]);
-    const handleOnAnimationEnd = () => {
-        if (!openOtp) setRender(false);
-    };
+    // useEffect(() => {
+    //     let timer;
+    //     if (openOtp) {
+    //         setRender(true);
+    //         timer = setTimeout(() => {
+    //             setInAnimation(true);
+    //         }, [250]);
+    //         return () => clearTimeout(timer);
+    //     }
+    // }, [openOtp]);
 
     return (
-        shouldRender && (
+        // shouldRender && (
+        openOtp && (
             <Box
                 component={'form'}
                 onSubmit={formik.handleSubmit}
                 sx={{
-                    animation: `${openOtp ? transformIn : transformOut} 1s`,
+                    // transform: inAnimation ? 'translateX(0)' : 'translateX(-200%)',
+                    display: openOtp ? 'block' : 'none',
+                    // transition: 'transform 1s ease-in-out 0s',
                 }}
-                onTransitionEnd={handleOnAnimationEnd}
             >
                 {errorMessage && <ErrorMessageForm>{errorMessage}</ErrorMessageForm>}
                 <Stack spacing={2} mt={2} alignItems={'flex-end'}>
@@ -94,6 +101,7 @@ const FormEmail = ({ openOtp, errorMessage, setErrorMessage, onSubmitOTP, onReSe
                 {/* button */}
             </Box>
         )
+        // )
     );
 };
 

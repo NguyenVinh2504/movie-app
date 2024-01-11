@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { Box, Button, Stack, keyframes, useMediaQuery } from '@mui/material';
+import React from 'react';
+import { Box, Button, Stack, useMediaQuery } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import ErrorMessageForm from '~/components/ErrorMessageForm';
 import { PasswordIcon } from '~/components/Icon';
 import Input from '~/components/Input';
-import uiConfigs from '~/config/ui.config';
+// import uiConfigs from '~/config/ui.config';
 
-
-const FormEmail = ({ errorMessage, openPass, setOpenOtp, onSubmitPass }) => {
-    const transformIn = keyframes`${uiConfigs.style.transformIn}`;
-    const transformOut = keyframes`${uiConfigs.style.transformOut}`;
+const FormEmail = ({ errorMessage, openPass, setOpenOtp, onSubmitPass, openEmail }) => {
+    // const transformIn = keyframes`${uiConfigs.style.transformIn}`;
+    // const transformOut = keyframes`${uiConfigs.style.transformOut}`;
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-    const [shouldRender, setRender] = useState(openPass);
+    // const [shouldRender, setRender] = useState(false);
+    // const [inAnimation, setInAnimation] = useState(false);
 
     const formik = useFormik({
         initialValues: {
@@ -37,29 +37,56 @@ const FormEmail = ({ errorMessage, openPass, setOpenOtp, onSubmitPass }) => {
         },
     });
 
-    useEffect(() => {
-        if (openPass) {
-            setRender(true);
-            console.log('con');
-        }
-    }, [openPass]);
-    const handleOnAnimationEnd = () => {
-        if (!openPass) {
-            console.log('mat pass');
-            setRender(false);
-            setOpenOtp(true);
-        }
-    };
-    console.log(shouldRender);
+    // useEffect(() => {
+    //     let timer;
+    //     if (openPass) {
+    //         setRender(true);
+    //         timer = setTimeout(() => {
+    //             setInAnimation(true);
+    //         }, [250]);
+    //         return () => clearTimeout(timer);
+    //     }
+    // }, [openPass]);
+
+    // useEffect(() => {
+    //     let timer;
+    //     if (!openPass) {
+    //         console.log('tắt');
+    //         setInAnimation(false);
+    //         timer = setTimeout(() => {
+    //             setRender(false);
+    //         }, [1000]);
+    //     }
+    //     return () => clearTimeout(timer);
+    // }, [openEmail, openPass, setOpenOtp]);
+
+    // useEffect(() => {
+    //     if (!shouldRender) {
+    //         setOpenOtp(true);
+    //     }
+    // }, [setOpenOtp, shouldRender]);
+    // useEffect(() => {
+    //     let timer;
+    //     if (shouldRender) {
+    //         timer = setTimeout(() => {
+    //             setInAnimation(true);
+    //         }, [1000]);
+    //     }
+    //     return () => clearTimeout(timer);
+    // }, [shouldRender]);
     return (
-        shouldRender && (
+        // shouldRender && (
+        //     <>
+        openPass && (
             <Box
                 component={'form'}
                 onSubmit={formik.handleSubmit}
                 sx={{
-                    animation: `${openPass ? transformIn : transformOut} 1.5s`,
+                    // animation: `${openPass ? transformIn : transformOut} 1.5s`,
+                    // transform: inAnimation ? 'translateX(0)' : openPass ? 'translateX(-200%)' : 'translateX(200%)',
+                    // transition: 'transform 1s ease-in-out 0s',
+                    display: openPass ? 'block' : 'none',
                 }}
-                onTransitionEnd={handleOnAnimationEnd}
             >
                 {errorMessage && <ErrorMessageForm>{errorMessage}</ErrorMessageForm>}
                 <Stack spacing={2} mt={2} alignItems={'flex-end'}>
@@ -91,6 +118,8 @@ const FormEmail = ({ errorMessage, openPass, setOpenOtp, onSubmitPass }) => {
                 {/* button */}
             </Box>
         )
+        //     </>
+        // )
     );
 };
 

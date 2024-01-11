@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Auth from '~/components/Auth';
 import { Box } from '@mui/material';
 import { useCallback, useState } from 'react';
@@ -9,6 +9,12 @@ import config from '~/config';
 import FormEmail from './FormEmail';
 import FormPassword from './FormPassword';
 import FormOTP from './FormOTP';
+
+// Import Swiper React components
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import 'swiper/css';
+import 'swiper/css/pagination';
 const ForgotPassword = () => {
     const [errorMessage, setErrorMessage] = useState();
     const [openEmail, setOpenEmail] = useState(true);
@@ -19,13 +25,25 @@ const ForgotPassword = () => {
         email: null,
         newPassword: null,
     });
+
+    const SlideRef = useRef();
+    // useEffect(() => {
+    //     if (SlideRef.current) {
+    //         SlideRef.current.children[0].style.height = 'auto';
+    //         console.log(SlideRef.current.children[0]);
+    //     }
+    // });
     const location = useNavigate();
     const { email, newPassword } = formValue;
+    const nextPage = () => {
+        SlideRef.current.swiper.slideNext();
+    };
     const handleSubmitEmail = useCallback(async (email, actions) => {
         setIsLoading(true);
         const { response, err } = await userApi.checkEmail({ email });
         if (response) {
-            // setOpenPass(true);
+            setOpenPass(true);
+            nextPage();
             setOpenEmail(false);
             setIsLoading(false);
             setFormValue({
@@ -46,8 +64,10 @@ const ForgotPassword = () => {
             const { response } = await userApi.sendEmail({ email });
             setIsLoading(false);
             if (response) {
+                nextPage();
                 setErrorMessage(false);
                 setOpenPass(false);
+                setOpenOtp(true);
                 setFormValue((prev) => ({ newPassword, ...prev }));
             }
         },
@@ -83,33 +103,51 @@ const ForgotPassword = () => {
         },
         [email],
     );
+
     return (
         <Auth titleAuth={'Khôi phục mật khẩu'} isLoading={isLoading}>
-            <Box sx={{ position: 'relative' }}>
-                <FormEmail
-                    openEmail={openEmail}
-                    setOpenEmail={setOpenEmail}
-                    setOpenOtp={setOpenOtp}
-                    errorMessage={errorMessage}
-                    setOpenPass={setOpenPass}
-                    onSubmitEmail={handleSubmitEmail}
-                />
-                <FormPassword
-                    openPass={openPass}
-                    onSubmitPass={handleSubmitPass}
-                    setOpenOtp={setOpenOtp}
-                    openOtp={openOtp}
-                />
-                <FormOTP
-                    openOtp={openOtp}
-                    setErrorMessage={setErrorMessage}
-                    setOpenPass={setOpenPass}
-                    setOpenOtp={setOpenOtp}
-                    errorMessage={errorMessage}
-                    openEmail={openEmail}
-                    onSubmitOTP={handleSubmitOTP}
-                    onReSendOTP={handleReSendOTP}
-                />
+            <Box>
+                <Swiper
+                    pagination={true}
+                    className="mySwiper"
+                    spaceBetween={524}
+                    ref={SlideRef}
+                    speed={2000}
+                    simulateTouch={false}
+                    allowTouchMove={false}
+                >
+                    <SwiperSlide>
+                        <FormEmail
+                            openEmail={openEmail}
+                            setOpenEmail={setOpenEmail}
+                            setOpenOtp={setOpenOtp}
+                            errorMessage={errorMessage}
+                            setOpenPass={setOpenPass}
+                            onSubmitEmail={handleSubmitEmail}
+                        />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <FormPassword
+                            openPass={openPass}
+                            openEmail={openEmail}
+                            onSubmitPass={handleSubmitPass}
+                            setOpenOtp={setOpenOtp}
+                            openOtp={openOtp}
+                        />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <FormOTP
+                            openOtp={openOtp}
+                            setErrorMessage={setErrorMessage}
+                            setOpenPass={setOpenPass}
+                            setOpenOtp={setOpenOtp}
+                            errorMessage={errorMessage}
+                            openEmail={openEmail}
+                            onSubmitOTP={handleSubmitOTP}
+                            onReSendOTP={handleReSendOTP}
+                        />
+                    </SwiperSlide>
+                </Swiper>
             </Box>
         </Auth>
     );

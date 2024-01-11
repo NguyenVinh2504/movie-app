@@ -61,7 +61,7 @@ function MovieDetail() {
                         position: 'fixed',
                         top: '2%',
                         bottom: '2%',
-                        width: { md: '850px', xs: '95%' },
+                        width: { md: '850px', xs: '97%' },
                         left: '50%',
                         display: 'flex',
                         flexDirection: 'column',

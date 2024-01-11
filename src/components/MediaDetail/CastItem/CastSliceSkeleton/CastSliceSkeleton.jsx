@@ -25,6 +25,7 @@ function CastSliceSkeleton({ cast }) {
             spaceBetween={8}
             simulateTouch={false}
             shortSwipes={false}
+            allowTouchMove={false}
             preventInteractionOnTransition={false}
             breakpoints={{
                 0: {

@@ -358,6 +358,11 @@ const theme = createTheme({
                     ':hover': {
                         backgroundColor: Color.secondary,
                     },
+                    '@media (hover: none)': {
+                        '&:hover': {
+                            backgroundColor: 'transparent',
+                        },
+                    },
                 },
             },
         },
