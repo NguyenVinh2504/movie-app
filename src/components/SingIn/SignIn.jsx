@@ -16,6 +16,7 @@ import { toast } from 'react-toastify';
 import ButtonGoogle from '../ButtonGoogle';
 import { setToken } from '~/redux/features/authSlice';
 import { useState } from 'react';
+import { setFavorites } from '~/redux/features/favoritesSlice';
 function SingIn({ setIsLoading }) {
     const [disable, setDisabled] = useState(false);
     const location = useNavigate();
@@ -49,7 +50,9 @@ function SingIn({ setIsLoading }) {
             if (response) {
                 setDisabled(false);
                 setIsLoading(false);
-                const { accessToken, refreshToken, ...user } = response;
+                const { accessToken, refreshToken, favorites, ...user } = response;
+                console.log(favorites);
+                dispatch(setFavorites(favorites));
                 dispatch(setUser(user));
                 dispatch(setToken({ accessToken, refreshToken }));
                 location(config.routes.home);

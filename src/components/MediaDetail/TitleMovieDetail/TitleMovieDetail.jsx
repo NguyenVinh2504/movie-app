@@ -1,9 +1,13 @@
 import { Box, Typography, Stack, useMediaQuery, Skeleton } from '@mui/material';
 import { memo } from 'react';
+import { useSelector } from 'react-redux';
 import ButtonAddFavorite from '~/components/ButtonAddFavorite';
 import uiConfigs from '~/config/ui.config';
+import { favoritesValue } from '~/redux/selectors';
 function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+    const favorites = useSelector(favoritesValue);
+
     return (
         <Box sx={{ p: 2 }}>
             <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'} spacing={2}>
@@ -17,7 +21,14 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
                             {dataDetail?.title ?? dataDetail?.name}
                         </Typography>
                         <Box>
-                            <ButtonAddFavorite item={dataDetail} mediaType={mediaType} />
+                            <ButtonAddFavorite
+                                item={dataDetail}
+                                mediaType={mediaType}
+                                favoriteStore={favorites?.find((e) => e.mediaId === dataDetail.id)}
+                                checkedLike={favorites?.some(
+                                    (favorite) => favorite?.mediaId === dataDetail.id,
+                                )}
+                            />
                         </Box>
                     </>
                 )}

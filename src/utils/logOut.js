@@ -1,5 +1,7 @@
 // import config from "~/config";
 
+import { removeFavorites } from "~/redux/features/favoritesSlice";
+
 export const logOut = async ({ userApi, dispatch, loginOut, removeToken, toast, navigate, setDisabled = () => { } }) => {
     const id = toast.loading('Đang đăng xuất...');
     setDisabled(true)
@@ -8,6 +10,7 @@ export const logOut = async ({ userApi, dispatch, loginOut, removeToken, toast, 
         // navigate(config.routes.home)
         setTimeout(() => {
             setDisabled(false)
+            dispatch(removeFavorites());
             dispatch(loginOut())
             dispatch(removeToken())
             toast.update(id, {
@@ -23,6 +26,7 @@ export const logOut = async ({ userApi, dispatch, loginOut, removeToken, toast, 
         setDisabled(false)
         dispatch(loginOut())
         dispatch(removeToken())
+        dispatch(removeFavorites());
         toast.update(id, {
             render: 'Đăng xuất không thành công',
             type: 'error',

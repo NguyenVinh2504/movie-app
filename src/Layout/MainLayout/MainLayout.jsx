@@ -12,6 +12,7 @@ import { loginOut, updateUser } from '~/redux/features/userSlice';
 import { openSelector } from '~/redux/selectors';
 import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
 import { removeToken } from '~/redux/features/authSlice';
+import { removeFavorites, setFavorites } from '~/redux/features/favoritesSlice';
 // import Search from '../components/Search';
 
 function MainLayout() {
@@ -22,12 +23,15 @@ function MainLayout() {
         const authUser = async () => {
             const { response, err } = await userApi.getInfo();
             if (response) {
-                dispatch(updateUser(response));
+                const { favorites, ...user } = response;
+                dispatch(updateUser(user));
+                dispatch(setFavorites(favorites));
                 dispatch(toggleGlobalLoading(false));
             }
             if (err) {
                 dispatch(loginOut());
                 dispatch(removeToken());
+                dispatch(removeFavorites());
                 dispatch(toggleGlobalLoading(false));
             }
         };

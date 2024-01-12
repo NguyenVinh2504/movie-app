@@ -9,7 +9,7 @@ import images from '~/assets/image';
 import Image from '../Image';
 import ButtonAddFavorite from '../ButtonAddFavorite';
 import { memo } from 'react';
-function MediaItems({ item, mediaType }) {
+function MediaItems({ item, mediaType, checkedLike, favoriteStore }) {
     const dispatch = useDispatch();
     const handleOpen = () => {
         if (item.media_type !== 'person') {
@@ -133,7 +133,12 @@ function MediaItems({ item, mediaType }) {
                         </Stack>
                         {/* text */}
                         {/* yeu thich */}
-                        <ButtonAddFavorite item={item} mediaType={mediaType} />
+                        <ButtonAddFavorite
+                            item={item}
+                            mediaType={mediaType}
+                            checkedLike={checkedLike}
+                            favoriteStore={favoriteStore}
+                        />
                         {/* yeu thich */}
                     </Stack>
                     {/* info */}

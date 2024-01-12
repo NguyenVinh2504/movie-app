@@ -1,24 +1,16 @@
 import { IconButton, Tooltip } from '@mui/material';
 import theme from '~/theme';
 import { HeartIcon } from '../Icon';
-// import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import 'react-lazy-load-image-component/src/effects/blur.css';
-import { updateUser } from '~/redux/features/userSlice';
 import favoriteApi from '~/api/module/favorite.api';
 import { toast } from 'react-toastify';
-import { userValue } from '~/redux/selectors';
-import { memo, useEffect, useMemo, useState } from 'react';
+import { memo, useEffect, useState } from 'react';
 import { useConfirm } from 'material-ui-confirm';
+import { deleteFavorite, addFavorite } from '~/redux/features/favoritesSlice';
 
-function ButtonAddFavorite({ item, mediaType }) {
-    const user = useSelector(userValue);
+function ButtonAddFavorite({ item, mediaType, checkedLike, favoriteStore }) {
     const confirm = useConfirm();
-    const checkedLike = useMemo(() => {
-        if (user?.favorites) {
-            return user?.favorites?.some((favorite) => favorite?.mediaId === item.id || item.mediaId);
-        }
-    }, [item.id, item.mediaId, user?.favorites]);
     const [liked, setLiked] = useState(checkedLike);
     const [disabled, setDisabled] = useState(false);
     const dispatch = useDispatch();
@@ -28,9 +20,8 @@ function ButtonAddFavorite({ item, mediaType }) {
         } else {
             setLiked(false);
         }
-    }, [checkedLike, user?.favorites]);
-    const addFavorite = async (item) => {
-        if (!user) return toast.error('Vui lòng đăng nhập');
+    }, [checkedLike]);
+    const addItem = async (item) => {
         setDisabled(true);
         const newFavorite = {
             media_type: item.media_type ?? mediaType,
@@ -44,25 +35,29 @@ function ButtonAddFavorite({ item, mediaType }) {
         const { response, err } = await favoriteApi.addFavorite(newFavorite);
         setDisabled(false);
         if (response) {
-            dispatch(updateUser(response));
+            dispatch(addFavorite(response.favorites));
             toast.success('Đã thêm vào mục yêu thích');
         }
         if (err) {
+            if (err.statusCode === 401) {
+                toast.success('Vui lòng đăng nhập');
+            }
             setLiked(false);
         }
     };
-    const removeFavorite = (item) => {
+    const removeFavorite = async () => {
         confirm({ title: 'Xóa phim yêu thích?', description: 'Phim sẽ được xóa khỏi mục yêu thích.' })
             .then(async () => {
                 setDisabled(false);
                 setLiked(false);
-                const favorite = user?.favorites?.find((e) => e.mediaId === (item.id || item.mediaId));
-                const { response, err } = await favoriteApi.removeFavorite(favorite?._id);
+                // const favorite = user?.favorites?.find((e) => e.mediaId === (item.id || item.mediaId));
+                const { response, err } = await favoriteApi.removeFavorite(favoriteStore);
                 if (response) {
-                    const newUser = { ...user };
-                    newUser.favorites = newUser?.favorites?.filter((f) => f.mediaId !== (item.mediaId || item.id));
-                    dispatch(updateUser(newUser));
-                    toast.success(response.removeFavorite);
+                    // const newUser = { ...user };
+                    const { favorites } = response;
+                    // newUser.favorites = newUser?.favorites?.filter((f) => f.mediaId !== (item.mediaId || item.id));
+                    dispatch(deleteFavorite(favorites));
+                    toast.success('Xóa phim yêu thích thành công');
                 } else if (err) {
                     setLiked(true);
                 }
@@ -73,9 +68,9 @@ function ButtonAddFavorite({ item, mediaType }) {
     };
     const handleItemAction = ({ item }) => {
         if (liked) {
-            removeFavorite(item); // Nếu đã thêm vào giỏ hàng, xóa sản phẩm
+            removeFavorite(); // Nếu đã thêm vào giỏ hàng, xóa sản phẩm
         } else {
-            addFavorite(item); // Nếu chưa thêm vào giỏ hàng, thêm sản phẩm vào giỏ hàng
+            addItem(item); // Nếu chưa thêm vào giỏ hàng, thêm sản phẩm vào giỏ hàng
         }
     };
     return (

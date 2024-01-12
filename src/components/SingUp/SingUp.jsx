@@ -16,6 +16,7 @@ import { toast } from 'react-toastify';
 import ButtonGoogle from '../ButtonGoogle';
 import { setToken } from '~/redux/features/authSlice';
 import { useState } from 'react';
+import { setFavorites } from '~/redux/features/favoritesSlice';
 
 function SingUp({ setIsLoading }) {
     const [disable, setDisabled] = useState(false);
@@ -60,7 +61,8 @@ function SingUp({ setIsLoading }) {
                 setIsLoading(false);
                 location(config.routes.home);
                 formik.resetForm();
-                const { accessToken, refreshToken, ...user } = response;
+                const { accessToken, refreshToken, favorites, ...user } = response;
+                dispatch(setFavorites(favorites));
                 dispatch(setUser(user));
                 dispatch(setToken({ accessToken, refreshToken }));
                 toast.success(`Xin chào, ${response.name}`, {
