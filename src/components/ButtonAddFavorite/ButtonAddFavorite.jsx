@@ -40,7 +40,7 @@ function ButtonAddFavorite({ item, mediaType, checkedLike, favoriteStore }) {
         }
         if (err) {
             if (err.statusCode === 401) {
-                toast.success('Vui lòng đăng nhập');
+                toast.error('Vui lòng đăng nhập');
             }
             setLiked(false);
         }
