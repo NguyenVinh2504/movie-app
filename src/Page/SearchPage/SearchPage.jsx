@@ -73,7 +73,7 @@ function SearchPage() {
             if (selectedIndex === index) return;
             setDataSearch([]);
             setCurrPage(1);
-            setMoreButton(false)
+            setMoreButton(false);
             setSelectedIndex(index);
         },
         [selectedIndex],

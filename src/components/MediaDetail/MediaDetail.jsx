@@ -24,23 +24,23 @@ function MovieDetail() {
         dispatch(toggleDetail(false));
         setDataDetail({});
     };
+    const getDataDetail = async () => {
+        const { response } = await mediaApi.getDetail({
+            mediaType: param?.mediaType,
+            mediaId: param?.id,
+        });
+        if (response) {
+            setDataDetail({ ...response });
+            setLoading(false);
+            const newGenres = response?.genres?.map((item) => item.name) || [];
+            setGenres(newGenres);
+        }
+    };
     useEffect(() => {
         if (param) {
-            // console.log('use');
-            const getDataDetail = async () => {
-                // console.log('get');
-                const { response } = await mediaApi.getDetail({
-                    mediaType: param?.mediaType,
-                    mediaId: param?.id,
-                });
-                if (response) {
-                    setDataDetail({ ...response });
-                    setLoading(false);
-                    response?.genres?.map((item) => setGenres((pram) => [...pram, item.name]));
-                }
-            };
             getDataDetail();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [param]);
     // console.log(loading);
     return (
@@ -105,7 +105,7 @@ function MovieDetail() {
                         }}
                     >
                         <Box px={1} mt={0}>
-                            <Paper variant='outlined' sx={{overflow: 'hidden'}}>
+                            <Paper variant="outlined" sx={{ overflow: 'hidden' }}>
                                 {/* poster */}
                                 <BannerMovieDetail
                                     loading={loading}
@@ -129,10 +129,7 @@ function MovieDetail() {
                                 <Episodes
                                     seasons={dataDetail?.seasons}
                                     seriesId={dataDetail?.id}
-                                    numberSeasonValue={
-                                        dataDetail?.seasons &&
-                                        dataDetail?.seasons[0]?.season_number
-                                    }
+                                    numberSeasonValue={dataDetail?.seasons && dataDetail?.seasons[0]?.season_number}
                                 />
                             )}
                             {/* tap phim */}
