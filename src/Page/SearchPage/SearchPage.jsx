@@ -1,71 +1,83 @@
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Box, Button, Container, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
+import { useSearchParams } from 'react-router-dom';
+import { usePrevious } from '~/Hooks';
 import Search from './Search';
 import Media from '~/components/Media';
-import { useSearchParams } from 'react-router-dom';
-import { useCallback, useEffect, useState } from 'react';
 import mediaApi from '~/api/module/media.api';
-import { usePrevious } from '~/Hooks';
-import menuItemsSearch from '~/config/MenuItemsSearch';
 import TabsSearchTypeMobile from './TabsSearchTypeMobile';
 import TabsSearch from './TabsSearch';
+import menuItemsSearch from '~/config/MenuItemsSearch';
+import { debounce } from 'lodash';
 
 function SearchPage() {
-    const pointDownLg = useMediaQuery((theme) => theme.breakpoints.down('lg'));
-    const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+    const isLgDown = useMediaQuery((theme) => theme.breakpoints.down('lg'));
+    const isSmDown = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const [dataSearch, setDataSearch] = useState([]);
+    const [valueInput, setValueInput] = useState(null);
     const [currPage, setCurrPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [moreButton, setMoreButton] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(0);
 
-    let [searchParams] = useSearchParams();
+    const [searchParams] = useSearchParams();
     const query = searchParams.get('query');
-    const prevQuery = usePrevious(query);
+
+    const setValue = useRef(
+        debounce((query) => {
+            // console.log('value', query);
+            setValueInput(query);
+        }, 1000),
+    );
 
     useEffect(() => {
-        // if (query !== null) {
-        //     setMoreButton(false);
-        //     setIsLoading(true);
-        // } else if (query === null) {
-        //     setIsLoading(false);
-        //     setMoreButton(false);
-        // }
-        const getDataSearch = async () => {
+        // console.log('query', query);
+        setValue.current(query);
+    }, [query, setValue]);
+
+    const prevQuery = usePrevious(valueInput);
+    // console.log('valueInput', valueInput, 'prevQuery', prevQuery);
+    useEffect(() => {
+        // console.log(
+        //     'currPage',
+        //     currPage,
+        //     'valueInput',
+        //     valueInput,
+        //     'selectedIndex',
+        //     selectedIndex,
+        //     'prevQuery',
+        //     prevQuery,
+        // );
+        const fetchData = async () => {
             setMoreButton(false);
             setIsLoading(true);
             const { response } = await mediaApi.search({
                 mediaType: menuItemsSearch[selectedIndex].type,
-                query: query,
+                query: valueInput,
                 page: currPage,
             });
+
             if (response) {
                 setIsLoading(false);
-                if (currPage === response.total_pages) {
-                    setMoreButton(false);
-                } else {
-                    setMoreButton(true);
-                }
-                if (currPage !== 1) {
-                    setDataSearch((m) => [...m, ...response.results]);
-                } else {
-                    setDataSearch([...response.results]);
-                }
+                setMoreButton(currPage < response.total_pages);
+                setDataSearch((prevData) =>
+                    currPage !== 1 ? [...prevData, ...response.results] : [...response.results],
+                );
             }
         };
-        if (prevQuery !== query) {
+
+        if (prevQuery !== valueInput) {
+            // console.log('co');
             setCurrPage(1);
             setMoreButton(false);
             setDataSearch([]);
+            return;
         }
-        const timer = setTimeout(() => {
-            if (query !== null) getDataSearch();
-        }, [1000]);
-        return () => {
-            clearTimeout(timer);
-        };
-    }, [currPage, prevQuery, query, selectedIndex]);
-    const handleLoadingMore = () => {
-        setCurrPage(currPage + 1);
+        if (valueInput !== null) fetchData();
+    }, [currPage, valueInput, selectedIndex, prevQuery]);
+
+    const handleLoadMore = () => {
+        setCurrPage((prevPage) => prevPage + 1);
     };
 
     const handleListItemClick = useCallback(
@@ -78,38 +90,63 @@ function SearchPage() {
         },
         [selectedIndex],
     );
+
     return (
-        <Container maxWidth={'xl'}>
-            {pointDownLg && (
-                <Box mb={'20px'}>
+        <Container maxWidth="xl">
+            {isLgDown && (
+                <Box mb="20px">
                     <Search />
                 </Box>
             )}
+
             <Grid container columnSpacing={2} rowSpacing={2}>
-                {/* tab type search */}
-                {!pointDownSm && (
+                {/* Tab type search */}
+                {!isSmDown && (
                     <Grid item xs={12} sm={4} md={3} lg={2.5} xl={2}>
                         <TabsSearch value={selectedIndex} onListItemClick={handleListItemClick} />
                     </Grid>
                 )}
-                {/* tab type search */}
-                {/* tab type search mobile*/}
-                {pointDownSm && (
+                {/* Tab type search */}
+
+                {/* Tab type search mobile */}
+                {isSmDown && (
                     <Grid item xs={12}>
                         <TabsSearchTypeMobile value={selectedIndex} onListItemClick={handleListItemClick} />
                     </Grid>
                 )}
-                {/* tab type search mobile*/}
-                <Grid item xs={12} sm={8} md={9} lg={9.5} xl={10}>
+                {/* Tab type search mobile */}
+
+                <Grid
+                    item
+                    xs={12}
+                    sm={isSmDown ? 12 : 8}
+                    md={isSmDown ? 12 : 9}
+                    lg={isSmDown ? 12 : 9.5}
+                    xl={isSmDown ? 12 : 10}
+                >
                     {query && (
-                        <Typography variant={pointDownLg ? 'h5' : 'h4'} fontWeight={500} mb={2} display={'block'}>
+                        <Typography variant={isLgDown ? 'h5' : 'h4'} fontWeight={500} mb={2} display="block">
                             Kết quả tìm kiếm: {query}
                         </Typography>
                     )}
-                    <Media medias={dataSearch} isLoading={isLoading} mediaType={menuItemsSearch[selectedIndex].type} />
+
+                    {dataSearch?.length !== 0 ? (
+                        <Media
+                            medias={dataSearch}
+                            isLoading={isLoading}
+                            mediaType={menuItemsSearch[selectedIndex].type}
+                        />
+                    ) : (
+                        <Box height={'500px'} display={'flex'} alignItems={'center'} justifyContent={'center'}>
+                            <Typography variant="h4" fontWeight={500} textAlign={'center'}>
+                                Không tìm thấy phim
+                            </Typography>
+                        </Box>
+                    )}
+
                     {moreButton && (
-                        <Stack mt={2} justifyContent={'center'} flexDirection={'row'}>
-                            <Button variant="contained" color="secondary" onClick={handleLoadingMore}>
+                        <Stack mt={2} justifyContent="center" flexDirection="row">
+                            <Button variant="contained" color="secondary" onClick={handleLoadMore}>
                                 View More
                             </Button>
                         </Stack>
