@@ -137,12 +137,20 @@ function SearchPage() {
                         </Typography>
                     )}
 
-                    <Media medias={dataSearch} isLoading={isLoading} mediaType={menuItemsSearch[selectedIndex].type} />
+                    {!noResult && (
+                        <Media
+                            medias={dataSearch}
+                            isLoading={isLoading}
+                            mediaType={menuItemsSearch[selectedIndex].type}
+                        />
+                    )}
                     {noResult && (
                         <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-                            <Box sx={{ width: { xs: '80%', sm: '50%' }, pt: 'calc(((150/225)*100%)/2)', position: 'relative' }}>
-                                <Box sx={{ ...uiConfigs.style.positionFullSize }}>
-                                    <img src={images.noResult} alt="noResult" />
+                            <Box sx={{ width: { xs: '80%', sm: '50%' } }}>
+                                <Box sx={{ pt: 'calc((150/225)*100%)', position: 'relative' }}>
+                                    <Box sx={{ ...uiConfigs.style.positionFullSize }}>
+                                        <img src={images.noResult} alt="noResult" />
+                                    </Box>
                                 </Box>
                             </Box>
                             <Typography variant="h6" fontWeight={500}>
