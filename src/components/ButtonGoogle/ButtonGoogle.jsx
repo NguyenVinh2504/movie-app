@@ -8,6 +8,7 @@ import userApi from '~/api/module/user.api';
 import config from '~/config';
 import { app } from '~/firebase';
 import { setToken } from '~/redux/features/authSlice';
+import { setFavorites } from '~/redux/features/favoritesSlice';
 import { setUser } from '~/redux/features/userSlice';
 
 function ButtonGoogle({ setIsLoading }) {
@@ -40,7 +41,8 @@ function ButtonGoogle({ setIsLoading }) {
             });
             if (response) {
                 location(config.routes.home);
-                const { accessToken, refreshToken, ...user } = response;
+                const { accessToken, refreshToken, favorites, ...user } = response;
+                dispatch(setFavorites(favorites));
                 dispatch(setUser(user));
                 dispatch(setToken({ accessToken, refreshToken }));
                 toast.success(`Xin chào, ${response.name}`, {

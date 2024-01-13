@@ -51,7 +51,6 @@ function SingIn({ setIsLoading }) {
                 setDisabled(false);
                 setIsLoading(false);
                 const { accessToken, refreshToken, favorites, ...user } = response;
-                console.log(favorites);
                 dispatch(setFavorites(favorites));
                 dispatch(setUser(user));
                 dispatch(setToken({ accessToken, refreshToken }));
