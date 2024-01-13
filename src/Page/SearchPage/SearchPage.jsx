@@ -10,6 +10,7 @@ import TabsSearch from './TabsSearch';
 import menuItemsSearch from '~/config/MenuItemsSearch';
 import { debounce } from 'lodash';
 import images from '~/assets/image';
+import uiConfigs from '~/config/ui.config';
 
 function SearchPage() {
     const isLgDown = useMediaQuery((theme) => theme.breakpoints.down('lg'));
@@ -139,8 +140,10 @@ function SearchPage() {
                     <Media medias={dataSearch} isLoading={isLoading} mediaType={menuItemsSearch[selectedIndex].type} />
                     {noResult && (
                         <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-                            <Box sx={{ width: { xs: '80%', sm: '50%' } }}>
-                                <img src={images.noResult} alt="noResult" />
+                            <Box sx={{ width: { xs: '80%', sm: '50%' }, pt: 'calc(((150/225)*100%)/2)', position: 'relative' }}>
+                                <Box sx={{ ...uiConfigs.style.positionFullSize }}>
+                                    <img src={images.noResult} alt="noResult" />
+                                </Box>
                             </Box>
                             <Typography variant="h6" fontWeight={500}>
                                 Không tìm thấy kết quả
