@@ -9,6 +9,7 @@ import TabsSearchTypeMobile from './TabsSearchTypeMobile';
 import TabsSearch from './TabsSearch';
 import menuItemsSearch from '~/config/MenuItemsSearch';
 import { debounce } from 'lodash';
+import images from '~/assets/image';
 
 function SearchPage() {
     const isLgDown = useMediaQuery((theme) => theme.breakpoints.down('lg'));
@@ -18,6 +19,7 @@ function SearchPage() {
     const [currPage, setCurrPage] = useState(1);
     const [isLoading, setIsLoading] = useState(false);
     const [moreButton, setMoreButton] = useState(false);
+    const [noResult, setNoResult] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     const [searchParams] = useSearchParams();
@@ -51,6 +53,7 @@ function SearchPage() {
         const fetchData = async () => {
             setMoreButton(false);
             setIsLoading(true);
+            setNoResult(false);
             const { response } = await mediaApi.search({
                 mediaType: menuItemsSearch[selectedIndex].type,
                 query: valueInput,
@@ -59,6 +62,7 @@ function SearchPage() {
 
             if (response) {
                 setIsLoading(false);
+                setNoResult(response?.total_results === 0);
                 setMoreButton(currPage < response.total_pages);
                 setDataSearch((prevData) =>
                     currPage !== 1 ? [...prevData, ...response.results] : [...response.results],
@@ -69,6 +73,7 @@ function SearchPage() {
         if (prevQuery !== valueInput) {
             // console.log('co');
             setCurrPage(1);
+            setNoResult(false);
             setMoreButton(false);
             setDataSearch([]);
             return;
@@ -85,6 +90,7 @@ function SearchPage() {
             if (selectedIndex === index) return;
             setDataSearch([]);
             setCurrPage(1);
+            setNoResult(false);
             setMoreButton(false);
             setSelectedIndex(index);
         },
@@ -131,7 +137,16 @@ function SearchPage() {
                     )}
 
                     <Media medias={dataSearch} isLoading={isLoading} mediaType={menuItemsSearch[selectedIndex].type} />
-
+                    {noResult && (
+                        <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
+                            <Box sx={{ width: { xs: '80%', sm: '50%' } }}>
+                                <img src={images.noResult} alt="noResult" />
+                            </Box>
+                            <Typography variant="h6" fontWeight={500}>
+                                Không tìm thấy kết quả
+                            </Typography>
+                        </Box>
+                    )}
                     {moreButton && (
                         <Stack mt={2} justifyContent="center" flexDirection="row">
                             <Button variant="contained" color="secondary" onClick={handleLoadMore}>

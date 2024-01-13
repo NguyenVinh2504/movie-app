@@ -13,7 +13,6 @@ function Episodes({ seasons, seriesId, numberSeasonValue }) {
     const [seasonDetailValue, setSeasonDetailValue] = useState({});
     const [visible, setVisible] = useState(4);
     const [moreButton, setMoreButton] = useState(false);
-    console.log('mou tap', seasons, undefined?.length !== 0);
 
     const handleSetSeasonNumber = useCallback((number) => {
         setNumberSeason(number);
@@ -50,7 +49,7 @@ function Episodes({ seasons, seriesId, numberSeasonValue }) {
 
     const handleShowMoreItems = () => {
         if (visible < seasonDetailValue?.episodes?.length) {
-            setVisible(seasonDetailValue?.episodes?.length);
+            setVisible(seasonDetailValue?.episodes?.length < 50 ? seasonDetailValue?.episodes?.length : visible + 10);
         }
     };
     const handleHideMoreItems = () => {
