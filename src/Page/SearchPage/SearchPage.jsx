@@ -130,19 +130,7 @@ function SearchPage() {
                         </Typography>
                     )}
 
-                    {dataSearch?.length !== 0 ? (
-                        <Media
-                            medias={dataSearch}
-                            isLoading={isLoading}
-                            mediaType={menuItemsSearch[selectedIndex].type}
-                        />
-                    ) : (
-                        <Box height={'500px'} display={'flex'} alignItems={'center'} justifyContent={'center'}>
-                            <Typography variant="h4" fontWeight={500} textAlign={'center'}>
-                                Không tìm thấy phim
-                            </Typography>
-                        </Box>
-                    )}
+                    <Media medias={dataSearch} isLoading={isLoading} mediaType={menuItemsSearch[selectedIndex].type} />
 
                     {moreButton && (
                         <Stack mt={2} justifyContent="center" flexDirection="row">
