@@ -153,9 +153,6 @@ function SearchPage() {
                                     </Box>
                                 </Box>
                             </Box>
-                            <Typography variant="h6" fontWeight={500}>
-                                Không tìm thấy kết quả
-                            </Typography>
                         </Box>
                     )}
                     {moreButton && (
