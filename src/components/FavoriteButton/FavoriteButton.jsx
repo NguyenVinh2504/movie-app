@@ -15,8 +15,6 @@ import theme from '~/theme';
 
 // Hàm con để thêm yêu thích
 const addItemToFavorite = async (item, mediaType, setLiked, setDisabled, setAnimation, dispatch) => {
-    setDisabled(true);
-
     const newFavorite = {
         media_type: item.media_type ?? mediaType,
         mediaId: item.id,
@@ -46,7 +44,7 @@ const addItemToFavorite = async (item, mediaType, setLiked, setDisabled, setAnim
 };
 
 // Hàm con để xóa khỏi danh sách yêu thích
-const removeItemFromFavorite = async (confirm, favoriteStore, setLiked, setDisabled, setAnimation, dispatch) => {
+const removeItemFromFavorite = async (confirm, favoriteStore, setLiked, setAnimation, setDisabled, dispatch) => {
     confirm({
         title: 'Xóa phim yêu thích?',
         description: 'Phim sẽ được xóa khỏi mục yêu thích.',
@@ -71,6 +69,17 @@ const removeItemFromFavorite = async (confirm, favoriteStore, setLiked, setDisab
         });
 };
 
+const animationStyles = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    svg: {
+        display: 'block',
+    },
+    animation: '0.8s ease-in-out 0s 1 normal forwards',
+};
+
 function FavoriteButton({ item, mediaType, checkedLike, favoriteStore }) {
     const confirm = useConfirm();
     const dispatch = useDispatch();
@@ -84,8 +93,9 @@ function FavoriteButton({ item, mediaType, checkedLike, favoriteStore }) {
     }, [checkedLike]);
 
     const handleItemAction = () => {
+        setDisabled(true);
         liked
-            ? removeItemFromFavorite(confirm, favoriteStore, setLiked, setDisabled, setAnimation, dispatch)
+            ? removeItemFromFavorite(confirm, favoriteStore, setLiked, setAnimation, setDisabled, dispatch)
             : addItemToFavorite(item, mediaType, setLiked, setDisabled, setAnimation, dispatch);
     };
 
@@ -97,14 +107,8 @@ function FavoriteButton({ item, mediaType, checkedLike, favoriteStore }) {
                         {liked ? (
                             <Box
                                 sx={{
-                                    position: 'absolute',
-                                    top: '50%',
-                                    left: '50%',
-                                    transform: 'translate(-50%, -50%)',
-                                    svg: {
-                                        display: 'block',
-                                    },
-                                    animation: animation && 'show-popup 0.8s ease-in-out 0s 1 normal forwards',
+                                    ...animationStyles,
+                                    animationName: animation && 'show-popup',
                                     '@keyframes show-popup': {
                                         '0%': { transform: 'translate(-50%, -50%)\n\t\tscale(.7)' },
                                         '45%': { transform: 'translate(-50%, -50%)\n\t\tscale(1.3)' },
@@ -118,14 +122,8 @@ function FavoriteButton({ item, mediaType, checkedLike, favoriteStore }) {
                         ) : (
                             <Box
                                 sx={{
-                                    position: 'absolute',
-                                    top: '50%',
-                                    left: '50%',
-                                    transform: 'translate(-50%, -50%)',
-                                    svg: {
-                                        display: 'block',
-                                    },
-                                    animation: animation && 'out-popup 0.8s ease-in-out 0s 1 normal forwards',
+                                    ...animationStyles,
+                                    animationName: animation && 'out-popup',
                                     '@keyframes out-popup': {
                                         '0%': { transform: 'translate(-50%, -50%)\n\t\tscale(.7)' },
                                         '45%': { transform: 'translate(-50%, -50%)\n\t\tscale(1.2)' },
