@@ -64,6 +64,67 @@ export const HeartIcon = ({ stroke = '#fff' }) => {
     );
 };
 
+export function HeartIconActive({fill = "#fff"}) {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
+            <path
+                fill={fill}
+                d="M16.44 3.1c-1.81 0-3.43.88-4.44 2.23A5.549 5.549 0 007.56 3.1C4.49 3.1 2 5.6 2 8.69c0 1.19.19 2.29.52 3.31 1.58 5 6.45 7.99 8.86 8.81.34.12.9.12 1.24 0 2.41-.82 7.28-3.81 8.86-8.81.33-1.02.52-2.12.52-3.31 0-3.09-2.49-5.59-5.56-5.59z"
+            ></path>
+        </svg>
+    );
+}
+export function ArchiveIcon() {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
+            <path
+                stroke="#fff"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeMiterlimit="10"
+                strokeWidth="1.5"
+                d="M14.5 10.65h-5M12 8.21v5"
+            ></path>
+            <path
+                stroke="#fff"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="1.5"
+                d="M16.82 2H7.18C5.05 2 3.32 3.74 3.32 5.86v14.09c0 1.8 1.29 2.56 2.87 1.69l4.88-2.71c.52-.29 1.36-.29 1.87 0l4.88 2.71c1.58.88 2.87.12 2.87-1.69V5.86C20.68 3.74 18.95 2 16.82 2z"
+            ></path>
+        </svg>
+    );
+}
+
+export function ArchiveIconActive({ fill = "#fff", height = 24, width = 24 }) {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={width}
+            height={height}
+            fill="none"
+            viewBox="0 0 24 24"
+        >
+            <path
+                fill={fill}
+                d="M16.82 1.91H7.18c-2.12 0-3.86 1.74-3.86 3.86v14.09c0 1.8 1.29 2.56 2.87 1.69l4.88-2.71c.52-.29 1.36-.29 1.87 0l4.88 2.71c1.58.88 2.87.12 2.87-1.69V5.77c-.01-2.12-1.74-3.86-3.87-3.86zm-1.2 7.12l-4 4c-.15.15-.34.22-.53.22s-.38-.07-.53-.22l-1.5-1.5a.754.754 0 010-1.06c.29-.29.77-.29 1.06 0l.97.97 3.47-3.47c.29-.29.77-.29 1.06 0 .29.29.29.77 0 1.06z"
+            ></path>
+        </svg>
+    );
+}
+
 export const MenuIcon = () => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -94,6 +155,23 @@ export function MovieIcon() {
     );
 }
 
+export function MovieIconActive() {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
+            <path
+                fill="#fff"
+                d="M14.73 2H9.27v4.36h5.46V2zM16.23 2v4.36h5.64c-.51-2.75-2.54-4.35-5.64-4.36zM2 7.86v8.33C2 19.83 4.17 22 7.81 22h8.38c3.64 0 5.81-2.17 5.81-5.81V7.86H2zm12.44 8.32l-2.08 1.2c-.44.25-.87.38-1.27.38-.3 0-.57-.07-.82-.21-.58-.33-.9-1.01-.9-1.89v-2.4c0-.88.32-1.56.9-1.89.58-.34 1.32-.28 2.09.17l2.08 1.2c.77.44 1.19 1.06 1.19 1.73 0 .67-.43 1.26-1.19 1.71zM7.77 2c-3.1.01-5.13 1.61-5.64 4.36h5.64V2z"
+            ></path>
+        </svg>
+    );
+}
+
 export function HomeIcon() {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -103,6 +181,22 @@ export function HomeIcon() {
                 strokeLinejoin="round"
                 strokeWidth="1.5"
                 d="M9.02 2.84l-5.39 4.2C2.73 7.74 2 9.23 2 10.36v7.41c0 2.32 1.89 4.22 4.21 4.22h11.58c2.32 0 4.21-1.9 4.21-4.21V10.5c0-1.21-.81-2.76-1.8-3.45l-6.18-4.33c-1.4-.98-3.65-.93-5 .12zM12 17.99v-3"
+            ></path>
+        </svg>
+    );
+}
+export function HomeIconActive() {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
+            <path
+                fill="#fff"
+                d="M20.04 6.82l-5.76-4.03c-1.57-1.1-3.98-1.04-5.49.13L3.78 6.83c-1 .78-1.79 2.38-1.79 3.64v6.9c0 2.55 2.07 4.63 4.62 4.63h10.78c2.55 0 4.62-2.07 4.62-4.62V10.6c0-1.35-.87-3.01-1.97-3.78zM12.75 18c0 .41-.34.75-.75.75s-.75-.34-.75-.75v-3c0-.41.34-.75.75-.75s.75.34.75.75v3z"
             ></path>
         </svg>
     );
@@ -117,6 +211,23 @@ export function TvShowIcon() {
                 strokeLinejoin="round"
                 strokeWidth="1.5"
                 d="M22 15V9c0-5-2-7-7-7H9C4 2 2 4 2 9v6c0 5 2 7 7 7h6c5 0 7-2 7-7zM2.52 17.11h18.96M2.52 7.11h18.96M6.97 17.11v4.35M12 17.11v4.86M16.97 17.11v4.41M6.97 2.11v4.35M12 2.11v4.86M12 7.03v11M16.97 2.11v4.41"
+            ></path>
+        </svg>
+    );
+}
+
+export function TvShowIconActive() {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
+            <path
+                fill="#fff"
+                d="M11.25 7.86H2v8.33c0 .06 0 .12.01.17h9.24v-8.5zM7.69 6.36h3.56V2H7.72v4.24c0 .04-.02.08-.03.12zM6.22 6.24V2.16C4 2.62 2.55 4.1 2.13 6.36h4.11c-.01-.04-.02-.08-.02-.12zM16.22 2h-3.47v4.36h3.47V2zM17.71 6.36h4.16c-.42-2.28-1.89-3.77-4.15-4.21v4.18c0 .01-.01.02-.01.03zM17.72 21.85c2.19-.43 3.63-1.83 4.1-3.99h-4.1v3.99zM16.22 17.86h-3.47V22h3.47v-4.14zM12.75 16.36h9.24c.01-.05.01-.11.01-.17V7.86h-9.25v8.5zM11.25 17.86H7.72V22h3.53v-4.14zM2.18 17.86c.47 2.14 1.89 3.54 4.04 3.98v-3.98H2.18z"
             ></path>
         </svg>
     );
@@ -137,6 +248,23 @@ export function AboutIcon() {
     );
 }
 
+export function AboutIconActive() {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
+            <path
+                fill="#fff"
+                d="M12 2C6.49 2 2 6.49 2 12s4.49 10 10 10 10-4.49 10-10S17.51 2 12 2zm-.75 6c0-.41.34-.75.75-.75s.75.34.75.75v5c0 .41-.34.75-.75.75s-.75-.34-.75-.75V8zm1.67 8.38c-.05.13-.12.23-.21.33-.1.09-.21.16-.33.21-.12.05-.25.08-.38.08s-.26-.03-.38-.08-.23-.12-.33-.21c-.09-.1-.16-.2-.21-.33A.995.995 0 0111 16c0-.13.03-.26.08-.38s.12-.23.21-.33c.1-.09.21-.16.33-.21a1 1 0 01.76 0c.12.05.23.12.33.21.09.1.16.21.21.33.05.12.08.25.08.38s-.03.26-.08.38z"
+            ></path>
+        </svg>
+    );
+}
+
 export function UserIcon() {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -150,6 +278,24 @@ export function UserIcon() {
         </svg>
     );
 }
+
+export function UserIconActive() {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
+            <path
+                fill="#fff"
+                d="M12 12a5 5 0 100-10 5 5 0 000 10zM12 14.5c-5.01 0-9.09 3.36-9.09 7.5 0 .28.22.5.5.5h17.18c.28 0 .5-.22.5-.5 0-4.14-4.08-7.5-9.09-7.5z"
+            ></path>
+        </svg>
+    );
+}
+
 export function EditIcon() {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
@@ -160,6 +306,23 @@ export function EditIcon() {
                 strokeMiterlimit="10"
                 strokeWidth="1.5"
                 d="M13.26 3.6l-8.21 8.69c-.31.33-.61.98-.67 1.43l-.37 3.24c-.13 1.17.71 1.97 1.87 1.77l3.22-.55c.45-.08 1.08-.41 1.39-.75l8.21-8.69c1.42-1.5 2.06-3.21-.15-5.3-2.2-2.07-3.87-1.34-5.29.16zM11.89 5.05a6.126 6.126 0 005.45 5.15M3 22h18"
+            ></path>
+        </svg>
+    );
+}
+
+export function EditIconActive() {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
+            <path
+                fill="#fff"
+                d="M21 22H3c-.41 0-.75-.34-.75-.75s.34-.75.75-.75h18c.41 0 .75.34.75.75s-.34.75-.75.75zM19.02 3.48c-1.94-1.94-3.84-1.99-5.83 0l-1.21 1.21c-.1.1-.14.26-.1.4a8.129 8.129 0 005.53 5.53.4.4 0 00.41-.1l1.2-1.21c.99-.98 1.47-1.93 1.47-2.89.01-.99-.47-1.95-1.47-2.94zM15.61 11.53c-.29-.14-.57-.28-.84-.44a8.8 8.8 0 01-.64-.42c-.17-.11-.37-.27-.56-.43a1.22 1.22 0 01-.17-.15c-.33-.28-.7-.64-1.03-1.04-.03-.02-.08-.09-.15-.18-.1-.12-.27-.32-.42-.55a5.49 5.49 0 01-.39-.59c-.16-.27-.3-.54-.44-.82a6.881 6.881 0 01-.062-.135c-.147-.334-.582-.431-.84-.173L4.34 12.33c-.13.13-.25.38-.28.55l-.54 3.83c-.1.68.09 1.32.51 1.75.36.35.86.54 1.4.54.12 0 .24-.01.36-.03l3.84-.54c.18-.03.43-.15.55-.28l5.721-5.721c.26-.26.162-.705-.176-.85a33.837 33.837 0 01-.115-.049z"
             ></path>
         </svg>
     );
@@ -188,17 +351,6 @@ export function SignOutIcon() {
 
 export function PlayIcon() {
     return (
-        // <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-        //     <path
-        //         stroke="#fff"
-        //         strokeLinecap="round"
-        //         strokeLinejoin="round"
-        //         strokeMiterlimit="10"
-        //         strokeWidth="1.5"
-        //         d="M4 12V8.44c0-4.42 3.13-6.23 6.96-4.02l3.09 1.78 3.09 1.78c3.83 2.21 3.83 5.83 0 8.04l-3.09 1.78-3.09 1.78C7.13 21.79 4 19.98 4 15.56V12z"
-        //     ></path>
-        //     //{' '}
-        // </svg>
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
             <path
                 fill="#fff"
@@ -367,3 +519,22 @@ export const SvgSpinners3DotsBounce = () => (
         </circle>
     </svg>
 );
+
+function StarIcon({ width = 24, height = 24 }) {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width={width}
+            height={height}
+            fill="none"
+            viewBox="0 0 24 24"
+        >
+            <path
+                fill="#FFC400"
+                d="M13.73 3.51l1.76 3.52c.24.49.88.96 1.42 1.05l3.19.53c2.04.34 2.52 1.82 1.05 3.28l-2.48 2.48c-.42.42-.65 1.23-.52 1.81l.71 3.07c.56 2.43-.73 3.37-2.88 2.1l-2.99-1.77c-.54-.32-1.43-.32-1.98 0l-2.99 1.77c-2.14 1.27-3.44.32-2.88-2.1l.71-3.07c.13-.58-.1-1.39-.52-1.81l-2.48-2.48c-1.46-1.46-.99-2.94 1.05-3.28l3.19-.53c.53-.09 1.17-.56 1.41-1.05l1.76-3.52c.96-1.91 2.52-1.91 3.47 0z"
+            ></path>
+        </svg>
+    );
+}
+
+export default StarIcon;

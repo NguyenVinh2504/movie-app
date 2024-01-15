@@ -81,7 +81,7 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
                                         <ListItemText
                                             primary={
                                                 <Box gap={3} display={'flex'} alignItems={'center'}>
-                                                    {item.icon}
+                                                    {isActive ? item.iconActive : item.icon}
                                                     <Typography textTransform="uppercase">{item.title}</Typography>
                                                 </Box>
                                             }
@@ -100,7 +100,7 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
                                 <ListItemText
                                     primary={
                                         <Box gap={3} display={'flex'} alignItems={'center'}>
-                                            {item.icon}
+                                            {isActive ? item.iconActive : item.icon}
                                             <Typography textTransform="uppercase">{item.title}</Typography>
                                         </Box>
                                     }

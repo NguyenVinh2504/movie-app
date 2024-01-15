@@ -6,8 +6,9 @@ import uiConfigs from '~/config/ui.config';
 import tmdbConfigs from '~/api/configs/tmdb.configs';
 import images from '~/assets/image';
 import Image from '../Image';
-import ButtonAddFavorite from '../FavoriteButton';
+import FavoriteButton from '../FavoriteButton';
 import theme from '~/theme';
+import StarIcon from '../Icon/Icon';
 
 function MediaItems({ item, mediaType, checkedLike, favoriteStore }) {
     const dispatch = useDispatch();
@@ -88,6 +89,7 @@ function MediaItems({ item, mediaType, checkedLike, favoriteStore }) {
                     overflow={'hidden'}
                     sx={{
                         display: 'flex',
+                        alignItems: 'center',
                         'p:not(:first-of-type)': {
                             '::before': {
                                 content: '"•"',
@@ -96,6 +98,9 @@ function MediaItems({ item, mediaType, checkedLike, favoriteStore }) {
                         },
                     }}
                 >
+                    <Box mr={0.5}>
+                        <StarIcon height={20} width={20}/>
+                    </Box>
                     {item.vote_average ? (
                         <Typography
                             variant="body2"
@@ -116,12 +121,7 @@ function MediaItems({ item, mediaType, checkedLike, favoriteStore }) {
                     ) : undefined}
                 </Box>
             </Stack>
-            <ButtonAddFavorite
-                item={item}
-                mediaType={mediaType}
-                checkedLike={checkedLike}
-                favoriteStore={favoriteStore}
-            />
+            <FavoriteButton item={item} mediaType={mediaType} checkedLike={checkedLike} favoriteStore={favoriteStore} />
         </Stack>
     );
 
