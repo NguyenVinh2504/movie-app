@@ -10,21 +10,35 @@ import * as Yup from 'yup';
 
 import { NavLink, useNavigate } from 'react-router-dom';
 
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setUser } from '~/redux/features/userSlice';
 import { toast } from 'react-toastify';
 import ButtonGoogle from '../ButtonGoogle';
 import { setToken } from '~/redux/features/authSlice';
-import { useState } from 'react';
 import { setFavorites } from '~/redux/features/favoritesSlice';
+import { isLoggedIn } from '~/redux/selectors';
+import { useMutation } from '@tanstack/react-query';
+import Auth from '../Auth';
 
-function SingUp({ setIsLoading }) {
-    const [disable, setDisabled] = useState(false);
+function SingUp({ setIsLoading, isLoading }) {
     const location = useNavigate();
 
     const dispatch = useDispatch();
 
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+
+    const isLogged = useSelector(isLoggedIn);
+
+    const fetchApi = async (body) => {
+        const { response, err } = await userApi.signup(body);
+        if (response) return response;
+        if (err) throw err;
+    };
+
+    const { mutate, isPending } = useMutation({
+        mutationKey: ['login'],
+        mutationFn: (body) => fetchApi(body),
+    });
 
     const formik = useFormik({
         initialValues: {
@@ -53,99 +67,100 @@ function SingUp({ setIsLoading }) {
                 .required('Vui lòng nhập lại mật khẩu'),
         }),
         onSubmit: async (values, action) => {
-            setDisabled(true);
-            setIsLoading(true);
-            const { response, err } = await userApi.signup(values);
-            if (response) {
-                setDisabled(false);
-                setIsLoading(false);
-                location(config.routes.home);
-                formik.resetForm();
-                const { accessToken, refreshToken, favorites, ...user } = response;
-                dispatch(setFavorites(favorites));
-                dispatch(setUser(user));
-                dispatch(setToken({ accessToken, refreshToken }));
-                toast.success(`Xin chào, ${response.name}`, {
-                    position: 'top-center',
-                });
-            }
-            if (err) {
-                setDisabled(false);
-                setIsLoading(false);
-                if (err.message === 'ISEXISTS') {
-                    action.setErrors({ email: 'Email này đã được đăng ký' });
-                }
-            }
+            if (isLogged) return;
+            mutate(values, {
+                onSuccess: (data) => {
+                    location(config.routes.home);
+                    formik.resetForm();
+                    const { accessToken, refreshToken, favorites, ...user } = data;
+                    dispatch(setFavorites(favorites));
+                    dispatch(setUser(user));
+                    dispatch(setToken({ accessToken, refreshToken }));
+                    toast.success(`Xin chào, ${data.name}`, {
+                        position: 'top-center',
+                    });
+                },
+                onError: (error) => {
+                    if (error.message === 'ISEXISTS') {
+                        action.setErrors({ email: 'Email này đã được đăng ký' });
+                    }
+                },
+            });
         },
     });
     return (
-        <Box component={'form'} onSubmit={formik.handleSubmit}>
-            <Stack spacing={2} mt={3}>
-                <Input
-                    type="text"
-                    name="name"
-                    placeholder={'Tên đăng nhập'}
-                    value={formik.values.name}
-                    onChange={formik.handleChange}
-                    error={formik.errors.name !== undefined && formik.touched.name}
-                    helperText={formik.touched.name && formik.errors.name}
-                    leftIcon={<UserIcon />}
-                ></Input>
-                <Input
-                    type="text"
-                    name="email"
-                    placeholder={'Email'}
-                    value={formik.values.email}
-                    onChange={formik.handleChange}
-                    error={formik.errors.email !== undefined && formik.touched.email}
-                    helperText={formik.touched.email && formik.errors.email}
-                    leftIcon={<EmailIcon />}
-                ></Input>
-                <Input
-                    type="password"
-                    name="password"
-                    placeholder={'Mật khẩu'}
-                    value={formik.values.password}
-                    onChange={formik.handleChange}
-                    error={formik.errors.password !== undefined && formik.touched.password}
-                    helperText={formik.touched.password && formik.errors.password}
-                    leftIcon={<PasswordIcon />}
-                ></Input>
-                <Input
-                    type="password"
-                    name="confirmPassword"
-                    placeholder={'Nhập lại mật khẩu'}
-                    value={formik.values.confirmPassword}
-                    onChange={formik.handleChange}
-                    error={formik.errors.confirmPassword !== undefined && formik.touched.confirmPassword}
-                    helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
-                    leftIcon={<PasswordIcon />}
-                ></Input>
+        <Auth titleAuth={'Chào mừng bạn đến với Viejoy'} isLoading={isPending || isLoading}>
+            <Box component={'form'} onSubmit={formik.handleSubmit}>
+                <Stack spacing={2} mt={3}>
+                    <Input
+                        type="text"
+                        name="name"
+                        placeholder={'Tên đăng nhập'}
+                        value={formik.values.name}
+                        onChange={formik.handleChange}
+                        error={formik.errors.name !== undefined && formik.touched.name}
+                        helperText={formik.touched.name && formik.errors.name}
+                        leftIcon={<UserIcon />}
+                    ></Input>
+                    <Input
+                        type="text"
+                        name="email"
+                        placeholder={'Email'}
+                        value={formik.values.email}
+                        onChange={formik.handleChange}
+                        error={formik.errors.email !== undefined && formik.touched.email}
+                        helperText={formik.touched.email && formik.errors.email}
+                        leftIcon={<EmailIcon />}
+                    ></Input>
+                    <Input
+                        type="password"
+                        name="password"
+                        placeholder={'Mật khẩu'}
+                        value={formik.values.password}
+                        onChange={formik.handleChange}
+                        error={formik.errors.password !== undefined && formik.touched.password}
+                        helperText={formik.touched.password && formik.errors.password}
+                        leftIcon={<PasswordIcon />}
+                    ></Input>
+                    <Input
+                        type="password"
+                        name="confirmPassword"
+                        placeholder={'Nhập lại mật khẩu'}
+                        value={formik.values.confirmPassword}
+                        onChange={formik.handleChange}
+                        error={formik.errors.confirmPassword !== undefined && formik.touched.confirmPassword}
+                        helperText={formik.touched.confirmPassword && formik.errors.confirmPassword}
+                        leftIcon={<PasswordIcon />}
+                    ></Input>
 
+                    {/* button */}
+                    <Button
+                        type={'submit'}
+                        disabled={isPending}
+                        variant="contained"
+                        sx={{ borderRadius: '100px' }}
+                        size={pointDownSm ? 'small' : 'medium'}
+                    >
+                        Đăng Ký Ngay
+                    </Button>
+                    <Divider
+                        sx={{
+                            '::before, :: after': { borderTop: '1px solid rgba(255, 255, 255, 0.2)' },
+                            fontSize: '16px',
+                        }}
+                    >
+                        Hoặc
+                    </Divider>
+                    <ButtonGoogle setIsLoading={setIsLoading}/>
+                </Stack>
                 {/* button */}
-                <Button
-                    type={'submit'}
-                    disabled={disable}
-                    variant="contained"
-                    sx={{ borderRadius: '100px' }}
-                    size={pointDownSm ? 'small' : 'medium'}
-                >
-                    Đăng Ký Ngay
-                </Button>
-                <Divider
-                    sx={{ '::before, :: after': { borderTop: '1px solid rgba(255, 255, 255, 0.2)' }, fontSize: '16px' }}
-                >
-                    Hoặc
-                </Divider>
-                <ButtonGoogle />
-            </Stack>
-            {/* button */}
-            <Stack direction={'row'} justifyContent={'space-between'} mt={2}>
-                <Typography variant={pointDownSm ? 'subtitle2' : 'subtitle1'}>
-                    <NavLink to={config.routes.login}>Bạn đã có tài khoản? Đăng Nhập</NavLink>
-                </Typography>
-            </Stack>
-        </Box>
+                <Stack direction={'row'} justifyContent={'space-between'} mt={2}>
+                    <Typography variant={pointDownSm ? 'subtitle2' : 'subtitle1'}>
+                        <NavLink to={config.routes.login}>Bạn đã có tài khoản? Đăng Nhập</NavLink>
+                    </Typography>
+                </Stack>
+            </Box>
+        </Auth>
     );
 }
 

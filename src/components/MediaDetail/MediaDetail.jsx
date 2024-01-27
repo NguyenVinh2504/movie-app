@@ -12,37 +12,40 @@ import mediaApi from '~/api/module/media.api';
 import BannerMovieDetail from './BannerMovieDetail';
 import TitleMovieDetail from './TitleMovieDetail';
 import OverviewMovieDetail from './OverviewMovieDetail';
+import { useQuery } from '@tanstack/react-query';
 
 function MovieDetail() {
-    const [dataDetail, setDataDetail] = useState({});
-    const [loading, setLoading] = useState(true);
     const [genres, setGenres] = useState([]);
     const open = useSelector(openSelector);
     const param = useSelector(paramsDetail);
     const dispatch = useDispatch();
     const handleClose = () => {
         dispatch(toggleDetail(false));
-        setDataDetail({});
     };
     const getDataDetail = async () => {
         const { response } = await mediaApi.getDetail({
             mediaType: param?.mediaType,
             mediaId: param?.id,
         });
-        if (response) {
-            setDataDetail({ ...response });
-            setLoading(false);
-            const newGenres = response?.genres?.map((item) => item.name) || [];
+        return response;
+    };
+
+    const { data: dataDetail, isPending: loading } = useQuery({
+        queryKey: ['Media detail', param],
+        queryFn: getDataDetail,
+        enabled: Boolean(param),
+        
+    });
+
+    useEffect(() => {
+        if (dataDetail) {
+            const newGenres = dataDetail?.genres?.map((item) => item.name) || [];
             setGenres(newGenres);
         }
-    };
-    useEffect(() => {
-        if (param) {
-            getDataDetail();
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [param]);
-    // console.log(loading);
+    }, [dataDetail]);
+
+    console.log('data', dataDetail, 'isPending', loading, 'isFetching', genres);
+
     return (
         <Modal
             open={open}
@@ -128,6 +131,7 @@ function MovieDetail() {
                             {param.mediaType === 'tv' && (
                                 <Episodes
                                     seasons={dataDetail?.seasons}
+                                    isLoading={loading}
                                     seriesId={dataDetail?.id}
                                     numberSeasonValue={dataDetail?.seasons && dataDetail?.seasons[0]?.season_number}
                                 />

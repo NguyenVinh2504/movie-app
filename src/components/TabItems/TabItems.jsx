@@ -37,7 +37,7 @@ function TabItems({ contentItems, onCurrCategory }) {
         setValue(newValue);
     };
     return (
-        <Box sx={{ mt: 5 }}>
+        <Box sx={{ mt: 5, mb: 2 }}>
             <Tabs
                 variant="scrollable"
                 // allowScrollButtonsMobile
@@ -45,7 +45,7 @@ function TabItems({ contentItems, onCurrCategory }) {
                 value={value}
                 onChange={(event, newValue) => {
                     handleChange(event, newValue);
-                    onCurrCategory(event, newValue);
+                    onCurrCategory(newValue);
                 }}
                 selectionFollowsFocus={true}
                 scrollButtons="auto"

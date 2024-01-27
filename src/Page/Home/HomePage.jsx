@@ -1,96 +1,86 @@
-import HeroSlice from '~/components/HeroSlice';
-import { Button, Container, Stack } from '@mui/material';
-import { homeTabItems } from '~/config/HoneTabMenuItems/HomeTabMenuItems';
-import TabItems from '~/components/TabItems';
-import Media from '~/components/Media';
+import { useState, useCallback, memo } from 'react';
+import { Container } from '@mui/material';
+import { useInfiniteQuery, keepPreviousData } from '@tanstack/react-query';
 import mediaApi from '~/api/module/media.api';
-import { memo, useCallback, useEffect, useState } from 'react';
+import HeroSlice from '~/components/HeroSlice';
+import TabItems from '~/components/TabItems';
+import { homeTabItems } from '~/config/HomeTabMenuItems/HomeTabMenuItems';
+import MediaGrid from '~/components/Media/MediaGrid';
+
 function Home() {
-    const [medias, setMedias] = useState([]);
-    const [currPage, setCurrPage] = useState(1);
-    const [moreButton, setMoreButton] = useState(false);
     const [currCategory, setCurrCategory] = useState(0);
-    const [isLoading, setIsLoading] = useState(true);
-    useEffect(() => {
-        const getMedias = async () => {
-            if (homeTabItems[currCategory].name === 'Thịnh Hành') {
-                return await mediaApi.getListTrending({
-                    mediaType: 'all',
-                    timeWindow: 'day',
-                    page: currPage,
-                });
-            } else {
-                return await mediaApi.getList({
-                    mediaType: homeTabItems[currCategory].mediaType,
-                    mediaCategory: homeTabItems[currCategory].mediaCategory,
-                    page: currPage,
-                });
-            }
-        };
-        const fetchData = async () => {
-            setMoreButton(false);
-            setIsLoading(true);
-            const { response } = await getMedias();
-            if (response) {
-                setIsLoading(false);
-                if (currPage === response?.total_pages) {
-                    setMoreButton(false);
-                } else {
-                    setMoreButton(true);
-                }
-                if (response.total_pages === currPage) return;
-                else if (response?.results?.length === 0) setIsLoading(true);
-                else if (currPage !== 1) setMedias((m) => [...m, ...response.results]);
-                else setMedias([...response.results]);
-            }
-        };
-        fetchData();
-    }, [currCategory, currPage]);
+    const getMedias = async ({ pageParam, nameCurrCategory, mediaType, mediaCategory }) => {
+        if (nameCurrCategory === 'Thịnh Hành') {
+            return await mediaApi.getListTrending({
+                mediaType: 'all',
+                timeWindow: 'day',
+                page: pageParam,
+            });
+        } else {
+            return await mediaApi.getList({
+                mediaType,
+                mediaCategory,
+                page: pageParam,
+            });
+        }
+    };
+
+    const fetchData = async ({ queryKey, pageParam }) => {
+        const [nameCurrCategory, mediaType, mediaCategory] = queryKey;
+        const { response, err } = await getMedias({ pageParam, nameCurrCategory, mediaType, mediaCategory });
+        if (response) return response;
+        if (err) throw err;
+    };
+
+    const { data, error, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+        useInfiniteQuery({
+            queryKey: [
+                homeTabItems[currCategory].name,
+                homeTabItems[currCategory].mediaType,
+                homeTabItems[currCategory].mediaCategory,
+            ],
+            queryFn: ({ queryKey, pageParam }) => fetchData({ queryKey, pageParam }),
+            getNextPageParam: (lastPage) => {
+                return lastPage?.page === lastPage?.total_pages ? undefined : lastPage?.page + 1;
+            },
+            initialPageParam: 1,
+            placeholderData: keepPreviousData,
+        });
+
+    // console.log('data', data, 'isLoading', isLoading, 'isFetching');
     const handleCurrCategory = useCallback(
-        (event, newValue) => {
+        (newValue) => {
             if (currCategory === newValue) return;
-            setIsLoading(true);
-            setMoreButton(false)
-            setMedias([]);
-            setCurrPage(1);
             setCurrCategory(newValue);
         },
         [currCategory],
     );
-    // useEffect(() => {
-    //     if (medias.length !== 0 && isLoading === false) {
-    //         const handleScroll = () => {
-    //             if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 800) {
-    //                 setCurrPage(currPage + 1);
-    //             }
-    //         };
-    //         window.addEventListener('scroll', handleScroll);
-    //         return () => window.removeEventListener('scroll', handleScroll);
-    //     }
-    // }, [currPage, isLoading, medias]);
-    // useEffect(() => {
-    //     isLoading && window.scrollTo(0, document.body.scrollHeight);
-    // }, [isLoading]);
     const handleLoadingMore = () => {
-        setCurrPage(currPage + 1);
+        fetchNextPage();
     };
+    // console.log('!isPaused', !isPaused, '!isError', !isError);
     return (
         <>
             <HeroSlice />
             <Container maxWidth={'xl'} sx={{ px: '0' }}>
                 <TabItems contentItems={homeTabItems} onCurrCategory={handleCurrCategory} />
-                <Media medias={medias} isLoading={isLoading} mediaType={homeTabItems[currCategory].mediaType} />
-                {moreButton && (
-                    <Stack mt={2} justifyContent={'center'} flexDirection={'row'}>
-                        <Button variant="contained" color="secondary" onClick={handleLoadingMore}>
-                            View More
-                        </Button>
-                    </Stack>
-                )}
+                <MediaGrid
+                    isLoadingButton={!isFetchingNextPage && hasNextPage}
+                    isLoadingSekeleton={isLoading || isFetchingNextPage || error}
+                    mediaType={homeTabItems[currCategory].mediaType}
+                    medias={data}
+                    onLoadingMore={handleLoadingMore}
+                />
+                {/* {(isPaused || error) && (
+            <Box sx={{ height: '500px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <Typography variant="h5" fontWeight={500}>
+                    Không có kết nối mạng
+                </Typography>
+            </Box>
+        )} */}
             </Container>
         </>
     );
 }
 
-// export default Home;
 export default memo(Home);

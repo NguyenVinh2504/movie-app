@@ -1,26 +1,21 @@
+import { Box, Paper, Stack, Typography, useMediaQuery } from '@mui/material';
 import React from 'react';
-import { Box, Typography, Stack, useMediaQuery, Skeleton } from '@mui/material';
-import { memo } from 'react';
-import { useSelector } from 'react-redux';
-import ButtonAddFavorite from '~/components/FavoriteButton';
+import Skeleton from 'react-loading-skeleton';
+import FavoriteButton from '~/components/FavoriteButton';
 import uiConfigs from '~/config/ui.config';
-import { favoritesValue } from '~/redux/selectors';
 
-function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
+function TitleMatchMovie({ dataDetail, genres }) {
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-    const favorites = useSelector(favoritesValue);
-
     const rating = {
         value: dataDetail?.vote_average?.toFixed(1) || dataDetail?.mediaRate?.toFixed(1),
         date: dataDetail?.release_date || dataDetail?.first_air_date,
         genres: genres?.length !== 0 ? genres.join(', ') : undefined,
         runtime: dataDetail?.runtime ? `${dataDetail.runtime} minutes` : undefined,
     };
-console.log('title', genres, genres?.length, 'isLoading', loading);
     return (
-        <Box sx={{ p: 2 }}>
+        <Paper variant="outlined" sx={{ mt: 1, p: 2 }}>
             <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'} spacing={2}>
-                {!loading && Boolean(genres?.length) ? (
+                {!false ? (
                     <>
                         <Typography
                             variant={pointDownSm ? 'h4' : 'h2'}
@@ -29,14 +24,14 @@ console.log('title', genres, genres?.length, 'isLoading', loading);
                         >
                             {dataDetail?.title ?? dataDetail?.name}
                         </Typography>
-                        <Box>
-                            <ButtonAddFavorite
-                                item={dataDetail}
-                                mediaType={mediaType}
-                                favoriteStore={favorites?.find((e) => e.mediaId === dataDetail.id)?._id}
-                                checkedLike={favorites?.some((favorite) => favorite?.mediaId === dataDetail.id)}
-                            />
-                        </Box>
+                        {/* <Box>
+                                    <FavoriteButton
+                                        item={dataDetail}
+                                        mediaType={mediaType}
+                                        favoriteStore={favorites?.find((e) => e.mediaId === dataDetail.id)?._id}
+                                        checkedLike={favorites?.some((favorite) => favorite?.mediaId === dataDetail.id)}
+                                    />
+                                </Box> */}
                     </>
                 ) : (
                     <>
@@ -47,8 +42,8 @@ console.log('title', genres, genres?.length, 'isLoading', loading);
                     </>
                 )}
             </Stack>
-            {(loading || !Boolean(genres?.length)) && <Skeleton variant="rounded" height={'24px'} width={'100%'} sx={{ mt: 1 }} />}
-            {!loading && Boolean(genres?.length) && (
+            {false && <Skeleton variant="rounded" height={'24px'} width={'100%'} sx={{ mt: 1 }} />}
+            {!false && (
                 <>
                     <Box
                         alignItems={'center'}
@@ -113,8 +108,8 @@ console.log('title', genres, genres?.length, 'isLoading', loading);
                     </Box>
                 </>
             )}
-        </Box>
+        </Paper>
     );
 }
 
-export default memo(TitleMovieDetail);
+export default TitleMatchMovie;

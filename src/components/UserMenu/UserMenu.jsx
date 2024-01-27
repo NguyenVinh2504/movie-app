@@ -1,7 +1,7 @@
 import {
     Box,
+    ButtonBase,
     Divider,
-    IconButton,
     ListItem,
     ListItemIcon,
     Menu,
@@ -11,29 +11,18 @@ import {
     // useMediaQuery,
 } from '@mui/material';
 import { memo, useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { userMenu } from '~/config/MenuItemsConfig';
 import { SignOutIcon } from '../Icon';
 import AvatarUser from '../Avatar/Avatar';
 
-//dispatch redux
-import { useDispatch } from 'react-redux';
-import { loginOut } from '~/redux/features/userSlice';
-
 //selector redux
 import { useSelector } from 'react-redux';
-import { refreshToken, userValue } from '~/redux/selectors';
-import userApi from '~/api/module/user.api';
-import { toast } from 'react-toastify';
-import { removeToken } from '~/redux/features/authSlice';
-import { logOut } from '~/utils/logOut';
+import { userValue } from '~/redux/selectors';
+import { useLogout } from '~/utils/useLogout';
 
 function UserMenu() {
     const user = useSelector(userValue);
-    const getRefreshToken = useSelector(refreshToken);
-    const [disable, setDisabled] = useState(false);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
 
@@ -69,17 +58,19 @@ function UserMenu() {
     // if (!breakpoints && open) {
     //     setAnchorEl(null);
     // }
+
+    const { disable, handelLogout } = useLogout();
+
     return (
         <>
-            <IconButton
-                sx={{ p: 0, width: { xs: '30px', sm: '40px' } }}
+            <ButtonBase
                 onClick={handleClick}
                 aria-controls={open ? 'account-menu' : undefined}
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
             >
-                <AvatarUser alt={user?.name} />
-            </IconButton>
+                <AvatarUser alt={user?.name} sx={{ width: { xs: '34px', sm: '40px' } }} />
+            </ButtonBase>
             <Menu
                 id="account-menu"
                 open={open}
@@ -137,16 +128,7 @@ function UserMenu() {
                         },
                     }}
                     onClick={() => {
-                        logOut({
-                            userApi,
-                            getRefreshToken,
-                            dispatch,
-                            loginOut,
-                            removeToken,
-                            toast,
-                            navigate,
-                            setDisabled,
-                        });
+                        handelLogout();
                         // test();
                     }}
                 >

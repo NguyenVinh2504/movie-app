@@ -5,7 +5,6 @@
 // import config from '~/config';
 import { useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import Auth from '~/components/Auth';
 import SingIn from '~/components/SingIn';
 import SingUp from '~/components/SingUp';
 import config from '~/config';
@@ -34,12 +33,8 @@ function AuthPage() {
         //     }}
         // >
         <>
-            {pathname === `${config.routes.login}` && (
-                <Auth titleAuth={'Đăng nhập vào tài khoản của bạn'} isLoading={isLoading}>{<SingIn setIsLoading={setIsLoading} />}</Auth>
-            )}
-            {pathname === `${config.routes.signup}` && (
-                <Auth titleAuth={'Chào mừng bạn đến với Viejoy'} isLoading={isLoading}>{<SingUp setIsLoading={setIsLoading} />}</Auth>
-            )}
+            {pathname === `${config.routes.login}` && <SingIn setIsLoading={setIsLoading} isLoading={isLoading} />}
+            {pathname === `${config.routes.signup}` && <SingUp setIsLoading={setIsLoading} isLoading={isLoading} />}
         </>
         // </Box>
     );

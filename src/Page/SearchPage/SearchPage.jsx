@@ -1,26 +1,22 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Box, Button, Container, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
-import { usePrevious } from '~/Hooks';
-import Search from './Search';
-import Media from '~/components/Media';
+import { Box, Container, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
+import { debounce } from 'lodash';
+import { useInfiniteQuery, keepPreviousData } from '@tanstack/react-query';
 import mediaApi from '~/api/module/media.api';
+import Search from './Search';
 import TabsSearchTypeMobile from './TabsSearchTypeMobile';
 import TabsSearch from './TabsSearch';
 import menuItemsSearch from '~/config/MenuItemsSearch';
-import { debounce } from 'lodash';
 import images from '~/assets/image';
 import uiConfigs from '~/config/ui.config';
+import MediaGrid from '~/components/Media/MediaGrid';
+
 
 function SearchPage() {
     const isLgDown = useMediaQuery((theme) => theme.breakpoints.down('lg'));
     const isSmDown = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-    const [dataSearch, setDataSearch] = useState([]);
     const [valueInput, setValueInput] = useState(null);
-    const [currPage, setCurrPage] = useState(1);
-    const [isLoading, setIsLoading] = useState(false);
-    const [moreButton, setMoreButton] = useState(false);
-    const [noResult, setNoResult] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState(0);
 
     const [searchParams] = useSearchParams();
@@ -28,75 +24,48 @@ function SearchPage() {
 
     const setValue = useRef(
         debounce((query) => {
-            // console.log('value', query);
             setValueInput(query);
         }, 1000),
     );
 
     useEffect(() => {
-        // console.log('query', query);
         setValue.current(query);
     }, [query, setValue]);
 
-    const prevQuery = usePrevious(valueInput);
-    // console.log('valueInput', valueInput, 'prevQuery', prevQuery);
-    useEffect(() => {
-        // console.log(
-        //     'currPage',
-        //     currPage,
-        //     'valueInput',
-        //     valueInput,
-        //     'selectedIndex',
-        //     selectedIndex,
-        //     'prevQuery',
-        //     prevQuery,
-        // );
-        const fetchData = async () => {
-            setMoreButton(false);
-            setIsLoading(true);
-            setNoResult(false);
-            const { response } = await mediaApi.search({
-                mediaType: menuItemsSearch[selectedIndex].type,
-                query: valueInput,
-                page: currPage,
-            });
+    const fetchData = async ({ queryKey, pageParam }) => {
+        const [mediaType, valueInput] = queryKey;
+        const { response, err } = await mediaApi.search({
+            mediaType,
+            query: valueInput,
+            page: pageParam,
+        });
 
-            if (response) {
-                setIsLoading(false);
-                setNoResult(response?.total_results === 0);
-                setMoreButton(currPage < response.total_pages);
-                setDataSearch((prevData) =>
-                    currPage !== 1 ? [...prevData, ...response.results] : [...response.results],
-                );
-            }
-        };
-
-        if (prevQuery !== valueInput) {
-            // console.log('co');
-            setCurrPage(1);
-            setNoResult(false);
-            setMoreButton(false);
-            setDataSearch([]);
-            return;
-        }
-        if (valueInput !== null) fetchData();
-    }, [currPage, valueInput, selectedIndex, prevQuery]);
+        if (response) return response;
+        if (err) throw err;
+    };
 
     const handleLoadMore = () => {
-        setCurrPage((prevPage) => prevPage + 1);
+        fetchNextPage();
     };
 
     const handleListItemClick = useCallback(
         (index) => {
             if (selectedIndex === index) return;
-            setDataSearch([]);
-            setCurrPage(1);
-            setNoResult(false);
-            setMoreButton(false);
             setSelectedIndex(index);
         },
         [selectedIndex],
     );
+
+    const { data, isLoading, isFetchingNextPage, isError, fetchNextPage, hasNextPage } = useInfiniteQuery({
+        queryKey: [menuItemsSearch[selectedIndex].type, valueInput],
+        queryFn: ({ queryKey, pageParam }) => fetchData({ queryKey, pageParam }),
+        getNextPageParam: (lastPage) => {
+            return lastPage.page === lastPage.total_pages ? undefined : lastPage.page + 1;
+        },
+        enabled: valueInput !== null,
+        initialPageParam: 1,
+        placeholderData: keepPreviousData,
+    });
 
     return (
         <Container maxWidth="xl">
@@ -131,37 +100,39 @@ function SearchPage() {
                     lg={isSmDown ? 12 : 9.5}
                     xl={isSmDown ? 12 : 10}
                 >
-                    {query && (
-                        <Typography variant={isLgDown ? 'h5' : 'h4'} fontWeight={500} mb={2} display="block">
-                            Kết quả tìm kiếm: {query}
-                        </Typography>
-                    )}
-
-                    {!noResult && (
-                        <Media
-                            medias={dataSearch}
-                            isLoading={isLoading}
-                            mediaType={menuItemsSearch[selectedIndex].type}
-                        />
-                    )}
-                    {noResult && (
-                        <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column' }}>
-                            <Box sx={{ width: { xs: '80%', sm: '50%' } }}>
-                                <Box sx={{ pt: 'calc((150/225)*100%)', position: 'relative' }}>
-                                    <Box sx={{ ...uiConfigs.style.positionFullSize }}>
-                                        <img src={images.noResult} alt="noResult" />
+                    <Stack>
+                        {query && (
+                            <Typography variant={isLgDown ? 'h5' : 'h4'} fontWeight={500} mb={2} display="block">
+                                Kết quả tìm kiếm: {query}
+                            </Typography>
+                        )}
+                        {data?.pages[0]?.total_results !== 0 ? (
+                            <MediaGrid
+                                isLoadingButton={!isFetchingNextPage && hasNextPage && !isLoading}
+                                isLoadingSekeleton={isLoading || isFetchingNextPage || isError}
+                                mediaType={menuItemsSearch[selectedIndex].type}
+                                medias={data}
+                                onLoadingMore={handleLoadMore}
+                            />
+                        ) : (
+                            <Box
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    width: '100%',
+                                    flexDirection: 'column',
+                                }}
+                            >
+                                <Box sx={{ width: { xs: '80%', sm: '50%' } }}>
+                                    <Box sx={{ pt: 'calc((150/225)*100%)', position: 'relative' }}>
+                                        <Box sx={{ ...uiConfigs.style.positionFullSize }}>
+                                            <img src={images.noResult} alt="noResult" />
+                                        </Box>
                                     </Box>
                                 </Box>
                             </Box>
-                        </Box>
-                    )}
-                    {moreButton && (
-                        <Stack mt={2} justifyContent="center" flexDirection="row">
-                            <Button variant="contained" color="secondary" onClick={handleLoadMore}>
-                                View More
-                            </Button>
-                        </Stack>
-                    )}
+                        )}
+                    </Stack>
                 </Grid>
             </Grid>
         </Container>

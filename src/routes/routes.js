@@ -98,7 +98,7 @@ export const routesMainLayout = [
     //     ],
     // },
     {
-        path: config.routes.watchMovie,
+        path: config.routes.watchMovieId,
         element: <WatchMovie />,
     },
     {

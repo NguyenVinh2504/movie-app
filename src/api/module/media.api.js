@@ -23,7 +23,6 @@ const mediaApi = {
     getListTrending: async ({ mediaType, timeWindow, page }) => {
         try {
             const response = await publicClient.get(mediaEndpoints.listTrending({ mediaType, timeWindow, page }));
-
             return { response };
         } catch (err) {
             return { err };

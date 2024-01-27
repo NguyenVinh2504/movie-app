@@ -11,6 +11,7 @@ import {
     Button,
     Divider,
     styled,
+    Skeleton,
 } from '@mui/material';
 import { NavLink } from 'react-router-dom';
 
@@ -18,28 +19,21 @@ import { menuItems, userMenu } from '~/config/MenuItemsConfig';
 import Logo from '../Logo';
 import { MenuIcon } from '../Icon';
 import AvatarUser from '../Avatar/Avatar';
-import { useDispatch, useSelector } from 'react-redux';
-import { refreshToken, userValue } from '~/redux/selectors';
-import { loginOut } from '~/redux/features/userSlice';
+import { useSelector } from 'react-redux';
+import { userValue } from '~/redux/selectors';
 import config from '~/config';
-import userApi from '~/api/module/user.api';
-import { toast } from 'react-toastify';
-import { memo, useState } from 'react';
-import { removeToken } from '~/redux/features/authSlice';
-import { logOut } from '~/utils/logOut';
+import { memo } from 'react';
+import { useLogout } from '~/utils/useLogout';
 const ListButtonCustoms = styled(ListItemButton)(() => ({
     borderRadius: 8,
 }));
 
-function SideBar({ open, onClick, onKeyDown, onClose }) {
+function SideBar({ open, onClick, onKeyDown, onClose, isLoading }) {
     const props = {
         onClick,
         onKeyDown,
     };
     const user = useSelector(userValue);
-    const getRefreshToken = useSelector(refreshToken);
-    const dispatch = useDispatch();
-    const [disable, setDisabled] = useState(false);
 
     // const handleLogout = async () => {
     //     const { response } = await userApi.logOut();
@@ -49,6 +43,8 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
     //         toast.success('Đăng xuất thành công');
     //     }
     // };
+    const { disable, handelLogout } = useLogout();
+
     const drawer = (
         <Box sx={{ width: '100%' }} role="presentation" {...props} px={2}>
             <Box sx={{ padding: '20px 16px 40px 16px', position: 'relative' }}>
@@ -61,35 +57,51 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
             </Box>
 
             <List>
-                {user && (
+                {!isLoading ? (
+                    <>
+                        {user && (
+                            <Box display={{ sm: 'none' }}>
+                                <ListItem>
+                                    <Stack direction={'row'} alignItems={'center'} spacing={2}>
+                                        <Box sx={{ width: '50px' }}>
+                                            <AvatarUser alt={user?.name} />
+                                        </Box>
+                                        <Typography component={'span'} fontWeight={500}>
+                                            {user?.name}
+                                        </Typography>
+                                    </Stack>
+                                </ListItem>
+                                <Divider sx={{ borderColor: 'white', marginY: '20px', opacity: 0.3 }} />
+                                {userMenu.map((item, index) => (
+                                    <NavLink to={item.path} key={index} end>
+                                        {({ isActive }) => (
+                                            <ListButtonCustoms selected={isActive}>
+                                                <ListItemText
+                                                    primary={
+                                                        <Box gap={3} display={'flex'} alignItems={'center'}>
+                                                            {isActive ? item.iconActive : item.icon}
+                                                            <Typography textTransform="uppercase">
+                                                                {item.title}
+                                                            </Typography>
+                                                        </Box>
+                                                    }
+                                                />
+                                            </ListButtonCustoms>
+                                        )}
+                                    </NavLink>
+                                ))}
+                                <Divider sx={{ borderColor: 'white', marginY: '20px', opacity: 0.3 }} />
+                            </Box>
+                        )}
+                    </>
+                ) : (
                     <Box display={{ sm: 'none' }}>
                         <ListItem>
                             <Stack direction={'row'} alignItems={'center'} spacing={2}>
-                                <Box sx={{ width: '50px' }}>
-                                    <AvatarUser alt={user?.name} />
-                                </Box>
-                                <Typography component={'span'} fontWeight={500}>
-                                    {user?.name}
-                                </Typography>
+                                <Skeleton variant="circular" height={'50px'} width={'50px'} />
+                                <Skeleton variant="rounded" height={'25px'} width={'150px'} />
                             </Stack>
                         </ListItem>
-                        <Divider sx={{ borderColor: 'white', marginY: '20px', opacity: 0.3 }} />
-                        {userMenu.map((item, index) => (
-                            <NavLink to={item.path} key={index} end>
-                                {({ isActive }) => (
-                                    <ListButtonCustoms selected={isActive}>
-                                        <ListItemText
-                                            primary={
-                                                <Box gap={3} display={'flex'} alignItems={'center'}>
-                                                    {isActive ? item.iconActive : item.icon}
-                                                    <Typography textTransform="uppercase">{item.title}</Typography>
-                                                </Box>
-                                            }
-                                        />
-                                    </ListButtonCustoms>
-                                )}
-                            </NavLink>
-                        ))}
                         <Divider sx={{ borderColor: 'white', marginY: '20px', opacity: 0.3 }} />
                     </Box>
                 )}
@@ -134,17 +146,7 @@ function SideBar({ open, onClick, onKeyDown, onClose }) {
                             disableElevation
                             disableRipple
                             disabled={disable}
-                            onClick={() =>
-                                logOut({
-                                    userApi,
-                                    getRefreshToken,
-                                    dispatch,
-                                    loginOut,
-                                    removeToken,
-                                    toast,
-                                    setDisabled,
-                                })
-                            }
+                            onClick={() => handelLogout()}
                         >
                             Đăng Xuất
                         </Button>

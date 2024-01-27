@@ -1,19 +1,19 @@
 import { memo, useCallback, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import Search from '../Search';
-import { Box, Button, IconButton, Stack, AppBar, Toolbar, useMediaQuery } from '@mui/material';
+import { Box, Button, IconButton, Stack, AppBar, Toolbar, useMediaQuery, Skeleton } from '@mui/material';
 import { MenuIcon, SearchIcon, UserIcon } from '~/components/Icon';
 import { menuItems } from '~/config/MenuItemsConfig';
 import Logo from '~/components/Logo';
 import SideBar from '~/components/SideBar';
 import UserMenu from '~/components/UserMenu';
 import { useSelector } from 'react-redux';
-import { userValue } from '~/redux/selectors';
+import { isLoggedIn } from '~/redux/selectors';
 import config from '~/config';
 import Notification from './Notification/Notification';
 
-function Header() {
-    const user = useSelector(userValue);
+function Header({ isLoading }) {
+    const isLogged = useSelector(isLoggedIn);
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const toggleSidebar = useCallback(() => setSidebarOpen(!sidebarOpen), [sidebarOpen]);
@@ -27,7 +27,7 @@ function Header() {
     return (
         <>
             {/* {sidebarOpen && ( */}
-            <SideBar open={sidebarOpen} onClick={toggleSidebar} onKeyDown={toggleSidebar} onClose={toggleSidebar} />
+            <SideBar open={sidebarOpen} onClick={toggleSidebar} onKeyDown={toggleSidebar} onClose={toggleSidebar} isLoading={isLoading} />
             {/* )} */}
             <AppBar position="sticky">
                 <Toolbar
@@ -112,28 +112,38 @@ function Header() {
                         >
                             <Notification />
                         </Box>
-                        {!user && !ponitDownSm && (
-                            <NavLink to={config.routes.login}>
-                                <Button variant="contained" disableElevation disableRipple>
-                                    Đăng Nhập
-                                </Button>
-                            </NavLink>
-                        )}
-                        {!user && ponitDownSm && (
-                            <NavLink to={config.routes.login}>
-                                <IconButton
-                                    variant="contained"
-                                    size="small"
-                                    sx={{ border: '1px solid hsla(0,0%,100%,.2)' }}
-                                >
-                                    <UserIcon />
-                                </IconButton>
-                            </NavLink>
-                        )}
-                        {user && (
-                            <Box>
-                                <UserMenu />
-                            </Box>
+                        {!isLoading ? (
+                            <>
+                                {!isLogged && !ponitDownSm && (
+                                    <NavLink to={config.routes.login}>
+                                        <Button variant="contained" disableElevation disableRipple>
+                                            Đăng Nhập
+                                        </Button>
+                                    </NavLink>
+                                )}
+                                {!isLogged && ponitDownSm && (
+                                    <NavLink to={config.routes.login}>
+                                        <IconButton
+                                            sx={{
+                                                border: '1px solid hsla(0,0%,100%,.2)',
+                                            }}
+                                            size='small'
+                                        >
+                                            <UserIcon />
+                                        </IconButton>
+                                    </NavLink>
+                                )}
+                                {isLogged && (
+                                    <Box>
+                                        <UserMenu />
+                                    </Box>
+                                )}
+                            </>
+                        ) : (
+                            <Skeleton
+                                sx={{ width: { xs: '30px', sm: '40px' }, height: { xs: '30px', sm: '40px' } }}
+                                variant="circular"
+                            />
                         )}
                     </Stack>
                     {/* user menu */}

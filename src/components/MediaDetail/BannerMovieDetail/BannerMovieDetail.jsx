@@ -16,7 +16,7 @@ function BannerMovieDetail({ loading, dataDetail, mediaType }) {
             ) : (
                 <>
                     {mediaType === 'movie' && (
-                        <Link to={config.routes.watchMovie} target="_blank">
+                        <Link to={`${config.routes.watchMovie}/${dataDetail?.id}`} target="_blank">
                             <IconButton
                                 color="secondNeutral"
                                 sx={{

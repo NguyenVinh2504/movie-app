@@ -5,70 +5,66 @@ import mediaApi from '~/api/module/media.api';
 import { ArrowDownIcon, ArrowUpIcon } from '~/components/Icon';
 import EpisodesList from './EpisodesList';
 import { isEmpty } from 'lodash';
+import { useQuery, keepPreviousData } from '@tanstack/react-query';
 
-function Episodes({ seasons, seriesId, numberSeasonValue }) {
+function Episodes({ seasons, seriesId, numberSeasonValue, isLoading }) {
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const [numberSeason, setNumberSeason] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
-    const [seasonDetailValue, setSeasonDetailValue] = useState({});
     const [visible, setVisible] = useState(4);
     const [moreButton, setMoreButton] = useState(false);
 
     const handleSetSeasonNumber = useCallback((number) => {
         setNumberSeason(number);
-        setSeasonDetailValue({});
         setVisible(4);
         setMoreButton(false);
-        setIsLoading(true);
     }, []);
-    useEffect(() => {
-        if (seasons) {
-            setIsLoading(false);
-        }
-    }, [seasons]);
-    useEffect(() => {
-        // console.log(isLoading);
-        const getDataDetailSeason = async () => {
-            setIsLoading(true);
-            const { response, err } = await mediaApi.getDetailSeason({
-                series_id: seriesId,
-                season_number: numberSeason ?? numberSeasonValue,
-            });
-            if (response) {
-                // console.log('set tap');
-                setSeasonDetailValue({ ...response });
-                setIsLoading(false);
-            }
-            if (err) {
-                // console.log('set tap');
-                setIsLoading(false);
-            }
-        };
-        if (numberSeasonValue !== undefined) getDataDetailSeason();
-    }, [numberSeason, numberSeasonValue, seriesId]);
 
+    const getDataDetailSeason = async () => {
+        const { response, err } = await mediaApi.getDetailSeason({
+            series_id: seriesId,
+            season_number: numberSeason ?? numberSeasonValue,
+        });
+        if (response) {
+            return response;
+        }
+        if (err) throw err;
+    };
+
+    const { data: seasonDetailValue, isFetching, isPlaceholderData } = useQuery({
+        queryKey: ['episodes', numberSeason ?? numberSeasonValue, seriesId],
+        queryFn: getDataDetailSeason,
+        enabled: !isEmpty(seasons),
+        placeholderData: keepPreviousData
+    });
+
+    console.log('isPlaceholderData',isPlaceholderData, 'isFetching',isFetching, 'data', seasonDetailValue);
     const handleShowMoreItems = () => {
         if (visible < seasonDetailValue?.episodes?.length) {
             setVisible(seasonDetailValue?.episodes?.length < 50 ? seasonDetailValue?.episodes?.length : visible + 10);
         }
     };
+
     const handleHideMoreItems = () => {
         setVisible(4);
         setMoreButton(false);
     };
+    
     useEffect(() => {
         if (visible >= seasonDetailValue?.episodes?.length) {
             setMoreButton(true);
         }
     }, [seasonDetailValue?.episodes?.length, visible]);
+
     return (
         <Paper variant="outlined" sx={{ mt: 1, p: 2 }}>
             <Typography variant={pointDownSm ? 'h6' : 'h5'} mb={1} fontWeight={'500'}>
                 Tập phim
             </Typography>
-            {!isLoading && isEmpty(seasonDetailValue) && <Typography variant={'body1'}>Không có nội dung</Typography>}
+            {!isLoading && !isFetching && isEmpty(seasonDetailValue) && (
+                <Typography variant={'body1'}>Không có nội dung</Typography>
+            )}
             {!isEmpty(seasons) && <ButtonSelector seasons={seasons} onSeasonNuber={handleSetSeasonNumber} />}
-            {isLoading &&
+            {(isLoading || isFetching) &&
                 Array(4)
                     .fill(0)
                     .map((item, index) => (
@@ -78,7 +74,7 @@ function Episodes({ seasons, seriesId, numberSeasonValue }) {
                             sx={{ my: 2, height: { xs: '110px', sm: '160px' } }}
                         />
                     ))}
-            {!isLoading && !isEmpty(seasonDetailValue) && (
+            {!isLoading && !isFetching && !isEmpty(seasonDetailValue) && (
                 <EpisodesList dataSeason={seasonDetailValue} visible={visible} />
             )}
             {/* them tap phim */}

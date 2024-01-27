@@ -1,7 +1,7 @@
 import { Google } from '@mui/icons-material';
 import { Button, useMediaQuery } from '@mui/material';
 import { GoogleAuthProvider, signInWithPopup, getAuth } from 'firebase/auth';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import userApi from '~/api/module/user.api';
@@ -10,6 +10,7 @@ import { app } from '~/firebase';
 import { setToken } from '~/redux/features/authSlice';
 import { setFavorites } from '~/redux/features/favoritesSlice';
 import { setUser } from '~/redux/features/userSlice';
+import { isLoggedIn } from '~/redux/selectors';
 
 function ButtonGoogle({ setIsLoading }) {
     const location = useNavigate();
@@ -17,6 +18,9 @@ function ButtonGoogle({ setIsLoading }) {
     const dispatch = useDispatch();
 
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+
+    const isLogged = useSelector(isLoggedIn);
+
     const signInGoogle = async () => {
         try {
             const provider = new GoogleAuthProvider();
@@ -28,7 +32,8 @@ function ButtonGoogle({ setIsLoading }) {
         }
     };
     const handleGoogleClick = async () => {
-        setIsLoading(true);
+            if (isLogged) return
+            setIsLoading(true);
         const { result, error } = await signInGoogle();
         if (result) {
             const { displayName, email, uid, photoURL } = result.user;

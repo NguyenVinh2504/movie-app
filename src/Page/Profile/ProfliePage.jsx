@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 import { userValue } from '~/redux/selectors';
 import config from '~/config';
 import { useEffect } from 'react';
+import Wrapper from '~/components/Wrapper';
 
 function Profile() {
     const user = useSelector(userValue);
@@ -17,14 +18,7 @@ function Profile() {
         }
     }, [user, location]);
     return (
-        <Box
-            sx={{
-                width: { md: '850px', lg: '1100px', xl: '100%' },
-                maxWidth: '1400px',
-                m: 'auto',
-                // bgcolor: (theme) => theme.palette.secondary.main,
-            }}
-        >
+        <Wrapper>
             {/* head */}
             <HeaderProfile valueTabItems={profileItems} />
             {/* head */}
@@ -33,7 +27,7 @@ function Profile() {
                 <Outlet />
             </Box>
             {/* content */}
-        </Box>
+        </Wrapper>
     );
 }
 

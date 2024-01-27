@@ -17,7 +17,10 @@ function MediaItemSekeleton({ cardNumber }) {
                     }}
                 >
                     <Box sx={{ pt: '150%', position: 'relative' }}>
-                        <Skeleton variant="rectangular" style={{ height: '100%', position: 'absolute', top: 0, left: 0, width: '100%' }} />
+                        <Skeleton
+                            variant="rectangular"
+                            style={{ height: '100%', position: 'absolute', top: 0, left: 0, width: '100%' }}
+                        />
                     </Box>
                     <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'} p={'15px'}>
                         <Box flex={1} mr={1}>

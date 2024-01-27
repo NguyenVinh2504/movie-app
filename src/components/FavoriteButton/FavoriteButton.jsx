@@ -50,10 +50,10 @@ const removeItemFromFavorite = async (confirm, favoriteStore, setLiked, setAnima
         description: 'Phim sẽ được xóa khỏi mục yêu thích.',
     })
         .then(async () => {
-            setDisabled(false);
             setLiked(false);
             setAnimation(true);
             const { response, err } = await favoriteApi.removeFavorite(favoriteStore);
+            setDisabled(false);
 
             if (response) {
                 const { favorites } = response;

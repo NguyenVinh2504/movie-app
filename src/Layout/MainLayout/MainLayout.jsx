@@ -3,7 +3,7 @@ import Header from '../components/Header';
 import { Container } from '@mui/material';
 import Footer from '../components/Footer';
 import MediaDetail from '~/components/MediaDetail';
-import GlobalLoading from '~/components/GlobalLoading';
+// import GlobalLoading from '~/components/GlobalLoading';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 // import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
@@ -14,36 +14,69 @@ import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
 import { removeToken } from '~/redux/features/authSlice';
 import { removeFavorites, setFavorites } from '~/redux/features/favoritesSlice';
 // import Search from '../components/Search';
+import { useQuery, keepPreviousData } from '@tanstack/react-query';
 
 function MainLayout() {
     const dispatch = useDispatch();
     const open = useSelector(openSelector);
     // const token = useSelector(accessToken);
-    useEffect(() => {
-        const authUser = async () => {
-            const { response, err } = await userApi.getInfo();
-            if (response) {
-                const { favorites, ...user } = response;
-                dispatch(updateUser(user));
-                dispatch(setFavorites(favorites));
-                dispatch(toggleGlobalLoading(false));
-            }
-            if (err) {
-                dispatch(loginOut());
-                dispatch(removeToken());
-                dispatch(removeFavorites());
-                dispatch(toggleGlobalLoading(false));
-            }
-        };
-        // if (token) {
-        authUser();
-        // }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    // useEffect(() => {
+    //     const authUser = async () => {
+    //         const { response, err } = await userApi.getInfo();
+    //         if (response) {
+    //             const { favorites, ...user } = response;
+    //             dispatch(updateUser(user));
+    //             dispatch(setFavorites(favorites));
+    //             dispatch(toggleGlobalLoading(false));
+    //         }
+    //         if (err) {
+    //             dispatch(loginOut());
+    //             dispatch(removeToken());
+    //             dispatch(removeFavorites());
+    //             dispatch(toggleGlobalLoading(false));
+    //         }
+    //     };
+    //     // if (token) {
+    //     authUser();
+    //     // }
+    //     // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, []);
 
+    const fetchApi = async () => {
+        const { response, err } = await userApi.getInfo();
+        if (response) return response;
+        if (err) throw err;
+    };
+    const { data, isLoading, error } = useQuery({
+        queryKey: ['user info'],
+        queryFn: fetchApi,
+        placeholderData: keepPreviousData,
+        refetchOnMount: false,
+        refetchOnWindowFocus: false,
+        retryOnMount: false,
+        refetchOnReconnect: false,
+        retry: 0
+    });
+    console.log('data user 1', data, 'isLoading', isLoading);
+    useEffect(() => {
+        if (data) {
+            console.log('data user', data);
+            const { favorites, ...user } = data;
+            dispatch(updateUser(user));
+            dispatch(setFavorites(favorites));
+            dispatch(toggleGlobalLoading(false));
+        }
+        if (error) {
+            console.log('error user', error);
+            dispatch(loginOut());
+            dispatch(removeToken());
+            dispatch(removeFavorites());
+            dispatch(toggleGlobalLoading(false));
+        }
+    }, [data, dispatch, error]);
     return (
         <>
-            <GlobalLoading />
+            {/* <GlobalLoading /> */}
             <Container
                 disableGutters
                 maxWidth="auto"
@@ -52,7 +85,7 @@ function MainLayout() {
                 }}
             >
                 {open && <MediaDetail />}
-                <Header />
+                <Header isLoading={isLoading} />
                 {/* <Box sx={{ position: 'fixed', left: '0', right: '0', top: '64px', display: { md: 'none' } }} px={3}>
                         <Search />
                     </Box> */}

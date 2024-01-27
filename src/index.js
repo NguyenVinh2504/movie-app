@@ -11,39 +11,55 @@ import { PersistGate } from 'redux-persist/integration/react';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ConfirmProvider } from 'material-ui-confirm';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            gcTime: 1000 * 60 * 6, // 6p
+            staleTime: 1000 * 60 * 5, // 5p
+            retry: 1
+        },
+    },
+})
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     // <React.StrictMode>
     <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
-            <ThemeProvider theme={theme}>
-                <ConfirmProvider
-                    defaultOptions={{
-                        allowClose: false,
-                        confirmationButtonProps: { color: 'secondary', variant: 'contained' },
-                        cancellationButtonProps: { color: 'secondary', variant: 'contained' },
-                        confirmationText: 'Xác nhận',
-                        cancellationText: 'Hủy',
-                    }}
-                >
-                    <CssBaseline>
-                        <App />
-                        <ToastContainer
-                            position="bottom-left"
-                            autoClose={3000}
-                            hideProgressBar={true}
-                            newestOnTop={false}
-                            closeOnClick
-                            rtl={false}
-                            pauseOnFocusLoss={false}
-                            draggable
-                            style={{ fontSize: '16px' }}
-                            pauseOnHover
-                            theme="dark"
-                        />
-                    </CssBaseline>
-                </ConfirmProvider>
-            </ThemeProvider>
+            <QueryClientProvider client={queryClient} >
+                <ThemeProvider theme={theme}>
+                    <ConfirmProvider
+                        defaultOptions={{
+                            allowClose: false,
+                            confirmationButtonProps: { color: 'secondary', variant: 'contained' },
+                            cancellationButtonProps: { color: 'secondary', variant: 'contained' },
+                            confirmationText: 'Xác nhận',
+                            cancellationText: 'Hủy',
+                        }}
+                    >
+                        <CssBaseline>
+                            <App />
+                            <ReactQueryDevtools initialIsOpen={false} position='bottom' />
+                            <ToastContainer
+                                position="bottom-left"
+                                autoClose={3000}
+                                hideProgressBar={true}
+                                newestOnTop={false}
+                                closeOnClick
+                                rtl={false}
+                                pauseOnFocusLoss={false}
+                                draggable
+                                style={{ fontSize: '16px' }}
+                                pauseOnHover
+                                theme="dark"
+                            />
+                        </CssBaseline>
+                    </ConfirmProvider>
+                </ThemeProvider>
+            </QueryClientProvider>
         </PersistGate>
     </Provider>,
     /* </React.StrictMode>, */

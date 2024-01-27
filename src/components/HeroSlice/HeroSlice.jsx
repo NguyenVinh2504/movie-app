@@ -1,30 +1,30 @@
 import { useDispatch } from 'react-redux';
 import { getIdDetail, toggleDetail } from '~/redux/features/mediaDetailSlice';
-import { memo, useEffect, useState } from 'react';
+import { memo } from 'react';
 import mediaApi from '~/api/module/media.api';
 import { useParams } from 'react-router-dom';
 import HeroSliceList from './HeroSliceList';
+import { useQuery, keepPreviousData } from '@tanstack/react-query';
+
 function HeroSlice() {
-    const [isLoading, setIsLoading] = useState(true);
-    const [medias, setMedias] = useState([]);
     const { mediaType } = useParams();
 
-    useEffect(() => {
-        setIsLoading(true);
-        setMedias([]);
-        const getDataSearch = async () => {
-            const { response } = await mediaApi.getListTrending({
-                mediaType: mediaType ?? 'all',
-                timeWindow: 'day',
-                page: 1,
-            });
-            if (response) {
-                setIsLoading(false);
-                setMedias([...response.results]);
-            }
-        };
-        getDataSearch();
-    }, [mediaType]);
+    const getDataSearch = async ({ queryKey }) => {
+        const mediaType = queryKey[1];
+        const { response, err } = await mediaApi.getListTrending({
+            mediaType: mediaType,
+            timeWindow: 'day',
+            page: 1,
+        });
+        if (response) return response
+        if (err) throw err
+    };
+    const { data: medias, isLoading, isError } = useQuery({
+        queryKey: ['Hero slice', mediaType ?? 'all'],
+        queryFn: getDataSearch,
+        placeholderData: keepPreviousData
+    });
+    // console.log('data', medias,'isFetching', isPlaceholderData);
 
     const dispatch = useDispatch();
 
@@ -37,7 +37,7 @@ function HeroSlice() {
             }),
         );
     };
-    return <HeroSliceList onOpen={handleOpen} medias={medias} isLoading={isLoading} />;
+    return <HeroSliceList onOpen={handleOpen} medias={medias?.results} isLoading={isLoading || isError } />;
 }
 
 export default memo(HeroSlice);

@@ -1,94 +1,73 @@
-import HeroSlice from '~/components/HeroSlice';
-import { Button, Container, Stack } from '@mui/material';
-import { useCallback, useEffect, useState } from 'react';
-import TabItems from '~/components/TabItems';
-import Media from '~/components/Media';
-import mediaApi from '~/api/module/media.api';
+import { useCallback, useState } from 'react';
+import { Container } from '@mui/material';
 import { useParams } from 'react-router-dom';
+import { useInfiniteQuery, keepPreviousData } from '@tanstack/react-query';
+import mediaApi from '~/api/module/media.api';
+import HeroSlice from '~/components/HeroSlice';
+import TabItems from '~/components/TabItems';
+import MediaGrid from '~/components/Media/MediaGrid';
 import { MovieTabItems } from '~/config/MovieTabMenuItems/MovieTabMenuItems';
 import { TvTabItems } from '~/config/TvShowTabMenuItems/TvShowTabMenuItems';
+
 function MediaListPage() {
-    // const [tabsCategoriesValue, setTabsCategoriesValue] = useState(homeTabItems[0].name);
-    const [medias, setMedias] = useState([]);
-    const [currPage, setCurrPage] = useState(1);
     const [currCategory, setCurrCategory] = useState(0);
-    const [moreButton, setMoreButton] = useState(false);
-    const [isLoading, setIsLoading] = useState(true);
     const { mediaType } = useParams();
-    useEffect(() => {
-        // window.scrollTo(0, 0);
-        setCurrPage(1);
-        setMedias([]);
-    }, [mediaType]);
-    useEffect(() => {
-        const getMedias = async () => {
-            if (MovieTabItems[currCategory].key === 'getList' || TvTabItems[currCategory].key === 'getList') {
-                return await mediaApi.getList({
-                    mediaType: mediaType,
-                    mediaCategory:
-                        mediaType === 'movie'
-                            ? MovieTabItems[currCategory].mediaCategory
-                            : TvTabItems[currCategory].mediaCategory,
-                    page: currPage,
-                });
-            } else {
-                return await mediaApi.getDiscoverGenres({
-                    mediaType: mediaType,
-                    withoutGenres: mediaType === 'movie' ? MovieTabItems[currCategory].id : TvTabItems[currCategory].id,
-                    page: currPage,
-                });
-            }
-        };
-        const fetchData = async () => {
-            setMoreButton(false);
-            setIsLoading(true);
-            const { response } = await getMedias();
-            if (response) {
-                setIsLoading(false);
-                if (currPage === response?.total_pages) {
-                    setMoreButton(false);
-                } else {
-                    setMoreButton(true);
-                }
-                if (currPage !== 1) {
-                    setMedias((m) => [...m, ...response.results]);
-                } else {
-                    setMedias([...response.results]);
-                }
-            }
-        };
-        fetchData();
-    }, [currCategory, currPage, mediaType]);
-    // useEffect(() => {
-    //     isLoading && window.scrollTo(0, document.body.scrollHeight);
-    // }, [isLoading]);
+
+    const getMedias = async ({ mediaType, key, mediaCategory, pageParam }) => {
+        if (key === 'getList') {
+            return await mediaApi.getList({
+                mediaType: mediaType,
+                mediaCategory,
+                page: pageParam,
+            });
+        } else {
+            return await mediaApi.getDiscoverGenres({
+                mediaType: mediaType,
+                withoutGenres: mediaCategory,
+                page: pageParam,
+            });
+        }
+    };
+
+    const fetchData = async ({ queryKey, pageParam }) => {
+        const [mediaType, key, mediaCategory] = queryKey;
+
+        const { response, err } = await getMedias({ mediaType, key, mediaCategory, pageParam });
+        if (response) return response;
+        if (err) throw err;
+    };
+
+    const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage, isError } = useInfiniteQuery({
+        queryKey: [
+            mediaType,
+            MovieTabItems[currCategory].key,
+            MovieTabItems[currCategory].key === 'getList' || TvTabItems[currCategory].key === 'getList'
+                ? mediaType === 'movie'
+                    ? MovieTabItems[currCategory].mediaCategory
+                    : TvTabItems[currCategory].mediaCategory
+                : mediaType === 'movie'
+                ? MovieTabItems[currCategory].id
+                : TvTabItems[currCategory].id,
+        ],
+        queryFn: ({ queryKey, pageParam }) => fetchData({ queryKey, pageParam }),
+        getNextPageParam: (lastPage) => {
+            return lastPage?.page === lastPage?.total_pages ? undefined : lastPage?.page + 1;
+        },
+        placeholderData: keepPreviousData,
+        initialPageParam: 1,
+    });
+
     const handleCurrCategory = useCallback(
-        (event, newValue) => {
+        (newValue) => {
             if (currCategory === newValue) return;
-            setIsLoading(true);
-            setMedias([]);
-            setMoreButton(false);
-            setCurrPage(1);
             setCurrCategory(newValue);
         },
         [currCategory],
     );
     const handleLoadingMore = () => {
-        // setIsLoading(true);
-        setCurrPage(currPage + 1);
+        fetchNextPage();
     };
-    // useEffect(() => {
-    //     if (medias.length !== 0 && isLoading === false) {
-    //         const handleScroll = () => {
-    //             if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight - 800) {
-    //                 setIsLoading(true);
-    //                 setCurrPage(currPage + 1);
-    //             }
-    //         };
-    //         window.addEventListener('scroll', handleScroll);
-    //         return () => window.removeEventListener('scroll', handleScroll);
-    //     }
-    // }, [currPage, isLoading, medias]);
+console.log('isFetchingNextPage', isFetchingNextPage, 'hasNextPage', hasNextPage);
     return (
         <>
             <HeroSlice />
@@ -97,14 +76,13 @@ function MediaListPage() {
                     contentItems={mediaType === 'movie' ? MovieTabItems : TvTabItems}
                     onCurrCategory={handleCurrCategory}
                 />
-                <Media medias={medias} isLoading={isLoading} mediaType={mediaType} />
-                {moreButton && (
-                    <Stack mt={2} justifyContent={'center'} flexDirection={'row'}>
-                        <Button variant="contained" color="secondary" onClick={handleLoadingMore}>
-                            View More
-                        </Button>
-                    </Stack>
-                )}
+                <MediaGrid
+                    isLoadingButton={!isFetchingNextPage && hasNextPage}
+                    isLoadingSekeleton={isLoading || isFetchingNextPage || isError}
+                    mediaType={mediaType}
+                    medias={data}
+                    onLoadingMore={handleLoadingMore}
+                />
             </Container>
         </>
     );

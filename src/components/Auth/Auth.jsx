@@ -1,26 +1,22 @@
-import { Box, LinearProgress, Typography } from '@mui/material';
+import { Box, LinearProgress, Paper, Typography } from '@mui/material';
 import Logo from '~/components/Logo';
 import uiConfigs from '~/config/ui.config';
 
 function Auth({ titleAuth, children, isLoading }) {
     return (
-        <Box
+        <Paper
+        variant="outlined"
             sx={{
                 display: 'flex',
                 position: 'relative',
                 flexDirection: 'column',
                 width: '100%',
                 maxWidth: '35rem',
-                bgcolor: '#ffffff08',
-                // height: '200px',
                 margin: 'auto',
                 opacity: 1,
-                // transform: "translateY(-50%)",
                 overflow: 'hidden',
-                border: '1px solid hsla(0,0%,100%,.1)',
                 p: '32px',
                 mt: { xs: 2, sm: 6 },
-                borderRadius: '0.5rem',
                 animation: `myEffect 0.8s ease-out`,
                 '@keyframes myEffect': {
                     from: {
@@ -58,7 +54,7 @@ function Auth({ titleAuth, children, isLoading }) {
             </Box>
             {/* title */}
             {children}
-        </Box>
+        </Paper>
     );
 }
 
