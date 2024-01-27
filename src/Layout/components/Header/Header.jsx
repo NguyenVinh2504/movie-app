@@ -141,7 +141,7 @@ function Header({ isLoading }) {
                             </>
                         ) : (
                             <Skeleton
-                                sx={{ width: { xs: '30px', sm: '40px' }, height: { xs: '30px', sm: '40px' } }}
+                                sx={{ width: { xs: '34px', sm: '40px' }, height: { xs: '34px', sm: '40px' } }}
                                 variant="circular"
                             />
                         )}
