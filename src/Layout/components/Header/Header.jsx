@@ -125,6 +125,7 @@ function Header({ isLoading }) {
                                     <NavLink to={config.routes.login}>
                                         <IconButton
                                             sx={{
+                                                p: '4px',
                                                 border: '1px solid hsla(0,0%,100%,.2)',
                                             }}
                                             size='small'
