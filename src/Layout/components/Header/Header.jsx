@@ -41,7 +41,7 @@ function Header({ isLoading }) {
                         <IconButton onClick={toggleSidebar}>
                             <MenuIcon />
                         </IconButton>
-                        <Box sx={{ height: '30px' }}>
+                        <Box sx={{ width: '92px' }}>
                             <Logo />
                         </Box>
                     </Stack>

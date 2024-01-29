@@ -88,23 +88,24 @@ function HeroSliceList({ isLoading, medias, onOpen }) {
                                                     'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0, 1) 100%)',
                                             }}
                                         ></Box>
-                                        <IconButton
-                                            color="secondNeutral"
-                                            component={'a'}
-                                            target="_blank"
-                                            href={config.routes.watchMovie}
-                                            sx={{
-                                                display: { sm: 'none' },
-                                                zIndex: '10',
-                                                ...uiConfigs.style.centerAlight,
-                                                svg: {
-                                                    width: '40px',
-                                                    height: '40px',
-                                                },
-                                            }}
+                                        <NavLink
+                                            to={`${config.routes.watchMovie}/${item?.id}`}
                                         >
-                                            <PlayIcon />
-                                        </IconButton>
+                                            <IconButton
+                                                color="secondNeutral"
+                                                sx={{
+                                                    display: { sm: 'none' },
+                                                    zIndex: '10',
+                                                    ...uiConfigs.style.centerAlight,
+                                                    svg: {
+                                                        width: '40px',
+                                                        height: '40px',
+                                                    },
+                                                }}
+                                            >
+                                                <PlayIcon />
+                                            </IconButton>
+                                        </NavLink>
                                         {/* content*/}
                                         <Grid
                                             container
@@ -179,7 +180,9 @@ function HeroSliceList({ isLoading, medias, onOpen }) {
                                                             startIcon={<PlayIcon />}
                                                             sx={{ display: { sm: 'inline-flex', xs: 'none' } }}
                                                         >
-                                                            <NavLink to={config.routes.watchMovie}>Xem Ngay</NavLink>
+                                                            <NavLink to={`${config.routes.watchMovie}/${item?.id}`}>
+                                                                Xem Ngay
+                                                            </NavLink>
                                                         </CustomButton>
                                                         <CustomButton
                                                             color="secondary"

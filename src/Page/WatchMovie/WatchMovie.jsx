@@ -27,18 +27,20 @@ const WatchMovie = () => {
                     <iframe
                         src={`https://vidsrc.to/embed/movie/${movieId}`}
                         title="W3Schools Free Online Web Tutorials"
+                        allowFullScreen={true}
+                        // sandbox="allow-modals allow-orientation-lock allow-pointer-lock allow-presentation allow-scripts allow-top-navigation allow-forms"
                         style={{ width: '100%', height: '100%', border: '0px' }}
                     ></iframe>
                 </Box>
             </Box>
             {/* title */}
-            <Box>
+            {/* <Box>
                 <TitleMatchMovie dataDetail={dataDetail} genres={genres} />
-            </Box>
+            </Box> */}
             {/* title */}
-            <Box>
+            {/* <Box>
                 <OverviewWatchMovie dataDetail={dataDetail} />
-            </Box>
+            </Box> */}
         </Wrapper>
     );
 };

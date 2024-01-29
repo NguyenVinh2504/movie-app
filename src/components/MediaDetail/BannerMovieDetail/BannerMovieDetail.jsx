@@ -3,10 +3,13 @@ import { PlayIcon } from '~/components/Icon';
 import uiConfigs from '~/config/ui.config';
 import tmdbConfigs from '~/api/configs/tmdb.configs';
 import { memo } from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import Image from '~/components/Image';
 import config from '~/config';
+import { useDispatch } from 'react-redux';
+import { toggleDetail } from '~/redux/features/mediaDetailSlice';
 function BannerMovieDetail({ loading, dataDetail, mediaType }) {
+    const dispatch = useDispatch();
     return (
         <Box sx={{ position: 'relative', overflow: 'hidden', pt: 'calc(9/16*100%)', pl: 0 }}>
             {loading ? (
@@ -16,7 +19,10 @@ function BannerMovieDetail({ loading, dataDetail, mediaType }) {
             ) : (
                 <>
                     {mediaType === 'movie' && (
-                        <Link to={`${config.routes.watchMovie}/${dataDetail?.id}`} target="_blank">
+                        <NavLink
+                            to={`${config.routes.watchMovie}/${dataDetail?.id}`}
+                            onClick={() => dispatch(toggleDetail(false))}
+                        >
                             <IconButton
                                 color="secondNeutral"
                                 sx={{
@@ -30,7 +36,7 @@ function BannerMovieDetail({ loading, dataDetail, mediaType }) {
                             >
                                 <PlayIcon />
                             </IconButton>
-                        </Link>
+                        </NavLink>
                     )}
                     <Box sx={{ ...uiConfigs.style.positionFullSize }}>
                         <Image src={tmdbConfigs.backdropPath(dataDetail.backdrop_path)} alt={dataDetail.title} />
