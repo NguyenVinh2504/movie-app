@@ -1,5 +1,4 @@
 import {
-    Box,
     ButtonBase,
     Divider,
     ListItem,
@@ -69,7 +68,10 @@ function UserMenu() {
                 aria-haspopup="true"
                 aria-expanded={open ? 'true' : undefined}
             >
-                <AvatarUser alt={user?.name} sx={{ width: { xs: '34px', sm: '40px' } }} />
+                <AvatarUser
+                    alt={user?.name}
+                    sx={{ width: { xs: '34px', sm: '40px' }, height: { xs: '34px', sm: '40px' } }}
+                />
             </ButtonBase>
             <Menu
                 id="account-menu"
@@ -104,9 +106,11 @@ function UserMenu() {
             >
                 <ListItem>
                     <Stack direction={'row'} alignItems={'center'} spacing={2}>
-                        <Box sx={{ width: '40px' }}>
-                            <AvatarUser alt={user?.name} src={user?.avatar} />
-                        </Box>
+                        <AvatarUser
+                            alt={user?.name}
+                            src={user?.avatar}
+                            sx={{ width: { xs: '34px', sm: '40px' }, height: { xs: '34px', sm: '40px' } }}
+                        />
                         <Typography component={'span'}>{user?.name}</Typography>
                     </Stack>
                 </ListItem>

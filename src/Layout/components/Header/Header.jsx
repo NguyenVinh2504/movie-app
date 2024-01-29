@@ -50,7 +50,7 @@ function Header({ isLoading }) {
                     {/* leftheader */}
                     <Stack direction="row" spacing={4} sx={{ color: '#a6a4a4', alignItems: 'center' }}>
                         {/* logo */}
-                        <Box sx={{ display: { xs: 'none', lg: 'inline-block' }, img: { height: '30px' } }}>
+                        <Box sx={{ display: { xs: 'none', lg: 'inline-block' }, width: '92px' }}>
                             <Logo />
                         </Box>
                         {/* logo */}

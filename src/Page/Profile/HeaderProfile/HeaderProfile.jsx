@@ -49,8 +49,8 @@ function HeaderProfile({ valueTabItems }) {
                     {/* image avatar */}
                     <Box
                         sx={{
-                            aspectRatio: '1',
                             width: { md: '172px', xs: '110px' },
+                            height: { md: '172px', xs: '110px' },
                             overflow: 'hidden',
                             borderRadius: '100px',
                         }}

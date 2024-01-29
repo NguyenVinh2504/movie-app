@@ -63,7 +63,7 @@ function SideBar({ open, onClick, onKeyDown, onClose, isLoading }) {
                             <Box display={{ sm: 'none' }}>
                                 <ListItem>
                                     <Stack direction={'row'} alignItems={'center'} spacing={2}>
-                                        <Box sx={{ width: '50px' }}>
+                                        <Box sx={{ width: '50px', height: '50px' }}>
                                             <AvatarUser alt={user?.name} />
                                         </Box>
                                         <Typography component={'span'} fontWeight={500}>
