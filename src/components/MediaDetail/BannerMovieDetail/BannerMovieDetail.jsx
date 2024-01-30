@@ -19,24 +19,22 @@ function BannerMovieDetail({ loading, dataDetail, mediaType }) {
             ) : (
                 <>
                     {mediaType === 'movie' && (
-                        <NavLink
+                        <IconButton
+                            component={NavLink}
                             to={`${config.routes.watchMovie}/${dataDetail?.id}`}
                             onClick={() => dispatch(toggleDetail(false))}
+                            color="secondNeutral"
+                            sx={{
+                                zIndex: '10',
+                                ...uiConfigs.style.centerAlight,
+                                svg: {
+                                    width: '40px',
+                                    height: '40px',
+                                },
+                            }}
                         >
-                            <IconButton
-                                color="secondNeutral"
-                                sx={{
-                                    zIndex: '10',
-                                    ...uiConfigs.style.centerAlight,
-                                    svg: {
-                                        width: '40px',
-                                        height: '40px',
-                                    },
-                                }}
-                            >
-                                <PlayIcon />
-                            </IconButton>
-                        </NavLink>
+                            <PlayIcon />
+                        </IconButton>
                     )}
                     <Box sx={{ ...uiConfigs.style.positionFullSize }}>
                         <Image src={tmdbConfigs.backdropPath(dataDetail.backdrop_path)} alt={dataDetail.title} />

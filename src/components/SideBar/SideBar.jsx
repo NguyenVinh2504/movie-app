@@ -129,16 +129,16 @@ function SideBar({ open, onClick, onKeyDown, onClose, isLoading }) {
                         sx={{ borderColor: 'white', marginBottom: '20px', display: { sm: 'none' }, opacity: '0.3' }}
                     />
                     {!user ? (
-                        <NavLink to={config.routes.login}>
-                            <Button
-                                sx={{ width: '100%', display: { sm: 'none' } }}
-                                variant="contained"
-                                disableElevation
-                                disableRipple
-                            >
-                                Đăng Nhập
-                            </Button>
-                        </NavLink>
+                        <Button
+                            component={NavLink}
+                            to={config.routes.login}
+                            sx={{ width: '100%', display: { sm: 'none' } }}
+                            variant="contained"
+                            disableElevation
+                            disableRipple
+                        >
+                            Đăng Nhập
+                        </Button>
                     ) : (
                         <Button
                             sx={{ width: '100%', display: { sm: 'none' } }}

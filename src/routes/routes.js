@@ -102,6 +102,10 @@ export const routesMainLayout = [
         element: <WatchMovie />,
     },
     {
+        path: config.routes.watchTvId,
+        element: <WatchMovie />,
+    },
+    {
         path: config.routes.error,
         element: <ErrorPage />,
     },

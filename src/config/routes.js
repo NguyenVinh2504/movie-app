@@ -26,8 +26,12 @@ const routes = {
 
     forgotPassword: '/forgot-password',
 
-    watchMovie: '/watch',
-    watchMovieId: '/watch/:movieId',
+    watchMovieId: '/watch/movie/:movieId',
+    watchMovie: '/watch/movie',
+
+    watchTvId: '/watch/tv/:showId/:ssId/:epId',
+    watchTv: '/watch/tv',
+
     error: '*',
 };
 

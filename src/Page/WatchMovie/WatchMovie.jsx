@@ -7,7 +7,7 @@ import OverviewWatchMovie from './OverviewWatchMovie';
 import { useParams } from 'react-router-dom';
 
 const WatchMovie = () => {
-    let { movieId } = useParams();
+    let { movieId, showId, ssId, epId } = useParams();
     console.log(movieId);
     const genres = ['Hành động', 'Phiêu Lưu', 'Lịch sử'];
     const dataDetail = {
@@ -22,10 +22,22 @@ const WatchMovie = () => {
     return (
         <Wrapper>
             {/* <Typography variant='h4'>Admin Lười Nên Chưa Có Phần Xem Phim. Sẽ Cập Nhật Trong Thời Gian Sắp Tới Nha. Yêu!!!</Typography> */}
-            <Box sx={{ position: 'relative', pt: 'calc(9/16*100%)', borderRadius: 2, overflow: 'hidden' }}>
+            <Box
+                sx={{
+                    position: 'relative',
+                    pt: 'calc(9/16*100%)',
+                    borderRadius: 2,
+                    overflow: 'hidden',
+                    backgroundColor: 'secondary.main',
+                }}
+            >
                 <Box sx={{ position: 'absolute', ...uiConfigs.style.positionFullSize }}>
                     <iframe
-                        src={`https://vidsrc.to/embed/movie/${movieId}`}
+                        src={
+                            movieId
+                                ? `https://vidsrc.to/embed/movie/${movieId}`
+                                : `https://vidsrc.to/embed/tv/${showId}/${ssId}/${epId}`
+                        }
                         title="W3Schools Free Online Web Tutorials"
                         allowFullScreen={true}
                         // sandbox="allow-modals allow-orientation-lock allow-pointer-lock allow-presentation allow-scripts allow-top-navigation allow-forms"

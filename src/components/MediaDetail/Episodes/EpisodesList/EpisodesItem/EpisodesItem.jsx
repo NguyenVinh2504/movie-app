@@ -17,6 +17,9 @@ import tmdbConfigs from '~/api/configs/tmdb.configs';
 import { memo } from 'react';
 import Image from '~/components/Image';
 import config from '~/config';
+import { NavLink } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { toggleDetail } from '~/redux/features/mediaDetailSlice';
 function EpisodesItem({ item, dataSeason }) {
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const ListCustoms = styled(ListItemButton)(({ theme }) => ({
@@ -78,10 +81,20 @@ function EpisodesItem({ item, dataSeason }) {
             </Box>
         );
     };
+
+    const dispatch = useDispatch();
+    const handleCloseDetail = () => {
+        dispatch(toggleDetail(false));
+    };
+
     return (
         <>
             {pointDownSm ? (
-                <Box component={'a'} target="_blank" href={config.routes.watchMovie}>
+                <Box
+                    onClick={handleCloseDetail}
+                    component={NavLink}
+                    to={`${config.routes.watchTv}/${item?.show_id}/${item?.season_number}/${item?.episode_number}`}
+                >
                     <CustomDivider />
                     <ListItemButton sx={{ px: 1, py: 2 }}>
                         <ListItemText
@@ -128,7 +141,11 @@ function EpisodesItem({ item, dataSeason }) {
                 </Box>
             ) : (
                 // pc-table
-                <Box component={'a'} target="_blank" href={config.routes.watchMovie}>
+                <Box
+                    onClick={handleCloseDetail}
+                    component={NavLink}
+                    to={`${config.routes.watchTv}/${item?.show_id}/${item?.season_number}/${item?.episode_number}`}
+                >
                     <CustomDivider />
                     <ListCustoms sx={{ px: 1, py: 3 }}>
                         <Typography variant="h5" width={'20%'} textAlign={'center'}>

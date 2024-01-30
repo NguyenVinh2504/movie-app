@@ -27,7 +27,13 @@ function Header({ isLoading }) {
     return (
         <>
             {/* {sidebarOpen && ( */}
-            <SideBar open={sidebarOpen} onClick={toggleSidebar} onKeyDown={toggleSidebar} onClose={toggleSidebar} isLoading={isLoading} />
+            <SideBar
+                open={sidebarOpen}
+                onClick={toggleSidebar}
+                onKeyDown={toggleSidebar}
+                onClose={toggleSidebar}
+                isLoading={isLoading}
+            />
             {/* )} */}
             <AppBar position="sticky">
                 <Toolbar
@@ -115,24 +121,28 @@ function Header({ isLoading }) {
                         {!isLoading ? (
                             <>
                                 {!isLogged && !ponitDownSm && (
-                                    <NavLink to={config.routes.login}>
-                                        <Button variant="contained" disableElevation disableRipple>
-                                            Đăng Nhập
-                                        </Button>
-                                    </NavLink>
+                                    <Button
+                                        variant="contained"
+                                        disableElevation
+                                        disableRipple
+                                        component={NavLink}
+                                        to={config.routes.login}
+                                    >
+                                        Đăng Nhập
+                                    </Button>
                                 )}
                                 {!isLogged && ponitDownSm && (
-                                    <NavLink to={config.routes.login}>
-                                        <IconButton
-                                            sx={{
-                                                p: '4px',
-                                                border: '1px solid hsla(0,0%,100%,.2)',
-                                            }}
-                                            size='small'
-                                        >
-                                            <UserIcon />
-                                        </IconButton>
-                                    </NavLink>
+                                    <IconButton
+                                        component={NavLink}
+                                        to={config.routes.login}
+                                        sx={{
+                                            p: '4px',
+                                            border: '1px solid hsla(0,0%,100%,.2)',
+                                        }}
+                                        size="small"
+                                    >
+                                        <UserIcon />
+                                    </IconButton>
                                 )}
                                 {isLogged && (
                                     <Box>
