@@ -14,7 +14,7 @@ import ForgotPassword from '~/Page/ForgotPassword/ForgotPassword';
 import WatchMovie from '~/Page/WatchMovie/WatchMovie';
 export const routesMainLayout = [
     {
-        index: true,
+        path: config.routes.home,
         element: <Home />,
         state: 'home',
     },
@@ -65,6 +65,24 @@ export const routesMainLayout = [
         path: config.routes.profile,
         element: <Profile />,
         child: [
+            {
+                index: true,
+                element: <InfoPage />,
+            },
+            {
+                path: config.routes.editProfile,
+                element: <EditAccount />,
+            },
+            {
+                path: config.routes.favorite,
+                element: <FavoriteMovieList />,
+            },
+            {
+                path: config.routes.settingProfile,
+                element: <SettingProfile />,
+            },
+        ],
+        children: [
             {
                 index: true,
                 element: <InfoPage />,

@@ -13,6 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { ConfirmProvider } from 'material-ui-confirm';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { BrowserRouter } from 'react-router-dom';
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -27,41 +28,43 @@ const queryClient = new QueryClient({
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     // <React.StrictMode>
-    <Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-            <QueryClientProvider client={queryClient} >
-                <ThemeProvider theme={theme}>
-                    <ConfirmProvider
-                        defaultOptions={{
-                            allowClose: false,
-                            confirmationButtonProps: { color: 'secondary', variant: 'contained' },
-                            cancellationButtonProps: { color: 'secondary', variant: 'contained' },
-                            confirmationText: 'Xác nhận',
-                            cancellationText: 'Hủy',
-                        }}
-                    >
-                        <CssBaseline>
-                            <App />
-                            <ReactQueryDevtools initialIsOpen={false} position='bottom' />
-                            <ToastContainer
-                                position="bottom-left"
-                                autoClose={3000}
-                                hideProgressBar={true}
-                                newestOnTop={false}
-                                closeOnClick
-                                rtl={false}
-                                pauseOnFocusLoss={false}
-                                draggable
-                                style={{ fontSize: '16px' }}
-                                pauseOnHover
-                                theme="dark"
-                            />
-                        </CssBaseline>
-                    </ConfirmProvider>
-                </ThemeProvider>
-            </QueryClientProvider>
-        </PersistGate>
-    </Provider>,
+    <BrowserRouter>
+        <Provider store={store}>
+            <PersistGate loading={null} persistor={persistor}>
+                <QueryClientProvider client={queryClient} >
+                    <ThemeProvider theme={theme}>
+                        <ConfirmProvider
+                            defaultOptions={{
+                                allowClose: false,
+                                confirmationButtonProps: { color: 'secondary', variant: 'contained' },
+                                cancellationButtonProps: { color: 'secondary', variant: 'contained' },
+                                confirmationText: 'Xác nhận',
+                                cancellationText: 'Hủy',
+                            }}
+                        >
+                            <CssBaseline>
+                                <App />
+                                <ReactQueryDevtools initialIsOpen={false} position='bottom' />
+                                <ToastContainer
+                                    position="bottom-left"
+                                    autoClose={3000}
+                                    hideProgressBar={true}
+                                    newestOnTop={false}
+                                    closeOnClick
+                                    rtl={false}
+                                    pauseOnFocusLoss={false}
+                                    draggable
+                                    style={{ fontSize: '16px' }}
+                                    pauseOnHover
+                                    theme="dark"
+                                />
+                            </CssBaseline>
+                        </ConfirmProvider>
+                    </ThemeProvider>
+                </QueryClientProvider>
+            </PersistGate>
+        </Provider>,
+    </BrowserRouter>
     /* </React.StrictMode>, */
 );
 

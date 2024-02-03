@@ -1,21 +1,21 @@
-import { Routes, Route, BrowserRouter } from 'react-router-dom';
+import { useRoutes } from 'react-router-dom';
 import { MainLayout } from './Layout';
-import { routesPage } from '~/routes';
-import routes from './config/routes';
+// import { routesPage } from '~/routes';
+// import routes from './config/routes';
+import { routesMainLayout } from './routes/routes';
 function App() {
+    const element = useRoutes(routesMainLayout)
     return (
-        <BrowserRouter>
-            <div className="App">
-                <Routes>
+        <div className="App">
+            {/* <Routes>
                     <Route path={routes.home} element={<MainLayout />}>
                         {routesPage}
                     </Route>
-                    {/* <Route path={routes.normal} element={<MainLayout />}>
-                        {routesPage}
-                    </Route> */}
-                </Routes>
-            </div>
-        </BrowserRouter>
+                </Routes> */}
+            <MainLayout>
+                {element}
+            </MainLayout>
+        </div>
     );
 }
 

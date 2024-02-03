@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+// import { Outlet } from 'react-router-dom';
 import Header from '../components/Header';
 import { Container } from '@mui/material';
 import Footer from '../components/Footer';
@@ -16,7 +16,7 @@ import { removeFavorites, setFavorites } from '~/redux/features/favoritesSlice';
 // import Search from '../components/Search';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 
-function MainLayout() {
+function MainLayout({ children }) {
     const dispatch = useDispatch();
     const open = useSelector(openSelector);
     // const token = useSelector(accessToken);
@@ -55,7 +55,7 @@ function MainLayout() {
         refetchOnWindowFocus: false,
         retryOnMount: false,
         refetchOnReconnect: false,
-        retry: 0
+        retry: 0,
     });
     console.log('data user 1', data, 'isLoading', isLoading);
     useEffect(() => {
@@ -97,7 +97,9 @@ function MainLayout() {
                         minHeight: '100vh',
                     }}
                 >
-                    <Outlet />
+                    {/* <Outlet />
+                     */}
+                    {children}
                 </Container>
                 <Footer />
             </Container>

@@ -1,4 +1,4 @@
-import { Box, IconButton, Stack, Typography } from '@mui/material';
+import { Box, ButtonBase, Stack, Typography } from '@mui/material';
 import { memo, useCallback, useState } from 'react';
 import Avatar from '~/components/Avatar';
 import ModalAvatarEdit from './ModalAvatarEdit/ModalAvatarEdit';
@@ -23,9 +23,9 @@ function AvatarEdit() {
                         Nên là ảnh vuông, chấp nhận các tệp: JPG, PNG.
                     </Typography>
                 </Box>
-                <IconButton sx={{ width: '75px' }} onClick={handleOpen}>
-                    <Avatar />
-                </IconButton>
+                <ButtonBase onClick={handleOpen}>
+                    <Avatar  sx={{ width: '56px', height: '56px' }}/>
+                </ButtonBase>
             </Stack>
             {open && <ModalAvatarEdit handleClose={handleClose} open={open} />}
         </>

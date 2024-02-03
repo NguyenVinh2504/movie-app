@@ -49,7 +49,7 @@ function FavoriteMovieList() {
     const favorites = useSelector(favoritesValue);
     return (
         <>
-            <Typography variant="h6">{`YOUR FAVORITES (${favorites?.length})`}</Typography>
+            <Typography variant="h6" mb={2}>{`YOUR FAVORITES (${favorites?.length})`}</Typography>
             <Media medias={favorites}></Media>
         </>
     );

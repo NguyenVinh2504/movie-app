@@ -170,6 +170,7 @@ function ModalAvatarEdit({ open, handleClose }) {
                             <Box
                                 sx={{
                                     width: { xs: '250px', sm: '200px' },
+                                    height: { xs: '250px', sm: '200px' },
                                     position: 'relative',
                                     cursor: 'pointer',
                                     '&:hover': {
