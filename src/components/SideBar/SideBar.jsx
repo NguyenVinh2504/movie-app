@@ -128,7 +128,7 @@ function SideBar({ open, onClick, onKeyDown, onClose, isLoading }) {
                     <Divider
                         sx={{ borderColor: 'white', marginBottom: '20px', display: { sm: 'none' }, opacity: '0.3' }}
                     />
-                    {!user ? (
+                    {!user || isLoading ? (
                         <Button
                             component={NavLink}
                             to={config.routes.login}

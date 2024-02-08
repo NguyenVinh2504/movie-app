@@ -12,119 +12,73 @@ import SettingProfile from '~/Page/Profile/SettingProfile/SettingProfile';
 import MediaListPage from '~/Page/MediaListPage/MediaListPage';
 import ForgotPassword from '~/Page/ForgotPassword/ForgotPassword';
 import WatchMovie from '~/Page/WatchMovie/WatchMovie';
+import { MainLayout } from '~/Layout';
 export const routesMainLayout = [
     {
-        path: config.routes.home,
-        element: <Home />,
-        state: 'home',
-    },
-    {
-        path: config.routes.aboutUs,
-        element: <AboutUs />,
-    },
-    {
-        path: config.routes.mediaList,
-        element: <MediaListPage />,
-    },
-    {
-        path: config.routes.search,
-        element: <SearchPage />,
-    },
-    {
-        path: config.routes.login,
-        element: <AuthPage />,
-    },
-    {
-        path: config.routes.signup,
-        element: <AuthPage />,
-    },
-    {
-        path: config.routes.forgotPassword,
-        element: <ForgotPassword />,
-    },
-    // {
-    //     path: config.routes.signup,
-    //     element: <AuthPage />,
-    // },
-    // {
-    //     path: config.routes.account,
-    //     element: <AuthPage />,
-    //     child: [
-    //         {
-    //             path: config.routes.login,
-    //             index: true,
-    //             element: <SingIn />,
-    //         },
-    //         {
-    //             path: config.routes.signup,
-    //             element: <SingUp />,
-    //         },
-    //     ],
-    // },
-    {
-        path: config.routes.profile,
-        element: <Profile />,
-        child: [
-            {
-                index: true,
-                element: <InfoPage />,
-            },
-            {
-                path: config.routes.editProfile,
-                element: <EditAccount />,
-            },
-            {
-                path: config.routes.favorite,
-                element: <FavoriteMovieList />,
-            },
-            {
-                path: config.routes.settingProfile,
-                element: <SettingProfile />,
-            },
-        ],
+        element: <MainLayout />,
         children: [
             {
-                index: true,
-                element: <InfoPage />,
+                path: config.routes.home,
+                element: <Home />,
             },
             {
-                path: config.routes.editProfile,
-                element: <EditAccount />,
+                path: config.routes.aboutUs,
+                element: <AboutUs />,
             },
             {
-                path: config.routes.favorite,
-                element: <FavoriteMovieList />,
+                path: config.routes.mediaList,
+                element: <MediaListPage />,
             },
             {
-                path: config.routes.settingProfile,
-                element: <SettingProfile />,
+                path: config.routes.search,
+                element: <SearchPage />,
+            },
+            {
+                path: config.routes.login,
+                element: <AuthPage />,
+            },
+            {
+                path: config.routes.signup,
+                element: <AuthPage />,
+            },
+            {
+                path: config.routes.forgotPassword,
+                element: <ForgotPassword />,
+            },
+            {
+                path: config.routes.profile,
+                element: <Profile />,
+                children: [
+                    {
+                        index: true,
+                        element: <InfoPage />,
+                    },
+                    {
+                        path: config.routes.editProfile,
+                        element: <EditAccount />,
+                    },
+                    {
+                        path: config.routes.favorite,
+                        element: <FavoriteMovieList />,
+                    },
+                    {
+                        path: config.routes.settingProfile,
+                        element: <SettingProfile />,
+                    },
+                ],
+            },
+            {
+                path: config.routes.watchMovieId,
+                element: <WatchMovie />,
+            },
+            {
+                path: config.routes.watchTvId,
+                element: <WatchMovie />,
+            },
+            {
+                path: config.routes.error,
+                element: <ErrorPage />,
             },
         ],
-    },
-    // {
-    //     path: config.routes.settingProfile,
-    //     element: <Settings />,
-    //     child: [
-    //         {
-    //             index: true,
-    //             element: <EditAccount />,
-    //         },
-    //         {
-    //             path: config.routes.deleteAccount,
-    //             element: <DeleteAccount />,
-    //         },
-    //     ],
-    // },
-    {
-        path: config.routes.watchMovieId,
-        element: <WatchMovie />,
-    },
-    {
-        path: config.routes.watchTvId,
-        element: <WatchMovie />,
-    },
-    {
-        path: config.routes.error,
-        element: <ErrorPage />,
     },
 ];

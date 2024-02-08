@@ -15,33 +15,11 @@ import { removeToken } from '~/redux/features/authSlice';
 import { removeFavorites, setFavorites } from '~/redux/features/favoritesSlice';
 // import Search from '../components/Search';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
+import { Outlet } from 'react-router-dom';
 
-function MainLayout({ children }) {
+function MainLayout() {
     const dispatch = useDispatch();
     const open = useSelector(openSelector);
-    // const token = useSelector(accessToken);
-    // useEffect(() => {
-    //     const authUser = async () => {
-    //         const { response, err } = await userApi.getInfo();
-    //         if (response) {
-    //             const { favorites, ...user } = response;
-    //             dispatch(updateUser(user));
-    //             dispatch(setFavorites(favorites));
-    //             dispatch(toggleGlobalLoading(false));
-    //         }
-    //         if (err) {
-    //             dispatch(loginOut());
-    //             dispatch(removeToken());
-    //             dispatch(removeFavorites());
-    //             dispatch(toggleGlobalLoading(false));
-    //         }
-    //     };
-    //     // if (token) {
-    //     authUser();
-    //     // }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, []);
-
     const fetchApi = async () => {
         const { response, err } = await userApi.getInfo();
         if (response) return response;
@@ -97,9 +75,7 @@ function MainLayout({ children }) {
                         minHeight: '100vh',
                     }}
                 >
-                    {/* <Outlet />
-                     */}
-                    {children}
+                    <Outlet />
                 </Container>
                 <Footer />
             </Container>

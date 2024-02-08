@@ -7,7 +7,7 @@ import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, 
 const persistConfig = {
     key: 'root',
     storage,
-    blacklist: ['globalLoading', 'detailMovie', 'user', 'favorites'],
+    blacklist: ['globalLoading', 'detailMovie', 'favorites'],
 };
 // const sagaMiddleware = createSagaMiddleware()
 

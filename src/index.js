@@ -63,7 +63,7 @@ root.render(
                     </ThemeProvider>
                 </QueryClientProvider>
             </PersistGate>
-        </Provider>,
+        </Provider>
     </BrowserRouter>
     /* </React.StrictMode>, */
 );

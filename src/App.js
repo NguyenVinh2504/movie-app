@@ -1,7 +1,5 @@
 import { useRoutes } from 'react-router-dom';
-import { MainLayout } from './Layout';
 // import { routesPage } from '~/routes';
-// import routes from './config/routes';
 import { routesMainLayout } from './routes/routes';
 function App() {
     const element = useRoutes(routesMainLayout)
@@ -12,9 +10,7 @@ function App() {
                         {routesPage}
                     </Route>
                 </Routes> */}
-            <MainLayout>
-                {element}
-            </MainLayout>
+            {element}
         </div>
     );
 }
