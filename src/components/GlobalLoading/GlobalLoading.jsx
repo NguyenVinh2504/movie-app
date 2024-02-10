@@ -7,23 +7,23 @@ import uiConfigs from '~/config/ui.config';
 import theme from '~/theme';
 
 function GlobalLoading() {
-    const [isLoading, setIsLoading] = useState(true);
-    const [shouldRender, setRender] = useState(true);
-    const globalLoading = useSelector(globalLoadingValue);
-    useEffect(() => {
-        if (globalLoading) {
-            // document.querySelector('body').style.cssText = 'overflow: hidden';
-            setIsLoading(true);
-        } else {
-            setTimeout(() => {
-                setIsLoading(false);
-                document.querySelector('body').removeAttribute('style');
-            }, 500);
-        }
-    }, [globalLoading]);
-    const handleOnAnimationEnd = () => {
-        if (!isLoading) setRender(false);
-    };
+    // const [isLoading, setIsLoading] = useState(true);
+    // const [shouldRender, setRender] = useState(true);
+    // const globalLoading = useSelector(globalLoadingValue);
+    // useEffect(() => {
+    //     if (globalLoading) {
+    //         // document.querySelector('body').style.cssText = 'overflow: hidden';
+    //         setIsLoading(true);
+    //     } else {
+    //         setTimeout(() => {
+    //             setIsLoading(false);
+    //             document.querySelector('body').removeAttribute('style');
+    //         }, 500);
+    //     }
+    // }, [globalLoading]);
+    // const handleOnAnimationEnd = () => {
+    //     if (!isLoading) setRender(false);
+    // };
     return (
         // shouldRender && (
         //     <Box
