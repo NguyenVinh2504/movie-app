@@ -49,7 +49,7 @@ function SingUp({ setIsLoading, isLoading }) {
         },
         validationSchema: Yup.object({
             name: Yup.string()
-                .min(8, 'Tên đăng nhập phải tối thiểu 8 kí tự')
+                // .min(8, 'Tên đăng nhập phải tối thiểu 8 kí tự')
                 .required('Vui lòng nhập tên đăng nhập')
                 .trim('Không được có khoảng trống')
                 .strict(),

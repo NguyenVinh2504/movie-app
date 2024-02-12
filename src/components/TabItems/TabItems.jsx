@@ -20,7 +20,8 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }
     '&.Mui-selected': {
         color: theme.button.neutralButton.solid.textActive,
         fontWeight: '500',
-        backgroundColor: theme.button.neutralButton.solid.active,
+        // backgroundColor: theme.button.neutralButton.solid.active,
+        backgroundColor: '#ffff'
     },
     [theme.breakpoints.down('sm')]: {
         fontSize: theme.typography.pxToRem(13),

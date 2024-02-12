@@ -29,7 +29,9 @@ function EditAccount() {
             phone: user?.phone ?? '',
         },
         validationSchema: Yup.object({
-            name: Yup.string().min(8, 'Tên đăng nhập phải tối thiểu 8 kí tự').required('Không được để trống'),
+            name: Yup.string()
+            // .min(8, 'Tên đăng nhập phải tối thiểu 8 kí tự')
+            .required('Không được để trống'),
             phone: Yup.number().typeError('Vui lòng nhập chữ số'),
         }),
         enableReinitialize: true,

@@ -119,6 +119,7 @@ const theme = createTheme({
         borderRadius: '5px',
     },
     palette: {
+        mode: 'light',
         primary: {
             main: Color.primary,
         },
