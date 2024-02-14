@@ -40,14 +40,14 @@ function MediaListPage() {
     const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage, isError } = useInfiniteQuery({
         queryKey: [
             mediaType,
-            MovieTabItems[currCategory].key,
-            MovieTabItems[currCategory].key === 'getList' || TvTabItems[currCategory].key === 'getList'
+            MovieTabItems[currCategory]?.key,
+            MovieTabItems[currCategory]?.key === 'getList' || TvTabItems[currCategory]?.key === 'getList'
                 ? mediaType === 'movie'
-                    ? MovieTabItems[currCategory].mediaCategory
-                    : TvTabItems[currCategory].mediaCategory
+                    ? MovieTabItems[currCategory]?.mediaCategory
+                    : TvTabItems[currCategory]?.mediaCategory
                 : mediaType === 'movie'
-                ? MovieTabItems[currCategory].id
-                : TvTabItems[currCategory].id,
+                ? MovieTabItems[currCategory]?.id
+                : TvTabItems[currCategory]?.id,
         ],
         queryFn: ({ queryKey, pageParam }) => fetchData({ queryKey, pageParam }),
         getNextPageParam: (lastPage) => {

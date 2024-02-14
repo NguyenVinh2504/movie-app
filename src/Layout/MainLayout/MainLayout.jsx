@@ -65,7 +65,7 @@ function MainLayout() {
                 }}
             >
                 {open && <MediaDetail />}
-                <Header isLoading={isLoading} />
+                <Header isLoading={false} />
                 {/* <Box sx={{ position: 'fixed', left: '0', right: '0', top: '64px', display: { md: 'none' } }} px={3}>
                         <Search />
                     </Box> */}

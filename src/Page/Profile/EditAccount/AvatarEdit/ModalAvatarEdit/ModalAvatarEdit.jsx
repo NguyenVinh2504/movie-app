@@ -41,6 +41,9 @@ function ModalAvatarEdit({ open, handleClose }) {
             if (btnUpdateRef.current) {
                 btnUpdateRef.current.setAttribute('disabled', 'disabled');
             }
+            if (btnRemoveRef.current) {
+                btnRemoveRef.current.setAttribute('disabled', 'disabled');
+            }
             setDisabled(true);
             const id = toast.loading('Đang tải ảnh đại diện');
             const compressedFile = await imageCompression(imageUpload, options);
@@ -65,6 +68,9 @@ function ModalAvatarEdit({ open, handleClose }) {
                 if (btnUpdateRef.current) {
                     btnUpdateRef.current.removeAttribute('disabled');
                 }
+                if (btnRemoveRef.current) {
+                    btnRemoveRef.current.removeAttribute('disabled');
+                }
             }
             if (err) {
                 toast.update(id, {
@@ -79,12 +85,18 @@ function ModalAvatarEdit({ open, handleClose }) {
                 if (btnUpdateRef.current) {
                     btnUpdateRef.current.removeAttribute('disabled');
                 }
+                if (btnRemoveRef.current) {
+                    btnRemoveRef.current.removeAttribute('disabled');
+                }
             }
         }
     };
 
     const handleDeleteAvatar = async () => {
         if (user.avatar) {
+            if (btnUpdateRef.current) {
+                btnUpdateRef.current.setAttribute('disabled', 'disabled');
+            }
             if (btnRemoveRef.current) {
                 btnRemoveRef.current.setAttribute('disabled', 'disabled');
             }
@@ -100,6 +112,9 @@ function ModalAvatarEdit({ open, handleClose }) {
                     autoClose: 3000,
                 });
                 setDisabled(false);
+                if (btnUpdateRef.current) {
+                    btnUpdateRef.current.removeAttribute('disabled');
+                }
                 if (btnRemoveRef.current) {
                     btnRemoveRef.current.removeAttribute('disabled');
                 }
@@ -112,6 +127,9 @@ function ModalAvatarEdit({ open, handleClose }) {
                     autoClose: 3000,
                 });
                 setDisabled(false);
+                if (btnUpdateRef.current) {
+                    btnUpdateRef.current.removeAttribute('disabled');
+                }
                 if (btnRemoveRef.current) {
                     btnRemoveRef.current.removeAttribute('disabled');
                 }
