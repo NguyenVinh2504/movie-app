@@ -9,7 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
 import userApi from '~/api/module/user.api';
 import { loginOut, updateUser } from '~/redux/features/userSlice';
-import { accessToken, openSelector } from '~/redux/selectors';
+import { openSelector } from '~/redux/selectors';
 import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
 import { removeToken } from '~/redux/features/authSlice';
 import { removeFavorites, setFavorites } from '~/redux/features/favoritesSlice';
@@ -20,7 +20,7 @@ import { Outlet } from 'react-router-dom';
 function MainLayout() {
     const dispatch = useDispatch();
     const open = useSelector(openSelector);
-    const token = useSelector(accessToken);
+    // const token = useSelector(accessToken);
     const fetchApi = async () => {
         const { response, err } = await userApi.getInfo();
         if (response) return response;
@@ -35,7 +35,7 @@ function MainLayout() {
         retryOnMount: false,
         refetchOnReconnect: false,
         retry: 0,
-        enabled: Boolean(token)
+        // enabled: Boolean(token)
     });
     console.log('data user 1', data, 'isLoading', isLoading);
     useEffect(() => {

@@ -1,5 +1,5 @@
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import userApi from "~/api/module/user.api";
@@ -7,14 +7,14 @@ import { removeToken } from "~/redux/features/authSlice";
 import { removeFavorites } from "~/redux/features/favoritesSlice";
 import { loginOut } from "~/redux/features/userSlice";
 
-let disable = false
+// let disable = false
 let isLogged = false
 export function useLogout() {
     const dispatch = useDispatch();
-    // const [disable, setDisabled] = useState(false);
+    const [disable, setDisabled] = useState(false);
     async function handelLogout() {
-        // setDisabled(true)
-        disable = true
+        setDisabled(true)
+        // disable = true
         const id = toast.loading('Đang đăng xuất...');
         const { response, err } = await userApi.logOut();
         if (response) {
