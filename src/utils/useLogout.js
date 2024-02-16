@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import userApi from "~/api/module/user.api";
@@ -7,8 +7,6 @@ import { removeToken } from "~/redux/features/authSlice";
 import { removeFavorites } from "~/redux/features/favoritesSlice";
 import { loginOut } from "~/redux/features/userSlice";
 
-// let disable = false
-let isLogged = false
 export function useLogout() {
     const dispatch = useDispatch();
     const [disable, setDisabled] = useState(false);
@@ -18,10 +16,7 @@ export function useLogout() {
         const id = toast.loading('Đang đăng xuất...');
         const { response, err } = await userApi.logOut();
         if (response) {
-            // navigate(config.routes.home)
             // setTimeout(() => {
-            // setDisabled(false)
-            // disable.current = false
             dispatch(removeFavorites());
             dispatch(loginOut())
             dispatch(removeToken())
@@ -31,11 +26,9 @@ export function useLogout() {
                 isLoading: false,
                 autoClose: 3000,
             });
-            isLogged = true
             setTimeout(() => {
-                // window.location.href = "/";
+                window.location.href = "/";
             }, [500])
-            // navigate(0)
             // }, 2000)
         }
         if (err) {
@@ -51,12 +44,6 @@ export function useLogout() {
             });
         }
     }
-    console.log(disable);
-    useEffect(() => {
-        if (isLogged) {
-            window.location.href = "/";
-        }
-    })
     return {
         handelLogout,
         disable
