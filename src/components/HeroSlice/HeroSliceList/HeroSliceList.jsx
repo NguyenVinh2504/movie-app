@@ -6,7 +6,7 @@ import 'swiper/css/effect-fade';
 import { AboutIcon, PlayIcon } from '~/components/Icon';
 import uiConfigs from '~/config/ui.config';
 import tmdbConfigs from '~/api/configs/tmdb.configs';
-import HeroSliceSkeleton from '../HeroSliceSkeleton';
+import HeroSliceSkeleton from './HeroSliceSkeleton';
 import { Autoplay, EffectFade, Navigation } from 'swiper/modules';
 import SwiperNavigation from '~/components/SwiperNavigation';
 import Image from '~/components/Image';

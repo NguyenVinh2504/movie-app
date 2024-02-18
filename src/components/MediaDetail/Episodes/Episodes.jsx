@@ -1,4 +1,4 @@
-import { Divider, IconButton, Paper, Skeleton, Typography, useMediaQuery } from '@mui/material';
+import { Divider, IconButton, Skeleton, Typography } from '@mui/material';
 import ButtonSelector from './ButtonSlector';
 import { memo, useCallback, useEffect, useState } from 'react';
 import mediaApi from '~/api/module/media.api';
@@ -6,15 +6,16 @@ import { ArrowDownIcon, ArrowUpIcon } from '~/components/Icon';
 import EpisodesList from './EpisodesList';
 import { isEmpty } from 'lodash';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
+import WrapperMovieDetail from '../components/WrapperMovieDetail';
+import PropTypes from 'prop-types';
+import CategoryMovieDetail from '../components/CategoryMovieDetail';
 
-function Episodes({ seasons, seriesId, numberSeasonValue, isLoading }) {
-    const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-    const [numberSeason, setNumberSeason] = useState(null);
+function Episodes({ seasons = [], seriesId, isLoading }) {
+    const [selectedIndex, setSelectedIndex] = useState(0);
     const [visible, setVisible] = useState(4);
     const [moreButton, setMoreButton] = useState(false);
-
     const handleSetSeasonNumber = useCallback((number) => {
-        setNumberSeason(number);
+        setSelectedIndex(number);
         setVisible(4);
         setMoreButton(false);
     }, []);
@@ -22,7 +23,7 @@ function Episodes({ seasons, seriesId, numberSeasonValue, isLoading }) {
     const getDataDetailSeason = async () => {
         const { response, err } = await mediaApi.getDetailSeason({
             series_id: seriesId,
-            season_number: numberSeason ?? numberSeasonValue,
+            season_number: seasons[selectedIndex]?.season_number,
         });
         if (response) {
             return response;
@@ -30,14 +31,18 @@ function Episodes({ seasons, seriesId, numberSeasonValue, isLoading }) {
         if (err) throw err;
     };
 
-    const { data: seasonDetailValue, isFetching, isPlaceholderData } = useQuery({
-        queryKey: ['episodes', numberSeason ?? numberSeasonValue, seriesId],
+    const {
+        data: seasonDetailValue,
+        isFetching,
+        // isPlaceholderData,
+    } = useQuery({
+        queryKey: ['episodes', seasons[selectedIndex]?.season_number, seriesId],
         queryFn: getDataDetailSeason,
         enabled: !isEmpty(seasons),
-        placeholderData: keepPreviousData
+        placeholderData: keepPreviousData,
     });
 
-    console.log('isPlaceholderData',isPlaceholderData, 'isFetching',isFetching, 'data', seasonDetailValue);
+    // console.log('isPlaceholderData', isPlaceholderData, 'isFetching', isFetching, 'data', seasonDetailValue);
     const handleShowMoreItems = () => {
         if (visible < seasonDetailValue?.episodes?.length) {
             setVisible(seasonDetailValue?.episodes?.length < 50 ? seasonDetailValue?.episodes?.length : visible + 10);
@@ -48,7 +53,7 @@ function Episodes({ seasons, seriesId, numberSeasonValue, isLoading }) {
         setVisible(4);
         setMoreButton(false);
     };
-    
+
     useEffect(() => {
         if (visible >= seasonDetailValue?.episodes?.length) {
             setMoreButton(true);
@@ -56,14 +61,18 @@ function Episodes({ seasons, seriesId, numberSeasonValue, isLoading }) {
     }, [seasonDetailValue?.episodes?.length, visible]);
 
     return (
-        <Paper variant="outlined" sx={{ mt: 1, p: 2 }}>
-            <Typography variant={pointDownSm ? 'h6' : 'h5'} mb={1} fontWeight={'500'}>
-                Tập phim
-            </Typography>
+        <WrapperMovieDetail>
+            <CategoryMovieDetail valueTitle={'Tập Phim'} />
+            {!isEmpty(seasons) && (
+                <ButtonSelector
+                    seasons={seasons}
+                    onSeasonNumber={handleSetSeasonNumber}
+                    selectedIndex={selectedIndex}
+                />
+            )}
             {!isLoading && !isFetching && isEmpty(seasonDetailValue) && (
                 <Typography variant={'body1'}>Không có nội dung</Typography>
             )}
-            {!isEmpty(seasons) && <ButtonSelector seasons={seasons} onSeasonNuber={handleSetSeasonNumber} />}
             {(isLoading || isFetching) &&
                 Array(4)
                     .fill(0)
@@ -102,8 +111,12 @@ function Episodes({ seasons, seriesId, numberSeasonValue, isLoading }) {
                 </Divider>
             )}
             {/* them tap phim */}
-        </Paper>
+        </WrapperMovieDetail>
     );
 }
-
+Episodes.propTypes = {
+    seasons: PropTypes.array.isRequired,
+    seriesId: PropTypes.number.isRequired,
+    isLoading: PropTypes.bool.isRequired,
+};
 export default memo(Episodes);

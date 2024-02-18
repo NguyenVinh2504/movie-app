@@ -26,7 +26,7 @@ function MainLayout() {
         if (response) return response;
         if (err) throw err;
     };
-    const { data, isLoading, error } = useQuery({
+    const { data, error } = useQuery({
         queryKey: ['user info'],
         queryFn: fetchApi,
         placeholderData: keepPreviousData,
@@ -37,10 +37,10 @@ function MainLayout() {
         retry: 0,
         // enabled: Boolean(token)
     });
-    console.log('data user 1', data, 'isLoading', isLoading);
+    // console.log('data user 1', data, 'isLoading', isLoading);
     useEffect(() => {
         if (data) {
-            console.log('data user', data);
+            // console.log('data user', data);
             const { favorites, ...user } = data;
             dispatch(updateUser(user));
             dispatch(setFavorites(favorites));

@@ -22,7 +22,7 @@ function HeroSlice() {
     const { data: medias, isLoading, isError } = useQuery({
         queryKey: ['Hero slice', mediaType ?? 'all'],
         queryFn: getDataSearch,
-        placeholderData: keepPreviousData
+        placeholderData: keepPreviousData,
     });
     // console.log('data', medias,'isFetching', isPlaceholderData);
 

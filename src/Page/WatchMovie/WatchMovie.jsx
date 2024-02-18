@@ -35,11 +35,12 @@ const WatchMovie = () => {
                     <iframe
                         src={
                             movieId
-                                ? `https://vidsrc.to/embed/movie/${movieId}`
-                                : `https://vidsrc.to/embed/tv/${showId}/${ssId}/${epId}`
+                                ? `https://vidsrc.xyz/embed/movie/${movieId}`
+                                : `https://vidsrc.xyz/embed/tv?tmdb=${showId}&season=${ssId}&episode=${epId}`
                         }
-                        title="W3Schools Free Online Web Tutorials"
+                        title='watch'
                         allowFullScreen={true}
+                        referrerpolicy="origin"
                         // sandbox="allow-modals allow-orientation-lock allow-pointer-lock allow-presentation allow-scripts allow-top-navigation allow-forms"
                         style={{ width: '100%', height: '100%', border: '0px' }}
                     ></iframe>

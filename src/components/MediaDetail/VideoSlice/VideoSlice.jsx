@@ -1,16 +1,15 @@
 import 'swiper/scss';
 import 'swiper/scss/navigation';
-import { Paper, Typography, useMediaQuery } from '@mui/material';
+import { Typography } from '@mui/material';
 import { memo } from 'react';
 import VideoSliceList from './VideoSliceList';
 import VideoSliceSkeleton from './VideoSliceSkeleton';
+import WrapperMovieDetail from '../components/WrapperMovieDetail';
+import CategoryMovieDetail from '../components/CategoryMovieDetail';
 function VideoSlice({ videos, loading }) {
-    const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     return (
-        <Paper variant='outlined' sx={{ mt: 1, p: 2 }}>
-            <Typography variant={pointDownSm ? 'h6' : 'h5'} mb={1} fontWeight={'500'}>
-                Trailer
-            </Typography>
+        <WrapperMovieDetail>
+            <CategoryMovieDetail valueTitle={'Trailer'} />
             {loading ? (
                 <VideoSliceSkeleton />
             ) : videos?.length !== 0 ? (
@@ -18,7 +17,7 @@ function VideoSlice({ videos, loading }) {
             ) : (
                 <Typography variant="subtitle1">Không có nội dung</Typography>
             )}
-        </Paper>
+        </WrapperMovieDetail>
     );
 }
 

@@ -16,7 +16,7 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
         genres: genres?.length !== 0 ? genres.join(', ') : undefined,
         runtime: dataDetail?.runtime ? `${dataDetail.runtime} minutes` : undefined,
     };
-console.log('title', genres, genres?.length, 'isLoading', loading);
+// console.log('title', genres, genres?.length, 'isLoading', loading);
     return (
         <Box sx={{ p: 2 }}>
             <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'} spacing={2}>

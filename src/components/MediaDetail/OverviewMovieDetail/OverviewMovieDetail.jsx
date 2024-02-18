@@ -1,6 +1,8 @@
 import { memo, useEffect, useRef, useState } from 'react';
-import { Box, Typography, useMediaQuery, Skeleton, Paper } from '@mui/material';
+import { Box, Typography, useMediaQuery, Skeleton } from '@mui/material';
 import uiConfigs from '~/config/ui.config';
+import WrapperMovieDetail from '../components/WrapperMovieDetail';
+import CategoryMovieDetail from '../components/CategoryMovieDetail';
 function OverviewMovieDetail({ loading, dataDetail }) {
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const [seeMore, setSeeMore] = useState(false);
@@ -12,10 +14,8 @@ function OverviewMovieDetail({ loading, dataDetail }) {
         }
     }, [loading]);
     return (
-        <Paper variant="outlined" sx={{ mt: 1, p: 2 }}>
-            <Typography variant={pointDownSm ? 'h6' : 'h5'} fontWeight={'500'}  mb={1}>
-                Mô tả
-            </Typography>
+        <WrapperMovieDetail>
+            <CategoryMovieDetail valueTitle={'Mô Tả'} />
             {loading ? (
                 <Skeleton variant="rounded" height={'150px'} width={'100%'} />
             ) : (
@@ -25,9 +25,7 @@ function OverviewMovieDetail({ loading, dataDetail }) {
                         variant={pointDownSm ? 'body2' : 'body1'}
                         sx={{ ...uiConfigs.style.typoLines(seeMore ? 'none' : 2) }}
                     >
-                        {dataDetail.overview !== '' || dataDetail.overview === null
-                            ? dataDetail.overview
-                            : 'Không có nội dung'}
+                        {dataDetail?.overview ? dataDetail.overview : 'Không có nội dung'}
                     </Typography>
                     {heightBody && (
                         <Typography variant={pointDownSm ? 'body2' : 'body1'} fontWeight={'500'}>
@@ -36,7 +34,7 @@ function OverviewMovieDetail({ loading, dataDetail }) {
                     )}
                 </Box>
             )}
-        </Paper>
+        </WrapperMovieDetail>
     );
 }
 

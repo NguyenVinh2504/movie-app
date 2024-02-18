@@ -67,7 +67,7 @@ function MediaListPage() {
     const handleLoadingMore = () => {
         fetchNextPage();
     };
-console.log('isFetchingNextPage', isFetchingNextPage, 'hasNextPage', hasNextPage);
+// console.log('isFetchingNextPage', isFetchingNextPage, 'hasNextPage', hasNextPage);
     return (
         <>
             <HeroSlice />

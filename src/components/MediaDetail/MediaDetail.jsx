@@ -1,5 +1,5 @@
 import { memo, useEffect, useState } from 'react';
-import { Modal, Box, Typography, Stack, IconButton, Fade, Paper } from '@mui/material';
+import { Modal, Box, Typography, Stack, IconButton, Fade } from '@mui/material';
 import { CloseIcon } from '../Icon';
 import CastSlice from './CastItem';
 import VideoSlice from './VideoSlice';
@@ -9,10 +9,9 @@ import { toggleDetail } from '~/redux/features/mediaDetailSlice';
 import Episodes from './Episodes';
 import uiConfigs from '~/config/ui.config';
 import mediaApi from '~/api/module/media.api';
-import BannerMovieDetail from './BannerMovieDetail';
-import TitleMovieDetail from './TitleMovieDetail';
 import OverviewMovieDetail from './OverviewMovieDetail';
 import { useQuery } from '@tanstack/react-query';
+import HeaderMovieDetail from './HeaderMovieDetail';
 
 function MovieDetail() {
     const [genres, setGenres] = useState([]);
@@ -30,21 +29,20 @@ function MovieDetail() {
         return response;
     };
 
-    const { data: dataDetail, isPending: loading } = useQuery({
+    const { data: dataDetail = {}, isPending: loading } = useQuery({
         queryKey: ['Media detail', param],
         queryFn: getDataDetail,
         enabled: Boolean(param),
-        
     });
 
     useEffect(() => {
-        if (dataDetail) {
+        if (dataDetail.genres) {
             const newGenres = dataDetail?.genres?.map((item) => item.name) || [];
             setGenres(newGenres);
         }
     }, [dataDetail]);
 
-    console.log('data', dataDetail, 'isPending', loading, 'isFetching', genres);
+    // console.log('data', dataDetail, 'isPending', loading, 'isFetching', genres);
 
     return (
         <Modal
@@ -108,33 +106,18 @@ function MovieDetail() {
                         }}
                     >
                         <Box px={1} mt={0}>
-                            <Paper variant="outlined" sx={{ overflow: 'hidden' }}>
-                                {/* poster */}
-                                <BannerMovieDetail
-                                    loading={loading}
-                                    dataDetail={dataDetail}
-                                    mediaType={param.mediaType}
-                                />
-                                {/* poster */}
-                                {/* thong tin phim */}
-                                <TitleMovieDetail
-                                    loading={loading}
-                                    dataDetail={dataDetail}
-                                    genres={genres}
-                                    mediaType={param?.mediaType}
-                                />
-                            </Paper>
+                            <HeaderMovieDetail
+                                loading={loading}
+                                dataDetail={dataDetail}
+                                genres={genres}
+                                mediaType={param?.mediaType}
+                            />
                             <OverviewMovieDetail loading={loading} dataDetail={dataDetail} />
                             {/* thong tin phim */}
 
                             {/* tap phim */}
                             {param.mediaType === 'tv' && (
-                                <Episodes
-                                    seasons={dataDetail?.seasons}
-                                    isLoading={loading}
-                                    seriesId={dataDetail?.id}
-                                    numberSeasonValue={dataDetail?.seasons && dataDetail?.seasons[0]?.season_number}
-                                />
+                                <Episodes seasons={dataDetail?.seasons} seriesId={dataDetail?.id} isLoading={loading} />
                             )}
                             {/* tap phim */}
 

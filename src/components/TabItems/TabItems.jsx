@@ -21,7 +21,7 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }
         color: theme.button.neutralButton.solid.textActive,
         fontWeight: '500',
         // backgroundColor: theme.button.neutralButton.solid.active,
-        backgroundColor: '#ffff'
+        backgroundColor: '#ffff',
     },
     [theme.breakpoints.down('sm')]: {
         fontSize: theme.typography.pxToRem(13),
@@ -34,7 +34,7 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }
 }));
 function TabItems({ contentItems, onCurrCategory }) {
     const [value, setValue] = useState(0);
-    const handleChange = (event, newValue) => {
+    const handleChange = (newValue) => {
         setValue(newValue);
     };
     return (
@@ -45,7 +45,7 @@ function TabItems({ contentItems, onCurrCategory }) {
                 aria-label="styled tabs example"
                 value={value}
                 onChange={(event, newValue) => {
-                    handleChange(event, newValue);
+                    handleChange(newValue);
                     onCurrCategory(newValue);
                 }}
                 selectionFollowsFocus={true}

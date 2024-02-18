@@ -4,18 +4,16 @@ import Menu from '@mui/material/Menu';
 import { Button } from '@mui/material';
 import { ArrowDownIcon, ArrowUpIcon } from '~/components/Icon';
 
-function ButtonSelector({ seasons, onSeasonNuber }) {
+function ButtonSelector({ seasons, selectedIndex, onSeasonNumber }) {
     const [anchorEl, setAnchorEl] = React.useState(null);
-    const [selectedIndex, setSelectedIndex] = React.useState(0);
     const open = Boolean(anchorEl);
 
     const handleClickListItem = (event) => {
         setAnchorEl(event.currentTarget);
     };
 
-    const handleMenuItemClick = (event, index, valueNumberSeason) => {
-        setSelectedIndex(index);
-        onSeasonNuber(valueNumberSeason);
+    const handleMenuItemClick = (index) => {
+        onSeasonNumber(index);
         setAnchorEl(null);
     };
 
@@ -79,7 +77,7 @@ function ButtonSelector({ seasons, onSeasonNuber }) {
                         key={option.season_number}
                         selected={index === selectedIndex}
                         disabled={index === selectedIndex}
-                        onClick={(event) => handleMenuItemClick(event, index, option.season_number)}
+                        onClick={() => handleMenuItemClick(index)}
                         sx={{ pr: 5.5 }}
                     >
                         {option.name}
