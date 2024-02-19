@@ -18,7 +18,7 @@ function MediaItems({ item, mediaType, checkedLike, favoriteStore }) {
             dispatch(toggleDetail(true));
             dispatch(
                 getIdDetail({
-                    mediaType: mediaType || item.media_type,
+                    mediaType: mediaType === 'all' ? item.media_type : mediaType,
                     id: item.id ?? item.mediaId,
                 }),
             );

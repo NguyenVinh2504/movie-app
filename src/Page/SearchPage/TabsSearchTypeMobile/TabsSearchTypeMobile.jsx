@@ -1,11 +1,13 @@
 import { Tab, Tabs } from '@mui/material';
 import { memo } from 'react';
+import { NavLink, createSearchParams, useLocation } from 'react-router-dom';
 import menuItemsSearch from '~/config/MenuItemsSearch';
 
-function TabsSearchTypeMobile({ value, onListItemClick }) {
+function TabsSearchTypeMobile({ valueInput }) {
+    const location = useLocation();
     return (
         <Tabs
-            value={value}
+            value={location.pathname}
             variant="scrollable"
             scrollButtons="auto"
             aria-label="basic tabs example"
@@ -21,7 +23,9 @@ function TabsSearchTypeMobile({ value, onListItemClick }) {
                     key={index}
                     disableRipple
                     label={item.title}
-                    onClick={() => onListItemClick(index)}
+                    to={`${item.path}?${createSearchParams({ query: valueInput })}`}
+                    value={item.path}
+                    component={NavLink}
                     sx={{
                         color: '#a6a4a4',
                         '&.Mui-selected': {

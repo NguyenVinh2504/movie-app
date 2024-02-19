@@ -1,6 +1,9 @@
+
 export const homeTabItems = [
     {
         name: 'Thịnh Hành',
+        mediaType: 'all',
+        mediaCategory: 'day',
     },
     {
         name: 'Phim Lẻ Mới Nhất',
@@ -23,3 +26,8 @@ export const homeTabItems = [
         mediaCategory: 'popular',
     },
 ];
+
+homeTabItems.forEach((item) => {
+    const path = `/home/${item.mediaType}/${item.mediaCategory}`;
+    item['path'] = path;
+});

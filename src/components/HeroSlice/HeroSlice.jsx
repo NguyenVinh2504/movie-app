@@ -2,12 +2,10 @@ import { useDispatch } from 'react-redux';
 import { getIdDetail, toggleDetail } from '~/redux/features/mediaDetailSlice';
 import { memo } from 'react';
 import mediaApi from '~/api/module/media.api';
-import { useParams } from 'react-router-dom';
 import HeroSliceList from './HeroSliceList';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 
-function HeroSlice() {
-    const { mediaType } = useParams();
+function HeroSlice({mediaType}) {
 
     const getDataSearch = async ({ queryKey }) => {
         const mediaType = queryKey[1];

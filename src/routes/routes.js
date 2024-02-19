@@ -13,12 +13,17 @@ import MediaListPage from '~/Page/MediaListPage/MediaListPage';
 import ForgotPassword from '~/Page/ForgotPassword/ForgotPassword';
 import WatchMovie from '~/Page/WatchMovie/WatchMovie';
 import { MainLayout } from '~/Layout';
+import { Navigate } from 'react-router-dom';
 export const routesMainLayout = [
     {
         element: <MainLayout />,
         children: [
             {
-                path: config.routes.home,
+                path: '/',
+                element: <Navigate to={config.routes.home}/>,
+            },
+            {
+                path: config.routes.homeList,
                 element: <Home />,
             },
             {
@@ -30,7 +35,7 @@ export const routesMainLayout = [
                 element: <MediaListPage />,
             },
             {
-                path: config.routes.search,
+                path: config.routes.searchPage,
                 element: <SearchPage />,
             },
             {

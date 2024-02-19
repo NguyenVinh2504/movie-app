@@ -1,6 +1,7 @@
 import { Tab, Tabs, styled, tabsClasses, Box } from '@mui/material';
 // import { TabList } from '@mui/lab';
-import { memo, useState } from 'react';
+import { memo } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 const StyledTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }) => ({
     textTransform: 'none',
     fontWeight: theme.typography.fontWeightRegular,
@@ -32,22 +33,24 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }
         marginRight: theme.spacing(1),
     },
 }));
-function TabItems({ contentItems, onCurrCategory }) {
-    const [value, setValue] = useState(0);
-    const handleChange = (newValue) => {
-        setValue(newValue);
-    };
+function TabItems({ contentItems }) {
+    // const [value, setValue] = useState(0);
+    // const handleChange = (newValue) => {
+    //     setValue(newValue);
+    // };
+    const location = useLocation();
+    console.log(location.pathname + location.search);
     return (
         <Box sx={{ mt: 5, mb: 2 }}>
             <Tabs
                 variant="scrollable"
                 // allowScrollButtonsMobile
                 aria-label="styled tabs example"
-                value={value}
-                onChange={(event, newValue) => {
-                    handleChange(newValue);
-                    onCurrCategory(newValue);
-                }}
+                value={location.pathname}
+                // onChange={(event, newValue) => {
+                //     // handleChange(newValue);
+                //     // onCurrCategory(newValue);
+                // }}
                 selectionFollowsFocus={true}
                 scrollButtons="auto"
                 sx={{
@@ -68,9 +71,18 @@ function TabItems({ contentItems, onCurrCategory }) {
                     },
                 }}
             >
-                {contentItems.map((item, index) => (
-                    <StyledTab disableRipple key={index} label={item.name} />
-                ))}
+                {contentItems.map((item, index) => {
+                    return (
+                        <StyledTab
+                            disableRipple
+                            key={index}
+                            label={item.name}
+                            to={item.path}
+                            value={item.path}
+                            component={NavLink}
+                        />
+                    );
+                })}
             </Tabs>
         </Box>
     );

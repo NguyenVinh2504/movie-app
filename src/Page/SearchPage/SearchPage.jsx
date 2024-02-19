@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
+import React, { useEffect, useRef, useState } from 'react';
+import { useParams, useSearchParams } from 'react-router-dom';
 import { Box, Container, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
 import { debounce } from 'lodash';
 import { useInfiniteQuery, keepPreviousData } from '@tanstack/react-query';
@@ -7,21 +7,19 @@ import mediaApi from '~/api/module/media.api';
 import Search from './Search';
 import TabsSearchTypeMobile from './TabsSearchTypeMobile';
 import TabsSearch from './TabsSearch';
-import menuItemsSearch from '~/config/MenuItemsSearch';
 import images from '~/assets/image';
 import uiConfigs from '~/config/ui.config';
 import MediaGrid from '~/components/Media/MediaGrid';
-
 
 function SearchPage() {
     const isLgDown = useMediaQuery((theme) => theme.breakpoints.down('lg'));
     const isSmDown = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const [valueInput, setValueInput] = useState(null);
-    const [selectedIndex, setSelectedIndex] = useState(0);
+    // const [selectedIndex, setSelectedIndex] = useState(0);
 
     const [searchParams] = useSearchParams();
     const query = searchParams.get('query');
-
+    const { mediaType } = useParams();
     const setValue = useRef(
         debounce((query) => {
             setValueInput(query);
@@ -48,25 +46,25 @@ function SearchPage() {
         fetchNextPage();
     };
 
-    const handleListItemClick = useCallback(
-        (index) => {
-            if (selectedIndex === index) return;
-            setSelectedIndex(index);
-        },
-        [selectedIndex],
-    );
+    // const handleListItemClick = useCallback(
+    //     (index) => {
+    //         if (selectedIndex === index) return;
+    //         setSelectedIndex(index);
+    //     },
+    //     [selectedIndex],
+    // );
 
     const { data, isLoading, isFetchingNextPage, isError, fetchNextPage, hasNextPage } = useInfiniteQuery({
-        queryKey: [menuItemsSearch[selectedIndex].type, valueInput],
+        queryKey: [mediaType, valueInput],
         queryFn: ({ queryKey, pageParam }) => fetchData({ queryKey, pageParam }),
         getNextPageParam: (lastPage) => {
             return lastPage.page === lastPage.total_pages ? undefined : lastPage.page + 1;
         },
-        enabled: valueInput !== null,
+        enabled: Boolean(valueInput),
         initialPageParam: 1,
         placeholderData: keepPreviousData,
     });
-
+    console.log(valueInput);
     return (
         <Container maxWidth="xl">
             {isLgDown && (
@@ -79,7 +77,7 @@ function SearchPage() {
                 {/* Tab type search */}
                 {!isSmDown && (
                     <Grid item xs={12} sm={4} md={3} lg={2.5} xl={2}>
-                        <TabsSearch value={selectedIndex} onListItemClick={handleListItemClick} />
+                        <TabsSearch valueInput={valueInput} />
                     </Grid>
                 )}
                 {/* Tab type search */}
@@ -87,7 +85,7 @@ function SearchPage() {
                 {/* Tab type search mobile */}
                 {isSmDown && (
                     <Grid item xs={12}>
-                        <TabsSearchTypeMobile value={selectedIndex} onListItemClick={handleListItemClick} />
+                        <TabsSearchTypeMobile valueInput={valueInput}/>
                     </Grid>
                 )}
                 {/* Tab type search mobile */}
@@ -110,7 +108,7 @@ function SearchPage() {
                             <MediaGrid
                                 isLoadingButton={!isFetchingNextPage && hasNextPage && !isLoading}
                                 isLoadingSekeleton={isLoading || isFetchingNextPage || isError}
-                                mediaType={menuItemsSearch[selectedIndex].type}
+                                mediaType={mediaType}
                                 medias={data}
                                 onLoadingMore={handleLoadMore}
                             />

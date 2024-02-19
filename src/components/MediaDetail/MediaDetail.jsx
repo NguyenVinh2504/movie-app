@@ -117,7 +117,7 @@ function MovieDetail() {
 
                             {/* tap phim */}
                             {param.mediaType === 'tv' && (
-                                <Episodes seasons={dataDetail?.seasons} seriesId={dataDetail?.id} isLoading={loading} />
+                                <Episodes seasons={dataDetail?.seasons ?? []} seriesId={dataDetail?.id ?? Number('')} isLoading={loading} />
                             )}
                             {/* tap phim */}
 

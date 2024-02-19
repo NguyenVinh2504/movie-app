@@ -1,12 +1,25 @@
+import { homeTabItems } from '~/config/HomeTabMenuItems/HomeTabMenuItems';
+import { MovieTabItems } from '~/config/MovieTabMenuItems/MovieTabMenuItems';
+import { TvTabItems } from '~/config/TvShowTabMenuItems/TvShowTabMenuItems';
+
 const routes = {
-    normal: '/',
-    home: '/',
+    homeList: '/home/:mediaType/:category',
+    home: homeTabItems[0].path,
     aboutUs: '/about',
-    movie: '/movie',
-    topRateMovie: '/movie/top-rate',
-    tv: '/tv',
-    mediaList: '/:mediaType',
-    search: '/search',
+    mediaList: '/:mediaType/:key/:category',
+    movie: MovieTabItems[0].path,
+    tv: TvTabItems[0].path,
+    homeCategory: {
+        trending: "/home/all/day",
+        nowPlaying: "/home/movie/now_playing",
+        airingToday: "/home/tv/airing_today",
+        popularMovie: "/home/movie/popular",
+        popularTv: "/home/tv/popular",
+    },
+
+    searchPage: '/search/:mediaType',
+    searchMovie: '/search/movie',
+    searchTv: '/search/tv',
     //profile
     profile: '/profile',
     favorite: '/profile/favorite',

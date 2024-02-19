@@ -103,7 +103,7 @@ function Header({ isLoading }) {
                                 display: { xs: 'block', lg: 'none' },
                             }}
                         >
-                            <NavLink to={config.routes.search}>
+                            <NavLink to={`${config.routes.searchMovie}?query=`}>
                                 <IconButton disableRipple color="neutral">
                                     <SearchIcon />
                                 </IconButton>

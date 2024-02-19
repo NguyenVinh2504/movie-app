@@ -40,11 +40,11 @@ function Search({ round }) {
         if (!value.startsWith(' ') && value.trim()) {
             setSearchValue(value);
             location({
-                pathname: config.routes.search,
+                pathname: config.routes.searchMovie,
                 search: `?${createSearchParams({ query: value })}`,
             });
         } else {
-            setSearchValue(value);
+            setSearchValue('');
             location(config.routes.home);
         }
     };

@@ -10,7 +10,7 @@ import WrapperMovieDetail from '../components/WrapperMovieDetail';
 import PropTypes from 'prop-types';
 import CategoryMovieDetail from '../components/CategoryMovieDetail';
 
-function Episodes({ seasons = [], seriesId, isLoading }) {
+function Episodes({ seasons, seriesId, isLoading }) {
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [visible, setVisible] = useState(4);
     const [moreButton, setMoreButton] = useState(false);

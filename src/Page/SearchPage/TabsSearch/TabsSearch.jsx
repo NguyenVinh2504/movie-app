@@ -1,8 +1,10 @@
 import { Box, List, ListItemButton, ListItemText, Typography } from '@mui/material';
 import { memo } from 'react';
+import { NavLink, createSearchParams, useLocation } from 'react-router-dom';
 import menuItemsSearch from '~/config/MenuItemsSearch';
 
-function TabsSearch({ value, onListItemClick }) {
+function TabsSearch({ valueInput }) {
+    const location = useLocation();
     return (
         <Box
             sx={{
@@ -16,7 +18,12 @@ function TabsSearch({ value, onListItemClick }) {
             </Typography>
             <List component="nav" aria-label="main mailbox folders" sx={{ py: 2 }}>
                 {menuItemsSearch.map((item, index) => (
-                    <ListItemButton selected={value === index} onClick={() => onListItemClick(index)} key={index}>
+                    <ListItemButton
+                        selected={location.pathname === item.path}
+                        key={index}
+                        component={NavLink}
+                        to={`${item.path}?${createSearchParams({ query: valueInput })}`}
+                    >
                         <Box sx={{ pr: 1 }}>{item.icon}</Box>
                         <ListItemText primary={item.title} />
                     </ListItemButton>
