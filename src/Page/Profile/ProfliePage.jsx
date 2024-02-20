@@ -17,6 +17,9 @@ function Profile() {
             location(config.routes.login);
         }
     }, [user, location]);
+    useEffect(() => {
+        document.title = 'Trang Cá Nhân';
+    }, []);
     return (
         <Wrapper>
             {/* head */}

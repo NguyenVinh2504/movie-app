@@ -16,12 +16,12 @@ export const homeTabItems = [
         mediaCategory: 'airing_today',
     },
     {
-        name: 'Phim Lẻ Phổ Biến',
+        name: 'Phim Lẻ Ưa Thích',
         mediaType: 'movie',
         mediaCategory: 'popular',
     },
     {
-        name: 'Phim Bộ Phổ Biến',
+        name: 'Phim Bộ Ưa Thích',
         mediaType: 'tv',
         mediaCategory: 'popular',
     },

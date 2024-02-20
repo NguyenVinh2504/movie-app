@@ -39,7 +39,7 @@ function TabItems({ contentItems }) {
     //     setValue(newValue);
     // };
     const location = useLocation();
-    console.log(location.pathname + location.search);
+    // console.log(location.pathname + location.search);
     return (
         <Box sx={{ mt: 5, mb: 2 }}>
             <Tabs
@@ -47,10 +47,10 @@ function TabItems({ contentItems }) {
                 // allowScrollButtonsMobile
                 aria-label="styled tabs example"
                 value={location.pathname}
-                // onChange={(event, newValue) => {
-                //     // handleChange(newValue);
-                //     // onCurrCategory(newValue);
-                // }}
+                onChange={(event, newValue) => {
+                    // handleChange(newValue);
+                    // onCurrCategory(newValue);
+                }}
                 selectionFollowsFocus={true}
                 scrollButtons="auto"
                 sx={{

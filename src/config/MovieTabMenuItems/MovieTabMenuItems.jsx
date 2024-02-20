@@ -1,18 +1,18 @@
 export const MovieTabItems = [
     {
-        name: 'Phổ biến',
+        name: 'Phim Ưa Thích',
         key: 'get-list',
         mediaCategory: 'popular',
         mediaType: 'movie',
     },
     {
-        name: 'Đang chiếu',
+        name: 'Phim Đang chiếu',
         key: 'get-list',
         mediaCategory: 'now_playing',
         mediaType: 'movie',
     },
     {
-        name: 'Top rate',
+        name: 'Phim Top rate',
         key: 'get-list',
         mediaCategory: 'top_rated',
         mediaType: 'movie',

@@ -2,19 +2,19 @@
 
 export const TvTabItems = [
     {
-        name: 'Phổ biến',
+        name: 'Phim Bộ Phổ biến',
         key: 'get-list',
         mediaCategory: 'popular',
         mediaType: 'tv',
     },
     {
-        name: 'Đang chiếu',
+        name: 'Phim Bộ Đang chiếu',
         key: 'get-list',
         mediaType: 'tv',
         mediaCategory: 'airing_today',
     },
     {
-        name: 'Top rate',
+        name: 'Phim Bộ Top rate',
         key: 'get-list',
         mediaCategory: 'top_rated',
         mediaType: 'tv',

@@ -18,25 +18,25 @@ import config from '.';
 
 export const menuItems = [
     {
-        title: 'Trang chủ',
+        title: 'Thịnh Hành',
         path: config.routes.home,
         icon: <HomeIcon />,
         iconActive: <HomeIconActive />,
     },
     {
-        title: 'Phim chiếu rạp',
+        title: 'Phim Lẻ Ưa Thích',
         path: config.routes.movie,
         icon: <MovieIcon />,
         iconActive: <MovieIconActive />,
     },
     {
-        title: 'Phim truyền hình',
+        title: 'Phim Bộ Ưa Thích',
         path: config.routes.tv,
         icon: <TvShowIcon />,
         iconActive: <TvShowIconActive />,
     },
     {
-        title: 'Giới thiệu',
+        title: 'Giới Thiệu',
         path: config.routes.aboutUs,
         icon: <AboutIcon />,
         iconActive: <AboutIconActive />,

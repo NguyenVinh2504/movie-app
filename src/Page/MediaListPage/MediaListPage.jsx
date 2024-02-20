@@ -7,6 +7,8 @@ import TabItems from '~/components/TabItems';
 import MediaGrid from '~/components/Media/MediaGrid';
 import { MovieTabItems } from '~/config/MovieTabMenuItems/MovieTabMenuItems';
 import { TvTabItems } from '~/config/TvShowTabMenuItems/TvShowTabMenuItems';
+import { useRef } from 'react';
+import { Helmet } from 'react-helmet';
 
 function MediaListPage() {
     const { mediaType, key, category } = useParams();
@@ -48,13 +50,37 @@ function MediaListPage() {
     const handleLoadingMore = () => {
         fetchNextPage();
     };
+    let title = useRef('');
+
     // console.log('isFetchingNextPage', isFetchingNextPage, 'hasNextPage', hasNextPage);
+    if (mediaType === 'movie') {
+        MovieTabItems.forEach((item) => {
+            if (category === item.mediaCategory || Number(category) === item.id) {
+                title.current = item.name;
+            }
+        });
+    } else {
+        TvTabItems.forEach((item) => {
+            if (category === item.mediaCategory || Number(category) === item.id) {
+                title.current = item.name;
+            }
+        });
+    }
 
     return (
         <>
+            <Helmet>
+                <title>{title.current}</title>
+                <meta
+                    name="description"
+                    content="Phim chiếu rạp mới nhất"
+                />
+            </Helmet>
             <HeroSlice mediaType={mediaType} />
             <Container maxWidth={'xl'} sx={{ px: '0' }}>
-                <TabItems contentItems={mediaType === 'movie' ? MovieTabItems : TvTabItems} />
+                <TabItems
+                    contentItems={mediaType === 'movie' ? MovieTabItems : TvTabItems}
+                />
                 <MediaGrid
                     isLoadingButton={!isFetchingNextPage && hasNextPage}
                     isLoadingSekeleton={isLoading || isFetchingNextPage || isError}

@@ -65,6 +65,9 @@ function SearchPage() {
         placeholderData: keepPreviousData,
     });
     console.log(valueInput);
+    useEffect(() => {
+        document.title = `Tìm kiếm: ${query}`;
+    }, [query]);
     return (
         <Container maxWidth="xl">
             {isLgDown && (
