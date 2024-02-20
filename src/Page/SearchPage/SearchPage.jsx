@@ -64,7 +64,6 @@ function SearchPage() {
         initialPageParam: 1,
         placeholderData: keepPreviousData,
     });
-    console.log(valueInput);
     useEffect(() => {
         document.title = `Tìm kiếm: ${query}`;
     }, [query]);

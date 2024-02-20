@@ -1,7 +1,8 @@
-import { Paper, Stack, Typography } from '@mui/material';
+import { Stack, Typography } from '@mui/material';
 
 import UpdatePassword from './UpdatePassword/UpdatePassword';
 import DeleteUser from './DeleteUser/DeleteUser';
+import PaperProfile from '../components/PaperProfile';
 
 function SettingCategory({ children }) {
     return (
@@ -11,15 +12,7 @@ function SettingCategory({ children }) {
     );
 }
 
-function ContainerSetting({ children }) {
-    return (
-        <Paper variant='outlined'>
-            {children}
-        </Paper>
-    );
-}
 function EditAccount() {
-    // const dispatch = useDispatch();
 
     return (
         <Stack spacing={2}>
@@ -27,13 +20,13 @@ function EditAccount() {
                 ⚠️Chỉ có thể thay đổi mật khẩu và xóa tài khoản đối với những tài khoản không đăng nhập bằng Google!
             </Typography>
             <SettingCategory>Thay đổi mật khẩu</SettingCategory>
-            <ContainerSetting>
+            <PaperProfile>
                 <UpdatePassword />
-            </ContainerSetting>
+            </PaperProfile>
             <SettingCategory>Xóa tài khoản</SettingCategory>
-            <ContainerSetting>
+            <PaperProfile>
                 <DeleteUser />
-            </ContainerSetting>
+            </PaperProfile>
         </Stack>
     );
 }

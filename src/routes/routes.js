@@ -20,7 +20,7 @@ export const routesMainLayout = [
         children: [
             {
                 path: '/',
-                element: <Navigate to={config.routes.home}/>,
+                element: <Navigate to={config.routes.home} replace/>,
             },
             {
                 path: config.routes.homeList,

@@ -1,4 +1,4 @@
-import { memo, useRef } from 'react';
+import { memo } from 'react';
 import { Container } from '@mui/material';
 import { useInfiniteQuery, keepPreviousData } from '@tanstack/react-query';
 import mediaApi from '~/api/module/media.api';
@@ -62,21 +62,18 @@ function Home() {
         fetchNextPage();
     };
     // console.log('!isPaused', !isPaused, '!isError', !isError);
-    let title = useRef('');
-    // useEffect(() => {
+    let title = '';
     homeTabItems.forEach((item) => {
         if (category === item.mediaCategory && mediaType === item.mediaType) {
             // document.title = item.name;
-            title.current = item.name;
+            title = item.name;
         }
     });
-    console.log(title.current);
-    // }, [category, mediaType]);
-    // console.log(title.current);
+    // console.log(title);
     return (
         <>
             <Helmet>
-                <title>{title.current}</title>
+                <title>{title}</title>
                 <meta
                     name="description"
                     content="Trang Viejoy là một trang web cung cấp cho người dùng khả năng xem phim trực tuyến. Trang web có một thư viện phim khổng lồ, bao gồm các bộ phim mới nhất, phim cũ, phim bom tấn, phim nghệ thuật,...Nguồn phim được cung cấp từ trang Themoviedb. Người dùng có thể tìm kiếm phim theo thể loại, quốc gia, diễn viên, đạo diễn,... và xem phim miễn phí."

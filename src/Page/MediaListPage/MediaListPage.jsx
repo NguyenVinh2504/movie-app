@@ -7,7 +7,6 @@ import TabItems from '~/components/TabItems';
 import MediaGrid from '~/components/Media/MediaGrid';
 import { MovieTabItems } from '~/config/MovieTabMenuItems/MovieTabMenuItems';
 import { TvTabItems } from '~/config/TvShowTabMenuItems/TvShowTabMenuItems';
-import { useRef } from 'react';
 import { Helmet } from 'react-helmet';
 
 function MediaListPage() {
@@ -50,19 +49,19 @@ function MediaListPage() {
     const handleLoadingMore = () => {
         fetchNextPage();
     };
-    let title = useRef('');
+    let title = '';
 
     // console.log('isFetchingNextPage', isFetchingNextPage, 'hasNextPage', hasNextPage);
     if (mediaType === 'movie') {
         MovieTabItems.forEach((item) => {
             if (category === item.mediaCategory || Number(category) === item.id) {
-                title.current = item.name;
+                title = item.name;
             }
         });
     } else {
         TvTabItems.forEach((item) => {
             if (category === item.mediaCategory || Number(category) === item.id) {
-                title.current = item.name;
+                title = item.name;
             }
         });
     }
@@ -70,7 +69,7 @@ function MediaListPage() {
     return (
         <>
             <Helmet>
-                <title>{title.current}</title>
+                <title>{title}</title>
                 <meta
                     name="description"
                     content="Phim chiếu rạp mới nhất"

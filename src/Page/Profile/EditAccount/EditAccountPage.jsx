@@ -1,4 +1,4 @@
-import { Box, Button, Divider, Grid, Paper, styled, useMediaQuery } from '@mui/material';
+import { Box, Button, Divider, Grid, styled, useMediaQuery } from '@mui/material';
 
 import { useState } from 'react';
 
@@ -17,6 +17,7 @@ import { toast } from 'react-toastify';
 
 import isEqual from 'lodash.isequal';
 import AvatarEdit from './AvatarEdit/AvatarEdit';
+import PaperProfile from '../components/PaperProfile';
 function EditAccount() {
     const [disable, setDisable] = useState(true);
 
@@ -30,8 +31,8 @@ function EditAccount() {
         },
         validationSchema: Yup.object({
             name: Yup.string()
-            // .min(8, 'Tên đăng nhập phải tối thiểu 8 kí tự')
-            .required('Không được để trống'),
+                // .min(8, 'Tên đăng nhập phải tối thiểu 8 kí tự')
+                .required('Không được để trống'),
             phone: Yup.number().typeError('Vui lòng nhập chữ số'),
         }),
         enableReinitialize: true,
@@ -69,7 +70,7 @@ function EditAccount() {
     ))(() => ({}));
 
     return (
-        <Paper variant="outlined" component={'form'} onSubmit={formik.handleSubmit}>
+        <PaperProfile component={'form'} onSubmit={formik.handleSubmit}>
             <Grid container spacing={2} p={2}>
                 <Grid item xs={12} sm={6}>
                     <InputProfile
@@ -111,12 +112,12 @@ function EditAccount() {
                 {disable && <CustomButton onClick={handleDisable}>Chỉnh sửa</CustomButton>}
                 {!disable && <CustomButton type="submit">Lưu chỉnh sửa</CustomButton>}
                 {!disable && (
-                    <CustomButton sx={{ ml: 2 }} onClick={handleCannel}>
+                    <Button variant="contained" color='secondary' size={pointDownSm ? 'small' : 'medium'} sx={{ ml: 2 }} onClick={handleCannel}>
                         Hủy chỉnh sửa
-                    </CustomButton>
+                    </Button>
                 )}
             </Box>
-        </Paper>
+        </PaperProfile>
     );
 }
 
