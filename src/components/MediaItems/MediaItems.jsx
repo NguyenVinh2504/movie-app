@@ -51,7 +51,7 @@ function MediaItems({ item, mediaType, checkedLike, favoriteStore }) {
                 cursor: 'pointer',
             }}
             onClick={() => {
-                if (id === item.id) return;
+                if (id === (item.id || item.mediaId)) return;
                 handleOpen({
                     id: item.id || item.mediaId,
                     mediaType: mediaType === 'all' ? item.media_type : mediaType,
@@ -100,7 +100,7 @@ function MediaItems({ item, mediaType, checkedLike, favoriteStore }) {
                     variant="subtitle1"
                     // onClick={handleOpen}
                     onClick={() => {
-                        if (id === item.id) return;
+                        if (id === (item.id || item.mediaId)) return;
                         handleOpen({
                             id: item.id || item.mediaId,
                             mediaType: mediaType === 'all' ? item.media_type : mediaType,
