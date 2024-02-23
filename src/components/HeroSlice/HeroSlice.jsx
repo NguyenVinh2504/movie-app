@@ -4,6 +4,7 @@ import { memo } from 'react';
 import mediaApi from '~/api/module/media.api';
 import HeroSliceList from './HeroSliceList';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
+import { createSearchParams, useNavigate } from 'react-router-dom';
 
 function HeroSlice({mediaType}) {
 
@@ -25,8 +26,12 @@ function HeroSlice({mediaType}) {
     // console.log('data', medias,'isFetching', isPlaceholderData);
 
     const dispatch = useDispatch();
+    const location = useNavigate();
 
     const handleOpen = (item) => {
+        location({
+            search: createSearchParams({ detailId: '1111', detailType: 'movie' }),
+        });
         dispatch(toggleDetail(true));
         dispatch(
             getIdDetail({
@@ -35,7 +40,7 @@ function HeroSlice({mediaType}) {
             }),
         );
     };
-    return <HeroSliceList onOpen={handleOpen} medias={medias?.results} isLoading={isLoading || isError } />;
+    return <HeroSliceList onOpen={handleOpen} medias={medias?.results} isLoading={isLoading || isError } mediaType={mediaType} />;
 }
 
 export default memo(HeroSlice);

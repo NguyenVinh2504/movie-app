@@ -70,16 +70,11 @@ function MediaListPage() {
         <>
             <Helmet>
                 <title>{title}</title>
-                <meta
-                    name="description"
-                    content="Phim chiếu rạp mới nhất"
-                />
+                <meta name="description" content="Phim chiếu rạp mới nhất" />
             </Helmet>
             <HeroSlice mediaType={mediaType} />
             <Container maxWidth={'xl'} sx={{ px: '0' }}>
-                <TabItems
-                    contentItems={mediaType === 'movie' ? MovieTabItems : TvTabItems}
-                />
+                <TabItems contentItems={mediaType === 'movie' ? MovieTabItems : TvTabItems} />
                 <MediaGrid
                     isLoadingButton={!isFetchingNextPage && hasNextPage}
                     isLoadingSekeleton={isLoading || isFetchingNextPage || isError}

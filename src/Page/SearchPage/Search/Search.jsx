@@ -1,48 +1,47 @@
 import Input from '~/components/Input';
 import { CloseIcon, SearchIcon } from '~/components/Icon';
-import { useEffect, useState } from 'react';
-import { createSearchParams, useLocation, useNavigate } from 'react-router-dom';
-// import config from '~/config';
+import { memo } from 'react';
+import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
+import config from '~/config';
+import { useQueryConfig } from '~/Hooks';
+// import { useDebounce } from '~/Hooks';
 function Search({ round }) {
     const props = {
         round,
     };
-    const [searchValue, setSearchValue] = useState('');
-    const location = useLocation();
-    const navigate = useNavigate();
-    useEffect(() => {
-        const parts = location.search.split('=');
-        // parts[1] sẽ là "name=John Doe&age=21"
-        const param = parts[1];
-        if (!param) {
-            setSearchValue('');
-        }
-    }, [location.search]);
+
+    // const [searchValue, setSearchValue] = useState('');
+    const [, setSearchParams] = useSearchParams();
+
+    const location = useNavigate();
+    const { query } = useQueryConfig();
     const handleChange = (e) => {
-        const searchValue = e.target.value;
-        if (!searchValue.startsWith(' ')) {
-            setSearchValue(searchValue);
-            if (searchValue.trim()) {
-                navigate({
-                    search: `?${createSearchParams({ query: searchValue })}`,
-                });
-            } else if (!searchValue.trim()) {
-                navigate({
-                    search: `?${createSearchParams({ query: '' })}`,
-                });
-            }
+        const value = e.target.value;
+        if (!value.startsWith(' ') && value.trim()) {
+            location({
+                pathname: config.routes.searchMovie,
+                search: createSearchParams({ query: value }).toString(),
+            });
+        } else {
+            setSearchParams('');
         }
     };
+
     const handleClear = () => {
-        setSearchValue('');
+        // setSearchValue('');
+        // location({
+        //     search: `?${createSearchParams({ query: '' })}`,
+        // });
+        setSearchParams('');
     };
+    let valueSearch = query ?? '';
     return (
         <Input
             {...props}
             leftIcon={<SearchIcon />}
             rightIcon={<CloseIcon />}
             inputEvent={{
-                value: searchValue,
+                value: valueSearch,
                 onChange: handleChange,
             }}
             iconRightEvent={{
@@ -52,4 +51,4 @@ function Search({ round }) {
     );
 }
 
-export default Search;
+export default memo(Search);

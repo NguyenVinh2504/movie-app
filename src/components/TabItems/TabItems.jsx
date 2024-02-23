@@ -34,12 +34,7 @@ const StyledTab = styled((props) => <Tab disableRipple {...props} />)(({ theme }
     },
 }));
 function TabItems({ contentItems }) {
-    // const [value, setValue] = useState(0);
-    // const handleChange = (newValue) => {
-    //     setValue(newValue);
-    // };
     const location = useLocation();
-    // console.log(location.pathname + location.search);
     return (
         <Box sx={{ mt: 5, mb: 2 }}>
             <Tabs

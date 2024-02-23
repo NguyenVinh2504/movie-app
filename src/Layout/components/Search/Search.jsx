@@ -1,56 +1,42 @@
 import Input from '~/components/Input';
 import { CloseIcon, SearchIcon } from '~/components/Icon';
-import { useState, memo } from 'react';
-import { createSearchParams, useNavigate } from 'react-router-dom';
+import { memo } from 'react';
+import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
 import config from '~/config';
+import { useQueryConfig } from '~/Hooks';
 // import { useDebounce } from '~/Hooks';
 function Search({ round }) {
     const props = {
         round,
     };
 
-    const [searchValue, setSearchValue] = useState('');
-    // const [toPageSearch, setToPageSearch] = useState(false);
-    const location = useNavigate();
-    // const debounce = useDebounce(searchValue, 100);
-    // useEffect(() => {
-    //     if (pathname !== config.routes.search) setToPageSearch(false);
-    // }, [pathname]);
-    // useEffect(() => {
-    //     if (debounce !== '') setToPageSearch(true);
-    // }, [debounce]);
-    // useEffect(() => {
-    //     if (!searchValue.trim() && pathname === config.routes.search) {
-    //         location(config.routes.home);
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [searchValue]);
+    // const [searchValue, setSearchValue] = useState('');
+    const [, setSearchParams] = useSearchParams();
 
-    // useEffect(() => {
-    //     if (searchValue.trim()) {
-    //         location({
-    //             pathname: config.routes.search,
-    //             search: `?${createSearchParams({ query: searchValue })}`,
-    //         });
-    //     }
-    //     // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [searchValue]);
+    const location = useNavigate();
+    const { query } = useQueryConfig();
+
     const handleChange = (e) => {
         const value = e.target.value;
         if (!value.startsWith(' ') && value.trim()) {
-            setSearchValue(value);
             location({
                 pathname: config.routes.searchMovie,
-                search: `?${createSearchParams({ query: value })}`,
+                search: createSearchParams({ query: value }).toString(),
             });
         } else {
-            setSearchValue('');
             location(config.routes.home);
         }
     };
+
     const handleClear = () => {
-        setSearchValue('');
+        // setSearchValue('');
+        // location({
+        //     search: `?${createSearchParams({ query: '' })}`,
+        // });
+        setSearchParams('');
     };
+    let valueSearch = query ?? '';
+    // console.log(Object.fromEntries([...searchParams]));
     return (
         <Input
             {...props}
@@ -58,7 +44,7 @@ function Search({ round }) {
             rightIcon={<CloseIcon />}
             // ref={inputRef}
             inputEvent={{
-                value: searchValue,
+                value: valueSearch,
                 onChange: handleChange,
             }}
             placeholder={'Tìm kiếm'}

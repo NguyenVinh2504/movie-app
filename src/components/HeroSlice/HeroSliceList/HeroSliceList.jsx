@@ -11,9 +11,10 @@ import { Autoplay, EffectFade, Navigation } from 'swiper/modules';
 import SwiperNavigation from '~/components/SwiperNavigation';
 import Image from '~/components/Image';
 import config from '~/config';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useSearchParams } from 'react-router-dom';
+import { useQueryConfig } from '~/Hooks';
 
-function HeroSliceList({ isLoading, medias, onOpen }) {
+function HeroSliceList({ isLoading, medias, onOpen, mediaType }) {
     const pointDownLg = useMediaQuery((theme) => theme.breakpoints.down('lg'));
     const pointDownMd = useMediaQuery((theme) => theme.breakpoints.down('md'));
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
@@ -27,6 +28,16 @@ function HeroSliceList({ isLoading, medias, onOpen }) {
             },
         },
     }));
+    const queryConfig = useQueryConfig();
+    const { id } = queryConfig;
+    const [, setSearchParams] = useSearchParams();
+    const handleOpen = ({ id, mediaType }) => {
+        setSearchParams({
+            category: 'detail',
+            media_type: mediaType,
+            id: id,
+        });
+    };
     return (
         <>
             <SwiperNavigation>
@@ -185,7 +196,22 @@ function HeroSliceList({ isLoading, medias, onOpen }) {
                                                         <CustomButton
                                                             color="secondary"
                                                             startIcon={<AboutIcon />}
-                                                            onClick={() => onOpen(item)}
+                                                            onClick={() => {
+                                                                if (id === item.id) return;
+                                                                handleOpen({
+                                                                    id: item.id,
+                                                                    mediaType:
+                                                                        mediaType === 'all'
+                                                                            ? item.media_type
+                                                                            : mediaType,
+                                                                });
+                                                            }}
+                                                            // component={NavLink}
+                                                            // to={
+                                                            //     mediaType === 'all'
+                                                            //         ? `modal/${item.media_type}/${item.id}`
+                                                            //         : `modal/${mediaType}/${item.id}`
+                                                            // }
                                                         >
                                                             Chi tiết
                                                         </CustomButton>

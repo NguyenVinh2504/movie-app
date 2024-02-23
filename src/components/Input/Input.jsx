@@ -1,6 +1,7 @@
 import { Box, Stack, Typography } from '@mui/material';
-import { forwardRef } from 'react';
+import { forwardRef, useState } from 'react';
 import { memo } from 'react';
+import { EyeIcon, EyeSlashIcon } from '../Icon';
 const root = {
     backgroundprimary: '#0c0a0a',
     primary: '#ec0101',
@@ -35,6 +36,10 @@ const Input = forwardRef(
         },
         ref,
     ) => {
+        const [openEye, setOpenEye] = useState(false);
+        const toggleEye = () => {
+            setOpenEye((prev) => !prev);
+        };
         return (
             <Stack sx={{ width: '100%' }} spacing={0.5}>
                 <Box
@@ -42,6 +47,7 @@ const Input = forwardRef(
                         backgroundColor: disable ? root.backgroundDisableInput : root.backgroundDefaultInput,
                         pointerEvents: disable && 'none',
                         display: 'flex',
+                        alignItems: 'center',
                         width: '100%',
                         borderRadius: round ? '100px' : 1,
                         position: 'relative',
@@ -80,6 +86,7 @@ const Input = forwardRef(
                         spellCheck={false}
                         {...inputEvent}
                         {...props}
+                        type={openEye ? 'text' : props?.type}
                         ref={ref}
                         style={{
                             'input[type="number" i]': {
@@ -88,6 +95,11 @@ const Input = forwardRef(
                         }}
                         autoComplete="off"
                     ></input>
+                    {props?.type === 'password' && (
+                        <Box component={'span'} sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={toggleEye}>
+                            {!openEye ? <EyeIcon /> : <EyeSlashIcon/>}
+                        </Box>
+                    )}
                     {rightIcon && (
                         <button {...iconRightEvent}>
                             <Box component={'span'} sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>

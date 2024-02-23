@@ -1,28 +1,41 @@
 import React, { memo } from 'react';
 import { Box, Typography, Stack } from '@mui/material';
-import { useDispatch } from 'react-redux';
-import { getIdDetail, toggleDetail } from '~/redux/features/mediaDetailSlice';
 import uiConfigs from '~/config/ui.config';
 import tmdbConfigs from '~/api/configs/tmdb.configs';
 import images from '~/assets/image';
 import Image from '../Image';
 import FavoriteButton from '../FavoriteButton';
 import theme from '~/theme';
-import StarIcon from '../Icon/Icon';
+import { StarIcon } from '../Icon/Icon';
+import { useSearchParams } from 'react-router-dom';
+import { useQueryConfig } from '~/Hooks';
 
 function MediaItems({ item, mediaType, checkedLike, favoriteStore }) {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
-    const handleOpen = () => {
-        if (item.media_type !== 'person') {
-            dispatch(toggleDetail(true));
-            dispatch(
-                getIdDetail({
-                    mediaType: mediaType === 'all' ? item.media_type : mediaType,
-                    id: item.id ?? item.mediaId,
-                }),
-            );
-        }
+    // const handleOpen = () => {
+    //     if (item.media_type !== 'person') {
+    //         dispatch(toggleDetail(true));
+    //         dispatch(
+    //             getIdDetail({
+    //                 mediaType: mediaType === 'all' ? item.media_type ?? item.mediaId : mediaType,
+    //                 id: item.id ?? item.mediaId,
+    //             }),
+    //         );
+    //     }
+    // };
+
+    const queryConfig = useQueryConfig();
+    const { id } = queryConfig;
+    const [, setSearchParams] = useSearchParams();
+
+    const handleOpen = ({ id, mediaType }) => {
+        setSearchParams({
+            ...queryConfig,
+            category: 'detail',
+            media_type: mediaType,
+            id: id,
+        });
     };
 
     const renderPoster = () => (
@@ -37,8 +50,18 @@ function MediaItems({ item, mediaType, checkedLike, favoriteStore }) {
                 alignItems: 'center',
                 cursor: 'pointer',
             }}
-            component={'button'}
-            onClick={handleOpen}
+            onClick={() => {
+                if (id === item.id) return;
+                handleOpen({
+                    id: item.id || item.mediaId,
+                    mediaType: mediaType === 'all' ? item.media_type : mediaType,
+                });
+            }}
+            // to={
+            //     mediaType === 'all'
+            //         ? `modal/${item.media_type}/${item.id ?? item.mediaId}`
+            //         : `modal/${mediaType}/${item.id ?? item.mediaId}`
+            // }
         >
             <Box
                 sx={{
@@ -75,7 +98,14 @@ function MediaItems({ item, mediaType, checkedLike, favoriteStore }) {
             <Stack direction={'column'} spacing={0}>
                 <Typography
                     variant="subtitle1"
-                    onClick={handleOpen}
+                    // onClick={handleOpen}
+                    onClick={() => {
+                        if (id === item.id) return;
+                        handleOpen({
+                            id: item.id || item.mediaId,
+                            mediaType: mediaType === 'all' ? item.media_type : mediaType,
+                        });
+                    }}
                     sx={{
                         fontWeight: '500',
                         cursor: 'pointer',
@@ -99,7 +129,7 @@ function MediaItems({ item, mediaType, checkedLike, favoriteStore }) {
                     }}
                 >
                     <Box mr={0.5}>
-                        <StarIcon height={20} width={20}/>
+                        <StarIcon height={20} width={20} />
                     </Box>
                     {item.vote_average ? (
                         <Typography

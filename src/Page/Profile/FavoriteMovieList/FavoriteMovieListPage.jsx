@@ -21,7 +21,7 @@ function Media({ medias, isLoading, mediaType }) {
                 <Grid item xl={2.4} lg={3} md={4} sm={6} xs={6} key={itemId}>
                     <MediaItems
                         item={item}
-                        mediaType={mediaType}
+                        mediaType={item.media_type}
                         favoriteStore={favorites.find((e) => e.mediaId === itemId)?._id}
                         checkedLike={favorites.some((favorite) => favorite?.mediaId === itemId)}
                     />

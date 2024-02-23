@@ -8,6 +8,7 @@ import { homeTabItems } from '~/config/HomeTabMenuItems/HomeTabMenuItems';
 import MediaGrid from '~/components/Media/MediaGrid';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
+import config from '~/config';
 
 function Home() {
     const { mediaType, category } = useParams();
@@ -79,7 +80,7 @@ function Home() {
                     content="Trang Viejoy là một trang web cung cấp cho người dùng khả năng xem phim trực tuyến. Trang web có một thư viện phim khổng lồ, bao gồm các bộ phim mới nhất, phim cũ, phim bom tấn, phim nghệ thuật,...Nguồn phim được cung cấp từ trang Themoviedb. Người dùng có thể tìm kiếm phim theo thể loại, quốc gia, diễn viên, đạo diễn,... và xem phim miễn phí."
                 />
             </Helmet>
-            <HeroSlice mediaType={'all'} />
+            <HeroSlice mediaType={'all'} path={config.routes.home} />
             <Container maxWidth={'xl'} sx={{ px: '0' }}>
                 <TabItems
                     contentItems={homeTabItems}

@@ -1,10 +1,25 @@
 import { Tab, Tabs } from '@mui/material';
 import { memo } from 'react';
-import { NavLink, createSearchParams, useLocation } from 'react-router-dom';
+import { createSearchParams, useLocation, useNavigate } from 'react-router-dom';
 import menuItemsSearch from '~/config/MenuItemsSearch';
-
+import { omitBy, isUndefined } from 'lodash';
 function TabsSearchTypeMobile({ valueInput }) {
     const location = useLocation();
+    const navigate = useNavigate();
+
+    const handleOpen = (path) => {
+        navigate({
+            pathname: path,
+            search: createSearchParams(
+                omitBy(
+                    {
+                        query: valueInput,
+                    },
+                    isUndefined,
+                ),
+            ).toString(),
+        });
+    };
     return (
         <Tabs
             value={location.pathname}
@@ -23,9 +38,11 @@ function TabsSearchTypeMobile({ valueInput }) {
                     key={index}
                     disableRipple
                     label={item.title}
-                    to={`${item.path}?${createSearchParams({ query: valueInput })}`}
+                    onClick={() => {
+                        if (location.pathname === item.path) return;
+                        handleOpen(item.path);
+                    }}
                     value={item.path}
-                    component={NavLink}
                     sx={{
                         color: '#a6a4a4',
                         '&.Mui-selected': {

@@ -14,6 +14,7 @@ import ForgotPassword from '~/Page/ForgotPassword/ForgotPassword';
 import WatchMovie from '~/Page/WatchMovie/WatchMovie';
 import { MainLayout } from '~/Layout';
 import { Navigate } from 'react-router-dom';
+import MediaDetail from '~/components/MediaDetail';
 export const routesMainLayout = [
     {
         element: <MainLayout />,
@@ -25,6 +26,12 @@ export const routesMainLayout = [
             {
                 path: config.routes.homeList,
                 element: <Home />,
+                children: [ 
+                    {
+                        path: 'modal/:mediaTypeDetail/:id',
+                        element: <MediaDetail/>,
+                    },
+                ]
             },
             {
                 path: config.routes.aboutUs,
@@ -33,10 +40,22 @@ export const routesMainLayout = [
             {
                 path: config.routes.mediaList,
                 element: <MediaListPage />,
+                children: [ 
+                    {
+                        path: 'modal/:mediaTypeDetail/:id',
+                        element: <MediaDetail/>,
+                    },
+                ]
             },
             {
                 path: config.routes.searchPage,
                 element: <SearchPage />,
+                children: [ 
+                    {
+                        path: 'modal/:mediaTypeDetail/:id',
+                        element: <MediaDetail/>,
+                    },
+                ]
             },
             {
                 path: config.routes.login,
@@ -65,6 +84,12 @@ export const routesMainLayout = [
                     {
                         path: config.routes.favorite,
                         element: <FavoriteMovieList />,
+                        children: [ 
+                            {
+                                path: 'modal/:mediaTypeDetail/:id',
+                                element: <MediaDetail/>,
+                            },
+                        ]
                     },
                     {
                         path: config.routes.settingProfile,

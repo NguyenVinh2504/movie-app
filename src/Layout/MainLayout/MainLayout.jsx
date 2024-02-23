@@ -5,21 +5,21 @@ import Footer from '../components/Footer';
 import MediaDetail from '~/components/MediaDetail';
 // import GlobalLoading from '~/components/GlobalLoading';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 // import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
 import userApi from '~/api/module/user.api';
 import { loginOut, updateUser } from '~/redux/features/userSlice';
-import { openSelector } from '~/redux/selectors';
 import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
 import { removeToken } from '~/redux/features/authSlice';
 import { removeFavorites, setFavorites } from '~/redux/features/favoritesSlice';
 // import Search from '../components/Search';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { Outlet } from 'react-router-dom';
+import { useQueryConfig } from '~/Hooks';
 
 function MainLayout() {
     const dispatch = useDispatch();
-    const open = useSelector(openSelector);
+    // const open = useSelector(openSelector);
     // const token = useSelector(accessToken);
     const fetchApi = async () => {
         const { response, err } = await userApi.getInfo();
@@ -54,6 +54,8 @@ function MainLayout() {
             dispatch(toggleGlobalLoading(false));
         }
     }, [data, dispatch, error]);
+    const queryConfig = useQueryConfig();
+    const { category: open } = queryConfig;
     return (
         <>
             {/* <GlobalLoading /> */}
@@ -64,7 +66,7 @@ function MainLayout() {
                     maxWidth: { xl: '1904px' },
                 }}
             >
-                {open && <MediaDetail />}
+                {Boolean(open) && <MediaDetail />}
                 <Header isLoading={false} />
                 {/* <Box sx={{ position: 'fixed', left: '0', right: '0', top: '64px', display: { md: 'none' } }} px={3}>
                         <Search />
