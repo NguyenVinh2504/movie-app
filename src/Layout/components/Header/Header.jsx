@@ -1,6 +1,6 @@
 import { memo, useCallback, useState } from 'react';
 import { NavLink } from 'react-router-dom';
-import Search from '../Search';
+import Search from '~/components/Search';
 import { Box, Button, IconButton, Stack, AppBar, Toolbar, useMediaQuery, Skeleton } from '@mui/material';
 import { MenuIcon, SearchIcon, UserIcon } from '~/components/Icon';
 import { menuItems } from '~/config/MenuItemsConfig';
@@ -95,7 +95,7 @@ function Header({ isLoading }) {
                                 width: '380px',
                             }}
                         >
-                            <Search round />
+                            <Search round inHeader/>
                         </Box>
 
                         <Box
@@ -103,7 +103,7 @@ function Header({ isLoading }) {
                                 display: { xs: 'block', lg: 'none' },
                             }}
                         >
-                            <NavLink to={config.routes.searchMovie}>
+                            <NavLink to={config.routes.searchPage}>
                                 <IconButton disableRipple color="neutral">
                                     <SearchIcon />
                                 </IconButton>

@@ -1,10 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { useParams } from 'react-router-dom';
 import { Box, Container, Grid, Stack, Typography, useMediaQuery } from '@mui/material';
 import { debounce } from 'lodash';
 import { useInfiniteQuery, keepPreviousData } from '@tanstack/react-query';
 import mediaApi from '~/api/module/media.api';
-import Search from './Search';
+import Search from '../../components/Search';
 import TabsSearchTypeMobile from './TabsSearchTypeMobile';
 import TabsSearch from './TabsSearch';
 import images from '~/assets/image';
@@ -16,8 +15,7 @@ function SearchPage() {
     const isLgDown = useMediaQuery((theme) => theme.breakpoints.down('lg'));
     const isSmDown = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const [valueInput, setValueInput] = useState(null);
-    const { query } = useQueryConfig();
-    const { mediaType } = useParams();
+    const { query, media_type } = useQueryConfig();
     const setValue = useRef(
         debounce((query) => {
             setValueInput(query);
@@ -28,10 +26,9 @@ function SearchPage() {
         if (query) setValue.current(query);
     }, [query, setValue]);
 
-    const fetchData = async ({ queryKey, pageParam }) => {
-        const [mediaType, valueInput] = queryKey;
+    const fetchData = async (pageParam) => {
         const { response, err } = await mediaApi.search({
-            mediaType,
+            mediaType: media_type ?? 'movie',
             query: valueInput,
             page: pageParam,
         });
@@ -45,8 +42,8 @@ function SearchPage() {
     };
 
     const { data, isLoading, isFetchingNextPage, isError, fetchNextPage, hasNextPage } = useInfiniteQuery({
-        queryKey: [mediaType, valueInput],
-        queryFn: ({ queryKey, pageParam }) => fetchData({ queryKey, pageParam }),
+        queryKey: [media_type ?? 'movie', valueInput],
+        queryFn: ({ pageParam }) => fetchData(pageParam),
         getNextPageParam: (lastPage) => {
             return lastPage.page === lastPage.total_pages ? undefined : lastPage.page + 1;
         },
@@ -57,7 +54,6 @@ function SearchPage() {
     useEffect(() => {
         document.title = `Tìm kiếm: ${query || ''}`;
     }, [query]);
-    // console.log(valueInput);
     return (
         <>
             <Container maxWidth="xl">
@@ -102,7 +98,7 @@ function SearchPage() {
                                 <MediaGrid
                                     isLoadingButton={!isFetchingNextPage && hasNextPage && !isLoading}
                                     isLoadingSekeleton={isLoading || isFetchingNextPage || isError}
-                                    mediaType={mediaType}
+                                    mediaType={media_type ?? 'movie'}
                                     medias={data}
                                     onLoadingMore={handleLoadMore}
                                 />

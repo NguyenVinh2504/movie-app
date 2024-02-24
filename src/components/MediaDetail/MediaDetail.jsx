@@ -9,33 +9,44 @@ import mediaApi from '~/api/module/media.api';
 import OverviewMovieDetail from './OverviewMovieDetail';
 import { useQuery } from '@tanstack/react-query';
 import HeaderMovieDetail from './HeaderMovieDetail';
-import { useSearchParams } from 'react-router-dom';
+import { useLocation, useSearchParams } from 'react-router-dom';
 import { omit } from 'lodash';
 import { useQueryConfig } from '~/Hooks';
 import { Helmet } from 'react-helmet';
+import config from '~/config';
 
 function MovieDetail() {
     const [genres, setGenres] = useState([]);
     const queryConfig = useQueryConfig();
     const [, setSearchParams] = useSearchParams();
+    const location = useLocation();
+    // const navigate = useNavigate();
     // console.log(mediaTypeDetail, id);
     const { media_type: mediaTypeDetail, id, category } = queryConfig;
     const handleClose = () => {
         setSearchParams(
-            omit(
-                {
-                    ...queryConfig,
-                },
-                ['media_type', 'id', 'category'],
-            ),
+            location.pathname === config.routes.searchPage
+                ? omit(
+                      {
+                          ...queryConfig,
+                      },
+                      ['id', 'category'],
+                  )
+                : omit(
+                      {
+                          ...queryConfig,
+                      },
+                      ['media_type', 'id', 'category'],
+                  ),
         );
     };
     const getDataDetail = async () => {
-        const { response } = await mediaApi.getDetail({
+        const { response, err } = await mediaApi.getDetail({
             mediaType: mediaTypeDetail,
             mediaId: id,
         });
-        return response;
+        if (response) return response;
+        if (err) throw err;
     };
 
     const { data: dataDetail = {}, isPending: loading } = useQuery({
@@ -50,9 +61,14 @@ function MovieDetail() {
             setGenres(newGenres);
         }
     }, [dataDetail]);
+    // useEffect(() => {
+    //     if (isError) {
+    //         navigate(config.routes.error)
+    //     }
+    // }, [isError, navigate]);
 
     // console.log('data', dataDetail, 'isPending', loading, 'isFetching', genres);
-
+// console.log(dataDetail, Object.keys(dataDetail).length === 0);
     return (
         <>
             <Helmet>
@@ -60,7 +76,7 @@ function MovieDetail() {
                 <meta name="description" content={dataDetail?.overview ? dataDetail.overview : 'Không có nội dung'} />
             </Helmet>
             <Modal
-                open={Boolean(category)}
+                open={Object.keys(dataDetail).length !== 0}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
@@ -70,7 +86,7 @@ function MovieDetail() {
                     },
                 }}
             >
-                <Fade in={Boolean(category)} timeout={300}>
+                <Fade in={Object.keys(dataDetail).length !== 0} timeout={300}>
                     <Box
                         sx={{
                             position: 'fixed',

@@ -17,7 +17,7 @@ const routes = {
         popularTv: "/home/tv/popular",
     },
 
-    searchPage: '/search/:mediaType',
+    searchPage: '/search',
     searchMovie: '/search/movie',
     searchTv: '/search/tv',
     //profile

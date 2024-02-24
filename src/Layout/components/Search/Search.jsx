@@ -12,16 +12,15 @@ function Search({ round }) {
 
     // const [searchValue, setSearchValue] = useState('');
     const [, setSearchParams] = useSearchParams();
-
     const location = useNavigate();
-    const { query } = useQueryConfig();
+    const { query, ...configQuery } = useQueryConfig();
 
     const handleChange = (e) => {
         const value = e.target.value;
         if (!value.startsWith(' ') && value.trim()) {
             location({
-                pathname: config.routes.searchMovie,
-                search: createSearchParams({ query: value }).toString(),
+                pathname: config.routes.searchPage,
+                search: createSearchParams({ query: value, ...configQuery }).toString(),
             });
         } else {
             location(config.routes.home);
@@ -29,11 +28,10 @@ function Search({ round }) {
     };
 
     const handleClear = () => {
-        // setSearchValue('');
-        // location({
-        //     search: `?${createSearchParams({ query: '' })}`,
-        // });
-        setSearchParams('');
+        setSearchParams(() => {
+            const { query, ...newQuery } = configQuery;
+            return { ...newQuery };
+        });
     };
     let valueSearch = query ?? '';
     // console.log(Object.fromEntries([...searchParams]));

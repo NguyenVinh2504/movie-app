@@ -5,7 +5,7 @@ import { createSearchParams, useNavigate, useSearchParams } from 'react-router-d
 import config from '~/config';
 import { useQueryConfig } from '~/Hooks';
 // import { useDebounce } from '~/Hooks';
-function Search({ round }) {
+function Search({ round = false, inHeader = false }) {
     const props = {
         round,
     };
@@ -14,16 +14,23 @@ function Search({ round }) {
     const [, setSearchParams] = useSearchParams();
 
     const location = useNavigate();
-    const { query } = useQueryConfig();
+    const { query, ...configQuery } = useQueryConfig();
     const handleChange = (e) => {
         const value = e.target.value;
         if (!value.startsWith(' ') && value.trim()) {
             location({
-                pathname: config.routes.searchMovie,
-                search: createSearchParams({ query: value }).toString(),
+                pathname: config.routes.searchPage,
+                search: createSearchParams({ query: value, ...configQuery }).toString(),
             });
         } else {
-            setSearchParams('');
+            if (inHeader) {
+                location(config.routes.home);
+            } else {
+                setSearchParams(() => {
+                    const { query, ...newQuery } = configQuery;
+                    return { ...newQuery };
+                });
+            }
         }
     };
 
@@ -32,12 +39,16 @@ function Search({ round }) {
         // location({
         //     search: `?${createSearchParams({ query: '' })}`,
         // });
-        setSearchParams('');
+        setSearchParams(() => {
+            const { query, ...newQuery } = configQuery;
+            return { ...newQuery };
+        });
     };
     let valueSearch = query ?? '';
     return (
         <Input
             {...props}
+            placeholder={'Tìm kiếm phim rạp, phim bộ,...'}
             leftIcon={<SearchIcon />}
             rightIcon={<CloseIcon />}
             inputEvent={{

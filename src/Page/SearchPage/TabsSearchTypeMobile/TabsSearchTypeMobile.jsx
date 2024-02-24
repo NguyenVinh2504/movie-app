@@ -1,19 +1,20 @@
 import { Tab, Tabs } from '@mui/material';
 import { memo } from 'react';
-import { createSearchParams, useLocation, useNavigate } from 'react-router-dom';
+import { createSearchParams, useNavigate } from 'react-router-dom';
 import menuItemsSearch from '~/config/MenuItemsSearch';
 import { omitBy, isUndefined } from 'lodash';
-function TabsSearchTypeMobile({ valueInput }) {
-    const location = useLocation();
+import { useQueryConfig } from '~/Hooks';
+function TabsSearchTypeMobile() {
     const navigate = useNavigate();
+    const { media_type, ...queryConfig } = useQueryConfig();
 
-    const handleOpen = (path) => {
+    const handleOpen = (type) => {
         navigate({
-            pathname: path,
             search: createSearchParams(
                 omitBy(
                     {
-                        query: valueInput,
+                        ...queryConfig,
+                        media_type: type,
                     },
                     isUndefined,
                 ),
@@ -22,7 +23,7 @@ function TabsSearchTypeMobile({ valueInput }) {
     };
     return (
         <Tabs
-            value={location.pathname}
+            value={media_type ?? 'movie'}
             variant="scrollable"
             scrollButtons="auto"
             aria-label="basic tabs example"
@@ -39,10 +40,10 @@ function TabsSearchTypeMobile({ valueInput }) {
                     disableRipple
                     label={item.title}
                     onClick={() => {
-                        if (location.pathname === item.path) return;
-                        handleOpen(item.path);
+                        if (media_type ? media_type === item.type : 'movie' === item.type) return;
+                        handleOpen(item.type);
                     }}
-                    value={item.path}
+                    value={item.type}
                     sx={{
                         color: '#a6a4a4',
                         '&.Mui-selected': {

@@ -1,20 +1,21 @@
 import { Box, List, ListItemButton, ListItemText, Typography } from '@mui/material';
 import { memo } from 'react';
-import { createSearchParams, useLocation, useNavigate } from 'react-router-dom';
+import { createSearchParams, useNavigate } from 'react-router-dom';
 import menuItemsSearch from '~/config/MenuItemsSearch';
 import { omitBy, isUndefined } from 'lodash';
+import { useQueryConfig } from '~/Hooks';
 
-function TabsSearch({ valueInput }) {
-    const location = useLocation();
+function TabsSearch() {
     const navigate = useNavigate();
+    const { media_type, ...queryConfig } = useQueryConfig();
 
-    const handleOpen = (path) => {
+    const handleOpen = (type) => {
         navigate({
-            pathname: path,
             search: createSearchParams(
                 omitBy(
                     {
-                        query: valueInput,
+                        ...queryConfig,
+                        media_type: type,
                     },
                     isUndefined,
                 ),
@@ -35,11 +36,11 @@ function TabsSearch({ valueInput }) {
             <List component="nav" aria-label="main mailbox folders" sx={{ py: 2 }}>
                 {menuItemsSearch.map((item, index) => (
                     <ListItemButton
-                        selected={location.pathname === item.path}
+                        selected={media_type ? media_type === item.type : 'movie' === item.type}
                         key={index}
                         onClick={() => {
-                            if (location.pathname === item.path) return;
-                            handleOpen(item.path);
+                            if (media_type ? media_type === item.type : 'movie' === item.type) return;
+                            handleOpen(item.type);
                         }}
                     >
                         <Box sx={{ pr: 1 }}>{item.icon}</Box>
