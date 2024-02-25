@@ -11,10 +11,10 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
     const favorites = useSelector(favoritesValue);
 
     const rating = {
-        value: Number(dataDetail?.vote_average?.toFixed(1)) || Number(dataDetail?.mediaRate?.toFixed(1)),
+        rate: Number(dataDetail?.vote_average?.toFixed(1)) || Number(dataDetail?.mediaRate?.toFixed(1)),
         date: dataDetail?.release_date || dataDetail?.first_air_date,
         genres: genres?.join(', '),
-        runtime: dataDetail?.runtime ? `${dataDetail.runtime} minutes` : undefined,
+        runtime: dataDetail?.runtime ? `${dataDetail.runtime} minutes` : '',
     };
     // console.log(dataDetail?.runtime);
     return (
@@ -70,7 +70,6 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
                         }}
                     >
                         {Object.entries(rating).map(([key, value]) => {
-                            console.log(value);
                             if (!value) {
                                 return null;
                             }
