@@ -15,9 +15,8 @@ const privateClient = axios.create({
         'Content-Type': 'application/json',
     },
     withCredentials: true,
-    paramsSerializer: {
-        encode: (params) => queryString.stringify(params),
-    },
+    paramsSerializer:
+        (params) => queryString.stringify(params),
 });
 let refreshTokenRequest = null
 privateClient.interceptors.request.use(async (config) => {

@@ -8,12 +8,14 @@ const baseURL = `${API_ROOT}/api/v1/`;
 const publicClient = axios.create({
     baseURL,
     withCredentials: true,
-    paramsSerializer: {
-        encode: (params) => queryString.stringify(params),
+    headers: {
+        'Content-Type': 'application/json',
     },
+    paramsSerializer: (params) => queryString.stringify(params),
 });
 
 publicClient.interceptors.request.use(async (config) => {
+    console.log(config.params);
     return {
         ...config,
         headers: {
