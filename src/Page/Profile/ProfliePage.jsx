@@ -13,9 +13,9 @@ function Profile() {
     const user = useSelector(userValue);
     const location = useNavigate();
     useEffect(() => {
-    if (!user) {
-        location(config.routes.login);
-    }
+        if (!user) {
+            location(config.routes.login);
+        }
     }, [user, location]);
     useEffect(() => {
         document.title = 'Trang Cá Nhân';

@@ -11,12 +11,12 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
     const favorites = useSelector(favoritesValue);
 
     const rating = {
-        value: dataDetail?.vote_average?.toFixed(1) || dataDetail?.mediaRate?.toFixed(1),
+        value: Number(dataDetail?.vote_average?.toFixed(1)) || Number(dataDetail?.mediaRate?.toFixed(1)),
         date: dataDetail?.release_date || dataDetail?.first_air_date,
-        genres: genres?.length !== 0 ? genres.join(', ') : undefined,
+        genres: genres?.join(', '),
         runtime: dataDetail?.runtime ? `${dataDetail.runtime} minutes` : undefined,
     };
-    // console.log('title', genres, genres?.length, 'isLoading', loading);
+    // console.log(dataDetail?.runtime);
     return (
         <Box sx={{ p: 2 }}>
             <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'} spacing={2}>
@@ -48,8 +48,9 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
                 )}
             </Stack>
             {loading && <Skeleton variant="rounded" height={'24px'} width={'100%'} sx={{ mt: 1 }} />}
-            {!loading && Boolean(genres?.length) && (
+            {!loading && (
                 <>
+                    {/* Pc */}
                     <Box
                         alignItems={'center'}
                         mt={1}
@@ -69,10 +70,10 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
                         }}
                     >
                         {Object.entries(rating).map(([key, value]) => {
-                            if (value !== undefined && parseFloat(value) === 0) {
+                            console.log(value);
+                            if (!value) {
                                 return null;
                             }
-
                             return (
                                 value && (
                                     <Typography key={key} variant={pointDownSm ? 'subtitle2' : 'subtitle1'}>
@@ -82,6 +83,7 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
                             );
                         })}
                     </Box>
+                    {/* Mobile */}
                     <Box sx={{ display: { xs: 'block', sm: 'none' } }}>
                         <Box
                             alignItems={'center'}
@@ -97,7 +99,7 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
                                 if (key === 'genres' && pointDownSm) {
                                     return null; // Ẩn genres khi ở chế độ mobile
                                 }
-                                if (value !== undefined && parseFloat(value) === 0) {
+                                if (!value) {
                                     return null;
                                 }
                                 return (

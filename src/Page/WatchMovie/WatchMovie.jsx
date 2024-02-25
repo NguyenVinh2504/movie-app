@@ -1,14 +1,24 @@
 import { Box } from '@mui/material';
-import React from 'react';
+import React, { useEffect } from 'react';
 import Wrapper from '~/components/Wrapper';
 import uiConfigs from '~/config/ui.config';
 import TitleMatchMovie from './TitleMatchMovie';
 import OverviewWatchMovie from './OverviewWatchMovie';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { isLoggedIn } from '~/redux/selectors';
+import config from '~/config';
 
 const WatchMovie = () => {
     let { movieId, showId, ssId, epId } = useParams();
-    console.log(movieId);
+    const user = useSelector(isLoggedIn);
+    // console.log(user);
+    const location = useNavigate();
+    useEffect(() => {
+        if (!user) {
+            location(config.routes.login);
+        }
+    }, [user, location]);
     const genres = ['Hành động', 'Phiêu Lưu', 'Lịch sử'];
     const dataDetail = {
         vote_average: 8.4,
@@ -38,9 +48,9 @@ const WatchMovie = () => {
                                 ? `https://vidsrc.xyz/embed/movie/${movieId}`
                                 : `https://vidsrc.xyz/embed/tv?tmdb=${showId}&season=${ssId}&episode=${epId}`
                         }
-                        title='watch'
+                        title="watch"
                         allowFullScreen={true}
-                        referrerpolicy="origin"
+                        referrerPolicy="origin"
                         // sandbox="allow-modals allow-orientation-lock allow-pointer-lock allow-presentation allow-scripts allow-top-navigation allow-forms"
                         style={{ width: '100%', height: '100%', border: '0px' }}
                     ></iframe>
