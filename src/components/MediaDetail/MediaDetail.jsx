@@ -1,4 +1,4 @@
-import { memo, useEffect, useState } from 'react';
+import { memo } from 'react';
 import { Modal, Box, Typography, Stack, IconButton, Fade } from '@mui/material';
 import { CloseIcon } from '../Icon';
 import CastSlice from './CastItem';
@@ -16,7 +16,7 @@ import { Helmet } from 'react-helmet';
 import config from '~/config';
 
 function MovieDetail() {
-    const [genres, setGenres] = useState([]);
+    // const [genres, setGenres] = useState([]);
     const queryConfig = useQueryConfig();
     const [, setSearchParams] = useSearchParams();
     const location = useLocation();
@@ -49,26 +49,37 @@ function MovieDetail() {
         if (err) throw err;
     };
 
-    const { data: dataDetail = {}, isPending: loading } = useQuery({
+    const {
+        data: dataDetail = {},
+        isPending: loading,
+        isError,
+    } = useQuery({
         queryKey: ['Media detail', mediaTypeDetail, id],
         queryFn: getDataDetail,
         enabled: Boolean(category),
     });
 
-    useEffect(() => {
-        if (dataDetail.genres) {
-            const newGenres = dataDetail?.genres?.map((item) => item.name) || [];
-            setGenres(newGenres);
-        }
-    }, [dataDetail]);
-    // useEffect(() => {
-    //     if (isError) {
-    //         navigate(config.routes.error)
-    //     }
-    // }, [isError, navigate]);
+    const newGenres = dataDetail?.genres?.map((item) => item.name) || [];
+    if (Object.keys(dataDetail).length === 0 && !loading) {
+        setSearchParams(
+            location.pathname === config.routes.searchPage
+                ? omit(
+                      {
+                          ...queryConfig,
+                      },
+                      ['id', 'category'],
+                  )
+                : omit(
+                      {
+                          ...queryConfig,
+                      },
+                      ['media_type', 'id', 'category'],
+                  ),
+        );
+    }
 
     // console.log('data', dataDetail, 'isPending', loading, 'isFetching', genres);
-// console.log(dataDetail, Object.keys(dataDetail).length === 0);
+    // console.log(dataDetail, Object.keys(dataDetail).length === 0);
     return (
         <>
             <Helmet>
@@ -76,7 +87,7 @@ function MovieDetail() {
                 <meta name="description" content={dataDetail?.overview ? dataDetail.overview : 'Không có nội dung'} />
             </Helmet>
             <Modal
-                open={Object.keys(dataDetail).length !== 0}
+                open={Boolean(category) && !isError}
                 onClose={handleClose}
                 aria-labelledby="modal-modal-title"
                 aria-describedby="modal-modal-description"
@@ -86,7 +97,7 @@ function MovieDetail() {
                     },
                 }}
             >
-                <Fade in={Object.keys(dataDetail).length !== 0} timeout={300}>
+                <Fade in={Boolean(category) && !isError} timeout={300}>
                     <Box
                         sx={{
                             position: 'fixed',
@@ -139,7 +150,7 @@ function MovieDetail() {
                                 <HeaderMovieDetail
                                     loading={loading}
                                     dataDetail={dataDetail}
-                                    genres={genres}
+                                    genres={newGenres}
                                     mediaType={mediaTypeDetail}
                                 />
                                 <OverviewMovieDetail loading={loading} dataDetail={dataDetail} />

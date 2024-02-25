@@ -16,18 +16,18 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
         genres: genres?.length !== 0 ? genres.join(', ') : undefined,
         runtime: dataDetail?.runtime ? `${dataDetail.runtime} minutes` : undefined,
     };
-// console.log('title', genres, genres?.length, 'isLoading', loading);
+    // console.log('title', genres, genres?.length, 'isLoading', loading);
     return (
         <Box sx={{ p: 2 }}>
             <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'} spacing={2}>
-                {!loading && Boolean(genres?.length) ? (
+                {!loading ? (
                     <>
                         <Typography
                             variant={pointDownSm ? 'h4' : 'h2'}
                             fontWeight={'500'}
                             sx={{ ...uiConfigs.style.typoLines(2) }}
                         >
-                            {dataDetail?.title ?? dataDetail?.name}
+                            {dataDetail?.title ?? dataDetail?.name ?? 'Không có nội dung'}
                         </Typography>
                         <Box>
                             <ButtonAddFavorite
@@ -47,7 +47,7 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
                     </>
                 )}
             </Stack>
-            {(loading || !Boolean(genres?.length)) && <Skeleton variant="rounded" height={'24px'} width={'100%'} sx={{ mt: 1 }} />}
+            {loading && <Skeleton variant="rounded" height={'24px'} width={'100%'} sx={{ mt: 1 }} />}
             {!loading && Boolean(genres?.length) && (
                 <>
                     <Box
