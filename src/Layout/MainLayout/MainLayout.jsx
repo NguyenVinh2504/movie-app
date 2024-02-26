@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 // import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
 import userApi from '~/api/module/user.api';
 import { loginOut, updateUser } from '~/redux/features/userSlice';
-import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
+// import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
 import { removeToken } from '~/redux/features/authSlice';
 import { removeFavorites, setFavorites } from '~/redux/features/favoritesSlice';
 // import Search from '../components/Search';
@@ -44,14 +44,14 @@ function MainLayout() {
             const { favorites, ...user } = data;
             dispatch(updateUser(user));
             dispatch(setFavorites(favorites));
-            dispatch(toggleGlobalLoading(false));
+            // dispatch(toggleGlobalLoading(false));
         }
         if (error) {
             console.log('error user', error);
             dispatch(loginOut());
             dispatch(removeToken());
             dispatch(removeFavorites());
-            dispatch(toggleGlobalLoading(false));
+            // dispatch(toggleGlobalLoading(false));
         }
     }, [data, dispatch, error]);
     const queryConfig = useQueryConfig();

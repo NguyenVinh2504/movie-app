@@ -11,20 +11,6 @@ import { useSearchParams } from 'react-router-dom';
 import { useQueryConfig } from '~/Hooks';
 
 function MediaItems({ item, mediaType, checkedLike, favoriteStore }) {
-    // const dispatch = useDispatch();
-
-    // const handleOpen = () => {
-    //     if (item.media_type !== 'person') {
-    //         dispatch(toggleDetail(true));
-    //         dispatch(
-    //             getIdDetail({
-    //                 mediaType: mediaType === 'all' ? item.media_type ?? item.mediaId : mediaType,
-    //                 id: item.id ?? item.mediaId,
-    //             }),
-    //         );
-    //     }
-    // };
-
     const queryConfig = useQueryConfig();
     const { id } = queryConfig;
     const [, setSearchParams] = useSearchParams();

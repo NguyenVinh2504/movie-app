@@ -18,8 +18,6 @@ import { memo } from 'react';
 import Image from '~/components/Image';
 import config from '~/config';
 import { NavLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { toggleDetail } from '~/redux/features/mediaDetailSlice';
 function EpisodesItem({ item, dataSeason }) {
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const ListCustoms = styled(ListItemButton)(({ theme }) => ({
@@ -82,16 +80,10 @@ function EpisodesItem({ item, dataSeason }) {
         );
     };
 
-    const dispatch = useDispatch();
-    const handleCloseDetail = () => {
-        dispatch(toggleDetail(false));
-    };
-
     return (
         <>
             {pointDownSm ? (
                 <Box
-                    onClick={handleCloseDetail}
                     component={NavLink}
                     to={`${config.routes.watchTv}/${item?.show_id}/${item?.season_number}/${item?.episode_number}`}
                 >
@@ -142,7 +134,6 @@ function EpisodesItem({ item, dataSeason }) {
             ) : (
                 // pc-table
                 <Box
-                    onClick={handleCloseDetail}
                     component={NavLink}
                     to={`${config.routes.watchTv}/${item?.show_id}/${item?.season_number}/${item?.episode_number}`}
                 >

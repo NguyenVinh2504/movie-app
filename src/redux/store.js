@@ -1,6 +1,6 @@
 import { configureStore, combineReducers } from '@reduxjs/toolkit';
 // import createSagaMiddleware from 'redux-saga'
-import { mediaDetailSlice, userSlice, globalLoadingSlice, authSlice, favoritesSlice } from './features';
+import { userSlice, authSlice, favoritesSlice } from './features';
 import storage from 'redux-persist/lib/storage';
 import { persistStore, persistReducer, FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER } from 'redux-persist';
 // import rootSaga from './rootSaga';
@@ -12,10 +12,10 @@ const persistConfig = {
 // const sagaMiddleware = createSagaMiddleware()
 
 const rootReducer = combineReducers({
-    detailMovie: mediaDetailSlice,
+    // detailMovie: mediaDetailSlice,
     user: userSlice,
     favorites: favoritesSlice,
-    globalLoading: globalLoadingSlice,
+    // globalLoading: globalLoadingSlice,
     auth: authSlice
 });
 const persistedReducer = persistReducer(persistConfig, rootReducer);

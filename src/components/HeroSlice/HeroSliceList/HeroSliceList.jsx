@@ -14,7 +14,7 @@ import config from '~/config';
 import { NavLink, useSearchParams } from 'react-router-dom';
 import { useQueryConfig } from '~/Hooks';
 
-function HeroSliceList({ isLoading, medias, onOpen, mediaType }) {
+function HeroSliceList({ isLoading, medias, mediaType }) {
     const pointDownLg = useMediaQuery((theme) => theme.breakpoints.down('lg'));
     const pointDownMd = useMediaQuery((theme) => theme.breakpoints.down('md'));
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));

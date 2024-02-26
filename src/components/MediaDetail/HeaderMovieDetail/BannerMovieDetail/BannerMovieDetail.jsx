@@ -6,10 +6,7 @@ import { memo } from 'react';
 import { NavLink } from 'react-router-dom';
 import Image from '~/components/Image';
 import config from '~/config';
-import { useDispatch } from 'react-redux';
-import { toggleDetail } from '~/redux/features/mediaDetailSlice';
 function BannerMovieDetail({ loading, dataDetail, mediaType }) {
-    const dispatch = useDispatch();
     return (
         <Box sx={{ position: 'relative', overflow: 'hidden', pt: 'calc(9/16*100%)', pl: 0 }}>
             {loading ? (
@@ -22,7 +19,6 @@ function BannerMovieDetail({ loading, dataDetail, mediaType }) {
                         <IconButton
                             component={NavLink}
                             to={`${config.routes.watchMovie}/${dataDetail?.id}`}
-                            onClick={() => dispatch(toggleDetail(false))}
                             color="secondNeutral"
                             sx={{
                                 zIndex: '10',
