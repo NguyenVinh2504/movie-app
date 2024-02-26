@@ -68,10 +68,13 @@ const userApi = {
             return { err };
         }
     },
-    refreshToken: async ({ refreshToken }) => {
+    refreshToken: async ({ refreshToken, accessToken }) => {
         try {
             const response = await axios.post(`${baseURL}auth/refresh-token`, { refreshToken }, {
                 withCredentials: true,
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
             });
             return { response };
         } catch (err) {

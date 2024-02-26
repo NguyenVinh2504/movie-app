@@ -26,9 +26,9 @@ export function useLogout() {
                 isLoading: false,
                 autoClose: 3000,
             });
-            setTimeout(() => {
-                window.location.href = "/";
-            }, [500])
+            // setTimeout(() => {
+            //     window.location.href = "/";
+            // }, [500])
             // }, 2000)
         }
         if (err) {

@@ -54,7 +54,7 @@ const mediaApi = {
     getDetail: async ({ mediaType, mediaId }) => {
         try {
             const response = await publicClient.get(mediaEndpoints.detail({ mediaType, mediaId }), {
-                params: { append_to_response: 'videos, credits' }
+                params: { append_to_response: 'videos,credits' }
             });
             return { response };
         } catch (err) {

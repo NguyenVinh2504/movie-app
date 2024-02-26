@@ -12,33 +12,27 @@ import { Helmet } from 'react-helmet';
 function MediaListPage() {
     const { mediaType, key, category } = useParams();
     // console.log(mediaType, key, category);
-    const getMedias = async ({ mediaType, key, category, pageParam }) => {
-        if (key === 'get-list') {
-            return await mediaApi.getList({
-                mediaType: mediaType,
-                mediaCategory: category,
-                page: pageParam,
-            });
-        } else {
-            return await mediaApi.getDiscoverGenres({
-                mediaType: mediaType,
-                withoutGenres: category,
-                page: pageParam,
-            });
-        }
-    };
 
-    const fetchData = async ({ queryKey, pageParam }) => {
-        const [mediaType, category, key] = queryKey;
-
-        const { response, err } = await getMedias({ mediaType, key, category, pageParam });
+    const fetchData = async ({ pageParam }) => {
+        const { response, err } =
+            key === 'get-list'
+                ? await mediaApi.getList({
+                      mediaType: mediaType,
+                      mediaCategory: category,
+                      page: pageParam,
+                  })
+                : await mediaApi.getDiscoverGenres({
+                      mediaType: mediaType,
+                      withoutGenres: category,
+                      page: pageParam,
+                  });
         if (response) return response;
         if (err) throw err;
     };
 
     const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage, isError } = useInfiniteQuery({
         queryKey: [mediaType, category, key],
-        queryFn: ({ queryKey, pageParam }) => fetchData({ queryKey, pageParam }),
+        queryFn: ({ pageParam }) => fetchData({ pageParam }),
         getNextPageParam: (lastPage) => {
             return lastPage?.page === lastPage?.total_pages ? undefined : lastPage?.page + 1;
         },

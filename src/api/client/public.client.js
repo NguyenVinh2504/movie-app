@@ -14,8 +14,7 @@ const publicClient = axios.create({
     paramsSerializer: (params) => queryString.stringify(params),
 });
 
-publicClient.interceptors.request.use(async (config) => {
-    console.log(config.params);
+publicClient.interceptors.request.use((config) => {
     return {
         ...config,
         headers: {

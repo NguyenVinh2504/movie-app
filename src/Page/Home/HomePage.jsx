@@ -12,38 +12,22 @@ import config from '~/config';
 
 function Home() {
     const { mediaType, category } = useParams();
-    // const params = {};
-    // searchParams.forEach((value, key) => {
-    //     params[key] = value;
-    // });
-    // const { mediaType, category} = params;
-    // console.log(mediaType, category);
-    const getMedias = async ({ pageParam, mediaType, mediaCategory }) => {
-        if (mediaType === 'all') {
-            return await mediaApi.getListTrending({
-                mediaType: mediaType,
-                timeWindow: 'day',
-                page: pageParam,
-            });
-        } else {
-            return await mediaApi.getList({
-                mediaType,
-                mediaCategory,
-                page: pageParam,
-            });
-        }
-    };
 
-    const fetchData = async ({ queryKey, pageParam }) => {
-        const [mediaType, mediaCategory] = queryKey;
-        const { response, err } = await getMedias({ pageParam, mediaType, mediaCategory });
-        if (response) return response;
-        if (err) throw err;
-    };
+    async function fetchData({ pageParam }) {
+        const { response, err } =
+            mediaType === 'all'
+                ? await mediaApi.getListTrending({ mediaType, timeWindow: 'day', page: pageParam })
+                : await mediaApi.getList({ mediaType, mediaCategory: category, page: pageParam });
+
+        if (!response && err) {
+            throw err;
+        }
+        return response;
+    }
 
     const { data, error, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
         queryKey: [mediaType, category],
-        queryFn: ({ queryKey, pageParam }) => fetchData({ queryKey, pageParam }),
+        queryFn: ({ pageParam }) => fetchData({ pageParam }),
         getNextPageParam: (lastPage) => {
             return lastPage?.page === lastPage?.total_pages ? undefined : lastPage?.page + 1;
         },
