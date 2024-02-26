@@ -95,7 +95,7 @@ const Input = forwardRef(
                         }}
                         autoComplete="off"
                     ></input>
-                    {props?.type === 'password' && (
+                    {props?.type === 'password' && props?.value && (
                         <Box component={'span'} sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }} onClick={toggleEye}>
                             {!openEye ? <EyeIcon /> : <EyeSlashIcon/>}
                         </Box>
