@@ -10,6 +10,7 @@ import images from '~/assets/image';
 import uiConfigs from '~/config/ui.config';
 import MediaGrid from '~/components/Media/MediaGrid';
 import { useQueryConfig } from '~/Hooks';
+import { Helmet } from 'react-helmet';
 
 function SearchPage() {
     const isLgDown = useMediaQuery((theme) => theme.breakpoints.down('lg'));
@@ -51,11 +52,9 @@ function SearchPage() {
         initialPageParam: 1,
         placeholderData: keepPreviousData,
     });
-    useEffect(() => {
-        document.title = `Tìm kiếm: ${query || ''}`;
-    }, [query]);
     return (
         <>
+            <Helmet title={`Tìm kiếm: ${query || ''}`} />
             <Container maxWidth="xl">
                 {isLgDown && (
                     <Box mb="20px">

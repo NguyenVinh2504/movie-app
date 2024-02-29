@@ -1,4 +1,4 @@
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import { Box, Stack, Tab, Tabs, Typography, useMediaQuery } from '@mui/material';
 import Image from '~/components/Image';
 import uiConfigs from '~/config/ui.config';
@@ -6,10 +6,9 @@ import AvatarUser from '~/components/Avatar';
 
 import { useSelector } from 'react-redux';
 import { userValue } from '~/redux/selectors';
-function HeaderProfile({ valueTabItems }) {
+function HeaderProfile({ valueTabItems, location }) {
     const user = useSelector(userValue);
     const pointDownMd = useMediaQuery((theme) => theme.breakpoints.down('md'));
-    const location = useLocation();
     return (
         <>
             {/* banner and avatar */}
