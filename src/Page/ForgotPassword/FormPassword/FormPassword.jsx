@@ -2,12 +2,11 @@ import React from 'react';
 import { Box, Button, Stack, useMediaQuery } from '@mui/material';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
-import ErrorMessageForm from '~/components/ErrorMessageForm';
 import { PasswordIcon } from '~/components/Icon';
 import Input from '~/components/Input';
 // import uiConfigs from '~/config/ui.config';
 
-const FormEmail = ({ errorMessage, openPass, setOpenOtp, onSubmitPass, openEmail }) => {
+const FormEmail = ({ openPass, onSubmitPass }) => {
     // const transformIn = keyframes`${uiConfigs.style.transformIn}`;
     // const transformOut = keyframes`${uiConfigs.style.transformOut}`;
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
@@ -88,7 +87,6 @@ const FormEmail = ({ errorMessage, openPass, setOpenOtp, onSubmitPass, openEmail
                     display: openPass ? 'block' : 'none',
                 }}
             >
-                {errorMessage && <ErrorMessageForm>{errorMessage}</ErrorMessageForm>}
                 <Stack spacing={2} mt={2} alignItems={'flex-end'}>
                     <Input
                         type="password"

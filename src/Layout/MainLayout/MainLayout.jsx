@@ -16,6 +16,7 @@ import { removeFavorites, setFavorites } from '~/redux/features/favoritesSlice';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { Outlet } from 'react-router-dom';
 import { useQueryConfig } from '~/Hooks';
+import { clearLS } from '~/utils/auth';
 
 function MainLayout() {
     const dispatch = useDispatch();
@@ -49,6 +50,7 @@ function MainLayout() {
         if (error) {
             console.log('error user', error);
             dispatch(loginOut());
+            clearLS()
             dispatch(removeToken());
             dispatch(removeFavorites());
             // dispatch(toggleGlobalLoading(false));

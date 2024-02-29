@@ -9,7 +9,7 @@ import Input from '~/components/Input';
 
 // const cx = classNames.bind(style);
 
-const FormEmail = ({ openEmail, onSubmitEmail }) => {
+const FormEmail = ({ onSubmitEmail }) => {
     // const transformOut = keyframes`${uiConfigs.style.transformOut}`;
     // const [shouldRender, setRender] = useState(true);
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
@@ -47,7 +47,7 @@ const FormEmail = ({ openEmail, onSubmitEmail }) => {
     //     }
     //     return () => clearTimeout(timer);
     // }, [openEmail, setOpenPass]);
-    console.log(openEmail);
+    // console.log(openEmail);
     return (
         // shouldRender && (
             // <div

@@ -18,7 +18,7 @@ import AvatarUser from '../Avatar/Avatar';
 //selector redux
 import { useSelector } from 'react-redux';
 import { userValue } from '~/redux/selectors';
-import { useLogout } from '~/utils/useLogout';
+import { useLogout } from '~/Hooks/useLogout';
 
 function UserMenu() {
     const user = useSelector(userValue);

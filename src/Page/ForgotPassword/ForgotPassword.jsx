@@ -17,7 +17,6 @@ import 'swiper/css';
 import 'swiper/css/pagination';
 const ForgotPassword = () => {
     const [errorMessage, setErrorMessage] = useState();
-    const [openEmail, setOpenEmail] = useState(true);
     const [openOtp, setOpenOtp] = useState(false);
     const [openPass, setOpenPass] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -44,7 +43,6 @@ const ForgotPassword = () => {
         if (response) {
             setOpenPass(true);
             nextPage();
-            setOpenEmail(false);
             setIsLoading(false);
             setFormValue({
                 email,
@@ -65,7 +63,6 @@ const ForgotPassword = () => {
             setIsLoading(false);
             if (response) {
                 nextPage();
-                setErrorMessage(false);
                 setOpenPass(false);
                 setOpenOtp(true);
                 setFormValue((prev) => ({ newPassword, ...prev }));
@@ -112,37 +109,27 @@ const ForgotPassword = () => {
                     className="mySwiper"
                     spaceBetween={524}
                     ref={SlideRef}
-                    speed={2000}
+                    speed={1000}
                     simulateTouch={false}
                     allowTouchMove={false}
                 >
                     <SwiperSlide>
                         <FormEmail
-                            openEmail={openEmail}
-                            setOpenEmail={setOpenEmail}
-                            setOpenOtp={setOpenOtp}
-                            errorMessage={errorMessage}
-                            setOpenPass={setOpenPass}
                             onSubmitEmail={handleSubmitEmail}
                         />
                     </SwiperSlide>
                     <SwiperSlide>
                         <FormPassword
                             openPass={openPass}
-                            openEmail={openEmail}
                             onSubmitPass={handleSubmitPass}
-                            setOpenOtp={setOpenOtp}
-                            openOtp={openOtp}
                         />
                     </SwiperSlide>
                     <SwiperSlide>
                         <FormOTP
                             openOtp={openOtp}
-                            setErrorMessage={setErrorMessage}
-                            setOpenPass={setOpenPass}
                             setOpenOtp={setOpenOtp}
                             errorMessage={errorMessage}
-                            openEmail={openEmail}
+                            setErrorMessage={setErrorMessage}
                             onSubmitOTP={handleSubmitOTP}
                             onReSendOTP={handleReSendOTP}
                         />

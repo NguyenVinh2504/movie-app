@@ -23,7 +23,7 @@ import { useSelector } from 'react-redux';
 import { userValue } from '~/redux/selectors';
 import config from '~/config';
 import { memo } from 'react';
-import { useLogout } from '~/utils/useLogout';
+import { useLogout } from '~/Hooks/useLogout';
 const ListButtonCustoms = styled(ListItemButton)(() => ({
     borderRadius: 8,
 }));

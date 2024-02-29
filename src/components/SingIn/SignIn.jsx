@@ -20,6 +20,7 @@ import { isLoggedIn } from '~/redux/selectors';
 
 import { useMutation } from '@tanstack/react-query';
 import Auth from '../Auth';
+import { setAccessTokenLs } from '~/utils/auth';
 
 function SingIn({ setIsLoading, isLoading }) {
     const location = useNavigate();
@@ -58,6 +59,7 @@ function SingIn({ setIsLoading, isLoading }) {
                     dispatch(setFavorites(favorites));
                     dispatch(setUser(user));
                     dispatch(setToken({ accessToken, refreshToken }));
+                    setAccessTokenLs(accessToken)
                     location(config.routes.home);
                     formik.resetForm();
                     toast.success(`Xin chào, ${data.name}`, {

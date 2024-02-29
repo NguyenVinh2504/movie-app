@@ -5,6 +5,7 @@ import { jwtDecode } from 'jwt-decode';
 import userApi from '~/api/module/user.api';
 import { store } from '~/redux/store';
 import { setToken } from '~/redux/features/authSlice';
+import { getAccessTokenLs, setAccessTokenLs } from '~/utils/auth';
 // import { loginOut } from '~/redux/features/userSlice';
 // import { loginOut } from '~/redux/features/userSlice';
 // import { toast } from 'react-toastify';
@@ -20,7 +21,8 @@ const privateClient = axios.create({
 });
 let refreshTokenRequest = null
 privateClient.interceptors.request.use(async (config) => {
-    const { accessToken, refreshToken } = store.getState()?.auth;
+    const { refreshToken } = store.getState()?.auth;
+    const accessToken = getAccessTokenLs()
     if (accessToken) {
         let date = new Date();
         config.headers.Authorization = `Bearer ${accessToken}`;
@@ -31,6 +33,7 @@ privateClient.interceptors.request.use(async (config) => {
             if (response) {
                 const { accessToken, refreshToken } = response.data;
                 store.dispatch(setToken({ accessToken, refreshToken }));
+                setAccessTokenLs(accessToken)
                 config.headers.Authorization = `Bearer ${accessToken}`;
                 refreshTokenRequest = null
                 return config

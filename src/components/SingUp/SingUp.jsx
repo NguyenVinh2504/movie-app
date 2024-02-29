@@ -19,6 +19,7 @@ import { setFavorites } from '~/redux/features/favoritesSlice';
 import { isLoggedIn } from '~/redux/selectors';
 import { useMutation } from '@tanstack/react-query';
 import Auth from '../Auth';
+import { setAccessTokenLs } from '~/utils/auth';
 
 function SingUp({ setIsLoading, isLoading }) {
     const location = useNavigate();
@@ -75,6 +76,7 @@ function SingUp({ setIsLoading, isLoading }) {
                     const { accessToken, refreshToken, favorites, ...user } = data;
                     dispatch(setFavorites(favorites));
                     dispatch(setUser(user));
+                    setAccessTokenLs(accessToken)
                     dispatch(setToken({ accessToken, refreshToken }));
                     toast.success(`Xin chào, ${data.name}`, {
                         position: 'top-center',

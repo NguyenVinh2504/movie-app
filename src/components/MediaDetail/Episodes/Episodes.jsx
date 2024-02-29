@@ -1,4 +1,4 @@
-import { Divider, IconButton, Skeleton, Typography } from '@mui/material';
+import { Box, Divider, IconButton, Skeleton, Stack, Tooltip, Typography } from '@mui/material';
 import ButtonSelector from './ButtonSlector';
 import { memo, useCallback, useEffect, useState } from 'react';
 import mediaApi from '~/api/module/media.api';
@@ -9,9 +9,11 @@ import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import WrapperMovieDetail from '../components/WrapperMovieDetail';
 import PropTypes from 'prop-types';
 import CategoryMovieDetail from '../components/CategoryMovieDetail';
+import Input from '~/components/Input';
 
 function Episodes({ seasons, seriesId, isLoading }) {
     const [selectedIndex, setSelectedIndex] = useState(0);
+    const [searchNumberEp, setSearchNumberEp] = useState('');
     const [visible, setVisible] = useState(4);
     const [moreButton, setMoreButton] = useState(false);
     const handleSetSeasonNumber = useCallback((number) => {
@@ -59,17 +61,35 @@ function Episodes({ seasons, seriesId, isLoading }) {
             setMoreButton(true);
         }
     }, [seasonDetailValue?.episodes?.length, visible]);
-
     return (
         <WrapperMovieDetail>
             <CategoryMovieDetail valueTitle={'Tập Phim'} />
-            {!isEmpty(seasons) && (
-                <ButtonSelector
-                    seasons={seasons}
-                    onSeasonNumber={handleSetSeasonNumber}
-                    selectedIndex={selectedIndex}
-                />
-            )}
+            <Stack direction={'row'} justifyContent={'space-between'}>
+                {!isEmpty(seasons) && (
+                    <ButtonSelector
+                        seasons={seasons}
+                        onSeasonNumber={handleSetSeasonNumber}
+                        selectedIndex={selectedIndex}
+                    />
+                )}
+                <Tooltip title={`${seasonDetailValue?.episodes?.length} tập`} placement="bottom-start">
+                    <Box
+                        sx={{
+                            width: { xs: '25%', sm: '25%', md: '20%' },
+                        }}
+                    >
+                        <Input
+                            placeholder={'Tìm tập'}
+                            // type={'number'}
+                            inputEvent={{
+                                onChange: (e) => {
+                                    setSearchNumberEp(e.target.value);
+                                },
+                            }}
+                        />
+                    </Box>
+                </Tooltip>
+            </Stack>
             {!isLoading && !isFetching && isEmpty(seasonDetailValue) && (
                 <Typography variant={'body1'}>Không có nội dung</Typography>
             )}
@@ -84,7 +104,7 @@ function Episodes({ seasons, seriesId, isLoading }) {
                         />
                     ))}
             {!isLoading && !isFetching && !isEmpty(seasonDetailValue) && (
-                <EpisodesList dataSeason={seasonDetailValue} visible={visible} />
+                <EpisodesList dataSeason={seasonDetailValue} visible={visible} searchNumberEp={searchNumberEp} />
             )}
             {/* them tap phim */}
             {!isEmpty(seasonDetailValue) && (

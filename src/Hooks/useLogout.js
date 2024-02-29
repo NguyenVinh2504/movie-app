@@ -6,6 +6,7 @@ import userApi from "~/api/module/user.api";
 import { removeToken } from "~/redux/features/authSlice";
 import { removeFavorites } from "~/redux/features/favoritesSlice";
 import { loginOut } from "~/redux/features/userSlice";
+import { clearLS } from "~/utils/auth";
 
 export function useLogout() {
     const dispatch = useDispatch();
@@ -19,6 +20,7 @@ export function useLogout() {
             // setTimeout(() => {
             dispatch(removeFavorites());
             dispatch(loginOut())
+            clearLS()
             dispatch(removeToken())
             toast.update(id, {
                 render: 'Đăng xuất thành công',
@@ -36,6 +38,7 @@ export function useLogout() {
             dispatch(loginOut())
             dispatch(removeToken())
             dispatch(removeFavorites());
+            clearLS()
             toast.update(id, {
                 render: 'Đăng xuất không thành công',
                 type: 'error',
