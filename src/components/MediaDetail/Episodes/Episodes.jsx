@@ -1,8 +1,7 @@
-import { Box, Divider, IconButton, Skeleton, Stack, Tooltip, Typography } from '@mui/material';
+import { Box, Skeleton, Stack, Tooltip, Typography } from '@mui/material';
 import ButtonSelector from './ButtonSlector';
-import { memo, useCallback, useEffect, useState } from 'react';
+import { memo, useCallback, useState } from 'react';
 import mediaApi from '~/api/module/media.api';
-import { ArrowDownIcon, ArrowUpIcon } from '~/components/Icon';
 import EpisodesList from './EpisodesList';
 import { isEmpty } from 'lodash';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
@@ -14,12 +13,8 @@ import Input from '~/components/Input';
 function Episodes({ seasons, seriesId, isLoading }) {
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [searchNumberEp, setSearchNumberEp] = useState('');
-    const [visible, setVisible] = useState(4);
-    const [moreButton, setMoreButton] = useState(false);
     const handleSetSeasonNumber = useCallback((number) => {
         setSelectedIndex(number);
-        setVisible(4);
-        setMoreButton(false);
     }, []);
 
     const getDataDetailSeason = async () => {
@@ -45,22 +40,6 @@ function Episodes({ seasons, seriesId, isLoading }) {
     });
 
     // console.log('isPlaceholderData', isPlaceholderData, 'isFetching', isFetching, 'data', seasonDetailValue);
-    const handleShowMoreItems = () => {
-        if (visible < seasonDetailValue?.episodes?.length) {
-            setVisible(seasonDetailValue?.episodes?.length < 50 ? seasonDetailValue?.episodes?.length : visible + 10);
-        }
-    };
-
-    const handleHideMoreItems = () => {
-        setVisible(4);
-        setMoreButton(false);
-    };
-
-    useEffect(() => {
-        if (visible >= seasonDetailValue?.episodes?.length) {
-            setMoreButton(true);
-        }
-    }, [seasonDetailValue?.episodes?.length, visible]);
     return (
         <WrapperMovieDetail>
             <CategoryMovieDetail valueTitle={'Tập Phim'} />
@@ -81,6 +60,7 @@ function Episodes({ seasons, seriesId, isLoading }) {
                         <Input
                             placeholder={'Tìm tập'}
                             // type={'number'}
+                            value={searchNumberEp}
                             inputEvent={{
                                 onChange: (e) => {
                                     setSearchNumberEp(e.target.value);
@@ -104,33 +84,8 @@ function Episodes({ seasons, seriesId, isLoading }) {
                         />
                     ))}
             {!isLoading && !isFetching && !isEmpty(seasonDetailValue) && (
-                <EpisodesList dataSeason={seasonDetailValue} visible={visible} searchNumberEp={searchNumberEp} />
+                <EpisodesList dataSeason={seasonDetailValue} searchNumberEp={searchNumberEp} />
             )}
-            {/* them tap phim */}
-            {!isEmpty(seasonDetailValue) && (
-                <Divider>
-                    {moreButton ? (
-                        <IconButton
-                            onClick={handleHideMoreItems}
-                            color="secondNeutral"
-                            size="large"
-                            sx={{ border: '1px solid rgba(255, 255, 255, 0.5)' }}
-                        >
-                            <ArrowUpIcon />
-                        </IconButton>
-                    ) : (
-                        <IconButton
-                            onClick={handleShowMoreItems}
-                            color="secondNeutral"
-                            size="large"
-                            sx={{ border: '1px solid rgba(255, 255, 255, 0.5)' }}
-                        >
-                            <ArrowDownIcon />
-                        </IconButton>
-                    )}
-                </Divider>
-            )}
-            {/* them tap phim */}
         </WrapperMovieDetail>
     );
 }
