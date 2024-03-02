@@ -5,8 +5,8 @@ const Wrapper = ({ children }) => {
     return (
         <Box
             sx={{
-                width: { md: '850px', lg: '1100px', xl: '100%' },
-                maxWidth: '1400px',
+                width: { md: '850px', lg: '1100px', xl: '1400px' },
+                // maxWidth: '1400px',
                 mx: 'auto',
                 // bgcolor: (theme) => theme.palette.secondary.main,
             }}

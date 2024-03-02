@@ -35,7 +35,7 @@ const addItemToFavorite = async (item, mediaType, setLiked, setDisabled, setAnim
     }
 
     if (err) {
-        if (err.statusCode === 401) {
+        if (err.statusCode === 401 || err.statusCode === 404) {
             toast.error('Vui lòng đăng nhập');
         }
         setAnimation(false);
