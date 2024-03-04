@@ -51,7 +51,7 @@ function EditAccount() {
                     dispatch(updateUser(response));
                 }
                 if (err) {
-                    toast.error(err.message);
+                    toast.error(err.data.message);
                 }
             }
         },
@@ -112,7 +112,13 @@ function EditAccount() {
                 {disable && <CustomButton onClick={handleDisable}>Chỉnh sửa</CustomButton>}
                 {!disable && <CustomButton type="submit">Lưu chỉnh sửa</CustomButton>}
                 {!disable && (
-                    <Button variant="contained" color='secondary' size={pointDownSm ? 'small' : 'medium'} sx={{ ml: 2 }} onClick={handleCannel}>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        size={pointDownSm ? 'small' : 'medium'}
+                        sx={{ ml: 2 }}
+                        onClick={handleCannel}
+                    >
                         Hủy chỉnh sửa
                     </Button>
                 )}

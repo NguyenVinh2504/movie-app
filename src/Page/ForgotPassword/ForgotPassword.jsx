@@ -50,8 +50,8 @@ const ForgotPassword = () => {
         }
         if (err) {
             setIsLoading(false);
-            if (err.statusCode === 404) {
-                actions.setErrors({ email: 'Không tìm thấy Email này' });
+            if (err.data.name === 'EMAIL') {
+                actions.setErrors({ email: err.data.message });
             }
         }
     }, []);
@@ -114,15 +114,10 @@ const ForgotPassword = () => {
                     allowTouchMove={false}
                 >
                     <SwiperSlide>
-                        <FormEmail
-                            onSubmitEmail={handleSubmitEmail}
-                        />
+                        <FormEmail onSubmitEmail={handleSubmitEmail} />
                     </SwiperSlide>
                     <SwiperSlide>
-                        <FormPassword
-                            openPass={openPass}
-                            onSubmitPass={handleSubmitPass}
-                        />
+                        <FormPassword openPass={openPass} onSubmitPass={handleSubmitPass} />
                     </SwiperSlide>
                     <SwiperSlide>
                         <FormOTP

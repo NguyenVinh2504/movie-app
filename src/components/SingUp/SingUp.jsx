@@ -76,15 +76,15 @@ function SingUp({ setIsLoading, isLoading }) {
                     const { accessToken, refreshToken, favorites, ...user } = data;
                     dispatch(setFavorites(favorites));
                     dispatch(setUser(user));
-                    setAccessTokenLs(accessToken)
+                    setAccessTokenLs(accessToken);
                     dispatch(setToken({ accessToken, refreshToken }));
                     toast.success(`Xin chào, ${data.name}`, {
                         position: 'top-center',
                     });
                 },
                 onError: (error) => {
-                    if (error.message === 'ISEXISTS') {
-                        action.setErrors({ email: 'Email này đã được đăng ký' });
+                    if (error.data.name === 'EMAIL') {
+                        action.setErrors({ email: error.data.message });
                     }
                 },
             });
@@ -153,7 +153,7 @@ function SingUp({ setIsLoading, isLoading }) {
                     >
                         Hoặc
                     </Divider>
-                    <ButtonGoogle setIsLoading={setIsLoading}/>
+                    <ButtonGoogle setIsLoading={setIsLoading} />
                 </Stack>
                 {/* button */}
                 <Stack direction={'row'} justifyContent={'space-between'} mt={2}>

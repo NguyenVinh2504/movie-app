@@ -40,7 +40,7 @@ function DeleteUser() {
             }
             if (err) {
                 setDisabled(false);
-                toast.error(err.message);
+                toast.error(err.data.message);
             }
         },
     });

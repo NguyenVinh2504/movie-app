@@ -8,15 +8,15 @@ import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 // import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
 import userApi from '~/api/module/user.api';
-import { loginOut, updateUser } from '~/redux/features/userSlice';
+import { updateUser } from '~/redux/features/userSlice';
 // import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
-import { removeToken } from '~/redux/features/authSlice';
-import { removeFavorites, setFavorites } from '~/redux/features/favoritesSlice';
+// import { removeToken } from '~/redux/features/authSlice';
+import { setFavorites } from '~/redux/features/favoritesSlice';
 // import Search from '../components/Search';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { Outlet } from 'react-router-dom';
 import { useQueryConfig } from '~/Hooks';
-import { clearLS } from '~/utils/auth';
+// import { clearLS } from '~/utils/auth';
 
 function MainLayout() {
     const dispatch = useDispatch();
@@ -47,14 +47,14 @@ function MainLayout() {
             dispatch(setFavorites(favorites));
             // dispatch(toggleGlobalLoading(false));
         }
-        if (error) {
-            console.log('error user', error);
-            dispatch(loginOut());
-            clearLS()
-            dispatch(removeToken());
-            dispatch(removeFavorites());
-            // dispatch(toggleGlobalLoading(false));
-        }
+        // if (error) {
+        //     console.log('error user', error);
+        //     // dispatch(loginOut());
+        //     // clearLS()
+        //     // dispatch(removeToken());
+        //     // dispatch(removeFavorites());
+        //     // dispatch(toggleGlobalLoading(false));
+        // }
     }, [data, dispatch, error]);
     const queryConfig = useQueryConfig();
     const { category: open } = queryConfig;

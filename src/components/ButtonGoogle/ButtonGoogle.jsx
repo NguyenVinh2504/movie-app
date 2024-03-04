@@ -33,8 +33,8 @@ function ButtonGoogle({ setIsLoading }) {
         }
     };
     const handleGoogleClick = async () => {
-            if (isLogged) return
-            setIsLoading(true);
+        if (isLogged) return;
+        setIsLoading(true);
         const { result, error } = await signInGoogle();
         if (result) {
             const { displayName, email, uid, photoURL } = result.user;
@@ -51,13 +51,13 @@ function ButtonGoogle({ setIsLoading }) {
                 dispatch(setFavorites(favorites));
                 dispatch(setUser(user));
                 dispatch(setToken({ accessToken, refreshToken }));
-                setAccessTokenLs(accessToken)
+                setAccessTokenLs(accessToken);
                 toast.success(`Xin chào, ${response.name}`, {
                     position: 'top-center',
                 });
             }
             if (err) {
-                toast.success(err.message, {
+                toast.success(err.data.message, {
                     position: 'top-center',
                 });
             }

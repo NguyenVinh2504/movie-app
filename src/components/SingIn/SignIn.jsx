@@ -59,7 +59,7 @@ function SingIn({ setIsLoading, isLoading }) {
                     dispatch(setFavorites(favorites));
                     dispatch(setUser(user));
                     dispatch(setToken({ accessToken, refreshToken }));
-                    setAccessTokenLs(accessToken)
+                    setAccessTokenLs(accessToken);
                     location(config.routes.home);
                     formik.resetForm();
                     toast.success(`Xin chào, ${data.name}`, {
@@ -67,10 +67,10 @@ function SingIn({ setIsLoading, isLoading }) {
                     });
                 },
                 onError: (error) => {
-                    if (error.message === 'INVALID_PASSWORD') {
-                        action.setErrors({ password: 'Mật khẩu chưa chính xác' });
-                    } else if (error.message === 'INVALID_EMAIL') {
-                        action.setErrors({ email: 'Không tìm thấy email' });
+                    if (error.data.name === 'PASSWORD') {
+                        action.setErrors({ password: error.data.message });
+                    } else if (error.data.name === 'EMAIL') {
+                        action.setErrors({ email: error.data.message });
                     }
                 },
             });
