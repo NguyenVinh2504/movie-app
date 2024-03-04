@@ -50,43 +50,41 @@ const FormEmail = ({ onSubmitEmail }) => {
     // console.log(openEmail);
     return (
         // shouldRender && (
-            // <div
-            //     className={cx('normal', {
-            //         submit: !openEmail,
-            //     })}
-            // >
-            <Box
-                component={'form'}
-                onSubmit={formik.handleSubmit}
-                sx={
-                    {
-                        height: '100%',
-                        // // position: openEmail ? 'relative' : 'absolute',
-                        // transition: 'all 1s ease 0s',
-                        // display: openEmail ? 'block' : 'none',
-                        // animation: `${!openEmail && transformOut} 1.5s`,
-                    }
-                }
-            >
-                <Stack spacing={2} mt={2} alignItems={'flex-end'}>
-                    <Input
-                        type="text"
-                        name="email"
-                        placeholder={'Nhập Email'}
-                        value={formik.values.email}
-                        onChange={formik.handleChange}
-                        error={formik.errors.email !== undefined && formik.touched.email}
-                        helperText={formik.touched.email && formik.errors.email}
-                        leftIcon={<EmailIcon />}
-                    ></Input>
-                    {/* button */}
-                    <Button variant="contained" size={pointDownSm ? 'small' : 'medium'} type="submit">
-                        Tiếp theo
-                    </Button>
-                </Stack>
+        // <div
+        //     className={cx('normal', {
+        //         submit: !openEmail,
+        //     })}
+        // >
+        <Box
+            component={'form'}
+            onSubmit={formik.handleSubmit}
+            sx={{
+                height: '100%',
+                // // position: openEmail ? 'relative' : 'absolute',
+                // transition: 'all 1s ease 0s',
+                // display: openEmail ? 'block' : 'none',
+                // animation: `${!openEmail && transformOut} 1.5s`,
+            }}
+        >
+            <Stack spacing={0} mt={2} alignItems={'flex-end'}>
+                <Input
+                    type="text"
+                    name="email"
+                    placeholder={'Nhập Email'}
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    error={formik.errors.email !== undefined && formik.touched.email}
+                    helperText={formik.touched.email && formik.errors.email}
+                    leftIcon={<EmailIcon />}
+                ></Input>
                 {/* button */}
-            </Box>
-            // </div>
+                <Button variant="contained" size={pointDownSm ? 'small' : 'medium'} type="submit">
+                    Tiếp theo
+                </Button>
+            </Stack>
+            {/* button */}
+        </Box>
+        // </div>
         // )
     );
 };

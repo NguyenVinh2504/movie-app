@@ -67,7 +67,7 @@ const FormEmail = ({ openOtp, errorMessage, setErrorMessage, onSubmitOTP, onReSe
                 }}
             >
                 {errorMessage && <ErrorMessageForm>{errorMessage}</ErrorMessageForm>}
-                <Stack spacing={2} mt={2} alignItems={'flex-end'}>
+                <Stack mt={2} alignItems={'flex-end'}>
                     <Box sx={{ width: '100%' }}>
                         <Input
                             type="number"

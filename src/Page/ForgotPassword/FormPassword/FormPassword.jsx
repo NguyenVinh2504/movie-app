@@ -87,7 +87,7 @@ const FormEmail = ({ openPass, onSubmitPass }) => {
                     display: openPass ? 'block' : 'none',
                 }}
             >
-                <Stack spacing={2} mt={2} alignItems={'flex-end'}>
+                <Stack mt={2} alignItems={'flex-end'}>
                     <Input
                         type="password"
                         name="password"
