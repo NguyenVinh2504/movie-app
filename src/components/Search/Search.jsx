@@ -47,6 +47,7 @@ function Search({ round = false, inHeader = false }) {
     let valueSearch = query ?? '';
     return (
         <Input
+            isHepperText={false}
             {...props}
             placeholder={'Tìm kiếm phim rạp, phim bộ,...'}
             leftIcon={<SearchIcon />}

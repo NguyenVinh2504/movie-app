@@ -79,7 +79,7 @@ function SingIn({ setIsLoading, isLoading }) {
     return (
         <Auth titleAuth={'Đăng nhập vào tài khoản của bạn'} isLoading={isPending || isLoading}>
             <Box component={'form'} onSubmit={formik.handleSubmit}>
-                <Stack spacing={2} mt={2}>
+                <Stack mt={2}>
                     <Input
                         type="text"
                         name="email"
@@ -105,7 +105,7 @@ function SingIn({ setIsLoading, isLoading }) {
                         variant="contained"
                         disabled={isPending}
                         size={pointDownSm ? 'small' : 'medium'}
-                        sx={{ borderRadius: '100px' }}
+                        sx={{ borderRadius: '100px', mb: '19px' }}
                         type="submit"
                     >
                         Đăng Nhập

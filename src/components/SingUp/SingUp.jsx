@@ -93,7 +93,7 @@ function SingUp({ setIsLoading, isLoading }) {
     return (
         <Auth titleAuth={'Chào mừng bạn đến với Viejoy'} isLoading={isPending || isLoading}>
             <Box component={'form'} onSubmit={formik.handleSubmit}>
-                <Stack spacing={2} mt={3}>
+                <Stack mt={3}>
                     <Input
                         type="text"
                         name="name"
@@ -140,7 +140,7 @@ function SingUp({ setIsLoading, isLoading }) {
                         type={'submit'}
                         disabled={isPending}
                         variant="contained"
-                        sx={{ borderRadius: '100px' }}
+                        sx={{ borderRadius: '100px', mb: '19px' }}
                         size={pointDownSm ? 'small' : 'medium'}
                     >
                         Đăng Ký Ngay
@@ -149,6 +149,7 @@ function SingUp({ setIsLoading, isLoading }) {
                         sx={{
                             '::before, :: after': { borderTop: '1px solid rgba(255, 255, 255, 0.2)' },
                             fontSize: '16px',
+                            mb: '19px',
                         }}
                     >
                         Hoặc

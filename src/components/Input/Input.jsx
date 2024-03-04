@@ -32,6 +32,7 @@ const Input = forwardRef(
             iconRightEvent,
             inputEvent,
             iconLeftEvent,
+            isHepperText = true,
             ...props
         },
         ref,
@@ -41,7 +42,7 @@ const Input = forwardRef(
             setOpenEye((prev) => !prev);
         };
         return (
-            <Stack sx={{ width: '100%' }} spacing={0.5}>
+            <Stack sx={{ width: '100%' }}>
                 <Box
                     sx={{
                         backgroundColor: disable ? root.backgroundDisableInput : root.backgroundDefaultInput,
@@ -112,8 +113,15 @@ const Input = forwardRef(
                         </button>
                     )}
                 </Box>
-                {helperText && (
-                    <Typography variant="caption" mt={0} color={root.textErrorInput}>
+                {isHepperText && (
+                    <Typography
+                        variant="caption"
+                        my={0.5}
+                        color={root.textErrorInput}
+                        minHeight={'16px'}
+                        lineHeight={'1rem'}
+                        display={'block'}
+                    >
                         {helperText}
                     </Typography>
                 )}

@@ -71,7 +71,7 @@ function EditAccount() {
 
     return (
         <PaperProfile component={'form'} onSubmit={formik.handleSubmit}>
-            <Grid container spacing={2} p={2}>
+            <Grid container columnSpacing={2} p={2}>
                 <Grid item xs={12} sm={6}>
                     <InputProfile
                         name="name"

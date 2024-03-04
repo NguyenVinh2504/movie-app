@@ -54,7 +54,7 @@ function UpdatePassword() {
     return (
         <>
             <Box component={'form'} onSubmit={formik.handleSubmit}>
-                <Stack spacing={2} p={2}>
+                <Stack p={2}>
                     <Box>
                         <Label>Mật khẩu cũ</Label>
                         <Input
