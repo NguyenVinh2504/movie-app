@@ -83,9 +83,9 @@ function SingUp({ setIsLoading, isLoading }) {
                     });
                 },
                 onError: (error) => {
-                    if (error.data.name === 'EMAIL') {
-                        action.setErrors({ email: error.data.message });
-                    }
+                    const key = error.data.name.toLowerCase();
+                    const message = error.data.message;
+                    action.setErrors({ [key]: message });
                 },
             });
         },

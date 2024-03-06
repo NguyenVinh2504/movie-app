@@ -67,11 +67,14 @@ function SingIn({ setIsLoading, isLoading }) {
                     });
                 },
                 onError: (error) => {
-                    if (error.data.name === 'PASSWORD') {
-                        action.setErrors({ password: error.data.message });
-                    } else if (error.data.name === 'EMAIL') {
-                        action.setErrors({ email: error.data.message });
-                    }
+                    // if (error.data.name === 'PASSWORD') {
+                    //     action.setErrors({ password: error.data.message });
+                    // } else if (error.data.name === 'EMAIL') {
+                    //     action.setErrors({ email: error.data.message });
+                    // }
+                    const key = error.data.name.toLowerCase();
+                    const message = error.data.message;
+                    action.setErrors({ [key]: message });
                 },
             });
         },
