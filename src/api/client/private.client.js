@@ -65,7 +65,9 @@ privateClient.interceptors.response.use(
                     const { accessToken, refreshToken } = response.data;
                     store.dispatch(setToken({ accessToken, refreshToken }));
                     setAccessTokenLs(accessToken)
-                    refreshTokenRequest = null
+                    setTimeout(() => {
+                        refreshTokenRequest = null
+                    }, 10000);
                     return privateClient(err.response?.config)
                 }
             }

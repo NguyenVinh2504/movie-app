@@ -15,7 +15,7 @@ import { setFavorites } from '~/redux/features/favoritesSlice';
 // import Search from '../components/Search';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { Outlet } from 'react-router-dom';
-import { useQueryConfig } from '~/Hooks';
+// import { useQueryConfig } from '~/Hooks';
 // import { clearLS } from '~/utils/auth';
 
 function MainLayout() {
@@ -27,7 +27,7 @@ function MainLayout() {
         if (response) return response;
         if (err) throw err;
     };
-    const { data, error } = useQuery({
+    const { data, error, isSuccess } = useQuery({
         queryKey: ['user info'],
         queryFn: fetchApi,
         placeholderData: keepPreviousData,
@@ -36,11 +36,14 @@ function MainLayout() {
         retryOnMount: false,
         refetchOnReconnect: false,
         retry: 0,
+        gcTime: 0,
+        staleTime: 0,
         // enabled: Boolean(token)
     });
     // console.log('data user 1', data, 'isLoading', isLoading);
+    // console.log(isSuccess, data);
     useEffect(() => {
-        if (data) {
+        if (data && isSuccess) {
             // console.log('data user', data);
             const { favorites, ...user } = data;
             dispatch(updateUser(user));
@@ -55,9 +58,9 @@ function MainLayout() {
         //     // dispatch(removeFavorites());
         //     // dispatch(toggleGlobalLoading(false));
         // }
-    }, [data, dispatch, error]);
-    const queryConfig = useQueryConfig();
-    const { category: open } = queryConfig;
+    }, [data, dispatch, error, isSuccess]);
+    // const queryConfig = useQueryConfig();
+    // const { category: open } = queryConfig;
     return (
         <>
             {/* <GlobalLoading /> */}
@@ -68,7 +71,8 @@ function MainLayout() {
                     maxWidth: { xl: '1904px' },
                 }}
             >
-                {Boolean(open) && <MediaDetail />}
+                {/* {Boolean(open) && <MediaDetail />} */}
+                <MediaDetail />
                 <Header isLoading={false} />
                 {/* <Box sx={{ position: 'fixed', left: '0', right: '0', top: '64px', display: { md: 'none' } }} px={3}>
                         <Search />
