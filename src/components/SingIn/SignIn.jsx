@@ -1,6 +1,6 @@
 import { Box, Button, Stack, Typography, useMediaQuery } from '@mui/material';
 
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import Input from '~/components/Input';
 import config from '~/config';
 import { PasswordIcon, UserIcon } from '../Icon';
@@ -23,7 +23,7 @@ import Auth from '../Auth';
 import { setAccessTokenLs } from '~/utils/auth';
 
 function SingIn({ setIsLoading, isLoading }) {
-    const location = useNavigate();
+    // const location = useNavigate();
 
     const dispatch = useDispatch();
 
@@ -60,7 +60,7 @@ function SingIn({ setIsLoading, isLoading }) {
                     dispatch(setUser(user));
                     dispatch(setToken({ accessToken, refreshToken }));
                     setAccessTokenLs(accessToken);
-                    location(config.routes.home);
+                    // location(config.routes.home);
                     formik.resetForm();
                     toast.success(`Xin chào, ${data.name}`, {
                         position: 'top-center',

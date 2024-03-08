@@ -13,14 +13,18 @@ import MediaListPage from '~/Page/MediaListPage/MediaListPage';
 import ForgotPassword from '~/Page/ForgotPassword/ForgotPassword';
 import WatchMovie from '~/Page/WatchMovie/WatchMovie';
 import { MainLayout } from '~/Layout';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Outlet, useRoutes } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { isLoggedIn } from '~/redux/selectors';
+
 export const routesMainLayout = [
     {
+        path: '/',
         element: <MainLayout />,
         children: [
             {
-                path: '/',
-                element: <Navigate to={config.routes.home} replace/>,
+                index: true,
+                element: <Navigate to={config.routes.home} replace />,
             },
             {
                 path: config.routes.homeList,
@@ -39,38 +43,50 @@ export const routesMainLayout = [
                 element: <SearchPage />,
             },
             {
-                path: config.routes.login,
-                element: <AuthPage />,
-            },
-            {
-                path: config.routes.signup,
-                element: <AuthPage />,
+                path: '',
+                element: <RejectedRoute />,
+                children: [
+                    {
+                        path: config.routes.login,
+                        element: <AuthPage />,
+                    },
+                    {
+                        path: config.routes.signup,
+                        element: <AuthPage />,
+                    },
+                ]
             },
             {
                 path: config.routes.forgotPassword,
                 element: <ForgotPassword />,
             },
             {
-                path: config.routes.profile,
-                element: <Profile />,
+                path: '',
+                element: <ProtectedRoute />,
                 children: [
                     {
-                        index: true,
-                        element: <InfoPage />,
+                        path: config.routes.profile,
+                        element: <Profile />,
+                        children: [
+                            {
+                                index: true,
+                                element: <InfoPage />,
+                            },
+                            {
+                                path: config.routes.editProfile,
+                                element: <EditAccount />,
+                            },
+                            {
+                                path: config.routes.favorite,
+                                element: <FavoriteMovieList />,
+                            },
+                            {
+                                path: config.routes.settingProfile,
+                                element: <SettingProfile />,
+                            },
+                        ],
                     },
-                    {
-                        path: config.routes.editProfile,
-                        element: <EditAccount />,
-                    },
-                    {
-                        path: config.routes.favorite,
-                        element: <FavoriteMovieList />,
-                    },
-                    {
-                        path: config.routes.settingProfile,
-                        element: <SettingProfile />,
-                    },
-                ],
+                ]
             },
             {
                 path: config.routes.watchMovieId,
@@ -87,3 +103,19 @@ export const routesMainLayout = [
         ],
     },
 ];
+function ProtectedRoute() {
+    const isAuthenticated = useSelector(isLoggedIn);
+    return isAuthenticated ? <Outlet /> : <Navigate to='/login' />
+}
+
+function RejectedRoute() {
+    const isAuthenticated = useSelector(isLoggedIn);
+    return !isAuthenticated ? <Outlet /> : <Navigate to={config.routes.home} />
+}
+
+const useRouteElements = () => {
+    const element = useRoutes(routesMainLayout)
+    return element
+}
+
+export default useRouteElements

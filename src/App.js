@@ -1,8 +1,7 @@
-import { useRoutes } from 'react-router-dom';
 // import { routesPage } from '~/routes';
-import { routesMainLayout } from './routes/routes';
+import useRouteElements from './routes/routes';
 function App() {
-    const element = useRoutes(routesMainLayout)
+    const element = useRouteElements()
     return (
         <div className="App">
             {/* <Routes>
