@@ -20,10 +20,11 @@ const privateClient = axios.create({
         (params) => queryString.stringify(params),
 });
 let refreshTokenRequest = null
-
+let accessToken = null
 privateClient.interceptors.request.use(async (config) => {
-    // const { refreshToken } = store.getState()?.auth;
-    const accessToken = getAccessTokenLs()
+    accessToken = accessToken ? accessToken : getAccessTokenLs()
+    // const { accessToken } = store.getState()?.auth;
+    // const accessToken = getAccessTokenLs()
     if (accessToken) {
         // let date = new Date();
         config.headers.Authorization = `Bearer ${accessToken}`;
@@ -49,15 +50,18 @@ privateClient.interceptors.request.use(async (config) => {
 
 privateClient.interceptors.response.use(
     (response) => {
+        const { url } = response.config
+        if (url === 'auth/logout') {
+            accessToken = null
+        }
         if (response && response.data) return response.data;
         return response;
     },
     async (err) => {
         const config = err.response?.config || {}
         const { url } = config
-        if (isAxiosUnauthorizedError(err) && url !== '/auth/refresh-token') {
-            const { refreshToken } = store.getState()?.auth;
-            const accessToken = getAccessTokenLs()
+        if (isAxiosUnauthorizedError(err) && url !== 'auth/refresh-token') {
+            const { refreshToken, accessToken } = store.getState()?.auth;
             if (isAxiosExpiredTokenError(err)) {
                 refreshTokenRequest = refreshTokenRequest ? refreshTokenRequest : userApi.refreshToken({ refreshToken, accessToken });
                 const { response } = await refreshTokenRequest;
