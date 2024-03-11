@@ -61,14 +61,15 @@ privateClient.interceptors.response.use(
         const config = err.response?.config || {}
         const { url } = config
         if (isAxiosUnauthorizedError(err) && url !== 'auth/refresh-token') {
-            const { refreshToken, accessToken } = store.getState()?.auth;
+            const { refreshToken } = store.getState()?.auth;
             if (isAxiosExpiredTokenError(err)) {
                 refreshTokenRequest = refreshTokenRequest ? refreshTokenRequest : userApi.refreshToken({ refreshToken, accessToken });
                 const { response } = await refreshTokenRequest;
                 if (response) {
-                    const { accessToken, refreshToken } = response.data;
-                    store.dispatch(setToken({ accessToken, refreshToken }));
-                    setAccessTokenLs(accessToken)
+                    const { accessToken: newAccessToken, refreshToken } = response.data;
+                    accessToken = newAccessToken
+                    store.dispatch(setToken({ newAccessToken, refreshToken }));
+                    setAccessTokenLs(newAccessToken)
                     setTimeout(() => {
                         refreshTokenRequest = null
                     }, 10000);
