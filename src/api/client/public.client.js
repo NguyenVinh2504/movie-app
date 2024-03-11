@@ -2,6 +2,8 @@ import axios from 'axios';
 import queryString from 'query-string';
 import { toast } from 'react-toastify';
 import { API_ROOT } from '~/utils/constants';
+import { userEndpoints } from '../module/user.api';
+import { setAccessTokenLs } from '~/utils/auth';
 axios.defaults.withCredentials = true;
 
 const baseURL = `${API_ROOT}/api/v1/`;
@@ -25,6 +27,10 @@ publicClient.interceptors.request.use((config) => {
 
 publicClient.interceptors.response.use(
     (response) => {
+        const { url } = response.config
+        if (url === userEndpoints.signin || url === userEndpoints.signup || url === userEndpoints.loginGoogle) {
+            setAccessTokenLs(response.data.accessToken)
+        }
         if (response && response.data) {
             return response.data;
         }

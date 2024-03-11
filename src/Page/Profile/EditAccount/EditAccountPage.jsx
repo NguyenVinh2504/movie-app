@@ -37,8 +37,8 @@ function EditAccount() {
         }),
         enableReinitialize: true,
         onSubmit: async (values) => {
-            const { phone } = values;
-            const name = values.name.trim();
+            let { name, phone } = values;
+            name = name.trim();
             const checkValue = isEqual(formik.initialValues, { name, phone });
             setDisable(!disable);
             if (!checkValue) {

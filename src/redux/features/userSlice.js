@@ -1,9 +1,10 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { getAccessTokenLs } from '~/utils/auth';
 
 const userSlice = createSlice({
     name: 'User',
     initialState: {
-        isLoggedIn: false,
+        isLoggedIn: Boolean(getAccessTokenLs()),
         user: null,
     },
     reducers: {

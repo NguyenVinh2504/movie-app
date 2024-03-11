@@ -2,7 +2,7 @@ import axios from 'axios';
 import queryString from 'query-string';
 import { API_ROOT } from '~/utils/constants';
 // import { jwtDecode } from 'jwt-decode';
-import userApi from '~/api/module/user.api';
+import userApi, { userEndpoints } from '~/api/module/user.api';
 import { store } from '~/redux/store';
 import { removeToken, setToken } from '~/redux/features/authSlice';
 import { clearLS, getAccessTokenLs, setAccessTokenLs } from '~/utils/auth';
@@ -60,7 +60,7 @@ privateClient.interceptors.response.use(
     async (err) => {
         const config = err.response?.config || {}
         const { url } = config
-        if (isAxiosUnauthorizedError(err) && url !== 'auth/refresh-token') {
+        if (isAxiosUnauthorizedError(err) && url !== userEndpoints.refreshToken) {
             const { refreshToken } = store.getState()?.auth;
             if (isAxiosExpiredTokenError(err)) {
                 refreshTokenRequest = refreshTokenRequest ? refreshTokenRequest : userApi.refreshToken({ refreshToken, accessToken });
@@ -68,12 +68,18 @@ privateClient.interceptors.response.use(
                 if (response) {
                     const { accessToken: newAccessToken, refreshToken } = response.data;
                     accessToken = newAccessToken
-                    store.dispatch(setToken({ newAccessToken, refreshToken }));
+                    store.dispatch(setToken({ accessToken: newAccessToken, refreshToken }));
                     setAccessTokenLs(newAccessToken)
                     setTimeout(() => {
                         refreshTokenRequest = null
                     }, 10000);
-                    return privateClient(err.response?.config)
+                    return privateClient({
+                        ...config,
+                        headers: {
+                            ...config.headers,
+                            Authorization: `Bearer ${accessToken}`
+                        }
+                    })
                 }
             }
             store.dispatch(loginOut())

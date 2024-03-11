@@ -4,7 +4,7 @@ import publicClient from '../client/public.client';
 import { API_ROOT } from '~/utils/constants';
 const baseURL = `${API_ROOT}/api/v1/`;
 axios.defaults.withCredentials = true;
-const userEndpoints = {
+export const userEndpoints = {
     signin: 'auth/login',
     loginGoogle: 'auth/google-login',
     signup: 'auth/signup',

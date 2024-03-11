@@ -11,7 +11,6 @@ import { setToken } from '~/redux/features/authSlice';
 import { setFavorites } from '~/redux/features/favoritesSlice';
 import { setUser } from '~/redux/features/userSlice';
 import { isLoggedIn } from '~/redux/selectors';
-import { setAccessTokenLs } from '~/utils/auth';
 
 function ButtonGoogle({ setIsLoading }) {
     const location = useNavigate();
@@ -51,7 +50,6 @@ function ButtonGoogle({ setIsLoading }) {
                 dispatch(setFavorites(favorites));
                 dispatch(setUser(user));
                 dispatch(setToken({ accessToken, refreshToken }));
-                setAccessTokenLs(accessToken);
                 toast.success(`Xin chào, ${response.name}`, {
                     position: 'top-center',
                 });
