@@ -5,12 +5,13 @@ import uiConfigs from '~/config/ui.config';
 function Auth({ titleAuth, children, isLoading }) {
     return (
         <Paper
-        variant="outlined"
+            variant="outlined"
             sx={{
                 display: 'flex',
                 position: 'relative',
                 flexDirection: 'column',
                 width: '100%',
+                minWidth: '380px',
                 maxWidth: '35rem',
                 margin: 'auto',
                 opacity: 1,
@@ -32,12 +33,21 @@ function Auth({ titleAuth, children, isLoading }) {
         >
             {isLoading && (
                 <LinearProgress
-                    sx={{ position: 'absolute', top: 0, left: 0, width: '100%', backgroundColor: 'secondary.main', zIndex: 3 }}
+                    sx={{
+                        position: 'absolute',
+                        top: 0,
+                        left: 0,
+                        width: '100%',
+                        backgroundColor: 'secondary.main',
+                        zIndex: 3,
+                    }}
                     color="primary"
                     variant="indeterminate"
                 />
             )}
-            {isLoading && <Box sx={{ ...uiConfigs.style.positionFullSize, bgcolor: 'rgba(0, 0, 0, 0.2)', zIndex: 2 }}></Box>}
+            {isLoading && (
+                <Box sx={{ ...uiConfigs.style.positionFullSize, bgcolor: 'rgba(0, 0, 0, 0.2)', zIndex: 2 }}></Box>
+            )}
             {/* title */}
             <Box sx={{ display: 'flex', alignItems: 'center', flexDirection: 'column', gap: 2, mb: 3, mt: 1 }}>
                 {/* logo */}

@@ -15,7 +15,7 @@ import WatchMovie from '~/Page/WatchMovie/WatchMovie';
 import { MainLayout } from '~/Layout';
 import { Navigate, Outlet, useRoutes } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { isLoggedIn } from '~/redux/selectors';
+import { isAuthenticated } from '~/redux/selectors';
 
 export const routesMainLayout = [
     {
@@ -89,12 +89,16 @@ export const routesMainLayout = [
                 ]
             },
             {
-                path: config.routes.watchMovieId,
-                element: <WatchMovie />,
-            },
-            {
-                path: config.routes.watchTvId,
-                element: <WatchMovie />,
+                path: '',
+                element: <ProtectedRoute />,
+                children: [{
+                    path: config.routes.watchMovieId,
+                    element: <WatchMovie />,
+                },
+                {
+                    path: config.routes.watchTvId,
+                    element: <WatchMovie />,
+                }]
             },
             {
                 path: config.routes.error,
@@ -104,13 +108,13 @@ export const routesMainLayout = [
     },
 ];
 function ProtectedRoute() {
-    const isAuthenticated = useSelector(isLoggedIn);
-    return isAuthenticated ? <Outlet /> : <Navigate to='/login' />
+    const isLogged = useSelector(isAuthenticated);
+    return isLogged ? <Outlet /> : <Navigate to='/login' />
 }
 
 function RejectedRoute() {
-    const isAuthenticated = useSelector(isLoggedIn);
-    return !isAuthenticated ? <Outlet /> : <Navigate to={config.routes.home} />
+    const isLogged = useSelector(isAuthenticated);
+    return !isLogged ? <Outlet /> : <Navigate to={config.routes.home} />
 }
 
 const useRouteElements = () => {

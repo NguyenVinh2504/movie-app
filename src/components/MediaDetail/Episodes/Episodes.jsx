@@ -43,7 +43,7 @@ function Episodes({ seasons, seriesId, isLoading }) {
     return (
         <WrapperMovieDetail>
             <CategoryMovieDetail valueTitle={'Tập Phim'} />
-            <Stack direction={'row'} justifyContent={'space-between'}>
+            <Stack direction={'row'} justifyContent={'space-between'} gap={1} flexWrap={'wrap'}>
                 {!isEmpty(seasons) && (
                     <ButtonSelector
                         seasons={seasons}

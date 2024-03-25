@@ -3,7 +3,7 @@ import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
 import { Button } from '@mui/material';
 import { ArrowDownIcon, ArrowUpIcon } from '~/components/Icon';
-
+import uiConfig from '~/config/ui.config';
 function ButtonSelector({ seasons, selectedIndex, onSeasonNumber }) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -40,9 +40,13 @@ function ButtonSelector({ seasons, selectedIndex, onSeasonNumber }) {
                         width: '18px',
                         height: '18px',
                     },
+                    display: 'flex',
                 }}
             >
-                {seasons && seasons[selectedIndex]?.name}
+                <span style={{ ...uiConfig.style.typoLines(1), textAlign: 'start' }}>
+                    {' '}
+                    {seasons && seasons[selectedIndex]?.name}
+                </span>
             </Button>
             <Menu
                 id="lock-menu"

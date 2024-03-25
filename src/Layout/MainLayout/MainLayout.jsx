@@ -15,14 +15,14 @@ import { setFavorites } from '~/redux/features/favoritesSlice';
 // import Search from '../components/Search';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { Outlet } from 'react-router-dom';
-import { isLoggedIn } from '~/redux/selectors';
+import { isAuthenticated } from '~/redux/selectors';
 // import { useQueryConfig } from '~/Hooks';
 // import { clearLS } from '~/utils/auth';
 
 function MainLayout() {
     const dispatch = useDispatch();
     // const open = useSelector(openSelector);
-    const isLogged = useSelector(isLoggedIn);
+    const isLogged = useSelector(isAuthenticated);
     const fetchApi = async () => {
         const { response, err } = await userApi.getInfo();
         if (response) return response;
@@ -61,6 +61,7 @@ function MainLayout() {
                 maxWidth="auto"
                 sx={{
                     maxWidth: { xl: '1904px' },
+                    minWidth: '250px',
                 }}
             >
                 {/* {Boolean(open) && <MediaDetail />} */}

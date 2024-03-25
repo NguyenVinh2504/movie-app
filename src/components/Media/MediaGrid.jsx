@@ -17,7 +17,7 @@ function MediaList({ medias, mediaType }) {
                     item={item}
                     mediaType={mediaType}
                     favoriteStore={favorites?.find((e) => e.mediaId === itemId)?._id}
-                    checkedLike={favorites?.some((favorite) => favorite?.mediaId === itemId)}
+                    checkedLike={item.isFavorite}
                 />
             </Grid>
         );

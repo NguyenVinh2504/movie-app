@@ -1,7 +1,7 @@
 import { Google } from '@mui/icons-material';
 import { Button, useMediaQuery } from '@mui/material';
 import { GoogleAuthProvider, signInWithPopup, getAuth } from 'firebase/auth';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import userApi from '~/api/module/user.api';
@@ -9,8 +9,8 @@ import config from '~/config';
 import { app } from '~/firebase';
 import { setToken } from '~/redux/features/authSlice';
 import { setFavorites } from '~/redux/features/favoritesSlice';
+import { setIsAuthenticated } from '~/redux/features/isAuthenticated';
 import { setUser } from '~/redux/features/userSlice';
-import { isLoggedIn } from '~/redux/selectors';
 
 function ButtonGoogle({ setIsLoading }) {
     const location = useNavigate();
@@ -18,8 +18,6 @@ function ButtonGoogle({ setIsLoading }) {
     const dispatch = useDispatch();
 
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-
-    const isLogged = useSelector(isLoggedIn);
 
     const signInGoogle = async () => {
         try {
@@ -32,7 +30,6 @@ function ButtonGoogle({ setIsLoading }) {
         }
     };
     const handleGoogleClick = async () => {
-        if (isLogged) return;
         setIsLoading(true);
         const { result, error } = await signInGoogle();
         if (result) {
@@ -48,6 +45,7 @@ function ButtonGoogle({ setIsLoading }) {
                 location(config.routes.home);
                 const { accessToken, refreshToken, favorites, ...user } = response;
                 dispatch(setFavorites(favorites));
+                dispatch(setIsAuthenticated(true));
                 dispatch(setUser(user));
                 dispatch(setToken({ accessToken, refreshToken }));
                 toast.success(`Xin chào, ${response.name}`, {

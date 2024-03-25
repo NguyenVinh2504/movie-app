@@ -16,10 +16,11 @@ import { toast } from 'react-toastify';
 import ButtonGoogle from '../ButtonGoogle';
 import { setToken } from '~/redux/features/authSlice';
 import { setFavorites } from '~/redux/features/favoritesSlice';
-import { isLoggedIn } from '~/redux/selectors';
+import { isAuthenticated } from '~/redux/selectors';
 
 import { useMutation } from '@tanstack/react-query';
 import Auth from '../Auth';
+import { setIsAuthenticated } from '~/redux/features/isAuthenticated';
 
 function SingIn({ setIsLoading, isLoading }) {
     // const location = useNavigate();
@@ -28,7 +29,7 @@ function SingIn({ setIsLoading, isLoading }) {
 
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
-    const isLogged = useSelector(isLoggedIn);
+    const isLogged = useSelector(isAuthenticated);
 
     const fetchApi = async (body) => {
         const { response, err } = await userApi.signin(body);
@@ -57,6 +58,7 @@ function SingIn({ setIsLoading, isLoading }) {
                     const { accessToken, refreshToken, favorites, ...user } = data;
                     dispatch(setFavorites(favorites));
                     dispatch(setUser(user));
+                    dispatch(setIsAuthenticated(true));
                     dispatch(setToken({ accessToken, refreshToken }));
                     // location(config.routes.home);
                     formik.resetForm();

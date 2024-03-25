@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import userApi from "~/api/module/user.api";
 import { removeToken } from "~/redux/features/authSlice";
 import { removeFavorites } from "~/redux/features/favoritesSlice";
+import { setIsAuthenticated } from "~/redux/features/isAuthenticated";
 import { loginOut } from "~/redux/features/userSlice";
 import { clearLS } from "~/utils/auth";
 
@@ -20,6 +21,7 @@ export function useLogout() {
             // setTimeout(() => {
             dispatch(removeFavorites());
             dispatch(loginOut())
+            dispatch(setIsAuthenticated(false))
             clearLS()
             dispatch(removeToken())
             toast.update(id, {

@@ -1,24 +1,15 @@
 import { Box } from '@mui/material';
-import React, { useEffect } from 'react';
+import React from 'react';
 import Wrapper from '~/components/Wrapper';
 import uiConfigs from '~/config/ui.config';
 // import TitleMatchMovie from './TitleMatchMovie';
 // import OverviewWatchMovie from './OverviewWatchMovie';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useSelector } from 'react-redux';
-import { isLoggedIn } from '~/redux/selectors';
-import config from '~/config';
+import { useParams } from 'react-router-dom';
 
 const WatchMovie = () => {
     let { movieId, showId, ssId, epId } = useParams();
-    const user = useSelector(isLoggedIn);
+
     // console.log(user);
-    const location = useNavigate();
-    useEffect(() => {
-        if (!user) {
-            location(config.routes.login);
-        }
-    }, [user, location]);
     // const genres = ['Hành động', 'Phiêu Lưu', 'Lịch sử'];
     // const dataDetail = {
     //     vote_average: 8.4,

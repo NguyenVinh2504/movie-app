@@ -1,3 +1,4 @@
+import privateClient from '../client/private.client';
 import publicClient from '../client/public.client';
 
 const mediaEndpoints = {
@@ -25,7 +26,7 @@ const mediaApi = {
     },
     getListTrending: async ({ mediaType, timeWindow, page }) => {
         try {
-            const response = await publicClient.get(mediaEndpoints.listTrending({ mediaType, timeWindow }), {
+            const response = await privateClient.get(mediaEndpoints.listTrending({ mediaType, timeWindow }), {
                 params: {
                     page
                 }

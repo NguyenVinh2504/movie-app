@@ -2,4 +2,5 @@
 export { default as authSlice } from './authSlice';
 export { default as userSlice } from './userSlice';
 export { default as favoritesSlice } from './favoritesSlice';
+export { default as isAuthenticatedSlice } from './isAuthenticated';
 // export { default as globalLoadingSlice } from './globalLoadingSlice';

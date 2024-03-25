@@ -8,12 +8,12 @@ import Logo from '~/components/Logo';
 import SideBar from '~/components/SideBar';
 import UserMenu from '~/components/UserMenu';
 import { useSelector } from 'react-redux';
-import { isLoggedIn } from '~/redux/selectors';
+import { isAuthenticated } from '~/redux/selectors';
 import config from '~/config';
 import Notification from './Notification/Notification';
 
 function Header({ isLoading }) {
-    const isLogged = useSelector(isLoggedIn);
+    const isLogged = useSelector(isAuthenticated);
 
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const toggleSidebar = useCallback(() => setSidebarOpen(!sidebarOpen), [sidebarOpen]);
@@ -43,20 +43,29 @@ function Header({ isLoading }) {
                     }}
                 >
                     {/* menu mobile */}
-                    <Stack direction="row" spacing={1} sx={{ display: { lg: 'none' } }} alignItems={'center'}>
+                    <Stack
+                        direction="row"
+                        spacing={1}
+                        sx={{ display: { lg: 'none' }, flex: '1' }}
+                        alignItems={'center'}
+                    >
                         <IconButton onClick={toggleSidebar}>
                             <MenuIcon />
                         </IconButton>
-                        <Box sx={{ width: '92px' }}>
+                        <Box sx={{ height: '30px', maxWidth: '100px' }}>
                             <Logo />
                         </Box>
                     </Stack>
                     {/* menu mobile */}
 
                     {/* leftheader */}
-                    <Stack direction="row" spacing={4} sx={{ color: '#a6a4a4', alignItems: 'center' }}>
+                    <Stack
+                        direction="row"
+                        spacing={4}
+                        sx={{ color: '#a6a4a4', alignItems: 'center', display: { xs: 'none', md: 'flex' } }}
+                    >
                         {/* logo */}
-                        <Box sx={{ display: { xs: 'none', lg: 'inline-block' }, width: '92px' }}>
+                        <Box sx={{ display: { xs: 'none', lg: 'inline-block' }, width: '92px', height: '30px' }}>
                             <Logo />
                         </Box>
                         {/* logo */}
@@ -95,7 +104,7 @@ function Header({ isLoading }) {
                                 width: '380px',
                             }}
                         >
-                            <Search round inHeader/>
+                            <Search round inHeader />
                         </Box>
 
                         <Box
