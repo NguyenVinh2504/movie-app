@@ -15,8 +15,7 @@ export function useLogout() {
     async function handelLogout() {
         setDisabled(true)
         // disable = true
-        const id = toast.loading('Đang đăng xuất...');
-        const { response, err } = await userApi.logOut();
+        const { response } = await userApi.logOut();
         if (response) {
             // setTimeout(() => {
             dispatch(removeFavorites());
@@ -24,30 +23,26 @@ export function useLogout() {
             dispatch(setIsAuthenticated(false))
             clearLS()
             dispatch(removeToken())
-            toast.update(id, {
-                render: 'Đăng xuất thành công',
-                type: 'success',
-                isLoading: false,
-                autoClose: 3000,
-            });
+            toast.success('Đăng xuất thành công');
             // setTimeout(() => {
             //     window.location.href = "/";
             // }, [500])
             // }, 2000)
         }
-        if (err) {
-            // setDisabled(false)
-            dispatch(loginOut())
-            dispatch(removeToken())
-            dispatch(removeFavorites());
-            clearLS()
-            toast.update(id, {
-                render: 'Đăng xuất không thành công',
-                type: 'error',
-                isLoading: false,
-                autoClose: 3000,
-            });
-        }
+        // if (err) {
+        //     // setDisabled(false)
+        //     dispatch(loginOut())
+        //     dispatch(removeToken())
+        //     dispatch(setIsAuthenticated(false))
+        //     dispatch(removeFavorites());
+        //     clearLS()
+        //     toast.update(id, {
+        //         render: 'Đăng xuất không thành công',
+        //         type: 'error',
+        //         isLoading: false,
+        //         autoClose: 3000,
+        //     });
+        // }
     }
     return {
         handelLogout,

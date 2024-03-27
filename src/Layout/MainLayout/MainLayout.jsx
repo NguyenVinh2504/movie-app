@@ -21,7 +21,6 @@ import { isAuthenticated } from '~/redux/selectors';
 
 function MainLayout() {
     const dispatch = useDispatch();
-    // const open = useSelector(openSelector);
     const isLogged = useSelector(isAuthenticated);
     const fetchApi = async () => {
         const { response, err } = await userApi.getInfo();

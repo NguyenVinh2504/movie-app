@@ -64,7 +64,6 @@ const userApi = {
             const response = await privateClient.get(userEndpoints.getInfo);
             return { response };
         } catch (err) {
-            console.log(err);
             return { err };
         }
     },
