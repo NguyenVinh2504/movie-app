@@ -24,6 +24,7 @@ function CastItem({ item }) {
             <Stack p={1}>
                 <Typography
                     variant="subtitle2"
+                    component={'span'}
                     fontWeight={500}
                     sx={{
                         ...uiConfigs.style.typoLines(1),
@@ -34,6 +35,7 @@ function CastItem({ item }) {
                 </Typography>
                 <Typography
                     variant="subtitle2"
+                    component={'span'}
                     fontWeight={300}
                     sx={{
                         ...uiConfigs.style.typoLines(1),

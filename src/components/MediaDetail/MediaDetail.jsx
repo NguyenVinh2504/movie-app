@@ -124,6 +124,7 @@ function MovieDetail() {
                         >
                             <Typography
                                 variant="h4"
+                                component={'p'}
                                 textAlign={'center'}
                                 fontWeight={'500'}
                                 position={'absolute'}

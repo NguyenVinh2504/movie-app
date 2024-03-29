@@ -162,6 +162,7 @@ function HeroSliceList({ isLoading, medias, mediaType }) {
                                                                 ? 'h2'
                                                                 : 'h1'
                                                         }
+                                                        component={'h1'}
                                                         sx={{
                                                             fontWeight: '500',
                                                             ...uiConfigs.style.typoLines(3),
@@ -174,6 +175,7 @@ function HeroSliceList({ isLoading, medias, mediaType }) {
                                                         variant={
                                                             pointDownMd ? 'subtitle2' : pointDownLg ? 'subtitle1' : 'h6'
                                                         }
+                                                        component={'p'}
                                                         sx={{
                                                             fontWeight: '400',
                                                             ...uiConfigs.style.typoLines(3),

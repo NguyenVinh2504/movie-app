@@ -139,7 +139,7 @@ function EpisodesItem({ item, dataSeason }) {
                 >
                     <CustomDivider />
                     <ListCustoms sx={{ px: 1, py: 3 }}>
-                        <Typography variant="h5" width={'20%'} textAlign={'center'}>
+                        <Typography variant="h5" component={'h3'} width={'20%'} textAlign={'center'}>
                             {item.episode_number || 'N/A'}
                         </Typography>
                         <CustomBox>
@@ -157,7 +157,7 @@ function EpisodesItem({ item, dataSeason }) {
                             }}
                             primary={
                                 <Stack direction={'row'} justifyContent={'space-between'}>
-                                    <Typography variant="h6" width={'80%'} fontWeight={500}>
+                                    <Typography variant="h6" width={'80%'} fontWeight={500} component={'h3'}>
                                         {`${item?.name || 'N/A'}`}
                                     </Typography>
 

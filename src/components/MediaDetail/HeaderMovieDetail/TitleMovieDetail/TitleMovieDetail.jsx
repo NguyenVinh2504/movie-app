@@ -25,6 +25,7 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
                         <Typography
                             variant={pointDownSm ? 'h4' : 'h2'}
                             fontWeight={'500'}
+                            component={'h1'}
                             sx={{ ...uiConfigs.style.typoLines(2) }}
                         >
                             {dataDetail?.title ?? dataDetail?.name ?? 'Không có nội dung'}
@@ -58,13 +59,13 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
                         flexWrap={'wrap'}
                         sx={{
                             display: { xs: 'none', sm: 'flex' },
-                            'h6:not(:first-of-type)': {
+                            'p:not(:first-of-type)': {
                                 '::before': {
                                     content: '"•"',
                                     mx: 0.5,
                                 },
                             },
-                            h6: {
+                            p: {
                                 ...uiConfigs.style.typoLines(1),
                             },
                         }}
@@ -75,7 +76,11 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
                             }
                             return (
                                 value && (
-                                    <Typography key={key} variant={pointDownSm ? 'subtitle2' : 'subtitle1'}>
+                                    <Typography
+                                        key={key}
+                                        variant={pointDownSm ? 'subtitle2' : 'subtitle1'}
+                                        component={'p'}
+                                    >
                                         {value}
                                     </Typography>
                                 )
@@ -91,7 +96,7 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
                             flexWrap={'wrap'}
                             sx={{
                                 display: 'flex',
-                                'h6:not(:first-of-type)': { '::before': { content: '"•"', mx: 0.5 } },
+                                'p:not(:first-of-type)': { '::before': { content: '"•"', mx: 0.5 } },
                             }}
                         >
                             {Object.entries(rating).map(([key, value]) => {
@@ -103,7 +108,11 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
                                 }
                                 return (
                                     value && (
-                                        <Typography key={key} variant={pointDownSm ? 'subtitle2' : 'subtitle1'}>
+                                        <Typography
+                                            key={key}
+                                            component={'p'}
+                                            variant={pointDownSm ? 'subtitle2' : 'subtitle1'}
+                                        >
                                             {value}
                                         </Typography>
                                     )

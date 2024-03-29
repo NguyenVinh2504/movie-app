@@ -30,7 +30,7 @@ function AboutUs() {
                 />
             </Helmet>
             <Paper variant="outlined" sx={{ p: 3 }}>
-                <Typography variant="h4" fontWeight={'500'}>
+                <Typography variant="h4" component={'h1'} fontWeight={'500'}>
                     Giới Thiệu
                 </Typography>
                 <Typography variant="body1" mt={3} fontWeight={'400'}>
