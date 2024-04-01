@@ -72,23 +72,25 @@ function Header({ isLoading }) {
 
                         {/* tab item */}
                         <Stack
-                            sx={{ display: { xs: 'none', lg: 'flex' }, fontSize: '16px' }}
+                            sx={{ display: { xs: 'none', lg: 'flex' }, fontSize: '16px', p: 0, listStyle: 'none' }}
                             direction="row"
                             spacing={3}
+                            component={'ul'}
                         >
                             {menuItems.map((item, index) => (
-                                <NavLink
-                                    key={index}
-                                    style={(nav) => {
-                                        return {
-                                            color: nav.isActive && 'white',
-                                        };
-                                    }}
-                                    to={item.path}
-                                    end
-                                >
-                                    {item.title}
-                                </NavLink>
+                                <li key={index}>
+                                    <NavLink
+                                        style={(nav) => {
+                                            return {
+                                                color: nav.isActive && 'white',
+                                            };
+                                        }}
+                                        to={item.path}
+                                        end
+                                    >
+                                        {item.title}
+                                    </NavLink>
+                                </li>
                             ))}
                         </Stack>
                         {/* tab items */}
@@ -112,11 +114,9 @@ function Header({ isLoading }) {
                                 display: { xs: 'block', lg: 'none' },
                             }}
                         >
-                            <NavLink to={config.routes.searchPage}>
-                                <IconButton disableRipple color="neutral">
-                                    <SearchIcon />
-                                </IconButton>
-                            </NavLink>
+                            <IconButton disableRipple color="neutral" component={NavLink} to={config.routes.searchPage}>
+                                <SearchIcon />
+                            </IconButton>
                         </Box>
 
                         {/* user menu */}

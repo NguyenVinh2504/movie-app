@@ -116,12 +116,12 @@ function UserMenu() {
                 </ListItem>
                 <Divider light sx={{ borderColor: 'white', my: 1.5, opacity: 0.3 }} />
                 {userMenu.map((item, index) => (
-                    <NavLink to={item.path} key={index}>
-                        <MenuItem sx={{ paddingRight: '55px' }}>
+                    <li key={index}>
+                        <MenuItem sx={{ paddingRight: '55px' }} component={NavLink} to={item.path}>
                             <ListItemIcon>{item.icon}</ListItemIcon>
                             {item.title}
                         </MenuItem>
-                    </NavLink>
+                    </li>
                 ))}
                 <Divider light sx={{ borderColor: 'white', mt: 1.5, mb: '5px', opacity: 0.3 }} />
                 <MenuItem
