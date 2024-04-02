@@ -67,6 +67,7 @@ function HeaderProfile({ valueTabItems, location }) {
                         <Typography
                             variant={pointDownMd ? 'h6' : 'h4'}
                             fontWeight={'500'}
+                            component={'h1'}
                             sx={{
                                 m: { xs: '16px 0 0 0', md: '0 0 0px 16px', textAlign: 'center' },
                             }}
@@ -75,6 +76,7 @@ function HeaderProfile({ valueTabItems, location }) {
                         </Typography>
                         <Typography
                             variant={pointDownMd ? 'subtitle2' : 'subtitle1'}
+                            component={'p'}
                             fontWeight={'300'}
                             sx={{ ml: { xs: '0px', md: '16px' }, textAlign: { xs: 'center', md: 'left' } }}
                         >

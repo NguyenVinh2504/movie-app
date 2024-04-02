@@ -50,43 +50,46 @@ function Notification() {
                 TransitionComponent={Grow}
             >
                 <Box sx={{ maxWidth: '480px', minWidth: '400px' }}>
-                    <Typography sx={{ p: 2 }} variant="h6" fontWeight={500}>
+                    <Typography sx={{ p: 2 }} variant="h6" component="h2" fontWeight={500}>
                         Thông báo
                     </Typography>
                     <Divider />
                     <Box sx={{ p: 0, overflowY: 'auto', maxHeight: '50vh' }}>
-                        {false && Array(5)
-                            .fill(0)
-                            .map((item, index) => (
-                                <List key={index}>
-                                    <ListItem sx={{ alignItems: 'flex-start', gap: 2 }}>
-                                        <ListItemAvatar
-                                            sx={{
-                                                height: '48px',
-                                                width: '48px',
-                                                minWidth: '0px',
-                                                borderRadius: 100,
-                                                overflow: 'hidden',
-                                            }}
-                                        >
-                                            <Image
-                                                src={'https://image.tmdb.org/t/p/w500/dB6Krk806zeqd0YNp2ngQ9zXteH.jpg'}
-                                            />
-                                        </ListItemAvatar>
-                                        <ListItemText sx={{ m: 0 }}>
-                                            <Typography variant="body2">
-                                                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aut possimus
-                                                reiciendis nobis quibusdam aperiam laborum quae, explicabo quo ea sit
-                                                molestias? Ea sequi repellat necessitatibus veritatis asperiores mollitia
-                                                expedita quibusdam.
-                                            </Typography>
-                                        </ListItemText>
-                                    </ListItem>
-                                </List>
-                            ))}
+                        {false &&
+                            Array(5)
+                                .fill(0)
+                                .map((item, index) => (
+                                    <List key={index}>
+                                        <ListItem sx={{ alignItems: 'flex-start', gap: 2 }}>
+                                            <ListItemAvatar
+                                                sx={{
+                                                    height: '48px',
+                                                    width: '48px',
+                                                    minWidth: '0px',
+                                                    borderRadius: 100,
+                                                    overflow: 'hidden',
+                                                }}
+                                            >
+                                                <Image
+                                                    src={
+                                                        'https://image.tmdb.org/t/p/w500/dB6Krk806zeqd0YNp2ngQ9zXteH.jpg'
+                                                    }
+                                                />
+                                            </ListItemAvatar>
+                                            <ListItemText sx={{ m: 0 }}>
+                                                <Typography variant="body2">
+                                                    Lorem, ipsum dolor sit amet consectetur adipisicing elit. Aut
+                                                    possimus reiciendis nobis quibusdam aperiam laborum quae, explicabo
+                                                    quo ea sit molestias? Ea sequi repellat necessitatibus veritatis
+                                                    asperiores mollitia expedita quibusdam.
+                                                </Typography>
+                                            </ListItemText>
+                                        </ListItem>
+                                    </List>
+                                ))}
                         {true && (
                             <Typography variant="body1" p={2}>
-                                Chào mừng bạn đến với VieJoy  ^.^
+                                Chào mừng bạn đến với VieJoy ^.^
                             </Typography>
                         )}
                     </Box>

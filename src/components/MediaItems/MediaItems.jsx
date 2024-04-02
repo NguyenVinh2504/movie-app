@@ -84,6 +84,7 @@ function MediaItems({ item, mediaType, checkedLike, favoriteStore }) {
             <Stack direction={'column'} spacing={0}>
                 <Typography
                     variant="subtitle1"
+                    component={'h2'}
                     // onClick={handleOpen}
                     onClick={() => {
                         if (id === (item.id || item.mediaId)) return;

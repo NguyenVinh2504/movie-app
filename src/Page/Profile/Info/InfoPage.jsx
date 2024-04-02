@@ -9,12 +9,12 @@ const Item = ({ primaryText, secondaryText, ...props }) => {
             <ListItemText
                 sx={{ display: 'flex', alignItems: 'center', gap: 1, overflow: 'hidden' }}
                 primary={
-                    <Typography variant="subtitle1" fontWeight={'500'}>
+                    <Typography variant="subtitle1" fontWeight={'500'} component={'h2'}>
                         {primaryText}
                     </Typography>
                 }
                 secondary={
-                    <Typography variant="subtitle1" mt={0} fontWeight={'300'}>
+                    <Typography variant="subtitle1" mt={0} fontWeight={'300'} component={'p'}>
                         {secondaryText}
                     </Typography>
                 }

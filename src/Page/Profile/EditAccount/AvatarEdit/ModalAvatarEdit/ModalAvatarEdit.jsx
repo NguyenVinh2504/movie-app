@@ -172,6 +172,7 @@ function ModalAvatarEdit({ open, handleClose }) {
                                 textAlign={'center'}
                                 left={0}
                                 right={0}
+                                component={'h2'}
                                 // sx={{ fontSize: { sm: '1.5rem' } }}
                                 position={'absolute'}
                             >
@@ -182,7 +183,9 @@ function ModalAvatarEdit({ open, handleClose }) {
                             </IconButton>
                         </Stack>
                         {/* title */}
-                        <Typography variant="subtitle1">Chọn vào ảnh đại diện để thay đổi</Typography>
+                        <Typography variant="subtitle1" component={'h3'}>
+                            Chọn vào ảnh đại diện để thay đổi
+                        </Typography>
                         {/* Avatar */}
                         <label htmlFor="avatar">
                             <Box

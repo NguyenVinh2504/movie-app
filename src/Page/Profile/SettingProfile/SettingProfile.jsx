@@ -6,14 +6,13 @@ import PaperProfile from '../components/PaperProfile';
 
 function SettingCategory({ children }) {
     return (
-        <Typography variant="h6" mb={2} fontWeight={500}>
+        <Typography variant="h6" component={'h2'} mb={2} fontWeight={500}>
             {children}
         </Typography>
     );
 }
 
 function EditAccount() {
-
     return (
         <Stack spacing={2}>
             <Typography variant="body1">
