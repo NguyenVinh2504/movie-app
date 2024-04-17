@@ -13,6 +13,7 @@ function HeaderProfile({ valueTabItems, location }) {
         <>
             {/* banner and avatar */}
             <Stack
+                component={'aside'}
                 direction={'column'}
                 sx={{
                     position: 'relative',

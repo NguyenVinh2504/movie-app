@@ -59,10 +59,16 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
                         flexWrap={'wrap'}
                         sx={{
                             display: { xs: 'none', sm: 'flex' },
-                            'p:not(:first-of-type)': {
+                            '& p': {
                                 '::before': {
                                     content: '"•"',
                                     mx: 0.5,
+                                },
+                            },
+                            '& p:first-of-type': {
+                                '::before': {
+                                    content: '""',
+                                    mx: 0,
                                 },
                             },
                             p: {
@@ -96,7 +102,18 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
                             flexWrap={'wrap'}
                             sx={{
                                 display: 'flex',
-                                'p:not(:first-of-type)': { '::before': { content: '"•"', mx: 0.5 } },
+                                '& p': {
+                                    '::before': {
+                                        content: '"•"',
+                                        mx: 0.5,
+                                    },
+                                },
+                                '& p:first-of-type': {
+                                    '::before': {
+                                        content: '""',
+                                        mx: 0,
+                                    },
+                                },
                             }}
                         >
                             {Object.entries(rating).map(([key, value]) => {

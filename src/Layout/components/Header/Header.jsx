@@ -71,28 +71,30 @@ function Header({ isLoading }) {
                         {/* logo */}
 
                         {/* tab item */}
-                        <Stack
-                            sx={{ display: { xs: 'none', lg: 'flex' }, fontSize: '16px', p: 0, listStyle: 'none' }}
-                            direction="row"
-                            spacing={3}
-                            component={'ul'}
-                        >
-                            {menuItems.map((item, index) => (
-                                <li key={index}>
-                                    <NavLink
-                                        style={(nav) => {
-                                            return {
-                                                color: nav.isActive && 'white',
-                                            };
-                                        }}
-                                        to={item.path}
-                                        end
-                                    >
-                                        {item.title}
-                                    </NavLink>
-                                </li>
-                            ))}
-                        </Stack>
+                        <nav>
+                            <Stack
+                                sx={{ display: { xs: 'none', lg: 'flex' }, fontSize: '16px', p: 0, listStyle: 'none' }}
+                                direction="row"
+                                spacing={3}
+                                component={'ul'}
+                            >
+                                {menuItems.map((item, index) => (
+                                    <li key={index}>
+                                        <NavLink
+                                            style={(nav) => {
+                                                return {
+                                                    color: nav.isActive && 'white',
+                                                };
+                                            }}
+                                            to={item.path}
+                                            end
+                                        >
+                                            {item.title}
+                                        </NavLink>
+                                    </li>
+                                ))}
+                            </Stack>
+                        </nav>
                         {/* tab items */}
                     </Stack>
                     {/* leftheader */}

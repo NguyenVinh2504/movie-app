@@ -150,6 +150,7 @@ function MediaItems({ item, mediaType, checkedLike, favoriteStore }) {
                 borderRadius: theme.mediaItems.borderRadius,
                 overflow: 'hidden',
             }}
+            component={'article'}
         >
             {renderPoster()}
             <Box padding={'15px'} display={'flex'} flexDirection={'column'} justifyContent={'space-between'}>
