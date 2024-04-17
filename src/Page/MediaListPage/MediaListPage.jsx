@@ -8,10 +8,12 @@ import MediaGrid from '~/components/Media/MediaGrid';
 import { MovieTabItems } from '~/config/MovieTabMenuItems/MovieTabMenuItems';
 import { TvTabItems } from '~/config/TvShowTabMenuItems/TvShowTabMenuItems';
 import { Helmet } from 'react-helmet';
+import useDetailMovie from '~/Hooks/useIsDetailMovie';
 
 function MediaListPage() {
     const { mediaType, key, category } = useParams();
     // console.log(mediaType, key, category);
+    const isDetailMovie = useDetailMovie();
 
     const fetchData = async ({ pageParam }) => {
         const { response, err } =
@@ -43,6 +45,7 @@ function MediaListPage() {
     const handleLoadingMore = () => {
         fetchNextPage();
     };
+
     let title = '';
 
     // console.log('isFetchingNextPage', isFetchingNextPage, 'hasNextPage', hasNextPage);
@@ -59,13 +62,14 @@ function MediaListPage() {
             }
         });
     }
-
     return (
         <>
-            <Helmet>
-                <title>{title}</title>
-                <meta name="description" content="Phim chiếu rạp mới nhất" />
-            </Helmet>
+            {!isDetailMovie && (
+                <Helmet>
+                    <title>{title}</title>
+                    <meta name="description" content="Phim chiếu rạp mới nhất" />
+                </Helmet>
+            )}
             <HeroSlice mediaType={mediaType} />
             <Container maxWidth={'xl'} sx={{ px: '0' }}>
                 <TabItems contentItems={mediaType === 'movie' ? MovieTabItems : TvTabItems} />

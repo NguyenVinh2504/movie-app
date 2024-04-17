@@ -11,12 +11,15 @@ import uiConfigs from '~/config/ui.config';
 import MediaGrid from '~/components/Media/MediaGrid';
 import { useQueryConfig } from '~/Hooks';
 import { Helmet } from 'react-helmet';
+import useDetailMovie from '~/Hooks/useIsDetailMovie';
 
 function SearchPage() {
     const isLgDown = useMediaQuery((theme) => theme.breakpoints.down('lg'));
     const isSmDown = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const [valueInput, setValueInput] = useState(null);
     const { query, media_type } = useQueryConfig();
+    const isDetailMovie = useDetailMovie();
+
     const setValue = useRef(
         debounce((query) => {
             setValueInput(query);
@@ -54,7 +57,7 @@ function SearchPage() {
     });
     return (
         <>
-            <Helmet title={`Tìm kiếm: ${query || ''}`} />
+            {!isDetailMovie && <Helmet title={`Tìm kiếm: ${query || ''}`} />}
             <Container maxWidth="xl">
                 {isLgDown && (
                     <Box mb="20px">

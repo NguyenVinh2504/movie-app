@@ -9,9 +9,11 @@ import MediaGrid from '~/components/Media/MediaGrid';
 import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import config from '~/config';
+import useDetailMovie from '~/Hooks/useIsDetailMovie';
 
 function Home() {
     const { mediaType, category } = useParams();
+    const isDetailMovie = useDetailMovie();
 
     async function fetchData({ pageParam }) {
         const { response, err } =
@@ -54,16 +56,17 @@ function Home() {
             title = item.name;
         }
     });
-    // console.log(title);
     return (
         <>
-            <Helmet>
-                <title>{title}</title>
-                <meta
-                    name="description"
-                    content="Trang Viejoy là một trang web cung cấp cho người dùng khả năng xem phim trực tuyến. Trang web có một thư viện phim khổng lồ, bao gồm các bộ phim mới nhất, phim cũ, phim bom tấn, phim nghệ thuật,...Nguồn phim được cung cấp từ trang Themoviedb. Người dùng có thể tìm kiếm phim theo thể loại, quốc gia, diễn viên, đạo diễn,... và xem phim miễn phí."
-                />
-            </Helmet>
+            {!isDetailMovie && (
+                <Helmet>
+                    <title>{title}</title>
+                    <meta
+                        name="description"
+                        content="Trang Viejoy là một trang web cung cấp cho người dùng khả năng xem phim trực tuyến. Trang web có một thư viện phim khổng lồ, bao gồm các bộ phim mới nhất, phim cũ, phim bom tấn, phim nghệ thuật,...Nguồn phim được cung cấp từ trang Themoviedb. Người dùng có thể tìm kiếm phim theo thể loại, quốc gia, diễn viên, đạo diễn,... và xem phim miễn phí."
+                    />
+                </Helmet>
+            )}
             <HeroSlice mediaType={'all'} path={config.routes.home} />
             <Container maxWidth={'xl'} sx={{ px: '0' }}>
                 <TabItems

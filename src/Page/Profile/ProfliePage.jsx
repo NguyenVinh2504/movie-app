@@ -4,9 +4,11 @@ import { profileItems } from '~/config/ProfileMenuItems';
 import HeaderProfile from '~/Page/Profile/HeaderProfile';
 import Wrapper from '~/components/Wrapper';
 import { Helmet } from 'react-helmet';
+import useDetailMovie from '~/Hooks/useIsDetailMovie';
 
 function Profile() {
     const location = useLocation();
+    const isDetailMovie = useDetailMovie();
 
     let title = '';
     profileItems.forEach((item) => {
@@ -16,7 +18,7 @@ function Profile() {
     });
     return (
         <>
-            <Helmet title={title} />
+            {!isDetailMovie && <Helmet title={title} />}
             <Wrapper>
                 {/* head */}
                 <HeaderProfile valueTabItems={profileItems} location={location} />
