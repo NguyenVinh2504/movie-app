@@ -10,7 +10,7 @@ import { StarIcon } from '../Icon/Icon';
 import { useSearchParams } from 'react-router-dom';
 import { useQueryConfig } from '~/Hooks';
 
-function MediaItems({ item, mediaType, checkedLike, favoriteStore }) {
+function MediaItems({ item, mediaType }) {
     const queryConfig = useQueryConfig();
     const { id } = queryConfig;
     const [, setSearchParams] = useSearchParams();
@@ -138,7 +138,7 @@ function MediaItems({ item, mediaType, checkedLike, favoriteStore }) {
                     ) : undefined}
                 </Box>
             </Stack>
-            <FavoriteButton item={item} mediaType={mediaType} checkedLike={checkedLike} favoriteStore={favoriteStore} />
+            <FavoriteButton item={item} itemId={item?.id ?? item?.mediaId} mediaType={mediaType} />
         </Stack>
     );
 

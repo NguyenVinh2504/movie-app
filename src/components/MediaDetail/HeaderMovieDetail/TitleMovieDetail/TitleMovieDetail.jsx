@@ -1,14 +1,11 @@
 import React from 'react';
 import { Box, Typography, Stack, useMediaQuery, Skeleton } from '@mui/material';
 import { memo } from 'react';
-import { useSelector } from 'react-redux';
 import ButtonAddFavorite from '~/components/FavoriteButton';
 import uiConfigs from '~/config/ui.config';
-import { favoritesValue } from '~/redux/selectors';
 
 function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-    const favorites = useSelector(favoritesValue);
 
     const rating = {
         rate: Number(dataDetail?.vote_average?.toFixed(1)) || Number(dataDetail?.mediaRate?.toFixed(1)),
@@ -34,8 +31,7 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
                             <ButtonAddFavorite
                                 item={dataDetail}
                                 mediaType={mediaType}
-                                favoriteStore={favorites?.find((e) => e.mediaId === dataDetail.id)?._id}
-                                checkedLike={favorites?.some((favorite) => favorite?.mediaId === dataDetail.id)}
+                                itemId={dataDetail?.id ?? dataDetail?.mediaId}
                             />
                         </Box>
                     </>
