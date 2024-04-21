@@ -22,7 +22,7 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
                         <Typography
                             variant={pointDownSm ? 'h4' : 'h2'}
                             fontWeight={'500'}
-                            component={'h1'}
+                            component={'h2'}
                             sx={{ ...uiConfigs.style.typoLines(2) }}
                         >
                             {dataDetail?.title ?? dataDetail?.name ?? 'Không có nội dung'}
