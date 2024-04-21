@@ -106,7 +106,7 @@ function EpisodesItem({ item, dataSeason }) {
                                         primary={
                                             <Typography
                                                 variant="subtitle1"
-                                                component={'h4'}
+                                                component={'h5'}
                                                 fontWeight={500}
                                                 sx={{ ...uiConfigs.style.typoLines(2) }}
                                             >
@@ -140,7 +140,7 @@ function EpisodesItem({ item, dataSeason }) {
                 >
                     <CustomDivider />
                     <ListCustoms sx={{ px: 1, py: 3 }}>
-                        <Typography variant="h5" component={'h4'} width={'20%'} textAlign={'center'}>
+                        <Typography variant="h5" component={'h5'} width={'20%'} textAlign={'center'}>
                             {item.episode_number || 'N/A'}
                         </Typography>
                         <CustomBox>
@@ -158,7 +158,7 @@ function EpisodesItem({ item, dataSeason }) {
                             }}
                             primary={
                                 <Stack direction={'row'} justifyContent={'space-between'}>
-                                    <Typography variant="h6" width={'80%'} fontWeight={500} component={'h4'}>
+                                    <Typography variant="h6" width={'80%'} fontWeight={500} component={'h5'}>
                                         {`${item?.name || 'N/A'}`}
                                     </Typography>
 
