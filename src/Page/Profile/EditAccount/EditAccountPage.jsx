@@ -94,9 +94,7 @@ function EditAccount() {
                         disable={disable}
                         label={'Số điện thoại'}
                         name="phone"
-                        inputEvent={{
-                            type: 'number',
-                        }}
+                        type="phone"
                         value={formik.values.phone}
                         onChange={formik.handleChange}
                         error={formik.errors.phone !== undefined && formik.touched.phone}
