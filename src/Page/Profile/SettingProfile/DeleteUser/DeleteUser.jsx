@@ -48,9 +48,10 @@ function DeleteUser() {
         <>
             <Box component={'form'} onSubmit={formik.handleSubmit}>
                 <Box p={2}>
-                    {inputPassword && <Label>Mật khẩu </Label>}
+                    {inputPassword && <Label forId={'passwordDelete'}>Mật khẩu </Label>}
                     {inputPassword && (
                         <Input
+                            id={'passwordDelete'}
                             type="password"
                             name="password"
                             placeholder={'Nhập lại mật khẩu'}

@@ -56,10 +56,11 @@ function UpdatePassword() {
             <Box component={'form'} onSubmit={formik.handleSubmit}>
                 <Stack p={2}>
                     <Box>
-                        <Label>Mật khẩu cũ</Label>
+                        <Label forId="password">Mật khẩu cũ</Label>
                         <Input
                             type="password"
                             name="password"
+                            id="password"
                             placeholder={'Nhập mật khẩu'}
                             value={formik.values.password}
                             onChange={formik.handleChange}
@@ -68,9 +69,10 @@ function UpdatePassword() {
                         />
                     </Box>
                     <Box>
-                        <Label>Mật khẩu mới</Label>
+                        <Label forId={'newPassword'}>Mật khẩu mới</Label>
                         <Input
                             type="password"
+                            id="newPassword"
                             name="newPassword"
                             placeholder={'Nhập mật khẩu mới'}
                             value={formik.values.newPassword}
@@ -80,9 +82,10 @@ function UpdatePassword() {
                         />
                     </Box>
                     <Box>
-                        <Label>Nhập lại mật khẩu</Label>
+                        <Label forId={'confirmNewPassword'}>Nhập lại mật khẩu</Label>
                         <Input
                             type="password"
+                            id="confirmNewPassword"
                             name="confirmNewPassword"
                             placeholder={'Nhập lại mật khẩu mới'}
                             value={formik.values.confirmNewPassword}
