@@ -93,6 +93,7 @@ function MediaItems({ item, mediaType }) {
                             mediaType: mediaType === 'all' ? item.media_type : mediaType,
                         });
                     }}
+                    title={item?.title || item?.name || item?.mediaTitle || 'N/A'}
                     sx={{
                         fontWeight: '500',
                         cursor: 'pointer',

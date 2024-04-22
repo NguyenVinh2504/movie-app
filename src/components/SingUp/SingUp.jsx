@@ -33,7 +33,7 @@ function SingUp({ setIsLoading, isLoading }) {
     const fetchApi = async (body) => {
         const { response, err } = await userApi.signup(body);
         if (response) return response;
-        if (err) throw err;
+        if (err) return Promise.reject(err);
     };
 
     const { mutate, isPending } = useMutation({
@@ -83,9 +83,11 @@ function SingUp({ setIsLoading, isLoading }) {
                     });
                 },
                 onError: (error) => {
-                    const key = error.data.name.toLowerCase();
-                    const message = error.data.message;
-                    action.setErrors({ [key]: message });
+                    if ('name' in error.data) {
+                        const key = error.data.name.toLowerCase();
+                        const message = error.data.message;
+                        action.setErrors({ [key]: message });
+                    }
                 },
             });
         },

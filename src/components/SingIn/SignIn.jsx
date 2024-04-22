@@ -34,14 +34,13 @@ function SingIn({ setIsLoading, isLoading }) {
     const fetchApi = async (body) => {
         const { response, err } = await userApi.signin(body);
         if (response) return response;
-        if (err) throw err;
+        if (err) return Promise.reject(err);
     };
 
     const { mutate, isPending } = useMutation({
         mutationKey: ['login'],
         mutationFn: (body) => fetchApi(body),
     });
-
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -72,9 +71,11 @@ function SingIn({ setIsLoading, isLoading }) {
                     // } else if (error.data.name === 'EMAIL') {
                     //     action.setErrors({ email: error.data.message });
                     // }
-                    const key = error.data.name.toLowerCase();
-                    const message = error.data.message;
-                    action.setErrors({ [key]: message });
+                    if ('name' in error.data) {
+                        const key = error.data.name.toLowerCase();
+                        const message = error.data.message;
+                        action.setErrors({ [key]: message });
+                    }
                 },
             });
         },
