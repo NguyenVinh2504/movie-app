@@ -4,6 +4,7 @@ axios.defaults.withCredentials = true;
 const favoriteEndpoints = {
     addFavorite: 'favorite',
     removeFavorite: (favoriteId) => `favorite/${favoriteId}`,
+    getFavorites: `favorite`,
 };
 const favoriteApi = {
     addFavorite: async ({ media_type, mediaId, title, poster_path, vote_average, release_date }) => {
@@ -28,6 +29,9 @@ const favoriteApi = {
         } catch (err) {
             return { err };
         }
+    },
+    getFavorites: () => {
+        return privateClient.get(favoriteEndpoints.getFavorites)
     },
 };
 

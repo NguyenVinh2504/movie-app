@@ -18,6 +18,7 @@ const Image = forwardRef(
                 height={'100%'}
                 style={{ aspectRatio: aspectRatio, objectFit: 'cover', ...sx }}
                 onError={() => setFallBack(customFallBack)}
+                loading="lazy"
             />
         );
     },

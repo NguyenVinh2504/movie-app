@@ -50,7 +50,8 @@ function HeroSliceList({ isLoading, medias, mediaType }) {
                         // border: '1px solid #848383',
                     }}
                     navigation={true}
-                    effect={'fade'}
+                    // effect={'fade'}
+                    loop={true}
                     modules={[Navigation, Autoplay, EffectFade]}
                     autoplay={{
                         delay: 3000,

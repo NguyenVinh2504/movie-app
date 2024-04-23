@@ -15,6 +15,7 @@ function AvatarUser({ sx, src, alt, ...props }) {
                 ...sx,
             }}
             {...props}
+            loading="lazy"
         />
     );
 }

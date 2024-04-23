@@ -1,57 +1,32 @@
-// import { Outlet } from 'react-router-dom';
 import Header from '../components/Header';
 import { Container } from '@mui/material';
 import Footer from '../components/Footer';
 import MediaDetail from '~/components/MediaDetail';
-// import GlobalLoading from '~/components/GlobalLoading';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
-import userApi from '~/api/module/user.api';
-import { updateUser } from '~/redux/features/userSlice';
-// import { toggleGlobalLoading } from '~/redux/features/globalLoadingSlice';
-// import { removeToken } from '~/redux/features/authSlice';
 import { setFavorites } from '~/redux/features/favoritesSlice';
-// import Search from '../components/Search';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { Outlet } from 'react-router-dom';
 import { isAuthenticated } from '~/redux/selectors';
-// import { useQueryConfig } from '~/Hooks';
-// import { clearLS } from '~/utils/auth';
+import favoriteApi from '~/api/module/favorite.api';
 
 function MainLayout() {
     const dispatch = useDispatch();
     const isLogged = useSelector(isAuthenticated);
-    const fetchApi = async () => {
-        const { response, err } = await userApi.getInfo();
-        if (response) return response;
-        if (err) throw err;
-    };
-    const { data, error, isSuccess } = useQuery({
-        queryKey: ['user info'],
-        queryFn: fetchApi,
+    const { data, isSuccess } = useQuery({
+        queryKey: ['favorite list'],
+        queryFn: favoriteApi.getFavorites,
         enabled: isLogged,
         placeholderData: keepPreviousData,
-        refetchOnMount: false,
-        refetchOnWindowFocus: false,
-        retryOnMount: false,
-        refetchOnReconnect: false,
-        retry: 0,
-        gcTime: 0,
-        staleTime: 0,
-        // enabled: Boolean(token)
     });
-    // console.log('data user 1', data, 'isLoading', isLoading);
-    // console.log(isSuccess, data);
+
     useEffect(() => {
         if (data && isSuccess) {
-            const { favorites, ...user } = data;
-            dispatch(updateUser(user));
+            const { favorites } = data;
             dispatch(setFavorites(favorites));
         }
-    }, [data, dispatch, error, isSuccess]);
-    // const queryConfig = useQueryConfig();
-    // const { category: open } = queryConfig;
+    }, [data, dispatch, isSuccess]);
+
     return (
         <>
             {/* <GlobalLoading /> */}
@@ -63,12 +38,8 @@ function MainLayout() {
                     minWidth: '250px',
                 }}
             >
-                {/* {Boolean(open) && <MediaDetail />} */}
                 <MediaDetail />
                 <Header isLoading={false} />
-                {/* <Box sx={{ position: 'fixed', left: '0', right: '0', top: '64px', display: { md: 'none' } }} px={3}>
-                        <Search />
-                    </Box> */}
                 <Container
                     component={'main'}
                     maxWidth="auto"
