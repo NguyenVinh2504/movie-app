@@ -50,21 +50,14 @@ function MediaItems({ item, mediaType }) {
             // }
         >
             <Box
+                className="media-item-poster"
                 sx={{
                     position: 'absolute',
                     top: 0,
                     left: 0,
-                    transition: 'all 0.5s ease ',
+                    transition: 'scale 0.5s ease',
                     width: '100%',
                     height: '100%',
-                    ':hover': {
-                        height: '105%',
-                    },
-                    '@media (hover: none)': {
-                        '&:hover': {
-                            height: '100%',
-                        },
-                    },
                 }}
             >
                 <Image
@@ -150,6 +143,14 @@ function MediaItems({ item, mediaType }) {
                 color: 'white',
                 borderRadius: theme.mediaItems.borderRadius,
                 overflow: 'hidden',
+                '&:hover .media-item-poster': {
+                    scale: '1.1',
+                },
+                '@media (hover: none)': {
+                    '&:hover .media-item-poster': {
+                        scale: '1',
+                    },
+                },
             }}
             component={'article'}
         >
