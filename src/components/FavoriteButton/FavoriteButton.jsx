@@ -1,5 +1,5 @@
-import React, { useEffect, useState, memo, useMemo } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState, memo } from 'react';
+import { useDispatch } from 'react-redux';
 import { Box, IconButton, Tooltip } from '@mui/material';
 import { useConfirm } from 'material-ui-confirm';
 import 'react-lazy-load-image-component/src/effects/blur.css';
@@ -12,7 +12,6 @@ import {
 import favoriteApi from '~/api/module/favorite.api';
 import { deleteFavorite, addFavorite } from '~/redux/features/favoritesSlice';
 import theme from '~/theme';
-import { favoritesValue } from '~/redux/selectors';
 
 // Hàm con để thêm yêu thích
 const addItemToFavorite = async (item, mediaType, setLiked, setDisabled, setAnimation, dispatch) => {
@@ -81,29 +80,33 @@ const animationStyles = {
     animation: '0.8s ease-in-out 0s 1 normal forwards',
 };
 
-function FavoriteButton({ item, itemId, mediaType }) {
-    const favorites = useSelector(favoritesValue);
+function FavoriteButton({ item, mediaType, isFavorite }) {
+    // const favorites = useSelector(favoritesValue);
 
     const confirm = useConfirm();
     const dispatch = useDispatch();
 
-    const checkedLike = useMemo(() => favorites.find((item) => item.mediaId === itemId), [favorites, itemId]);
-
-    const [liked, setLiked] = useState(checkedLike);
+    // const checkedLike = useMemo(() => favorites.find((item) => item.mediaId === itemId), [favorites, itemId]);
+    const [liked, setLiked] = useState(isFavorite);
     const [disabled, setDisabled] = useState(false);
     const [animation, setAnimation] = useState(false);
 
     useEffect(() => {
-        setLiked(checkedLike);
-    }, [checkedLike]);
-
+        setLiked(isFavorite);
+    }, [isFavorite]);
     const handleItemAction = () => {
         setDisabled(true);
         liked
-            ? removeItemFromFavorite(confirm, checkedLike._id, setLiked, setAnimation, setDisabled, dispatch)
+            ? removeItemFromFavorite(
+                  confirm,
+                  item.favoriteId || item._id,
+                  setLiked,
+                  setAnimation,
+                  setDisabled,
+                  dispatch,
+              )
             : addItemToFavorite(item, mediaType, setLiked, setDisabled, setAnimation, dispatch);
     };
-
     return (
         <Tooltip title={liked ? 'Hủy yêu thích' : 'Yêu thích'}>
             <span>

@@ -9,7 +9,7 @@ import TabsSearch from './TabsSearch';
 import images from '~/assets/image';
 import uiConfigs from '~/config/ui.config';
 import MediaGrid from '~/components/Media/MediaGrid';
-import { useQueryConfig } from '~/Hooks';
+import { useMediaList, useQueryConfig } from '~/Hooks';
 import { Helmet } from 'react-helmet';
 import useDetailMovie from '~/Hooks/useIsDetailMovie';
 
@@ -55,6 +55,9 @@ function SearchPage() {
         initialPageParam: 1,
         placeholderData: keepPreviousData,
     });
+
+    const medias = useMediaList(data);
+
     return (
         <>
             {!isDetailMovie && <Helmet title={`Tìm kiếm: ${query || ''}`} />}
@@ -101,7 +104,7 @@ function SearchPage() {
                                     isLoadingButton={!isFetchingNextPage && hasNextPage && !isLoading}
                                     isLoadingSekeleton={isLoading || isFetchingNextPage || isError}
                                     mediaType={media_type ?? 'movie'}
-                                    medias={data}
+                                    medias={medias}
                                     onLoadingMore={handleLoadMore}
                                 />
                             ) : (

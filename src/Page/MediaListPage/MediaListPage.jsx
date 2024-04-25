@@ -9,6 +9,7 @@ import { MovieTabItems } from '~/config/MovieTabMenuItems/MovieTabMenuItems';
 import { TvTabItems } from '~/config/TvShowTabMenuItems/TvShowTabMenuItems';
 import { Helmet } from 'react-helmet';
 import useDetailMovie from '~/Hooks/useIsDetailMovie';
+import { useMediaList } from '~/Hooks';
 
 function MediaListPage() {
     const { mediaType, key, category } = useParams();
@@ -42,6 +43,7 @@ function MediaListPage() {
         initialPageParam: 1,
     });
 
+    const medias = useMediaList(data);
     const handleLoadingMore = () => {
         fetchNextPage();
     };
@@ -62,6 +64,7 @@ function MediaListPage() {
             }
         });
     }
+
     return (
         <>
             {!isDetailMovie && (
@@ -77,7 +80,7 @@ function MediaListPage() {
                     isLoadingButton={!isFetchingNextPage && hasNextPage}
                     isLoadingSekeleton={isLoading || isFetchingNextPage || isError}
                     mediaType={mediaType}
-                    medias={data}
+                    medias={medias}
                     onLoadingMore={handleLoadingMore}
                 />
             </Container>

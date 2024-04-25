@@ -3,9 +3,12 @@ import { Box, Typography, Stack, useMediaQuery, Skeleton } from '@mui/material';
 import { memo } from 'react';
 import ButtonAddFavorite from '~/components/FavoriteButton';
 import uiConfigs from '~/config/ui.config';
+import { useSelector } from 'react-redux';
+import { favoritesValue } from '~/redux/selectors';
 
 function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+    const favorites = useSelector(favoritesValue);
 
     const rating = {
         rate: Number(dataDetail?.vote_average?.toFixed(1)) || Number(dataDetail?.mediaRate?.toFixed(1)),
@@ -14,6 +17,13 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
         runtime: dataDetail?.runtime ? `${dataDetail.runtime} minutes` : '',
     };
     // console.log(dataDetail?.runtime);
+    const isFavorite = favorites.find((element) => element.mediaId === dataDetail.id);
+    if (isFavorite) {
+        dataDetail.isFavorite = true;
+        dataDetail.favoriteId = isFavorite._id;
+    } else {
+        dataDetail.isFavorite = false;
+    }
     return (
         <Box sx={{ p: 2 }}>
             <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'} spacing={2}>
@@ -31,8 +41,8 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
                         <Box>
                             <ButtonAddFavorite
                                 item={dataDetail}
+                                isFavorite={dataDetail.isFavorite}
                                 mediaType={mediaType}
-                                itemId={dataDetail?.id ?? dataDetail?.mediaId}
                             />
                         </Box>
                     </>

@@ -10,11 +10,12 @@ import { useParams } from 'react-router-dom';
 import { Helmet } from 'react-helmet';
 import config from '~/config';
 import useDetailMovie from '~/Hooks/useIsDetailMovie';
+import { useMediaList } from '~/Hooks';
 
 function Home() {
     const { mediaType, category } = useParams();
     const isDetailMovie = useDetailMovie();
-
+    // const [data, setData] = useState();
     async function fetchData({ pageParam }) {
         const { response, err } =
             mediaType === 'all'
@@ -37,6 +38,12 @@ function Home() {
         placeholderData: keepPreviousData,
     });
 
+    const medias = useMediaList(data);
+    // useEffect(() => {
+    //     if (medias) {
+    //         setData(medias);
+    //     }
+    // }, [medias]);
     // // console.log('data', data, 'isLoading', isLoading, 'isFetching');
     // const handleCurrCategory = useCallback(
     //     (newValue) => {
@@ -45,10 +52,13 @@ function Home() {
     //     },
     //     [currCategory],
     // );
+    // useEffect(() => {
+
+    // setData({ ...medias, pages: newList });
+    // }, [medias, favorites]);
     const handleLoadingMore = () => {
         fetchNextPage();
     };
-    // console.log('!isPaused', !isPaused, '!isError', !isError);
     let title = '';
     homeTabItems.forEach((item) => {
         if (category === item.mediaCategory && mediaType === item.mediaType) {
@@ -56,6 +66,8 @@ function Home() {
             title = item.name;
         }
     });
+    console.log('data', data);
+
     return (
         <>
             {!isDetailMovie && (
@@ -77,7 +89,7 @@ function Home() {
                     isLoadingButton={!isFetchingNextPage && hasNextPage}
                     isLoadingSekeleton={isLoading || isFetchingNextPage || error}
                     mediaType={mediaType}
-                    medias={data}
+                    medias={medias}
                     onLoadingMore={handleLoadingMore}
                 />
                 {/* {(isPaused || error) && (

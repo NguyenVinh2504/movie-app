@@ -7,24 +7,15 @@ import MediaItems from '~/components/MediaItems';
 import { favoritesValue } from '~/redux/selectors';
 
 function Media({ medias, isLoading, mediaType }) {
-    const favorites = useSelector(favoritesValue);
-
     const renderMediaItems = () => {
-        if (!medias || !favorites) {
+        if (!medias) {
             return null;
         }
 
         return medias.map((item) => {
-            const itemId = item?.id || item?.mediaId;
-
             return (
-                <Grid item xl={2.4} lg={3} md={4} sm={6} xs={6} key={itemId}>
-                    <MediaItems
-                        item={item}
-                        mediaType={item.media_type}
-                        favoriteStore={favorites.find((e) => e.mediaId === itemId)?._id}
-                        checkedLike={favorites.some((favorite) => favorite?.mediaId === itemId)}
-                    />
+                <Grid item xl={2.4} lg={3} md={4} sm={6} xs={6} key={item._id}>
+                    <MediaItems item={item} mediaType={item.media_type} isFavorite={true} />
                 </Grid>
             );
         });
