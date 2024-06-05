@@ -18,7 +18,12 @@ import { memo } from 'react';
 import Image from '~/components/Image';
 import config from '~/config';
 import { NavLink } from 'react-router-dom';
-function EpisodesItem({ item, dataSeason }) {
+import { slugify } from '~/utils/slugify';
+function EpisodesItem({ item, dataSeason, mediaTitle }) {
+    let slugifyNameMovie = '';
+    if (mediaTitle) {
+        slugifyNameMovie = slugify(mediaTitle);
+    }
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const ListCustoms = styled(ListItemButton)(({ theme }) => ({
         '&:hover': {
@@ -83,10 +88,7 @@ function EpisodesItem({ item, dataSeason }) {
     return (
         <>
             {pointDownSm ? (
-                <Box
-                    component={NavLink}
-                    to={`${config.routes.watchTv}/${item?.show_id}/${item?.season_number}/${item?.episode_number}`}
-                >
+                <Box component={NavLink} to={`${config.routes.watchTv}/${slugifyNameMovie}/${item?.episode_number}`}>
                     <CustomDivider />
                     <ListItemButton sx={{ px: 1, py: 2 }}>
                         <ListItemText
@@ -134,10 +136,7 @@ function EpisodesItem({ item, dataSeason }) {
                 </Box>
             ) : (
                 // pc-table
-                <Box
-                    component={NavLink}
-                    to={`${config.routes.watchTv}/${item?.show_id}/${item?.season_number}/${item?.episode_number}`}
-                >
+                <Box component={NavLink} to={`${config.routes.watchTv}/${slugifyNameMovie}/${item?.episode_number}`}>
                     <CustomDivider />
                     <ListCustoms sx={{ px: 1, py: 3 }}>
                         <Typography variant="h5" component={'h5'} width={'20%'} textAlign={'center'}>

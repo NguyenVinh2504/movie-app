@@ -3,7 +3,7 @@ import EpisodesItem from './EpisodesItem';
 import { memo, useEffect, useState } from 'react';
 import { ArrowDownIcon, ArrowUpIcon } from '~/components/Icon';
 import { isEmpty } from 'lodash';
-function EpisodesList({ dataSeason, searchNumberEp }) {
+function EpisodesList({ dataSeason, searchNumberEp, mediaTitle }) {
     const [visible, setVisible] = useState(4);
 
     // Sử dụng optional chaining để kiểm tra existence an toàn
@@ -49,7 +49,13 @@ function EpisodesList({ dataSeason, searchNumberEp }) {
         <>
             <List>
                 {filteredEpisodes.slice(0, visible).map((item, index) => (
-                    <EpisodesItem key={index} index={index} item={item} dataSeason={dataSeason} />
+                    <EpisodesItem
+                        key={index}
+                        index={index}
+                        item={item}
+                        dataSeason={dataSeason}
+                        mediaTitle={mediaTitle}
+                    />
                 ))}
             </List>
             {!isEmpty(filteredEpisodes) && filteredEpisodes?.length > 4 && (

@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import CategoryMovieDetail from '../components/CategoryMovieDetail';
 import Input from '~/components/Input';
 
-function Episodes({ seasons, seriesId, isLoading }) {
+function Episodes({ seasons, seriesId, isLoading, mediaTitle }) {
     const [selectedIndex, setSelectedIndex] = useState(0);
     const [searchNumberEp, setSearchNumberEp] = useState('');
     const handleSetSeasonNumber = useCallback((number) => {
@@ -84,7 +84,7 @@ function Episodes({ seasons, seriesId, isLoading }) {
                         />
                     ))}
             {!isLoading && !isFetching && !isEmpty(seasonDetailValue) && (
-                <EpisodesList dataSeason={seasonDetailValue} searchNumberEp={searchNumberEp} />
+                <EpisodesList dataSeason={seasonDetailValue} searchNumberEp={searchNumberEp} mediaTitle={mediaTitle} />
             )}
         </WrapperMovieDetail>
     );
@@ -93,5 +93,6 @@ Episodes.propTypes = {
     seasons: PropTypes.array.isRequired,
     seriesId: PropTypes.number.isRequired,
     isLoading: PropTypes.bool.isRequired,
+    mediaTitle: PropTypes.string.isRequired,
 };
 export default memo(Episodes);

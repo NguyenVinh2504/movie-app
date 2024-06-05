@@ -6,7 +6,12 @@ import { memo } from 'react';
 import { NavLink } from 'react-router-dom';
 import Image from '~/components/Image';
 import config from '~/config';
+import { slugify } from '~/utils/slugify';
 function BannerMovieDetail({ loading, dataDetail, mediaType }) {
+    let slugifyNameMovie = '';
+    if (dataDetail?.title || dataDetail?.name) {
+        slugifyNameMovie = slugify(dataDetail?.title || dataDetail?.name);
+    }
     return (
         <Box sx={{ position: 'relative', overflow: 'hidden', pt: 'calc(9/16*100%)', pl: 0 }}>
             {loading ? (
@@ -18,7 +23,7 @@ function BannerMovieDetail({ loading, dataDetail, mediaType }) {
                     {mediaType === 'movie' && (
                         <IconButton
                             component={NavLink}
-                            to={`${config.routes.watchMovie}/${dataDetail?.id}`}
+                            to={`${config.routes.watchMovie}/${slugifyNameMovie}`}
                             color="secondNeutral"
                             sx={{
                                 zIndex: '10',

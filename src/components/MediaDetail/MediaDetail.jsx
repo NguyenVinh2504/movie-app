@@ -48,7 +48,6 @@ function MovieDetail() {
         if (response) return response;
         if (err) throw err;
     };
-
     const {
         data: dataDetail = {},
         isPending: loading,
@@ -163,6 +162,7 @@ function MovieDetail() {
                                         seasons={dataDetail?.seasons ?? []}
                                         seriesId={dataDetail?.id ?? Number('')}
                                         isLoading={loading}
+                                        mediaTitle={dataDetail?.name ?? dataDetail?.title ?? ''}
                                     />
                                 )}
                                 {/* tap phim */}

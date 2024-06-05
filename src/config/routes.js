@@ -39,10 +39,10 @@ const routes = {
 
     forgotPassword: '/forgot-password',
 
-    watchMovieId: '/watch/movie/:movieId',
+    watchMovieId: '/watch/movie/:slugifyMovieName',
     watchMovie: '/watch/movie',
 
-    watchTvId: '/watch/tv/:showId/:ssId/:epId',
+    watchTvId: '/watch/tv/:slugifyMovieName/:epNumber',
     watchTv: '/watch/tv',
 
     error: '*',
