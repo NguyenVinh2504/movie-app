@@ -9,6 +9,8 @@ import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { Outlet } from 'react-router-dom';
 import { isAuthenticated } from '~/redux/selectors';
 import favoriteApi from '~/api/module/favorite.api';
+import userApi from '~/api/module/user.api';
+import { updateUser } from '~/redux/features/userSlice';
 
 function MainLayout() {
     const dispatch = useDispatch();
@@ -26,6 +28,22 @@ function MainLayout() {
             dispatch(setFavorites(favorites));
         }
     }, [data, dispatch, isSuccess]);
+
+    const { data: profileUser } = useQuery({
+        queryKey: ['profile'],
+        enabled: isLogged,
+        queryFn: async () => {
+            const { response, err } = await userApi.getInfo();
+            if (response) return response;
+            return Promise.reject(err);
+        },
+    });
+
+    useEffect(() => {
+        if (profileUser) {
+            dispatch(updateUser(profileUser));
+        }
+    }, [data, dispatch, profileUser]);
 
     return (
         <>
