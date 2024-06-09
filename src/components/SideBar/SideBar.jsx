@@ -132,7 +132,7 @@ function SideBar({ open, onClick, onKeyDown, onClose, isLoading }) {
                         <Button
                             component={NavLink}
                             to={config.routes.login}
-                            sx={{ width: '100%', display: { sm: 'none' } }}
+                            sx={{ width: '100%', display: { sm: 'none' }, mb: '60px' }}
                             variant="contained"
                             disableElevation
                             disableRipple
@@ -141,7 +141,7 @@ function SideBar({ open, onClick, onKeyDown, onClose, isLoading }) {
                         </Button>
                     ) : (
                         <Button
-                            sx={{ width: '100%', display: { sm: 'none' } }}
+                            sx={{ width: '100%', display: { sm: 'none' }, mb: '60px' }}
                             variant="contained"
                             disableElevation
                             disableRipple
