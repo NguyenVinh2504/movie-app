@@ -1,5 +1,5 @@
 import { Google } from '@mui/icons-material';
-import { Button, useMediaQuery } from '@mui/material';
+import { Box, Button, useMediaQuery } from '@mui/material';
 import { GoogleAuthProvider, signInWithPopup, getAuth } from 'firebase/auth';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -71,7 +71,15 @@ function ButtonGoogle({ setIsLoading }) {
             size={pointDownSm ? 'small' : 'medium'}
             onClick={handleGoogleClick}
         >
-            <div>Đăng nhập bằng Google</div>
+            <Box
+                sx={{
+                    overflow: 'hidden',
+                    textOverflow: 'ellipsis',
+                    whiteSpace: 'nowrap',
+                }}
+            >
+                Đăng nhập bằng Google
+            </Box>
         </Button>
     );
 }
