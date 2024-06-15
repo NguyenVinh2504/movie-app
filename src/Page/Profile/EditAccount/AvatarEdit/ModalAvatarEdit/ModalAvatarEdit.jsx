@@ -74,7 +74,7 @@ function ModalAvatarEdit({ open, handleClose }) {
             }
             if (err) {
                 toast.update(id, {
-                    render: err.data.message,
+                    render: err?.data?.message,
                     type: 'error',
                     isLoading: false,
                     autoClose: 3000,
@@ -121,7 +121,7 @@ function ModalAvatarEdit({ open, handleClose }) {
             }
             if (err) {
                 toast.update(id, {
-                    render: err.data,
+                    render: err?.data,
                     type: 'error',
                     isLoading: false,
                     autoClose: 3000,
