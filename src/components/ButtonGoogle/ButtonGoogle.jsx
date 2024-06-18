@@ -26,16 +26,18 @@ function ButtonGoogle() {
                 setAccessTokenLs(accessToken);
                 setRefreshTokenLs(refreshToken);
                 dispatch(setToken({ accessToken, refreshToken }));
-
-                userApi.getInfo().then(({ response, err }) => {
-                    const { favorites, ...user } = response;
-                    dispatch(setUser(user));
-                    dispatch(setIsAuthenticated(true));
-                    dispatch(setFavorites(favorites));
-                    toast.success(`Xin chào, ${user.name}`, {
-                        position: 'top-center',
-                    });
-                });
+                dispatch(setIsAuthenticated(true));
+                // toast.success(`Xin chào, ${user.name}`, {
+                //     position: 'top-center',
+                // });
+                // userApi.getInfo().then(({ response, err }) => {
+                //     const { favorites, ...user } = response;
+                //     dispatch(setUser(user));
+                //     dispatch(setFavorites(favorites));
+                //     toast.success(`Xin chào, ${user.name}`, {
+                //         position: 'top-center',
+                //     });
+                // });
             }
         };
         login();
