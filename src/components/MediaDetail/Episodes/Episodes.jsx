@@ -54,13 +54,14 @@ function Episodes({ seasons, seriesId, isLoading, mediaTitle }) {
                 <Tooltip title={`${seasonDetailValue?.episodes?.length} tập`} placement="bottom-start">
                     <Box
                         sx={{
-                            width: { xs: '25%', sm: '25%', md: '20%' },
+                            width: 'min(100px, 50%)',
                         }}
                     >
                         <Input
                             placeholder={'Tìm tập'}
                             // type={'number'}
                             value={searchNumberEp}
+                            isHepperText={false}
                             inputEvent={{
                                 onChange: (e) => {
                                     setSearchNumberEp(e.target.value);

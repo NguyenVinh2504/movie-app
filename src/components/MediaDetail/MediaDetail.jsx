@@ -144,6 +144,7 @@ function MovieDetail() {
                                 pt: 1,
                                 overflowY: 'auto',
                                 ...uiConfigs.style.scroll,
+                                scrollbarWidth: { xs: 'none', md: 'initial' },
                             }}
                         >
                             <Box px={1} mt={0}>

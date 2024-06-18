@@ -1,14 +1,4 @@
-import {
-    Box,
-    ListItemText,
-    Typography,
-    Stack,
-    Divider,
-    styled,
-    IconButton,
-    useMediaQuery,
-    ListItemButton,
-} from '@mui/material';
+import { Box, Typography, Stack, Divider, styled, IconButton, useMediaQuery } from '@mui/material';
 import { PlayIcon } from '~/components/Icon';
 
 import uiConfigs from '~/config/ui.config';
@@ -20,34 +10,20 @@ import config from '~/config';
 import { NavLink } from 'react-router-dom';
 import { slugify } from '~/utils/slugify';
 function EpisodesItem({ item, dataSeason, mediaTitle }) {
+    const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     let slugifyNameMovie = '';
     if (mediaTitle) {
         slugifyNameMovie = slugify(mediaTitle);
     }
-    const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-    const ListCustoms = styled(ListItemButton)(({ theme }) => ({
-        '&:hover': {
-            '.MuiIconButton-root': {
-                opacity: 1,
-            },
-        },
-        '@media (hover: none)': {
-            '&:hover': {
-                '.MuiIconButton-root': {
-                    opacity: 0,
-                },
-            },
-        },
-    }));
     const CustomBox = styled(Box)(({ theme }) => ({
-        [theme.breakpoints.down('sm')]: {
-            width: '120%',
-        },
         position: 'relative',
-        width: '45%',
         marginRight: theme.spacing(2),
         borderRadius: '5px',
         overflow: 'hidden',
+        gridArea: '1 / 2 / 3 / 3',
+        [theme.breakpoints.down('sm')]: {
+            gridArea: '1 / 1 / 2 / 2',
+        },
     }));
     const CustomIconButton = styled((props) => <IconButton color="secondNeutral" {...props} />)(({ theme }) => ({
         [theme.breakpoints.down('sm')]: {
@@ -86,98 +62,91 @@ function EpisodesItem({ item, dataSeason, mediaTitle }) {
     };
 
     return (
-        <>
-            {pointDownSm ? (
-                <Box component={NavLink} to={`${config.routes.watchTv}/${slugifyNameMovie}/${item?.episode_number}`}>
-                    <CustomDivider />
-                    <ListItemButton sx={{ px: 1, py: 2 }}>
-                        <ListItemText
-                            primary={
-                                <Stack direction={'row'} height={'100%'} alignItems={'center'}>
-                                    {/* hinh anh */}
-                                    <CustomBox>
-                                        <CustomIconButton>
-                                            <PlayIcon />
-                                        </CustomIconButton>
-                                        <CustomImage item={item}></CustomImage>
-                                    </CustomBox>
-                                    {/* hinh anh */}
-                                    {/* title */}
-                                    <ListItemText
-                                        sx={{ width: '100%' }}
-                                        primary={
-                                            <Typography
-                                                variant="subtitle1"
-                                                component={'h5'}
-                                                fontWeight={500}
-                                                sx={{ ...uiConfigs.style.typoLines(2) }}
-                                            >
-                                                {`${item?.episode_number}. ${item?.name || 'N/A'}`}
-                                            </Typography>
-                                        }
-                                        secondary={
-                                            item.runtime && (
-                                                <Typography variant="subtitle2" fontWeight={400}>
-                                                    {`${item.runtime || 'N/A'} ${!item.runtime ? '' : 'minutes'}`}
-                                                </Typography>
-                                            )
-                                        }
-                                    />
-                                    {/* title */}
-                                </Stack>
-                            }
-                            secondary={
-                                <Typography variant="body2" mt={2}>
-                                    {item.overview}
-                                </Typography>
-                            }
-                        ></ListItemText>
-                    </ListItemButton>
-                </Box>
-            ) : (
-                // pc-table
-                <Box component={NavLink} to={`${config.routes.watchTv}/${slugifyNameMovie}/${item?.episode_number}`}>
-                    <CustomDivider />
-                    <ListCustoms sx={{ px: 1, py: 3 }}>
-                        <Typography variant="h5" component={'h5'} width={'20%'} textAlign={'center'}>
-                            {item.episode_number || 'N/A'}
-                        </Typography>
-                        <CustomBox>
-                            <CustomIconButton>
-                                <PlayIcon />
-                            </CustomIconButton>
-                            <CustomImage item={item}></CustomImage>
-                        </CustomBox>
-                        <ListItemText
-                            sx={{
-                                width: '100%',
-                                // '& .MuiListItemText-primary': {
-                                //     display: 'flex',
-                                // },
-                            }}
-                            primary={
-                                <Stack direction={'row'} justifyContent={'space-between'}>
-                                    <Typography variant="h6" width={'80%'} fontWeight={500} component={'h5'}>
-                                        {`${item?.name || 'N/A'}`}
-                                    </Typography>
+        <Box component={NavLink} to={`${config.routes.watchTv}/${slugifyNameMovie}/${item?.episode_number}`}>
+            {/* <CustomDivider /> */}
+            <Box
+                sx={{
+                    borderColor: 'rgb(255,255,255,0.5)',
+                    borderTopWidth: '1px',
+                    borderTopStyle: 'solid',
+                    px: 1,
+                    py: 3,
+                    display: 'grid',
+                    gridTemplateColumns: { sm: '0.2fr 0.45fr 1fr', xs: '1.2fr 1fr' },
+                    gridTemplateRows: 'repeat(2, auto)',
+                    alignItems: 'center',
+                    '&:hover': {
+                        '.MuiIconButton-root': {
+                            opacity: 1,
+                        },
+                    },
+                    '@media (hover: none)': {
+                        '&:hover': {
+                            '.MuiIconButton-root': {
+                                opacity: 0,
+                            },
+                        },
+                    },
+                }}
+            >
+                <Typography
+                    variant="h5"
+                    component={'h5'}
+                    textAlign={'center'}
+                    sx={{
+                        gridArea: '1 / 1 / 3 / 2',
+                        display: { xs: 'none', sm: 'block' },
+                    }}
+                >
+                    {item.episode_number || 'N/A'}
+                </Typography>
+                <CustomBox>
+                    <CustomIconButton>
+                        <PlayIcon />
+                    </CustomIconButton>
+                    <CustomImage item={item}></CustomImage>
+                </CustomBox>
+                <Stack
+                    sx={{ flexDirection: { xs: 'column', sm: 'row' }, alignItems: { xs: 'flex-start', msm: 'center' } }}
+                    justifyContent={'space-between'}
+                >
+                    <Typography
+                        variant="h6"
+                        sx={{
+                            mr: { sm: 2, xs: 0 },
+                            mb: { sm: 0, xs: 1 },
+                        }}
+                        fontWeight={500}
+                        component={'h5'}
+                    >
+                        {pointDownSm ? `${item.episode_number}. ${item.name || 'N/A'}` : `${item?.name || 'N/A'}`}
+                    </Typography>
 
-                                    {item.runtime && (
-                                        <Typography variant="body1" fontWeight={400} width={'20%'} textAlign={'end'}>
-                                            {`${item.runtime || 'N/A'} ${!item.runtime ? '' : 'minutes'}`}
-                                        </Typography>
-                                    )}
-                                </Stack>
-                            }
-                            secondary={
-                                <Typography variant="body1" mt={1} fontWeight={400}>
-                                    {item.overview || 'N/A'}
-                                </Typography>
-                            }
-                        />
-                    </ListCustoms>
-                </Box>
-            )}
-        </>
+                    {item.runtime && (
+                        <Typography
+                            whiteSpace={'nowrap'}
+                            variant="body1"
+                            fontWeight={400}
+                            sx={{
+                                textAlign: { sm: 'end', xs: 'start' },
+                            }}
+                        >
+                            {`${item.runtime || 'N/A'} ${!item.runtime ? '' : 'minutes'}`}
+                        </Typography>
+                    )}
+                </Stack>
+                <Typography
+                    variant="body1"
+                    mt={1}
+                    fontWeight={400}
+                    sx={{
+                        gridArea: { sm: '2 / 3 / 3 / 4', xs: '2 / 1 / 3 / 3' },
+                    }}
+                >
+                    {item.overview || 'N/A'}
+                </Typography>
+            </Box>
+        </Box>
     );
 }
 
