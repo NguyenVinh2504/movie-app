@@ -1,4 +1,4 @@
-import { Box, Typography, Stack, Divider, styled, IconButton, useMediaQuery } from '@mui/material';
+import { Box, Typography, Stack, styled, IconButton, useMediaQuery } from '@mui/material';
 import { PlayIcon } from '~/components/Icon';
 
 import uiConfigs from '~/config/ui.config';
@@ -40,9 +40,6 @@ function EpisodesItem({ item, dataSeason, mediaTitle }) {
             width: '30px',
             height: '30px',
         },
-    }));
-    const CustomDivider = styled(Divider)(({ theme }) => ({
-        borderColor: 'rgb(255,255,255,0.5)',
     }));
     const CustomImage = ({ item }) => {
         return (

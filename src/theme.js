@@ -112,7 +112,8 @@ const theme = createTheme({
     },
     mediaItems: {
         // background: 'rgba(255, 255, 255, 0.08)',
-        background: '#141212',
+        // background: '#141212',
+        background: '#1F1D1D',
         text: 'white',
         textOverview: 'rgba(255, 255, 255, 0.50)',
         iconHeart: Color.primary,
