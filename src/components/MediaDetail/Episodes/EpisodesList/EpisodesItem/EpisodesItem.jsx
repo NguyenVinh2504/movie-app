@@ -111,7 +111,7 @@ function EpisodesItem({ item, dataSeason, mediaTitle }) {
                     justifyContent={'space-between'}
                 >
                     <Typography
-                        variant="h6"
+                        variant={pointDownSm ? 'subtitle1' : 'h6'}
                         sx={{
                             mr: { sm: 2, xs: 0 },
                             mb: { sm: 0, xs: 1 },
@@ -119,13 +119,13 @@ function EpisodesItem({ item, dataSeason, mediaTitle }) {
                         fontWeight={500}
                         component={'h5'}
                     >
-                        {pointDownSm ? `${item.episode_number}. ${item.name || 'N/A'}` : `${item?.name || 'N/A'}`}
+                        {`${pointDownSm ? `${item.episode_number}. ` : ''}${item?.name || 'N/A'}`}
                     </Typography>
 
                     {item.runtime && (
                         <Typography
                             whiteSpace={'nowrap'}
-                            variant="body1"
+                            variant={pointDownSm ? 'subtitle2' : 'body1'}
                             fontWeight={400}
                             sx={{
                                 textAlign: { sm: 'end', xs: 'start' },
@@ -136,7 +136,7 @@ function EpisodesItem({ item, dataSeason, mediaTitle }) {
                     )}
                 </Stack>
                 <Typography
-                    variant="body1"
+                    variant={pointDownSm ? 'body2' : 'body1'}
                     mt={1}
                     fontWeight={400}
                     sx={{
