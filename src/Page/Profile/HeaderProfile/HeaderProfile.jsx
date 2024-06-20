@@ -43,7 +43,6 @@ function HeaderProfile({ valueTabItems, location }) {
                         flexDirection: { md: 'row', xs: 'column' },
                         alignItems: { md: 'flex-end', xs: 'center' },
                         transform: { md: 'translateX(0%)', xs: 'translateX(-50%)' },
-                        width: '100%',
                     }}
                 >
                     {/* image avatar */}
