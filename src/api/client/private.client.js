@@ -189,7 +189,7 @@ class PrivateClient {
                     this.refreshToken = ''
                     clearLS()
                 }
-                return Promise.reject(err)
+                return Promise.reject(err?.response?.data)
             }
         )
     }
