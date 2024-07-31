@@ -5,11 +5,21 @@ import { API_ROOT } from '~/utils/constants';
 import { userEndpoints } from '~/api/module/user.api';
 import { store } from '~/redux/store';
 import { removeToken, setToken } from '~/redux/features/authSlice';
-import { clearLS, getAccessTokenLs, getRefreshTokenLs, setAccessTokenLs, setRefreshTokenLs } from '~/utils/auth';
-import { isAxiosExpiredTokenError, isAxiosUnauthorizedError } from '~/utils/utils';
+import {
+    clearLS,
+    getAccessTokenLs,
+    getRefreshTokenLs,
+    setAccessTokenLs,
+    setRefreshTokenLs,
+} from '~/utils/auth';
+import {
+    isAxiosExpiredTokenError,
+    isAxiosUnauthorizedError,
+} from '~/utils/utils';
 import { loginOut } from '~/redux/features/userSlice';
 import { removeFavorites } from '~/redux/features/favoritesSlice';
 import { setIsAuthenticated } from '~/redux/features/isAuthenticated';
+// import { toast } from 'react-toastify';
 const baseURL = `${API_ROOT}/api/v1/`;
 // const privateClient1 = axios.create({
 //     baseURL,
@@ -106,102 +116,129 @@ const baseURL = `${API_ROOT}/api/v1/`;
 
 class PrivateClient {
     constructor() {
-        this.accessToken = getAccessTokenLs()
-        this.refreshToken = getRefreshTokenLs()
-        this.refreshTokenRequest = null
+        this.accessToken = getAccessTokenLs();
+        this.refreshToken = getRefreshTokenLs();
+        this.refreshTokenRequest = null;
         this.instance = axios.create({
             baseURL,
             headers: {
                 'Content-Type': 'application/json',
             },
             withCredentials: true,
-            paramsSerializer:
-                (params) => queryString.stringify(params),
-        })
+            paramsSerializer: (params) => queryString.stringify(params),
+        });
         this.instance.interceptors.request.use(
             (config) => {
-                this.accessToken = this.accessToken ? this.accessToken : getAccessTokenLs()
+                this.accessToken = this.accessToken
+                    ? this.accessToken
+                    : getAccessTokenLs();
                 if (this.accessToken && config.headers) {
-                    config.headers.authorization = `Bearer ${this.accessToken}`
-                    return config
+                    config.headers.authorization = `Bearer ${this.accessToken}`;
+                    return config;
                 }
-                return config
+                return config;
             },
             (error) => {
-                return Promise.reject(error)
-            }
-        )
+                return Promise.reject(error);
+            },
+        );
         this.instance.interceptors.response.use(
             (response) => {
-                const { url } = response.config
+                const { url } = response.config;
                 if (url === 'auth/logout') {
-                    this.accessToken = ''
-                    this.refreshToken = ''
+                    this.accessToken = '';
+                    this.refreshToken = '';
                 }
                 if (response && response.data) return response.data;
                 return response;
             },
             (err) => {
-                if (isAxiosUnauthorizedError(err)) {
-                    const config = err.response?.config || {}
-                    const { url } = config
-                    if (isAxiosExpiredTokenError(err) && url !== userEndpoints.refreshToken) {
-                        this.refreshTokenRequest = this.refreshTokenRequest ? this.refreshTokenRequest :
-                            this.handleRefreshToken().finally(() => {
-                                // Giữ refreshTokenRequest trong 10s cho những request tiếp theo nếu có 401 thì dùng
-                                setTimeout(() => {
-                                    this.refreshTokenRequest = null
-                                }, 10000)
-                            });
-                        return this.refreshTokenRequest.then(({ response, err }) => {
+                if (
+                    isAxiosUnauthorizedError(err) &&
+                    !isAxiosExpiredTokenError(err)
+                ) {
+                    this.handleLogout();
+                }
+                const config = err.response?.config || {};
+                const { url } = config;
+                if (
+                    isAxiosExpiredTokenError(err) &&
+                    url !== userEndpoints.refreshToken
+                ) {
+                    this.refreshTokenRequest = this.refreshTokenRequest
+                        ? this.refreshTokenRequest
+                        : this.handleRefreshToken().finally(() => {
+                              // Giữ refreshTokenRequest trong 10s cho những request tiếp theo nếu có 401 thì dùng
+                              setTimeout(() => {
+                                  this.refreshTokenRequest = null;
+                              }, 10000);
+                          });
+                    return this.refreshTokenRequest.then(
+                        ({ response, err }) => {
                             // Nghĩa là chúng ta tiếp tục gọi lại request cũ vừa bị lỗi
                             if (response) {
-                                const { accessToken: newAccessToken, refreshToken } = response;
-                                this.accessToken = newAccessToken
-                                this.refreshToken = refreshToken
-                                store.dispatch(setToken({ accessToken: newAccessToken, refreshToken }));
-                                setAccessTokenLs(newAccessToken)
-                                setRefreshTokenLs(refreshToken)
+                                const {
+                                    accessToken: newAccessToken,
+                                    refreshToken,
+                                } = response;
+                                this.accessToken = newAccessToken;
+                                this.refreshToken = refreshToken;
+                                store.dispatch(
+                                    setToken({
+                                        accessToken: newAccessToken,
+                                        refreshToken,
+                                    }),
+                                );
+                                setAccessTokenLs(newAccessToken);
+                                setRefreshTokenLs(refreshToken);
                                 return this.instance({
                                     ...config,
                                     headers: {
                                         ...config.headers,
-                                        Authorization: `Bearer ${newAccessToken}`
-                                    }
-                                })
+                                        Authorization: `Bearer ${newAccessToken}`,
+                                    },
+                                });
                             }
                             if (err) {
-                                store.dispatch(loginOut())
-                                store.dispatch(removeToken())
-                                store.dispatch(removeFavorites())
-                                store.dispatch(setIsAuthenticated(false))
-                                this.accessToken = ''
-                                this.refreshToken = ''
-                                clearLS()
+                                this.handleLogout();
                             }
-                        })
-                    }
-                    store.dispatch(loginOut())
-                    store.dispatch(removeToken())
-                    store.dispatch(removeFavorites())
-                    store.dispatch(setIsAuthenticated(false))
-                    this.accessToken = ''
-                    this.refreshToken = ''
-                    clearLS()
+                        },
+                    );
                 }
-                return Promise.reject(err?.response?.data)
-            }
-        )
+                // if (
+                //     !isAxiosExpiredTokenError(err) &&
+                //     !isAxiosUnauthorizedError(err)
+                // ) {
+                //     toast.error(err?.response?.data?.data?.message);
+                // }
+                // console.log(err);
+                return Promise.reject(err?.response?.data);
+            },
+        );
+    }
+    handleLogout() {
+        store.dispatch(loginOut());
+        store.dispatch(removeToken());
+        store.dispatch(removeFavorites());
+        store.dispatch(setIsAuthenticated(false));
+        this.accessToken = '';
+        this.refreshToken = '';
+        clearLS();
     }
     async handleRefreshToken() {
-        this.refreshToken = this.refreshToken ? this.refreshToken : getRefreshTokenLs()
+        this.refreshToken = this.refreshToken
+            ? this.refreshToken
+            : getRefreshTokenLs();
         try {
-            const response = await this.instance
-                .post(`auth/refresh-token`, {
-                    refreshToken: this.refreshToken
-                }, {
-                    withCredentials: true
-                })
+            const response = await this.instance.post(
+                `auth/refresh-token`,
+                {
+                    refreshToken: this.refreshToken,
+                },
+                {
+                    withCredentials: true,
+                },
+            );
             return { response };
         } catch (err) {
             return { err };

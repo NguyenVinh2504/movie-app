@@ -7,16 +7,26 @@ const favoriteEndpoints = {
     getFavorites: `favorite`,
 };
 const favoriteApi = {
-    addFavorite: async ({ media_type, mediaId, title, poster_path, vote_average, release_date }) => {
+    addFavorite: async ({
+        media_type,
+        mediaId,
+        title,
+        poster_path,
+        vote_average,
+        release_date,
+    }) => {
         try {
-            const response = await privateClient.post(favoriteEndpoints.addFavorite, {
-                media_type,
-                mediaId,
-                title,
-                poster_path,
-                vote_average,
-                release_date,
-            });
+            const response = await privateClient.post(
+                favoriteEndpoints.addFavorite,
+                {
+                    media_type,
+                    mediaId,
+                    title,
+                    poster_path,
+                    vote_average,
+                    release_date,
+                },
+            );
             return { response };
         } catch (err) {
             return { err };
@@ -24,14 +34,16 @@ const favoriteApi = {
     },
     removeFavorite: async (favoriteId) => {
         try {
-            const response = await privateClient.delete(favoriteEndpoints.removeFavorite(favoriteId));
+            const response = await privateClient.delete(
+                favoriteEndpoints.removeFavorite(favoriteId),
+            );
             return { response };
         } catch (err) {
             return { err };
         }
     },
     getFavorites: () => {
-        return privateClient.get(favoriteEndpoints.getFavorites)
+        return privateClient.get(favoriteEndpoints.getFavorites);
     },
 };
 

@@ -12,7 +12,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { ConfirmProvider } from 'material-ui-confirm';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { BrowserRouter } from 'react-router-dom';
 
 const queryClient = new QueryClient({
@@ -25,7 +25,7 @@ const queryClient = new QueryClient({
             refetchOnReconnect: false,
         },
     },
-})
+});
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -33,7 +33,7 @@ root.render(
     <BrowserRouter>
         <Provider store={store}>
             <PersistGate loading={null} persistor={persistor}>
-                <QueryClientProvider client={queryClient} >
+                <QueryClientProvider client={queryClient}>
                     <ThemeProvider theme={theme}>
                         <ConfirmProvider
                             defaultOptions={{
@@ -46,7 +46,7 @@ root.render(
                         >
                             <CssBaseline>
                                 <App />
-                                <ReactQueryDevtools initialIsOpen={false} position='bottom' />
+                                <ReactQueryDevtools initialIsOpen={false} position="bottom" />
                                 <ToastContainer
                                     position="bottom-left"
                                     autoClose={3000}
@@ -66,7 +66,7 @@ root.render(
                 </QueryClientProvider>
             </PersistGate>
         </Provider>
-    </BrowserRouter>
+    </BrowserRouter>,
     /* </React.StrictMode>, */
 );
 
