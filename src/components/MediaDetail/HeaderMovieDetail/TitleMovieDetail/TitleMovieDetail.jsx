@@ -5,19 +5,26 @@ import ButtonAddFavorite from '~/components/FavoriteButton';
 import uiConfigs from '~/config/ui.config';
 import { useSelector } from 'react-redux';
 import { favoritesValue } from '~/redux/selectors';
+import { formatDate } from '~/utils/formatDate';
 
 function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const favorites = useSelector(favoritesValue);
 
     const rating = {
-        rate: Number(dataDetail?.vote_average?.toFixed(1)) || Number(dataDetail?.mediaRate?.toFixed(1)),
-        date: dataDetail?.release_date || dataDetail?.first_air_date,
+        rate:
+            Number(dataDetail?.vote_average?.toFixed(1)) ||
+            Number(dataDetail?.mediaRate?.toFixed(1)),
+        date: formatDate(
+            dataDetail?.release_date || dataDetail?.first_air_date,
+        ),
         genres: genres?.join(', '),
         runtime: dataDetail?.runtime ? `${dataDetail.runtime} minutes` : '',
     };
     // console.log(dataDetail?.runtime);
-    const isFavorite = favorites.find((element) => element.mediaId === dataDetail.id);
+    const isFavorite = favorites.find(
+        (element) => element.mediaId === dataDetail.id,
+    );
     if (isFavorite) {
         dataDetail.isFavorite = true;
         dataDetail.favoriteId = isFavorite._id;
@@ -26,17 +33,28 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
     }
     return (
         <Box sx={{ p: 2 }}>
-            <Stack direction={'row'} alignItems={'center'} justifyContent={'space-between'} spacing={2}>
+            <Stack
+                direction={'row'}
+                alignItems={'center'}
+                justifyContent={'space-between'}
+                spacing={2}
+            >
                 {!loading ? (
                     <>
                         <Typography
                             variant={pointDownSm ? 'h4' : 'h2'}
                             fontWeight={'500'}
                             component={'h3'}
-                            title={dataDetail?.title ?? dataDetail?.name ?? 'Không có nội dung'}
+                            title={
+                                dataDetail?.title ??
+                                dataDetail?.name ??
+                                'Không có nội dung'
+                            }
                             sx={{ ...uiConfigs.style.typoLines(2) }}
                         >
-                            {dataDetail?.title ?? dataDetail?.name ?? 'Không có nội dung'}
+                            {dataDetail?.title ??
+                                dataDetail?.name ??
+                                'Không có nội dung'}
                         </Typography>
                         <Box>
                             <ButtonAddFavorite
@@ -48,14 +66,29 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
                     </>
                 ) : (
                     <>
-                        <Skeleton variant="rounded" height={'56px'} width={'80%'} />
+                        <Skeleton
+                            variant="rounded"
+                            height={'56px'}
+                            width={'80%'}
+                        />
                         <Box>
-                            <Skeleton variant="circular" width={40} height={40} />
+                            <Skeleton
+                                variant="circular"
+                                width={40}
+                                height={40}
+                            />
                         </Box>
                     </>
                 )}
             </Stack>
-            {loading && <Skeleton variant="rounded" height={'24px'} width={'100%'} sx={{ mt: 1 }} />}
+            {loading && (
+                <Skeleton
+                    variant="rounded"
+                    height={'24px'}
+                    width={'100%'}
+                    sx={{ mt: 1 }}
+                />
+            )}
             {!loading && (
                 <>
                     {/* Pc */}
@@ -91,7 +124,11 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
                                 value && (
                                     <Typography
                                         key={key}
-                                        variant={pointDownSm ? 'subtitle2' : 'subtitle1'}
+                                        variant={
+                                            pointDownSm
+                                                ? 'subtitle2'
+                                                : 'subtitle1'
+                                        }
                                         component={'p'}
                                     >
                                         {value}
@@ -135,7 +172,11 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
                                         <Typography
                                             key={key}
                                             component={'p'}
-                                            variant={pointDownSm ? 'subtitle2' : 'subtitle1'}
+                                            variant={
+                                                pointDownSm
+                                                    ? 'subtitle2'
+                                                    : 'subtitle1'
+                                            }
                                         >
                                             {value}
                                         </Typography>
@@ -143,7 +184,11 @@ function TitleMovieDetail({ loading, dataDetail, genres, mediaType }) {
                                 );
                             })}
                         </Box>
-                        {genres?.length !== 0 && <Typography variant="subtitle2">{genres?.join(', ')}</Typography>}
+                        {genres?.length !== 0 && (
+                            <Typography variant="subtitle2">
+                                {genres?.join(', ')}
+                            </Typography>
+                        )}
                     </Box>
                 </>
             )}
