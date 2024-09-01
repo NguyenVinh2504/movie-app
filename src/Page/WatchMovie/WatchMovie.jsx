@@ -53,8 +53,21 @@ const WatchMovie = () => {
                     backgroundColor: 'secondary.main',
                 }}
             >
-                <Box sx={{ position: 'absolute', ...uiConfigs.style.positionFullSize }}>
-                    <iframe
+                <Box
+                    sx={{
+                        position: 'absolute',
+                        ...uiConfigs.style.positionFullSize,
+                    }}
+                >
+                    <video width={'100%'} height={'100%'} controls={true}>
+                        <source
+                            src={
+                                'http://localhost:2504/api/v1/files/video-stream/97483167-6f1a-4f88-8db3-1898bc30cf6e.mp4'
+                            }
+                            type="video/mp4"
+                        />
+                    </video>
+                    {/*  <iframe
                         src={
                             // movieId
                             //     ? `https://vidsrc.xyz/embed/movie/${movieId}`
@@ -65,7 +78,7 @@ const WatchMovie = () => {
                         allowFullScreen={true}
                         // sandbox="allow-modals allow-orientation-lock allow-pointer-lock allow-presentation allow-scripts allow-top-navigation allow-forms"
                         style={{ width: '100%', height: '100%', border: '0px' }}
-                    ></iframe>
+                    ></iframe> */}
                 </Box>
             </Box>
             {/* title */}

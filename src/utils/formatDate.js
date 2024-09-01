@@ -1,7 +1,7 @@
-export const formatDate = (date) => {
+export const formatDate = (date, locale = 'en-US') => {
     if (!date) return;
 
-    return new Intl.DateTimeFormat('en-US', {
+    return new Intl.DateTimeFormat(locale, {
         year: 'numeric',
         month: 'short',
         day: 'numeric',

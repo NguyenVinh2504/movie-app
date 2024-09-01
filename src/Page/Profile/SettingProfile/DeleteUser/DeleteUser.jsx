@@ -14,7 +14,11 @@ import Input from '~/components/Input';
 import Label from '~/components/LabelSetting';
 
 import { useState } from 'react';
-import { setUser } from '~/redux/features/userSlice';
+import { loginOut } from '~/redux/features/userSlice';
+import { removeFavorites } from '~/redux/features/favoritesSlice';
+import { setIsAuthenticated } from '~/redux/features/isAuthenticated';
+import { clearLS } from '~/utils/auth';
+import { removeToken } from '~/redux/features/authSlice';
 
 function DeleteUser() {
     const [inputPassword, setInputPassword] = useState(false);
@@ -36,7 +40,11 @@ function DeleteUser() {
             if (response) {
                 setDisabled(false);
                 toast.success('Xóa tài khoản thành công');
-                dispatch(setUser(null));
+                dispatch(removeFavorites());
+                dispatch(loginOut());
+                dispatch(setIsAuthenticated(false));
+                clearLS();
+                dispatch(removeToken());
             }
             if (err) {
                 setDisabled(false);
@@ -48,7 +56,9 @@ function DeleteUser() {
         <>
             <Box component={'form'} onSubmit={formik.handleSubmit}>
                 <Box p={2}>
-                    {inputPassword && <Label forId={'passwordDelete'}>Mật khẩu </Label>}
+                    {inputPassword && (
+                        <Label forId={'passwordDelete'}>Mật khẩu </Label>
+                    )}
                     {inputPassword && (
                         <Input
                             id={'passwordDelete'}
@@ -57,18 +67,33 @@ function DeleteUser() {
                             placeholder={'Nhập lại mật khẩu'}
                             value={formik.values.password}
                             onChange={formik.handleChange}
-                            error={formik.errors.password !== undefined && formik.touched.password}
-                            helperText={formik.touched.password && formik.errors.password}
+                            error={
+                                formik.errors.password !== undefined &&
+                                formik.touched.password
+                            }
+                            helperText={
+                                formik.touched.password &&
+                                formik.errors.password
+                            }
                         />
                     )}
                     {!inputPassword && (
-                        <Button variant="contained" color="secondary" onClick={() => setInputPassword(!inputPassword)}>
+                        <Button
+                            variant="contained"
+                            color="secondary"
+                            onClick={() => setInputPassword(!inputPassword)}
+                        >
                             Xóa tài khoản
                         </Button>
                     )}
                     {inputPassword && (
                         <Box sx={{ mt: 1, display: 'flex', gap: 1 }}>
-                            <Button disabled={disable} variant="contained" color="secondary" type={'submit'}>
+                            <Button
+                                disabled={disable}
+                                variant="contained"
+                                color="secondary"
+                                type={'submit'}
+                            >
                                 Xác nhận
                             </Button>
                             <Button
@@ -83,7 +108,8 @@ function DeleteUser() {
                 </Box>
                 <Divider />
                 <Typography variant="body1" p={2}>
-                    Bạn xác nhận muốn xóa tài khoản? Khi xác nhận xóa, tài khoản bạn sẽ được xóa vĩnh viễn.
+                    Bạn xác nhận muốn xóa tài khoản? Khi xác nhận xóa, tài khoản
+                    bạn sẽ được xóa vĩnh viễn.
                 </Typography>
             </Box>
         </>
