@@ -19,6 +19,7 @@ import {
 import { loginOut } from '~/redux/features/userSlice';
 import { removeFavorites } from '~/redux/features/favoritesSlice';
 import { setIsAuthenticated } from '~/redux/features/isAuthenticated';
+import { toast } from 'react-toastify';
 // import { toast } from 'react-toastify';
 const baseURL = `${API_ROOT}/api/v1/`;
 // const privateClient1 = axios.create({
@@ -132,9 +133,12 @@ class PrivateClient {
                 this.accessToken = this.accessToken
                     ? this.accessToken
                     : getAccessTokenLs();
+
                 if (this.accessToken && config.headers) {
                     config.headers.authorization = `Bearer ${this.accessToken}`;
                     return config;
+                } else {
+                    toast.error('Vui lòng đăng nhập');
                 }
                 return config;
             },
@@ -211,8 +215,7 @@ class PrivateClient {
                 // ) {
                 //     toast.error(err?.response?.data?.data?.message);
                 // }
-                // console.log(err);
-                return Promise.reject(err?.response?.data);
+                return Promise.reject(err?.response?.data ?? err.message);
             },
         );
     }

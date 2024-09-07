@@ -1,18 +1,15 @@
 import { Google } from '@mui/icons-material';
 import { Box, Button, useMediaQuery } from '@mui/material';
-import { GoogleAuthProvider, signInWithPopup, getAuth } from 'firebase/auth';
+// import { GoogleAuthProvider, signInWithPopup, getAuth } from 'firebase/auth';
 import { memo, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useQueryParams } from '~/Hooks';
-import userApi from '~/api/module/user.api';
 import { env } from '~/config/environtments';
-import { app } from '~/firebase';
+// import { app } from '~/firebase';
 import { setToken } from '~/redux/features/authSlice';
-import { setFavorites } from '~/redux/features/favoritesSlice';
 import { setIsAuthenticated } from '~/redux/features/isAuthenticated';
-import { setUser } from '~/redux/features/userSlice';
 import { setAccessTokenLs, setRefreshTokenLs } from '~/utils/auth';
 
 function ButtonGoogle() {
@@ -44,7 +41,10 @@ function ButtonGoogle() {
     }, [accessToken, dispatch, refreshToken]);
 
     useEffect(() => {
-        if (error) toast.error('Bạn đã hủy đăng nhập bằng Google', { position: 'top-center' });
+        if (error)
+            toast.error('Bạn đã hủy đăng nhập bằng Google', {
+                position: 'top-center',
+            });
     }, [error]);
     // const isLogged = useSelector(isAuthenticated);
 
@@ -72,16 +72,16 @@ function ButtonGoogle() {
 
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
 
-    const signInGoogle = async () => {
-        try {
-            const provider = new GoogleAuthProvider();
-            const auth = getAuth(app);
-            const result = await signInWithPopup(auth, provider);
-            return { result };
-        } catch (error) {
-            return { error };
-        }
-    };
+    // const signInGoogle = async () => {
+    //     try {
+    //         const provider = new GoogleAuthProvider();
+    //         const auth = getAuth(app);
+    //         const result = await signInWithPopup(auth, provider);
+    //         return { result };
+    //     } catch (error) {
+    //         return { error };
+    //     }
+    // };
     // const handleGoogleClick = async () => {
     //     setIsLoading(true);
     //     const { result, error } = await signInGoogle();

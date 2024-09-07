@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { Box } from '@mui/material';
 import React from 'react';
 import Wrapper from '~/components/Wrapper';

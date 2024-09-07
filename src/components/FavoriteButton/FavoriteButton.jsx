@@ -14,7 +14,14 @@ import { deleteFavorite, addFavorite } from '~/redux/features/favoritesSlice';
 import theme from '~/theme';
 
 // Hàm con để thêm yêu thích
-const addItemToFavorite = async (item, mediaType, setLiked, setDisabled, setAnimation, dispatch) => {
+const addItemToFavorite = async (
+    item,
+    mediaType,
+    setLiked,
+    setDisabled,
+    setAnimation,
+    dispatch,
+) => {
     const newFavorite = {
         media_type: item.media_type ?? mediaType,
         mediaId: item.id,
@@ -35,16 +42,20 @@ const addItemToFavorite = async (item, mediaType, setLiked, setDisabled, setAnim
     }
 
     if (err) {
-        if (err.statusCode === 401 || err.statusCode === 404) {
-            toast.error('Vui lòng đăng nhập');
-        }
         setAnimation(false);
         setLiked(false);
     }
 };
 
 // Hàm con để xóa khỏi danh sách yêu thích
-const removeItemFromFavorite = async (confirm, itemId, setLiked, setAnimation, setDisabled, dispatch) => {
+const removeItemFromFavorite = async (
+    confirm,
+    itemId,
+    setLiked,
+    setAnimation,
+    setDisabled,
+    dispatch,
+) => {
     confirm({
         title: 'Xóa phim yêu thích?',
         description: 'Phim sẽ được xóa khỏi mục yêu thích.',
@@ -105,27 +116,58 @@ function FavoriteButton({ item, mediaType, isFavorite }) {
                   setDisabled,
                   dispatch,
               )
-            : addItemToFavorite(item, mediaType, setLiked, setDisabled, setAnimation, dispatch);
+            : addItemToFavorite(
+                  item,
+                  mediaType,
+                  setLiked,
+                  setDisabled,
+                  setAnimation,
+                  dispatch,
+              );
     };
     return (
         <Tooltip title={liked ? 'Hủy yêu thích' : 'Yêu thích'}>
             <span>
-                <IconButton color="neutral" disabled={disabled} onClick={handleItemAction}>
-                    <Box sx={{ position: 'relative', height: '24px', width: '24px' }}>
+                <IconButton
+                    color="neutral"
+                    disabled={disabled}
+                    onClick={handleItemAction}
+                >
+                    <Box
+                        sx={{
+                            position: 'relative',
+                            height: '24px',
+                            width: '24px',
+                        }}
+                    >
                         {liked ? (
                             <Box
                                 sx={{
                                     ...animationStyles,
                                     animationName: animation && 'show-popup',
                                     '@keyframes show-popup': {
-                                        '0%': { transform: 'translate(-50%, -50%)\n\t\tscale(.7)' },
-                                        '45%': { transform: 'translate(-50%, -50%)\n\t\tscale(1.3)' },
-                                        '80%': { transform: 'translate(-50%, -50%)\n\t\tscale(.95)' },
-                                        '100%': { transform: 'translate(-50%, -50%)\n\t\tscale(1)' },
+                                        '0%': {
+                                            transform:
+                                                'translate(-50%, -50%)\n\t\tscale(.7)',
+                                        },
+                                        '45%': {
+                                            transform:
+                                                'translate(-50%, -50%)\n\t\tscale(1.3)',
+                                        },
+                                        '80%': {
+                                            transform:
+                                                'translate(-50%, -50%)\n\t\tscale(.95)',
+                                        },
+                                        '100%': {
+                                            transform:
+                                                'translate(-50%, -50%)\n\t\tscale(1)',
+                                        },
                                     },
                                 }}
                             >
-                                <HeartIconActive fill={theme.palette.primary.main} />
+                                <HeartIconActive
+                                    fill={theme.palette.primary.main}
+                                />
                             </Box>
                         ) : (
                             <Box
@@ -133,10 +175,22 @@ function FavoriteButton({ item, mediaType, isFavorite }) {
                                     ...animationStyles,
                                     animationName: animation && 'out-popup',
                                     '@keyframes out-popup': {
-                                        '0%': { transform: 'translate(-50%, -50%)\n\t\tscale(.7)' },
-                                        '45%': { transform: 'translate(-50%, -50%)\n\t\tscale(1.2)' },
-                                        '80%': { transform: 'translate(-50%, -50%)\n\t\tscale(.95)' },
-                                        '100%': { transform: 'translate(-50%, -50%)\n\t\tscale(1)' },
+                                        '0%': {
+                                            transform:
+                                                'translate(-50%, -50%)\n\t\tscale(.7)',
+                                        },
+                                        '45%': {
+                                            transform:
+                                                'translate(-50%, -50%)\n\t\tscale(1.2)',
+                                        },
+                                        '80%': {
+                                            transform:
+                                                'translate(-50%, -50%)\n\t\tscale(.95)',
+                                        },
+                                        '100%': {
+                                            transform:
+                                                'translate(-50%, -50%)\n\t\tscale(1)',
+                                        },
                                     },
                                 }}
                             >

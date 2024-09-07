@@ -1,5 +1,15 @@
-export const SearchIcon = ({ width = '1.5rem', height = '1.5rem', className }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+export const SearchIcon = ({
+    width = '1.5rem',
+    height = '1.5rem',
+    className,
+}) => (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="none"
+        viewBox="0 0 24 24"
+    >
         <path
             stroke="#fff"
             strokeLinecap="round"
@@ -10,8 +20,18 @@ export const SearchIcon = ({ width = '1.5rem', height = '1.5rem', className }) =
     </svg>
 );
 
-export const CloseIcon = ({ width = '1.5rem', height = '1.5rem', className }) => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+export const CloseIcon = ({
+    width = '1.5rem',
+    height = '1.5rem',
+    className,
+}) => (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="24"
+        height="24"
+        fill="none"
+        viewBox="0 0 24 24"
+    >
         <path
             stroke="#fff"
             strokeLinecap="round"
@@ -24,7 +44,13 @@ export const CloseIcon = ({ width = '1.5rem', height = '1.5rem', className }) =>
 
 export const NotificationIcon = () => {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
             <path
                 stroke="#fff"
                 strokeLinecap="round"
@@ -52,7 +78,13 @@ export const NotificationIcon = () => {
 
 export const HeartIcon = ({ stroke = '#fff' }) => {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
             <path
                 stroke={stroke}
                 strokeLinecap="round"
@@ -64,7 +96,7 @@ export const HeartIcon = ({ stroke = '#fff' }) => {
     );
 };
 
-export function HeartIconActive({ fill = "#fff" }) {
+export function HeartIconActive({ fill = '#fff' }) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -108,7 +140,7 @@ export function ArchiveIcon() {
     );
 }
 
-export function ArchiveIconActive({ fill = "#fff", height = 24, width = 24 }) {
+export function ArchiveIconActive({ fill = '#fff', height = 24, width = 24 }) {
     return (
         <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -127,15 +159,32 @@ export function ArchiveIconActive({ fill = "#fff", height = 24, width = 24 }) {
 
 export const MenuIcon = () => {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-            <path stroke="#fff" strokeLinecap="round" strokeWidth="1.5" d="M3 7h18M3 12h18M3 17h18"></path>
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
+            <path
+                stroke="#fff"
+                strokeLinecap="round"
+                strokeWidth="1.5"
+                d="M3 7h18M3 12h18M3 17h18"
+            ></path>
         </svg>
     );
 };
 
 export function MovieIcon() {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
             <path
                 stroke="#fff"
                 strokeLinecap="round"
@@ -174,7 +223,13 @@ export function MovieIconActive() {
 
 export function HomeIcon() {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
             <path
                 stroke="#fff"
                 strokeLinecap="round"
@@ -204,7 +259,13 @@ export function HomeIconActive() {
 
 export function TvShowIcon() {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
             <path
                 stroke="#fff"
                 strokeLinecap="round"
@@ -235,7 +296,13 @@ export function TvShowIconActive() {
 
 export function AboutIcon() {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
             <path
                 stroke="#fff"
                 strokeLinecap="round"
@@ -243,7 +310,13 @@ export function AboutIcon() {
                 strokeWidth="1.5"
                 d="M12 22c5.5 0 10-4.5 10-10S17.5 2 12 2 2 6.5 2 12s4.5 10 10 10zM12 8v5"
             ></path>
-            <path stroke="#fff" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11.995 16h.009"></path>
+            <path
+                stroke="#fff"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="M11.995 16h.009"
+            ></path>
         </svg>
     );
 }
@@ -267,7 +340,13 @@ export function AboutIconActive() {
 
 export function UserIcon() {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
             <path
                 stroke="#fff"
                 strokeLinecap="round"
@@ -298,7 +377,13 @@ export function UserIconActive() {
 
 export function EditIcon() {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
             <path
                 stroke="#fff"
                 strokeLinecap="round"
@@ -330,7 +415,13 @@ export function EditIconActive() {
 
 export function SignOutIcon() {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
             <path
                 stroke="#fff"
                 strokeLinecap="round"
@@ -351,7 +442,13 @@ export function SignOutIcon() {
 
 export function PlayIcon() {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
             <path
                 fill="#fff"
                 d="M7.778 3.269a1.821 1.821 0 00-1.846-.035A1.83 1.83 0 005 4.83v13.394c0 .662.358 1.27.932 1.594a1.83 1.83 0 001.846-.034l10.958-6.697a1.827 1.827 0 000-3.12L7.778 3.269z"
@@ -362,7 +459,13 @@ export function PlayIcon() {
 
 export function ArrowRightIcon() {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
             <path
                 stroke="#fff"
                 strokeLinecap="round"
@@ -377,7 +480,13 @@ export function ArrowRightIcon() {
 
 export function ArrowLeftIcon() {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
             <path
                 stroke="#fff"
                 strokeLinecap="round"
@@ -392,7 +501,13 @@ export function ArrowLeftIcon() {
 
 export function ArrowDownIcon() {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
             <path
                 stroke="#fff"
                 strokeLinecap="round"
@@ -406,7 +521,13 @@ export function ArrowDownIcon() {
 }
 export function ArrowUpIcon() {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
             <path
                 stroke="#fff"
                 strokeLinecap="round"
@@ -420,7 +541,13 @@ export function ArrowUpIcon() {
 }
 export function GoogleIcon() {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
             <path
                 fill="currentColor"
                 d="M21.5 11.79c0 4.15-2.21 9.21-8.87 9.21a9.07 9.07 0 01-9.13-9 9.07 9.07 0 019.13-9 9.22 9.22 0 015.7 2 .52.52 0 01.19.37.55.55 0 01-.16.39 26.403 26.403 0 00-1.86 1.88.49.49 0 01-.66.06 5.11 5.11 0 00-3.2-1 5.35 5.35 0 000 10.7c3 0 4.27-1.28 4.93-3.55H13a.5.5 0 01-.5-.5V10.7a.5.5 0 01.5-.5h8a.45.45 0 01.45.4c.037.396.054.793.05 1.19z"
@@ -431,7 +558,13 @@ export function GoogleIcon() {
 
 export function EmailIcon() {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
             <path
                 stroke="#fff"
                 strokeLinecap="round"
@@ -454,7 +587,13 @@ export function EmailIcon() {
 
 export function PasswordIcon() {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
             <path
                 stroke="#fff"
                 strokeLinecap="round"
@@ -475,7 +614,13 @@ export function PasswordIcon() {
 
 export function PhotoIcon() {
     return (
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            fill="none"
+            viewBox="0 0 24 24"
+        >
             <path
                 fill="#fff"
                 d="M18 6c-.61 0-1.17-.35-1.45-.89l-.72-1.45C15.37 2.75 14.17 2 13.15 2h-2.29c-1.03 0-2.23.75-2.69 1.66l-.72 1.45C7.17 5.65 6.61 6 6 6 3.83 6 2.11 7.83 2.25 9.99l.52 8.26C2.89 20.31 4 22 6.76 22h10.48c2.76 0 3.86-1.69 3.99-3.75l.52-8.26A3.753 3.753 0 0018 6zm-7.5 1.25h3c.41 0 .75.34.75.75s-.34.75-.75.75h-3c-.41 0-.75-.34-.75-.75s.34-.75.75-.75zM12 18.12c-1.86 0-3.38-1.51-3.38-3.38 0-1.87 1.51-3.38 3.38-3.38 1.87 0 3.38 1.51 3.38 3.38 0 1.87-1.52 3.38-3.38 3.38z"
@@ -484,7 +629,12 @@ export function PhotoIcon() {
     );
 }
 export const SvgSpinners3DotsBounce = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" viewBox="0 0 24 24">
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="50"
+        height="50"
+        viewBox="0 0 24 24"
+    >
         <circle cx="4" cy="12" r="3" fill="#ec0101">
             <animate
                 id="svgSpinners3DotsBounce0"
@@ -587,6 +737,22 @@ export function EyeSlashIcon() {
                 strokeWidth="1.5"
                 d="M17.82 5.77C16.07 4.45 14.07 3.73 12 3.73c-3.53 0-6.82 2.08-9.11 5.68-.9 1.41-.9 3.78 0 5.19.79 1.24 1.71 2.31 2.71 3.17M8.42 19.53c1.14.48 2.35.74 3.58.74 3.53 0 6.82-2.08 9.11-5.68.9-1.41.9-3.78 0-5.19-.33-.52-.69-1.01-1.06-1.47M15.51 12.7a3.565 3.565 0 01-2.82 2.82M9.47 14.53L2 22M22 2l-7.47 7.47"
             ></path>
+        </svg>
+    );
+}
+
+export function SmileIcon() {
+    return (
+        <svg
+            fill="#fff"
+            height="24px"
+            width="24px"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 485 485"
+            xmlSpace="preserve"
+        >
+            <path d="M413.974 71.026C368.171 25.225 307.274 0 242.5 0S116.829 25.225 71.026 71.026C25.225 116.829 0 177.726 0 242.5s25.225 125.671 71.026 171.474C116.829 459.775 177.726 485 242.5 485s125.671-25.225 171.474-71.026C459.775 368.171 485 307.274 485 242.5s-25.225-125.671-71.026-171.474zM242.5 455C125.327 455 30 359.673 30 242.5S125.327 30 242.5 30 455 125.327 455 242.5 359.673 455 242.5 455z" />
+            <path d="M318.514 231.486c19.299 0 35-15.701 35-35s-15.701-35-35-35-35 15.701-35 35 15.701 35 35 35zM166.486 231.486c19.299 0 35-15.701 35-35s-15.701-35-35-35-35 15.701-35 35 15.702 35 35 35zM242.5 355c-46.911 0-89.35-29.619-105.604-73.703l-28.148 10.378C129.329 347.496 183.08 385 242.5 385s113.171-37.504 133.752-93.325l-28.148-10.378C331.85 325.381 289.411 355 242.5 355z" />
         </svg>
     );
 }

@@ -14,6 +14,7 @@ import { omit } from 'lodash';
 import { useQueryConfig } from '~/Hooks';
 import { Helmet } from 'react-helmet';
 import config from '~/config';
+import CommentMedia from './CommentMedia';
 
 function MovieDetail() {
     // const [genres, setGenres] = useState([]);
@@ -55,7 +56,7 @@ function MovieDetail() {
     } = useQuery({
         queryKey: ['Media detail', mediaTypeDetail, id],
         queryFn: getDataDetail,
-        enabled: Boolean(category),
+        enabled: Boolean(category && mediaTypeDetail && id),
     });
 
     const newGenres = dataDetail?.genres?.map((item) => item.name) || [];
@@ -83,7 +84,14 @@ function MovieDetail() {
         <>
             <Helmet>
                 <title>{dataDetail?.title ?? dataDetail?.name}</title>
-                <meta name="description" content={dataDetail?.overview ? dataDetail.overview : 'Không có nội dung'} />
+                <meta
+                    name="description"
+                    content={
+                        dataDetail?.overview
+                            ? dataDetail.overview
+                            : 'Không có nội dung'
+                    }
+                />
             </Helmet>
             <Modal
                 open={Boolean(category) && !isError}
@@ -154,7 +162,10 @@ function MovieDetail() {
                                     genres={newGenres}
                                     mediaType={mediaTypeDetail}
                                 />
-                                <OverviewMovieDetail loading={loading} dataDetail={dataDetail} />
+                                <OverviewMovieDetail
+                                    loading={loading}
+                                    dataDetail={dataDetail}
+                                />
                                 {/* thong tin phim */}
 
                                 {/* tap phim */}
@@ -163,18 +174,34 @@ function MovieDetail() {
                                         seasons={dataDetail?.seasons ?? []}
                                         seriesId={dataDetail?.id ?? Number('')}
                                         isLoading={loading}
-                                        mediaTitle={dataDetail?.name ?? dataDetail?.title ?? ''}
+                                        mediaTitle={
+                                            dataDetail?.name ??
+                                            dataDetail?.title ??
+                                            ''
+                                        }
                                     />
                                 )}
                                 {/* tap phim */}
 
                                 {/* slice dien vien */}
-                                <CastSlice cast={dataDetail?.credits?.cast} loading={loading} />
+                                <CastSlice
+                                    cast={dataDetail?.credits?.cast}
+                                    loading={loading}
+                                />
                                 {/* slice dien vien */}
 
                                 {/* trailer */}
-                                <VideoSlice videos={dataDetail?.videos?.results} loading={loading} />
+                                <VideoSlice
+                                    videos={dataDetail?.videos?.results}
+                                    loading={loading}
+                                />
                                 {/* trailer */}
+
+                                {/* comment */}
+                                <CommentMedia
+                                    movieId={id}
+                                    mediaType={mediaTypeDetail}
+                                />
                             </Box>
                         </Box>
                         {/* container */}

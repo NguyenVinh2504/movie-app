@@ -19,20 +19,37 @@ function Home() {
     async function fetchData({ pageParam }) {
         const { response, err } =
             mediaType === 'all'
-                ? await mediaApi.getListTrending({ mediaType, timeWindow: 'day', page: pageParam })
-                : await mediaApi.getList({ mediaType, mediaCategory: category, page: pageParam });
+                ? await mediaApi.getListTrending({
+                      mediaType,
+                      timeWindow: 'day',
+                      page: pageParam,
+                  })
+                : await mediaApi.getList({
+                      mediaType,
+                      mediaCategory: category,
+                      page: pageParam,
+                  });
 
         if (!response && err) {
-            throw err;
+            return Promise.reject(err);
         }
         return response;
     }
 
-    const { data, error, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } = useInfiniteQuery({
+    const {
+        data,
+        error,
+        isLoading,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage,
+    } = useInfiniteQuery({
         queryKey: [mediaType, category],
         queryFn: ({ pageParam }) => fetchData({ pageParam }),
         getNextPageParam: (lastPage) => {
-            return lastPage?.page === lastPage?.total_pages ? undefined : lastPage?.page + 1;
+            return lastPage?.page === lastPage?.total_pages
+                ? undefined
+                : lastPage?.page + 1;
         },
         initialPageParam: 1,
         placeholderData: keepPreviousData,
@@ -66,7 +83,7 @@ function Home() {
             title = item.name;
         }
     });
-    console.log('data', data);
+    // console.log('data', data);
 
     return (
         <>
@@ -87,7 +104,9 @@ function Home() {
                 />
                 <MediaGrid
                     isLoadingButton={!isFetchingNextPage && hasNextPage}
-                    isLoadingSekeleton={isLoading || isFetchingNextPage || error}
+                    isLoadingSekeleton={
+                        isLoading || isFetchingNextPage || error
+                    }
                     mediaType={mediaType}
                     medias={medias}
                     onLoadingMore={handleLoadingMore}

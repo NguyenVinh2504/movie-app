@@ -7,8 +7,9 @@ const useMediaList = (data) => {
         map[favorite.mediaId] = favorite;
         return map;
     }, {});
+    if (!data) return;
     data?.pages?.forEach((itemList) => {
-        itemList.results.forEach((itemResult) => {
+        itemList?.results?.forEach((itemResult) => {
             const isFavorite = mapFavorites[itemResult.id];
             // const isFavorite = favorites.find((element) => element.mediaId === itemResult.id);
             if (isFavorite) {
