@@ -136,14 +136,16 @@ function CommentMedia({ movieId, mediaType }) {
                         <Divider sx={{ my: 2 }} />
                     </>
                 )}
-                <Typography
-                    variant={pointDownSm ? 'body1' : 'h6'}
-                    fontWeight={500}
-                    component={'p'}
-                    mt={2}
-                >
-                    {`${totalComment} bình luận`}
-                </Typography>
+                {!isLoading && (
+                    <Typography
+                        variant={pointDownSm ? 'body1' : 'h6'}
+                        fontWeight={500}
+                        component={'p'}
+                        mt={2}
+                    >
+                        {`${totalComment} bình luận`}
+                    </Typography>
+                )}
                 {/* List Comment  */}
                 <CommentList
                     listComment={listComment}
