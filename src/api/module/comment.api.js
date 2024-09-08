@@ -1,5 +1,6 @@
 import axios from 'axios';
 import privateClient from '../client/private.client';
+import publicClient from '../client/public.client';
 axios.defaults.withCredentials = true;
 const commentEndpoints = {
     addComment: 'comment/add-comment',
@@ -13,7 +14,7 @@ const commentApi = {
             content,
         }),
     getListComment: async ({ mediaType, movieId, pageParam }) =>
-        await privateClient.get(
+        await publicClient.get(
             `${commentEndpoints.getListComment}${mediaType}/${movieId}`,
             {
                 params: {
