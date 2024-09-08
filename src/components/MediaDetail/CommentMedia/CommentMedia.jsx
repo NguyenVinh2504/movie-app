@@ -11,10 +11,11 @@ import privateClient from '~/api/client/private.client';
 import { useSelector } from 'react-redux';
 import { isAuthenticated } from '~/redux/selectors';
 
-import { socket } from '~/context/Socket';
+import { useSocket } from '~/context/Socket';
 
 function CommentMedia({ movieId, mediaType }) {
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
+    const socket = useSocket();
     const isLogged = useSelector(isAuthenticated);
     const [listComment, setListComment] = useState([]);
     const { data } = useQuery({
@@ -41,25 +42,22 @@ function CommentMedia({ movieId, mediaType }) {
         setListComment(newDataSort);
     }, [data]);
 
-    // useEffect(() => {
-    //     console.table(listComment);
-    //     console.log('movieId', movieId);
-    //     console.log('data', data);
-    // });
+    useEffect(() => {
+        // console.table(listComment);
+        // console.log('movieId', movieId);
+        // console.log('data', data);
+        console.log('socket', socket);
+    });
 
     useEffect(() => {
-        if (!movieId) return;
-        socket.connect();
+        if (!movieId || !socket) return;
         socket.emit('joinMovieRoom', movieId);
         socket.on('newComment', (newComments) => {
             // Cập nhật giao diện với danh sách bình luận mới
             console.log('Received new comments:', newComments);
             setListComment(sortComment(newComments));
         });
-        return () => {
-            socket.disconnect();
-        };
-    }, [movieId]);
+    }, [movieId, socket]);
 
     const handleSubmit = async (values) => {
         try {
