@@ -1,29 +1,31 @@
-import { createContext, useContext, useEffect, useRef, useState } from 'react';
+import { createContext, useContext, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { io } from 'socket.io-client';
+import { userValue } from '~/redux/selectors';
 import { API_ROOT } from '~/utils/constants';
-
-export const SocketContext = createContext();
+const socket = io(API_ROOT, {
+    withCredentials: true,
+});
+export const SocketContext = createContext(socket);
 export const useSocket = () => {
     return useContext(SocketContext);
 };
 function SocketProvider({ children }) {
-    const [socket, setSocket] = useState();
-    useEffect(() => {
-        setSocket(
-            io(API_ROOT, {
-                withCredentials: true,
-            }),
-        );
-    }, []);
+    const { id } = useSelector(userValue) || {};
     useEffect(() => {
         if (!socket) return;
         socket.on('connect', () => {
             console.log('connected to socket server');
         });
+        console.log('idUser', id);
+
+        socket.auth = {
+            id,
+        };
         return () => {
             socket.disconnect();
         };
-    }, [socket]);
+    }, [id]);
 
     return (
         <SocketContext.Provider value={socket}>

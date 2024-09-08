@@ -14,7 +14,6 @@ import { ConfirmProvider } from 'material-ui-confirm';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { BrowserRouter } from 'react-router-dom';
-import SocketProvider from './context/Socket';
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -52,26 +51,26 @@ root.render(
                             }}
                         >
                             <CssBaseline>
-                                <SocketProvider>
-                                    <App />
-                                    <ReactQueryDevtools
-                                        initialIsOpen={false}
-                                        position="bottom"
-                                    />
-                                    <ToastContainer
-                                        position="bottom-left"
-                                        autoClose={3000}
-                                        hideProgressBar={true}
-                                        newestOnTop={false}
-                                        closeOnClick
-                                        rtl={false}
-                                        pauseOnFocusLoss={false}
-                                        draggable
-                                        style={{ fontSize: '16px' }}
-                                        pauseOnHover
-                                        theme="dark"
-                                    />
-                                </SocketProvider>
+                                {/* <SocketProvider> */}
+                                <App />
+                                <ReactQueryDevtools
+                                    initialIsOpen={false}
+                                    position="bottom"
+                                />
+                                <ToastContainer
+                                    position="bottom-left"
+                                    autoClose={3000}
+                                    hideProgressBar={true}
+                                    newestOnTop={false}
+                                    closeOnClick
+                                    rtl={false}
+                                    pauseOnFocusLoss={false}
+                                    draggable
+                                    style={{ fontSize: '16px' }}
+                                    pauseOnHover
+                                    theme="dark"
+                                />
+                                {/* </SocketProvider> */}
                             </CssBaseline>
                         </ConfirmProvider>
                     </ThemeProvider>
