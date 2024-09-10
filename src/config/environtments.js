@@ -1,6 +1,7 @@
 export const env = {
     API_URL_DEV: process.env.REACT_APP_API_URL_DEV,
     API_URL_PROD: process.env.REACT_APP_API_URL_PROD,
+    API_URL_RENDER: process.env.REACT_APP_API_URL_RENDER,
     FIRE_BASE_API_KEY: process.env.REACT_APP_FIRE_BASE_API_KEY,
     AUTH_DOMAIN: process.env.REACT_APP_AUTHDOMAIN,
     PROJECT_ID: process.env.REACT_APP_PROJECTID,

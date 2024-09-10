@@ -15,10 +15,12 @@ import { isAuthenticated } from '~/redux/selectors';
 
 import commentApi from '~/api/module/comment.api';
 import CommentList from './CommentList/CommentList';
+import { useSocket } from '~/context/Socket';
+import { toast } from 'react-toastify';
 
 function CommentMedia({ movieId, mediaType }) {
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-    // const socket = useSocket();
+    const socket = useSocket();
     const isLogged = useSelector(isAuthenticated);
     const [listComment, setListComment] = useState([]);
     const [totalComment, setTotalComment] = useState(0);
@@ -77,26 +79,32 @@ function CommentMedia({ movieId, mediaType }) {
         setListComment(pageFlatMath);
     }, [data]);
 
-    useEffect(() => {
-        // console.table(listComment);
-        // console.log('movieId', movieId);
-        console.log('data', data);
-        console.log('isLoading', isLoading);
-        console.log('isFetchingNextPage', isFetchingNextPage);
-        console.log('hasNextPage', hasNextPage);
-        // console.log('socket', socket);
-    });
-
     // useEffect(() => {
-    //     if (!movieId || !socket) return;
-    //     // socket.emit('joinMovieRoom', movieId);
-    //     socket.on('newListComments', (newComment) => {
-    //         // Cập nhật giao diện với danh sách bình luận mới
-    //         console.log('Received new comments:', newComment);
-    //         // const newDataSort = sortComment(newComments);
-    //         setListComment((prevComments) => [newComment, ...prevComments]);
-    //     });
-    // }, [movieId, socket]);
+    //     // console.table(listComment);
+    //     // console.log('movieId', movieId);
+    //     console.log('data', data);
+    //     console.log('isLoading', isLoading);
+    //     console.log('isFetchingNextPage', isFetchingNextPage);
+    //     console.log('hasNextPage', hasNextPage);
+    //     // console.log('socket', socket);
+    // });
+
+    useEffect(() => {
+        if (!socket) return;
+        // socket.emit('joinMovieRoom', movieId);
+        const addNewComment = (newComment) => {
+            // Cập nhật giao diện với danh sách bình luận mới
+            console.log('Received new comments:', newComment);
+            // const newDataSort = sortComment(newComments);
+            setListComment((prevComments) => [newComment, ...prevComments]);
+            setTotalComment((prevTotal) => prevTotal + 1);
+        };
+        socket.on('newComment', addNewComment);
+
+        return () => {
+            socket.off('newComment', addNewComment);
+        };
+    }, [socket]);
 
     const handleSubmit = async (values) => {
         addCommentMutation.mutate(
@@ -108,13 +116,14 @@ function CommentMedia({ movieId, mediaType }) {
             {
                 onSuccess: (newComment) => {
                     // Cập nhật giao diện với danh sách bình luận
-                    console.log('Received new comments:', newComment);
+                    toast.success('Đã thêm bình luận');
+                    socket.emit('addComment', newComment.data);
+
                     // const newDataSort = sortComment(newComments);
-                    setListComment((prevComments) => [
-                        newComment.data,
-                        ...prevComments,
-                    ]);
-                    setTotalComment((prevTotal) => prevTotal + 1);
+                    // setListComment((prevComments) => [
+                    //     newComment.data,
+                    //     ...prevComments,
+                    // ]);
                 },
             },
         );
@@ -124,7 +133,9 @@ function CommentMedia({ movieId, mediaType }) {
         //     content: values.comment,
         // });
     };
-
+    useEffect(() => {
+        socket.emit('joinMovieRoom', `${movieId}-${mediaType}`);
+    }, [mediaType, movieId, socket]);
     return (
         <WrapperMovieDetail>
             <CategoryMovieDetail valueTitle={'Bình luận'} />

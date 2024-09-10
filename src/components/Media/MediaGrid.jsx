@@ -14,7 +14,10 @@ function MediaList({ medias, mediaType }) {
                 md={4}
                 sm={6}
                 xs={6}
-                key={item?.id ?? item?.mediaId}
+                key={
+                    `${item?.id}-${item?.media_type}` ||
+                    `${item?.mediaId}-${item?.media_type}`
+                }
             >
                 <MediaItems
                     item={item}

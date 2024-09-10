@@ -1,4 +1,4 @@
-import { memo } from 'react';
+import { memo, useEffect } from 'react';
 import { Modal, Box, Typography, Stack, IconButton, Fade } from '@mui/material';
 import { CloseIcon } from '../Icon';
 import CastSlice from './CastItem';
@@ -60,26 +60,31 @@ function MovieDetail() {
     });
 
     const newGenres = dataDetail?.genres?.map((item) => item.name) || [];
-    if (Object.keys(dataDetail).length === 0 && !loading) {
-        setSearchParams(
-            location.pathname === config.routes.searchPage
-                ? omit(
-                      {
-                          ...queryConfig,
-                      },
-                      ['id', 'category'],
-                  )
-                : omit(
-                      {
-                          ...queryConfig,
-                      },
-                      ['media_type', 'id', 'category'],
-                  ),
-        );
-    }
+    useEffect(() => {
+        if (Object.keys(dataDetail).length === 0 && !loading) {
+            setSearchParams(
+                location.pathname === config.routes.searchPage
+                    ? omit(
+                          {
+                              ...queryConfig,
+                          },
+                          ['id', 'category'],
+                      )
+                    : omit(
+                          {
+                              ...queryConfig,
+                          },
+                          ['media_type', 'id', 'category'],
+                      ),
+            );
+        }
+    }, [dataDetail, loading, location.pathname, queryConfig, setSearchParams]);
 
     // console.log('data', dataDetail, 'isPending', loading, 'isFetching', genres);
     // console.log(dataDetail, Object.keys(dataDetail).length === 0);
+    // useEffect(() => {
+    //     console.log('data', dataDetail);
+    // });
     return (
         <>
             <Helmet>
