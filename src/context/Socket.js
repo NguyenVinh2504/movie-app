@@ -1,6 +1,8 @@
 import { createContext, useContext, useEffect } from 'react';
 import { io } from 'socket.io-client';
 import { API_RENDER } from '~/utils/constants';
+console.log(API_RENDER);
+
 const socket = io(API_RENDER, {
     withCredentials: true,
 });
