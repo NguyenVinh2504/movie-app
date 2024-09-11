@@ -79,22 +79,22 @@ function CommentMedia({ movieId, mediaType }) {
         setListComment(pageFlatMath);
     }, [data]);
 
-    // useEffect(() => {
-    //     // console.table(listComment);
-    //     // console.log('movieId', movieId);
-    //     console.log('data', data);
-    //     console.log('isLoading', isLoading);
-    //     console.log('isFetchingNextPage', isFetchingNextPage);
-    //     console.log('hasNextPage', hasNextPage);
-    //     // console.log('socket', socket);
-    // });
+    useEffect(() => {
+        // console.log(listComment);
+        // console.log('movieId', movieId);
+        // console.log('data', data);
+        // console.log('isLoading', isLoading);
+        // console.log('isFetchingNextPage', isFetchingNextPage);
+        // console.log('hasNextPage', hasNextPage);
+        // console.log('socket', socket);
+    });
 
     useEffect(() => {
         if (!socket) return;
         // socket.emit('joinMovieRoom', movieId);
         const addNewComment = (newComment) => {
             // Cập nhật giao diện với danh sách bình luận mới
-            console.log('Received new comments:', newComment);
+            // console.log('Received new comments:', newComment);
             // const newDataSort = sortComment(newComments);
             setListComment((prevComments) => [newComment, ...prevComments]);
             setTotalComment((prevTotal) => prevTotal + 1);

@@ -1,5 +1,5 @@
 import { Box, Stack, Typography, useMediaQuery } from '@mui/material';
-import React from 'react';
+import React, { memo } from 'react';
 import AvatarUser from '~/components/Avatar/AvatarUser';
 import BodyText from '~/components/BodyText';
 import { timeElapsed } from '~/utils/formatDate';
@@ -7,7 +7,6 @@ import { timeElapsed } from '~/utils/formatDate';
 function CommentItem({ user, content, createAt }) {
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const date = timeElapsed(createAt);
-
     return (
         <Stack direction={'row'} columnGap={2} py={2}>
             <AvatarUser
@@ -46,4 +45,4 @@ function CommentItem({ user, content, createAt }) {
     );
 }
 
-export default CommentItem;
+export default memo(CommentItem);
