@@ -83,7 +83,8 @@ function Home() {
             title = item.name;
         }
     });
-    // console.log('data', data);
+
+    console.log('data', data, medias);
 
     return (
         <>
