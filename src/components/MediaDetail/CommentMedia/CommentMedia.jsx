@@ -96,6 +96,7 @@ function CommentMedia({ movieId, mediaType }) {
             // Cập nhật giao diện với danh sách bình luận mới
             // console.log('Received new comments:', newComment);
             // const newDataSort = sortComment(newComments);
+            data.pages[0].listComment.unshift(newComment);
             setListComment((prevComments) => [newComment, ...prevComments]);
             setTotalComment((prevTotal) => prevTotal + 1);
         };
@@ -104,7 +105,7 @@ function CommentMedia({ movieId, mediaType }) {
         return () => {
             socket.off('newComment', addNewComment);
         };
-    }, [socket]);
+    }, [data?.pages, socket]);
 
     const handleSubmit = async (values) => {
         addCommentMutation.mutate(

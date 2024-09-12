@@ -1,5 +1,4 @@
 import { Box, Stack, Typography, useMediaQuery } from '@mui/material';
-import React, { memo } from 'react';
 import AvatarUser from '~/components/Avatar/AvatarUser';
 import BodyText from '~/components/BodyText';
 import { timeElapsed } from '~/utils/formatDate';
@@ -45,4 +44,4 @@ function CommentItem({ user, content, createAt }) {
     );
 }
 
-export default memo(CommentItem);
+export default CommentItem;
