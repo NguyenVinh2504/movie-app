@@ -84,7 +84,7 @@ function Home() {
         }
     });
 
-    // console.log('data', data, medias);
+    console.log('data', data, medias);
 
     return (
         <>

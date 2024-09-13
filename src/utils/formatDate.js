@@ -1,6 +1,9 @@
-export const formatDate = (date, locale = 'en-US') => {
-    if (!date) return;
+const isValidDateString = (dateString) => {
+    return !isNaN(Date.parse(dateString));
+};
 
+export const formatDate = (date, locale = 'en-US') => {
+    if (!date || !isValidDateString(date)) return;
     return new Intl.DateTimeFormat(locale, {
         year: 'numeric',
         month: 'short',
@@ -8,7 +11,7 @@ export const formatDate = (date, locale = 'en-US') => {
     }).format(new Date(date));
 };
 export const timeElapsed = (date) => {
-    if (!date) return;
+    if (!date || !isValidDateString(date)) return;
     const now = new Date();
 
     const elapsed = now - new Date(date);
