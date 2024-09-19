@@ -1,8 +1,8 @@
-const {
-    override, useBabelRc,
-} = require("customize-cra");
+const { override, useBabelRc, addBabelPlugin } = require('customize-cra');
 
-module.exports = override(   
+module.exports = override(
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    useBabelRc() 
-    );
+    useBabelRc(),
+    process.env.REACT_APP_BUILD_MODE === 'production' &&
+        addBabelPlugin('transform-remove-console'),
+);

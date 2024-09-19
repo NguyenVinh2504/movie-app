@@ -7,9 +7,9 @@ const CustomTextField = styled((props) => (
         variant="standard"
         color="secondary"
         fullWidth
-        inputProps={{
-            maxLength: 400,
-        }}
+        // inputProps={{
+        //     maxLength: 400,
+        // }}
         {...props}
     />
 ))(({ theme }) => ({

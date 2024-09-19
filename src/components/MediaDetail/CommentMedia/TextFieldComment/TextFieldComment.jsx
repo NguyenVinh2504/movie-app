@@ -39,7 +39,14 @@ function TextFieldComment({ onSubmit }) {
             comment: '',
         },
         validationSchema: Yup.object({
-            comment: Yup.string().required('Không được để trống').max(400),
+            comment: Yup.string()
+                .required('Không được để trống')
+                .test(
+                    'maxLength',
+                    // eslint-disable-next-line no-template-curly-in-string
+                    'độ dài của ${path} phải nhỏ hơn hoặc bằng 400 kí tự',
+                    (value) => Array.from(value).length <= 400,
+                ),
         }),
         onSubmit: async (values) => {
             // setIsShowBtn(false);
@@ -61,8 +68,9 @@ function TextFieldComment({ onSubmit }) {
     const handleCloseEmoji = () => {
         setIsShowEmoji(null);
     };
+
     const setCurrentEmoji = (emoji) => {
-        if (formik.values.comment.length < 400) {
+        if (Array.from(formik.values.comment).length < 400) {
             formik.setFieldValue(
                 'comment',
                 formik.values.comment + emoji.native,
@@ -84,7 +92,10 @@ function TextFieldComment({ onSubmit }) {
                         name="comment"
                         // onFocus={handleFocus}
                         value={formik.values.comment}
-                        onChange={formik.handleChange}
+                        onChange={(e) => {
+                            Array.from(e.target.value).length <= 400 &&
+                                formik.handleChange(e);
+                        }}
                     />
                     {/* {isShowBtn && ( */}
                     <Stack

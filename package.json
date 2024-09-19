@@ -77,6 +77,7 @@
     },
     "devDependencies": {
         "babel-plugin-module-resolver": "^5.0.0",
+        "babel-plugin-transform-remove-console": "^6.9.4",
         "customize-cra": "^1.0.0",
         "dotenv": "^16.3.1",
         "gh-pages": "^6.0.0",
