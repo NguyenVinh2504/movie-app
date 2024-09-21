@@ -1,9 +1,10 @@
 import * as React from 'react';
 import MenuItem from '@mui/material/MenuItem';
 import Menu from '@mui/material/Menu';
-import { Button } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 import { ArrowDownIcon, ArrowUpIcon } from '~/components/Icon';
-import uiConfig from '~/config/ui.config';
+import uiConfigs from '~/config/ui.config';
+
 function ButtonSelector({ seasons, selectedIndex, onSeasonNumber }) {
     const [anchorEl, setAnchorEl] = React.useState(null);
     const open = Boolean(anchorEl);
@@ -41,9 +42,15 @@ function ButtonSelector({ seasons, selectedIndex, onSeasonNumber }) {
                         height: '18px',
                     },
                     display: 'flex',
+                    maxWidth: '316px',
                 }}
             >
-                <span style={{ ...uiConfig.style.typoLines(1), textAlign: 'start' }}>
+                <span
+                    style={{
+                        ...uiConfigs.style.typoLines(1),
+                        textAlign: 'start',
+                    }}
+                >
                     {' '}
                     {seasons && seasons[selectedIndex]?.name}
                 </span>
@@ -82,9 +89,19 @@ function ButtonSelector({ seasons, selectedIndex, onSeasonNumber }) {
                         selected={index === selectedIndex}
                         disabled={index === selectedIndex}
                         onClick={() => handleMenuItemClick(index)}
-                        sx={{ pr: 5.5 }}
+                        sx={{
+                            maxWidth: '316px',
+                            pr: 5.5,
+                        }}
                     >
-                        {option.name}
+                        <Typography
+                            component={'span'}
+                            sx={{
+                                ...uiConfigs.style.typoLines(1),
+                            }}
+                        >
+                            {option.name}
+                        </Typography>
                     </MenuItem>
                 ))}
             </Menu>
