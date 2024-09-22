@@ -118,7 +118,9 @@ function UserMenu() {
                                 height: { xs: '34px', sm: '40px' },
                             }}
                         />
-                        <Typography component={'span'}>{user?.name}</Typography>
+                        <Typography component={'span'} noWrap>
+                            {user?.name}
+                        </Typography>
                     </Stack>
                 </ListItem>
                 <Divider
@@ -133,7 +135,9 @@ function UserMenu() {
                             to={item.path}
                         >
                             <ListItemIcon>{item.icon}</ListItemIcon>
-                            {item.title}
+                            <Typography component={'p'} noWrap variant="body1">
+                                {item.title}
+                            </Typography>
                         </MenuItem>
                     </li>
                 ))}

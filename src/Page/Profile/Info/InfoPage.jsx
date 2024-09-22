@@ -3,6 +3,7 @@ import { useSelector } from 'react-redux';
 import { userValue } from '~/redux/selectors';
 import PaperProfile from '../components/PaperProfile';
 import { formatDate } from '~/utils/formatDate';
+import uiConfigs from '~/config/ui.config';
 
 const Item = ({ primaryText, secondaryText, ...props }) => {
     return (
@@ -30,6 +31,9 @@ const Item = ({ primaryText, secondaryText, ...props }) => {
                         mt={0}
                         fontWeight={'300'}
                         component={'p'}
+                        sx={{
+                            ...uiConfigs.style.typoLines(1),
+                        }}
                     >
                         {secondaryText}
                     </Typography>
