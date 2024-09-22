@@ -24,10 +24,11 @@ function HeaderProfile({ valueTabItems, location }) {
                 direction={'column'}
                 sx={{
                     position: 'relative',
+                    pb: { md: '70px', xs: '130px' },
                 }}
             >
                 {/* banner */}
-                <Box sx={{ pt: 'calc(431/1536*100%)' }}>
+                <Box sx={{ pt: 'calc(431/1536*100%)', position: 'relative' }}>
                     <Box sx={{ ...uiConfigs.style.positionFullSize }}>
                         <Image
                             alt={'banner'}
@@ -46,7 +47,7 @@ function HeaderProfile({ valueTabItems, location }) {
                     sx={{
                         position: 'absolute',
                         left: { md: '38px', xs: '50%' },
-                        bottom: { md: '-70px', xs: '-130px' },
+                        bottom: 0,
                         flexDirection: { md: 'row', xs: 'column' },
                         alignItems: { md: 'flex-end', xs: 'center' },
                         transform: {
@@ -114,7 +115,7 @@ function HeaderProfile({ valueTabItems, location }) {
                 direction={'column'}
                 spacing={2}
                 sx={{
-                    mt: { md: '90px', xs: '150px' },
+                    mt: '20px',
                 }}
             >
                 <Box>
