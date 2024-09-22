@@ -81,7 +81,7 @@ function MediaItems({ item, mediaType, isFavorite }) {
             justifyContent={'space-between'}
             alignItems={'flex-start'}
         >
-            <Stack direction={'column'} spacing={0} minHeight={0}>
+            <Stack direction={'column'} spacing={0} minWidth={0}>
                 <Typography
                     variant="subtitle1"
                     component={'h2'}
