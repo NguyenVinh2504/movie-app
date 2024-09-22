@@ -5,7 +5,6 @@ import {
     ListItemIcon,
     Menu,
     MenuItem,
-    Stack,
     Typography,
     // useMediaQuery,
 } from '@mui/material';
@@ -109,19 +108,17 @@ function UserMenu() {
                 }}
             >
                 <ListItem>
-                    <Stack direction={'row'} alignItems={'center'} spacing={2}>
-                        <AvatarUser
-                            alt={user?.name}
-                            src={user?.avatar}
-                            sx={{
-                                width: { xs: '34px', sm: '40px' },
-                                height: { xs: '34px', sm: '40px' },
-                            }}
-                        />
-                        <Typography component={'span'} noWrap>
-                            {user?.name}
-                        </Typography>
-                    </Stack>
+                    <AvatarUser
+                        alt={user?.name}
+                        src={user?.avatar}
+                        sx={{
+                            width: { xs: '34px', sm: '40px' },
+                            height: { xs: '34px', sm: '40px' },
+                        }}
+                    />
+                    <Typography component={'span'} noWrap ml={2} maxWidth={100}>
+                        {user?.name}
+                    </Typography>
                 </ListItem>
                 <Divider
                     light

@@ -74,26 +74,24 @@ function SideBar({ open, onClick, onKeyDown, onClose, isLoading }) {
                         {user && (
                             <Box display={{ sm: 'none' }}>
                                 <ListItem>
-                                    <Stack
-                                        direction={'row'}
-                                        alignItems={'center'}
-                                        spacing={2}
+                                    <Box
+                                        sx={{
+                                            width: '50px',
+                                            height: '50px',
+                                            flexShrink: 0,
+                                        }}
                                     >
-                                        <Box
-                                            sx={{
-                                                width: '50px',
-                                                height: '50px',
-                                            }}
-                                        >
-                                            <AvatarUser alt={user?.name} />
-                                        </Box>
-                                        <Typography
-                                            component={'span'}
-                                            fontWeight={500}
-                                        >
-                                            {user?.name}
-                                        </Typography>
-                                    </Stack>
+                                        <AvatarUser alt={user?.name} />
+                                    </Box>
+                                    <Typography
+                                        component={'span'}
+                                        fontWeight={500}
+                                        overflow={'hidden'}
+                                        ml={2}
+                                        noWrap
+                                    >
+                                        {user?.name}
+                                    </Typography>
                                 </ListItem>
                                 <Divider
                                     sx={{
