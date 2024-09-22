@@ -1,5 +1,12 @@
 import { NavLink } from 'react-router-dom';
-import { Box, Stack, Tab, Tabs, Typography, useMediaQuery } from '@mui/material';
+import {
+    Box,
+    Stack,
+    Tab,
+    Tabs,
+    Typography,
+    useMediaQuery,
+} from '@mui/material';
 import Image from '~/components/Image';
 import uiConfigs from '~/config/ui.config';
 import AvatarUser from '~/components/Avatar';
@@ -42,7 +49,11 @@ function HeaderProfile({ valueTabItems, location }) {
                         bottom: { md: '-70px', xs: '-130px' },
                         flexDirection: { md: 'row', xs: 'column' },
                         alignItems: { md: 'flex-end', xs: 'center' },
-                        transform: { md: 'translateX(0%)', xs: 'translateX(-50%)' },
+                        transform: {
+                            md: 'translateX(0%)',
+                            xs: 'translateX(-50%)',
+                        },
+                        maxWidth: '90%',
                     }}
                 >
                     {/* image avatar */}
@@ -52,6 +63,7 @@ function HeaderProfile({ valueTabItems, location }) {
                             height: { md: '172px', xs: '110px' },
                             overflow: 'hidden',
                             borderRadius: '100px',
+                            flexShrink: 0,
                         }}
                     >
                         <AvatarUser
@@ -63,13 +75,18 @@ function HeaderProfile({ valueTabItems, location }) {
                     {/* image avatar */}
 
                     {/* name user */}
-                    <Stack>
+                    <Stack minWidth={0}>
                         <Typography
                             variant={pointDownMd ? 'h6' : 'h4'}
                             fontWeight={'500'}
                             component={'h1'}
                             sx={{
-                                m: { xs: '16px 0 0 0', md: '0 0 0px 16px', textAlign: 'center' },
+                                m: {
+                                    xs: '16px 0 0 0',
+                                    md: '0 0 0px 16px',
+                                },
+                                textAlign: 'center',
+                                ...uiConfigs.style.typoLines(1),
                             }}
                         >
                             {user?.name}
@@ -78,7 +95,10 @@ function HeaderProfile({ valueTabItems, location }) {
                             variant={pointDownMd ? 'subtitle2' : 'subtitle1'}
                             component={'p'}
                             fontWeight={'300'}
-                            sx={{ ml: { xs: '0px', md: '16px' }, textAlign: { xs: 'center', md: 'left' } }}
+                            sx={{
+                                ml: { xs: '0px', md: '16px' },
+                                textAlign: { xs: 'center', md: 'left' },
+                            }}
                         >
                             {user?.userName}
                         </Typography>
@@ -107,7 +127,14 @@ function HeaderProfile({ valueTabItems, location }) {
                             '& .MuiTabs-indicator': {
                                 bgcolor: 'white',
                             },
-                            pl: { md: valueTabItems[0].title === 'Thông tin cá nhân' ? '36px' : '60px', xs: 0 },
+                            pl: {
+                                md:
+                                    valueTabItems[0].title ===
+                                    'Thông tin cá nhân'
+                                        ? '36px'
+                                        : '60px',
+                                xs: 0,
+                            },
                             borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
                         }}
                     >
