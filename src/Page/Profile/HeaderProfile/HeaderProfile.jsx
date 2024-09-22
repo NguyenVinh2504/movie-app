@@ -76,7 +76,12 @@ function HeaderProfile({ valueTabItems, location }) {
                     {/* image avatar */}
 
                     {/* name user */}
-                    <Stack minWidth={0}>
+                    <Stack
+                        minWidth={0}
+                        sx={{
+                            width: { xs: '100%', md: 'none' },
+                        }}
+                    >
                         <Typography
                             variant={pointDownMd ? 'h6' : 'h4'}
                             fontWeight={'500'}

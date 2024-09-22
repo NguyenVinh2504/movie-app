@@ -19,6 +19,7 @@ const Item = ({ primaryText, secondaryText, ...props }) => {
                         variant="subtitle1"
                         fontWeight={'500'}
                         component={'h2'}
+                        flexShrink={0}
                     >
                         {primaryText}
                     </Typography>
