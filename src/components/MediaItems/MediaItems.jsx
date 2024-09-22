@@ -40,7 +40,8 @@ function MediaItems({ item, mediaType, isFavorite }) {
                 if (id === (item.id || item.mediaId)) return;
                 handleOpen({
                     id: item.id || item.mediaId,
-                    mediaType: mediaType === 'all' ? item.media_type : mediaType,
+                    mediaType:
+                        mediaType === 'all' ? item.media_type : mediaType,
                 });
             }}
             // to={
@@ -63,7 +64,9 @@ function MediaItems({ item, mediaType, isFavorite }) {
                 <Image
                     src={
                         item.poster_path || item.profile_path
-                            ? tmdbConfigs.posterPath(item.poster_path || item.profile_path)
+                            ? tmdbConfigs.posterPath(
+                                  item.poster_path || item.profile_path,
+                              )
                             : images.noImage19x6
                     }
                     alt={item.title}
@@ -73,8 +76,12 @@ function MediaItems({ item, mediaType, isFavorite }) {
     );
 
     const renderInfo = () => (
-        <Stack direction={'row'} justifyContent={'space-between'} alignItems={'flex-start'}>
-            <Stack direction={'column'} spacing={0}>
+        <Stack
+            direction={'row'}
+            justifyContent={'space-between'}
+            alignItems={'flex-start'}
+        >
+            <Stack direction={'column'} spacing={0} minHeight={0}>
                 <Typography
                     variant="subtitle1"
                     component={'h2'}
@@ -83,10 +90,15 @@ function MediaItems({ item, mediaType, isFavorite }) {
                         if (id === (item.id || item.mediaId)) return;
                         handleOpen({
                             id: item.id || item.mediaId,
-                            mediaType: mediaType === 'all' ? item.media_type : mediaType,
+                            mediaType:
+                                mediaType === 'all'
+                                    ? item.media_type
+                                    : mediaType,
                         });
                     }}
-                    title={item?.title || item?.name || item?.mediaTitle || 'N/A'}
+                    title={
+                        item?.title || item?.name || item?.mediaTitle || 'N/A'
+                    }
                     sx={{
                         fontWeight: '500',
                         cursor: 'pointer',
@@ -127,12 +139,17 @@ function MediaItems({ item, mediaType, isFavorite }) {
                             color={theme.mediaItems.textOverview}
                             sx={{ ...uiConfigs.style.typoLines(1) }}
                         >
-                            {item?.release_date?.split('-')[0] || item?.first_air_date?.split('-')[0]}
+                            {item?.release_date?.split('-')[0] ||
+                                item?.first_air_date?.split('-')[0]}
                         </Typography>
                     ) : undefined}
                 </Box>
             </Stack>
-            <FavoriteButton item={item} mediaType={mediaType} isFavorite={isFavorite} />
+            <FavoriteButton
+                item={item}
+                mediaType={mediaType}
+                isFavorite={isFavorite}
+            />
         </Stack>
     );
 
@@ -155,7 +172,12 @@ function MediaItems({ item, mediaType, isFavorite }) {
             component={'article'}
         >
             {renderPoster()}
-            <Box padding={'15px'} display={'flex'} flexDirection={'column'} justifyContent={'space-between'}>
+            <Box
+                padding={'15px'}
+                display={'flex'}
+                flexDirection={'column'}
+                justifyContent={'space-between'}
+            >
                 {renderInfo()}
             </Box>
         </Box>
