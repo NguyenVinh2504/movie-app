@@ -19,7 +19,7 @@ const Item = ({ primaryText, secondaryText, ...props }) => {
                     <Typography
                         variant="subtitle1"
                         fontWeight={'500'}
-                        component={'h2'}
+                        component={'dt'}
                         flexShrink={0}
                     >
                         {primaryText}
@@ -30,7 +30,7 @@ const Item = ({ primaryText, secondaryText, ...props }) => {
                         variant="subtitle1"
                         mt={0}
                         fontWeight={'300'}
-                        component={'p'}
+                        component={'dd'}
                         sx={{
                             ...uiConfigs.style.typoLines(1),
                         }}
@@ -49,7 +49,7 @@ function InfoPage() {
     // };
     const dateUser = formatDate(user?.createdAt, 'vi-VN');
     return (
-        <PaperProfile>
+        <PaperProfile component="dl">
             <Item primaryText={'Họ và tên:'} secondaryText={user?.name} />
             <Divider variant="middle" />
             <Item primaryText={'Email:'} secondaryText={user?.email} />

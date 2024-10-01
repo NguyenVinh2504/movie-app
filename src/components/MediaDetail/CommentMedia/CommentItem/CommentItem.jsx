@@ -7,7 +7,7 @@ function CommentItem({ user, content, createAt }) {
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const date = timeElapsed(createAt);
     return (
-        <Stack direction={'row'} columnGap={2} py={2}>
+        <Stack direction={'row'} columnGap={2} py={2} component={'article'}>
             <AvatarUser
                 src={user.avatar || user.temporaryAvatar}
                 sx={{
