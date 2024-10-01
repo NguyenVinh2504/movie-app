@@ -1,11 +1,30 @@
 import { Box, Stack, Typography, useMediaQuery } from '@mui/material';
 import AvatarUser from '~/components/Avatar/AvatarUser';
 import BodyText from '~/components/BodyText';
-import { timeElapsed } from '~/utils/formatDate';
-
+import { formatDistanceToNowStrict } from 'date-fns';
+import { vi } from 'date-fns/locale';
+import { useCallback, useEffect, useState } from 'react';
 function CommentItem({ user, content, createAt }) {
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-    const date = timeElapsed(createAt);
+    const formatDate = useCallback(() => {
+        return formatDistanceToNowStrict(createAt, {
+            addSuffix: true,
+            includeSeconds: true,
+            locale: vi,
+        });
+    }, [createAt]);
+
+    const [date, setDate] = useState(formatDate());
+
+    useEffect(() => {
+        const id = setInterval(() => {
+            setDate(formatDate());
+        }, 1000 * 60); // Cập nhật mỗi phút
+
+        return () => {
+            clearInterval(id);
+        };
+    }, [formatDate]);
     return (
         <Stack direction={'row'} columnGap={2} py={2} component={'article'}>
             <AvatarUser
