@@ -1,4 +1,12 @@
-import { Box, Button, Fade, IconButton, Modal, Stack, Typography } from '@mui/material';
+import {
+    Box,
+    Button,
+    Fade,
+    IconButton,
+    Modal,
+    Stack,
+    Typography,
+} from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Avatar from '~/components/Avatar';
@@ -10,6 +18,7 @@ import { updateUser } from '~/redux/features/userSlice';
 import { toast } from 'react-toastify';
 import imageCompression from 'browser-image-compression';
 import { useRef } from 'react';
+import { singleFileValidator } from '~/utils/validators';
 function ModalAvatarEdit({ open, handleClose }) {
     let btnUpdateRef = useRef();
     let btnRemoveRef = useRef();
@@ -27,6 +36,11 @@ function ModalAvatarEdit({ open, handleClose }) {
         const file = e.target.files[0];
         const imageFile = e.target.files[0];
         file.preview = URL.createObjectURL(file);
+        const error = singleFileValidator(file);
+        if (error) {
+            toast.error(error);
+            return;
+        }
         setAvatar(file);
         setImageUpload(imageFile);
         e.target.value = null;
@@ -102,7 +116,9 @@ function ModalAvatarEdit({ open, handleClose }) {
             }
             const id = toast.loading('Đang xóa ảnh đại diện');
             setDisabled(true);
-            const { response, err } = await userApi.profileUpdate({ avatar: user.avatar });
+            const { response, err } = await userApi.profileUpdate({
+                avatar: user.avatar,
+            });
             if (response) {
                 dispatch(updateUser(response));
                 toast.update(id, {
@@ -138,7 +154,11 @@ function ModalAvatarEdit({ open, handleClose }) {
     };
     return (
         <>
-            <Modal open={open} aria-labelledby="modal-modal-title" aria-describedby="modal-modal-description">
+            <Modal
+                open={open}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
                 {/* container */}
                 <Fade in={open} timeout={300}>
                     <Box
@@ -154,7 +174,10 @@ function ModalAvatarEdit({ open, handleClose }) {
                             flexDirection: 'column',
                             borderRadius: 2,
                             gap: 3,
-                            border: { xs: 'none', sm: '1px solid hsla(0,0%,100%,.1)' },
+                            border: {
+                                xs: 'none',
+                                sm: '1px solid hsla(0,0%,100%,.1)',
+                            },
                             overflowY: 'auto',
                         }}
                     >
@@ -179,12 +202,20 @@ function ModalAvatarEdit({ open, handleClose }) {
                             >
                                 Thay đổi ảnh đại diện
                             </Typography>
-                            <IconButton color="neutral" onClick={() => handleClose()} disabled={disabled}>
+                            <IconButton
+                                color="neutral"
+                                onClick={() => handleClose()}
+                                disabled={disabled}
+                            >
                                 <CloseIcon />
                             </IconButton>
                         </Stack>
                         {/* title */}
-                        <Typography variant="subtitle1" component={'h3'} textAlign={'center'}>
+                        <Typography
+                            variant="subtitle1"
+                            component={'h3'}
+                            textAlign={'center'}
+                        >
                             Chọn vào ảnh đại diện để thay đổi
                         </Typography>
                         {/* Avatar */}
@@ -212,7 +243,10 @@ function ModalAvatarEdit({ open, handleClose }) {
                                     onChange={handlePreviewAvatar}
                                     multiple
                                 />
-                                <Avatar src={avatar && avatar.preview} alt={null} />
+                                <Avatar
+                                    src={avatar && avatar.preview}
+                                    alt={null}
+                                />
                                 <Box
                                     sx={{
                                         borderRadius: '1000px',
@@ -229,7 +263,14 @@ function ModalAvatarEdit({ open, handleClose }) {
                                         transition: 'opacity 0.4s ease 0s',
                                     }}
                                 >
-                                    <Box sx={{ svg: { width: '50px', height: '50px' } }}>
+                                    <Box
+                                        sx={{
+                                            svg: {
+                                                width: '50px',
+                                                height: '50px',
+                                            },
+                                        }}
+                                    >
                                         <PhotoIcon />
                                     </Box>
                                 </Box>
