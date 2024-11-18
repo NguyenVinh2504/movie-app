@@ -46,8 +46,7 @@ function ModalAvatarEdit({ open, handleClose }) {
         e.target.value = null;
     };
     const options = {
-        maxSizeMB: 0.5,
-        maxWidthOrHeight: 1920,
+        maxSizeMB: 0.1,
         useWebWorker: true,
     };
     const handleUploadAvatar = async () => {
