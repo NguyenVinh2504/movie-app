@@ -47,7 +47,7 @@ function ModalAvatarEdit({ open, handleClose }) {
     };
     const options = {
         maxSizeMB: 0.1, // Giới hạn dung lượng tối đa là 100KB
-        maxWidthOrHeight: 500, // Giới hạn chiều rộng hoặc chiều cao là 344px
+        maxWidthOrHeight: 300, // Giới hạn chiều rộng hoặc chiều cao là 344px
         useWebWorker: true, // Sử dụng Web Worker để tăng hiệu suất
     };
     const handleUploadAvatar = async () => {
