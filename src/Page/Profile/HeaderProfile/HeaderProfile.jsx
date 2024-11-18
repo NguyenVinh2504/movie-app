@@ -33,7 +33,7 @@ function HeaderProfile({ valueTabItems, location }) {
                         <Image
                             alt={'banner'}
                             src={
-                                'https://firebasestorage.googleapis.com/v0/b/movie-app-8766b.appspot.com/o/images%2FBannerVieJoy%20(1).png?alt=media&token=6c3f75e0-4525-4571-90a3-c39209c33353'
+                                'https://firebasestorage.googleapis.com/v0/b/movie-app-8766b.appspot.com/o/images%2FBannerVieJoy%20(1).png?alt=media&token=d97afe7b-dff8-41dd-a386-d2ef4cf647f2'
                             }
                             sx={{ borderRadius: '16px' }}
                         />

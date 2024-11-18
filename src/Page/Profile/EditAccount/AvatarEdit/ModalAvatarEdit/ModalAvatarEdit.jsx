@@ -88,7 +88,9 @@ function ModalAvatarEdit({ open, handleClose }) {
             }
             if (err) {
                 toast.update(id, {
-                    render: err?.data?.message,
+                    render:
+                        err?.data?.message ??
+                        'Cập nhật ảnh đại diện không thành công',
                     type: 'error',
                     isLoading: false,
                     autoClose: 3000,
