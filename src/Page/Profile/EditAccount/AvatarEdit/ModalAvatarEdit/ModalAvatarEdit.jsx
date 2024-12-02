@@ -2,15 +2,27 @@ import {
     Box,
     Button,
     Fade,
+    Grid,
     IconButton,
+    List,
+    ListItemButton,
+    ListItemIcon,
+    ListItemText,
     Modal,
+    Paper,
     Stack,
     Typography,
 } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Avatar from '~/components/Avatar';
-import { CloseIcon, PhotoIcon } from '~/components/Icon';
+import {
+    ArrowDownIcon,
+    CloseIcon,
+    PhotoIcon,
+    RefreshIcon,
+    RotateIcon,
+} from '~/components/Icon';
 import uiConfigs from '~/config/ui.config';
 import { userValue } from '~/redux/selectors';
 import userApi from '~/api/module/user.api';
@@ -19,48 +31,125 @@ import { toast } from 'react-toastify';
 import imageCompression from 'browser-image-compression';
 import { useRef } from 'react';
 import { singleFileValidator } from '~/utils/validators';
+// import './style.css';
+import { CSSTransition } from 'react-transition-group';
+import Cropper from 'react-cropper';
+import 'cropperjs/dist/cropper.css';
+function ModalContainer({ children, isEditing, menuSize, setMenuSize }) {
+    const containerRef = useRef();
+    useEffect(() => {
+        if (containerRef.current?.firstChild) {
+            const height = containerRef.current.firstChild.offsetHeight;
+            const width = containerRef.current.firstChild.offsetWidth;
+            console.log(height, width);
+
+            setMenuSize({
+                height,
+                width,
+            });
+        }
+    }, [setMenuSize]);
+    console.log(menuSize);
+    console.log('containerRef :>> ', containerRef);
+
+    return (
+        <Box
+            ref={containerRef}
+            sx={{
+                ...uiConfigs.style.centerAlight,
+                backgroundColor: '#121212',
+                borderRadius: 2,
+                border: {
+                    xs: 'none',
+                    sm: '1px solid hsla(0,0%,100%,.1)',
+                },
+                overflow: 'hidden',
+                transition: 'all 0.3s ease-in-out',
+                width: {
+                    xs: '100%',
+                    sm: menuSize ? `${menuSize.width + 2}px` : 'auto',
+                },
+                height: {
+                    xs: '100%',
+                    sm: menuSize ? `${menuSize.height + 2}px` : 'auto',
+                },
+            }}
+        >
+            {children}
+        </Box>
+    );
+}
+// Cấu hình nén ảnh
+const IMAGE_COMPRESSION_OPTIONS = {
+    maxSizeMB: 0.05,
+    maxWidthOrHeight: 300,
+    useWebWorker: true,
+};
 function ModalAvatarEdit({ open, handleClose }) {
-    let btnUpdateRef = useRef();
-    let btnRemoveRef = useRef();
-    const user = useSelector(userValue);
-    const [avatar, setAvatar] = useState();
-    const [imageUpload, setImageUpload] = useState();
-    const [disabled, setDisabled] = useState();
     const dispatch = useDispatch();
+    const user = useSelector(userValue);
+
+    const [previewAvatar, setPreviewAvatar] = useState(null);
+    const [avatarFile, setAvatarFile] = useState(null);
+
+    const [isDisabled, setIsDisabled] = useState(false);
+
+    const [isEditing, setIsEditing] = useState(false);
+
+    const [menuSize, setMenuSize] = useState(null);
+
+    const cropperRef = useRef(null);
+
     useEffect(() => {
         return () => {
-            avatar && URL.revokeObjectURL(avatar.preview);
+            previewAvatar && URL.revokeObjectURL(previewAvatar.preview);
         };
-    }, [avatar]);
+    }, [previewAvatar]);
     const handlePreviewAvatar = (e) => {
         const file = e.target.files[0];
-        const imageFile = e.target.files[0];
+
         file.preview = URL.createObjectURL(file);
         const error = singleFileValidator(file);
         if (error) {
             toast.error(error);
             return;
         }
-        setAvatar(file);
-        setImageUpload(imageFile);
+        setPreviewAvatar(file);
+        setAvatarFile(file);
         e.target.value = null;
+        setIsEditing(true);
     };
-    const options = {
-        maxSizeMB: 0.05, // Giới hạn dung lượng tối đa là 100KB
-        maxWidthOrHeight: 300, // Giới hạn chiều rộng hoặc chiều cao là 344px
-        useWebWorker: true, // Sử dụng Web Worker để tăng hiệu suất
+    const resetAvatarState = useCallback(() => {
+        setIsDisabled(false);
+        setPreviewAvatar(null);
+        setAvatarFile(null);
+        handleClose();
+    }, [handleClose]);
+
+    const getCropData = () => {
+        if (typeof cropperRef.current.cropper === 'undefined') {
+            return;
+        }
+        cropperRef.current?.cropper.getCroppedCanvas().toBlob((blob) => {
+            const file = blob;
+            file.preview = URL.createObjectURL(blob);
+            setAvatarFile(file);
+            setPreviewAvatar(file);
+            setIsEditing(false);
+        });
     };
-    const handleUploadAvatar = async () => {
-        if (imageUpload) {
-            if (btnUpdateRef.current) {
-                btnUpdateRef.current.setAttribute('disabled', 'disabled');
-            }
-            if (btnRemoveRef.current) {
-                btnRemoveRef.current.setAttribute('disabled', 'disabled');
-            }
-            setDisabled(true);
-            const id = toast.loading('Đang tải ảnh đại diện');
-            const compressedFile = await imageCompression(imageUpload, options);
+    const handleUploadAvatar = useCallback(async () => {
+        if (!avatarFile) {
+            toast.error('Vui lòng chọn ảnh');
+            return;
+        }
+        setIsDisabled(true);
+        const toastId = toast.loading('Đang tải ảnh đại diện');
+        try {
+            const compressedFile = await imageCompression(
+                avatarFile,
+                IMAGE_COMPRESSION_OPTIONS,
+            );
             const formDate = new FormData();
             if (user.avatar) {
                 formDate.append('avatar', user.avatar);
@@ -70,24 +159,16 @@ function ModalAvatarEdit({ open, handleClose }) {
 
             if (response) {
                 dispatch(updateUser(response));
-                toast.update(id, {
+                toast.update(toastId, {
                     render: 'Cập nhật ảnh đại diện thành công',
                     type: 'success',
                     isLoading: false,
                     autoClose: 3000,
                 });
-                setDisabled(false);
-                setAvatar(null);
-                setImageUpload(null);
-                if (btnUpdateRef.current) {
-                    btnUpdateRef.current.removeAttribute('disabled');
-                }
-                if (btnRemoveRef.current) {
-                    btnRemoveRef.current.removeAttribute('disabled');
-                }
+                resetAvatarState();
             }
             if (err) {
-                toast.update(id, {
+                toast.update(toastId, {
                     render:
                         err?.data?.message ??
                         'Cập nhật ảnh đại diện không thành công',
@@ -95,216 +176,395 @@ function ModalAvatarEdit({ open, handleClose }) {
                     isLoading: false,
                     autoClose: 3000,
                 });
-                setDisabled(false);
-                setAvatar(null);
-                setImageUpload(null);
-                if (btnUpdateRef.current) {
-                    btnUpdateRef.current.removeAttribute('disabled');
-                }
-                if (btnRemoveRef.current) {
-                    btnRemoveRef.current.removeAttribute('disabled');
-                }
+                resetAvatarState();
             }
+        } catch (error) {
+            toast.update(toastId, {
+                render: 'Lỗi khi tải ảnh',
+                type: 'error',
+                isLoading: false,
+                autoClose: 3000,
+            });
         }
-    };
+    }, [avatarFile, dispatch, resetAvatarState, user.avatar]);
 
-    const handleDeleteAvatar = async () => {
-        if (user.avatar) {
-            if (btnUpdateRef.current) {
-                btnUpdateRef.current.setAttribute('disabled', 'disabled');
-            }
-            if (btnRemoveRef.current) {
-                btnRemoveRef.current.setAttribute('disabled', 'disabled');
-            }
-            const id = toast.loading('Đang xóa ảnh đại diện');
-            setDisabled(true);
+    const handleDeleteAvatar = useCallback(async () => {
+        if (!user.avatar) return;
+
+        setIsDisabled(true);
+        const toastId = toast.loading('Đang xóa ảnh đại diện');
+
+        try {
             const { response, err } = await userApi.profileUpdate({
                 avatar: user.avatar,
             });
             if (response) {
                 dispatch(updateUser(response));
-                toast.update(id, {
+                toast.update(toastId, {
                     render: 'Xóa ảnh đại diện thành công',
                     type: 'success',
                     isLoading: false,
                     autoClose: 3000,
                 });
-                setDisabled(false);
-                if (btnUpdateRef.current) {
-                    btnUpdateRef.current.removeAttribute('disabled');
-                }
-                if (btnRemoveRef.current) {
-                    btnRemoveRef.current.removeAttribute('disabled');
-                }
+                setIsDisabled(false);
             }
             if (err) {
-                toast.update(id, {
+                toast.update(toastId, {
                     render: err?.data,
                     type: 'error',
                     isLoading: false,
                     autoClose: 3000,
                 });
-                setDisabled(false);
-                if (btnUpdateRef.current) {
-                    btnUpdateRef.current.removeAttribute('disabled');
-                }
-                if (btnRemoveRef.current) {
-                    btnRemoveRef.current.removeAttribute('disabled');
-                }
+                setIsDisabled(false);
             }
+        } catch (error) {
+            toast.update(toastId, {
+                render: 'Lỗi khi xóa ảnh',
+                type: 'error',
+                isLoading: false,
+                autoClose: 3000,
+            });
         }
+    }, [dispatch, user.avatar]);
+
+    const calcHeight = (e) => {
+        console.log('goik');
+        const height = e?.offsetHeight;
+        const width = e?.offsetWidth;
+        setMenuSize({
+            height,
+            width,
+        });
     };
+    // useEffect(() => {
+    //     calcHeight();
+    // }, []);
+    useEffect(() => {
+        console.log('menuHeight', menuSize);
+    });
     return (
-        <>
-            <Modal
-                open={open}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                {/* container */}
-                <Fade in={open} timeout={300}>
-                    <Box
-                        sx={{
-                            ...uiConfigs.style.centerAlight,
-                            width: { xs: '100%', sm: '400px' },
-                            height: { xs: '100%', sm: 'auto' },
-                            backgroundColor: '#121212',
-                            p: 2,
-                            display: 'flex',
-                            // justifyContent: 'center',
-                            alignItems: 'center',
-                            flexDirection: 'column',
-                            borderRadius: 2,
-                            gap: 3,
-                            border: {
-                                xs: 'none',
-                                sm: '1px solid hsla(0,0%,100%,.1)',
-                            },
-                            overflowY: 'auto',
-                        }}
+        <Modal
+            open={open}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            {/* container */}
+            <Fade in={open} timeout={300}>
+                <Box>
+                    <ModalContainer
+                        isEditing={isEditing}
+                        menuSize={menuSize}
+                        setMenuSize={setMenuSize}
                     >
-                        {/* title */}
-                        <Stack
-                            width={'100%'}
-                            position={'relative'}
-                            flexDirection={'row'}
-                            justifyContent={'flex-end'}
-                            alignItems={'center'}
+                        <CSSTransition
+                            in={!isEditing}
+                            timeout={500}
+                            unmountOnExit
+                            onEnter={calcHeight}
+                            classNames="modal-chose-avatar"
                         >
-                            <Typography
-                                variant="h5"
-                                fontWeight={500}
-                                textAlign={'center'}
-                                left={0}
-                                right={0}
-                                component={'h2'}
-                                // sx={{ fontSize: { sm: '1.5rem' } }}
-                                position={'absolute'}
-                                px={'40px'}
-                            >
-                                Thay đổi ảnh đại diện
-                            </Typography>
-                            <IconButton
-                                color="neutral"
-                                onClick={() => handleClose()}
-                                disabled={disabled}
-                            >
-                                <CloseIcon />
-                            </IconButton>
-                        </Stack>
-                        {/* title */}
-                        <Typography
-                            variant="subtitle1"
-                            component={'h3'}
-                            textAlign={'center'}
-                        >
-                            Chọn vào ảnh đại diện để thay đổi
-                        </Typography>
-                        {/* Avatar */}
-                        <label htmlFor="avatar">
                             <Box
                                 sx={{
-                                    width: { xs: '250px', sm: '200px' },
-                                    height: { xs: '250px', sm: '200px' },
-                                    position: 'relative',
-                                    cursor: 'pointer',
-                                    '&:hover': {
-                                        '.MuiBox-root': {
-                                            opacity: 1,
-                                        },
+                                    p: 2,
+                                    display: 'flex',
+                                    // justifyContent: 'center',
+                                    alignItems: 'center',
+                                    flexDirection: 'column',
+                                    gap: 3,
+                                    width: '400px',
+                                    '&.modal-chose-avatar-enter': {
+                                        transform: 'translateX(-100%)',
+                                    },
+                                    '&.modal-chose-avatar-enter-active': {
+                                        position: 'absolute',
+                                        transform: 'translateX(0)',
+                                        transition:
+                                            'transform 500ms ease-in-out',
+                                    },
+                                    '&.modal-chose-avatar-exit': {
+                                        transform: 'translateX(0)',
+                                    },
+                                    '&.modal-chose-avatar-exit-active': {
+                                        position: 'absolute',
+                                        transform: 'translateX(-100%)',
+                                        transition:
+                                            'transform 500ms ease-in-out',
                                     },
                                 }}
                             >
-                                <input
-                                    id="avatar"
-                                    style={{
-                                        display: 'none',
-                                    }}
-                                    type="file"
-                                    accept="image/*"
-                                    onChange={handlePreviewAvatar}
-                                    multiple
-                                />
-                                <Avatar
-                                    src={avatar && avatar.preview}
-                                    alt={null}
-                                />
-                                <Box
-                                    sx={{
-                                        borderRadius: '1000px',
-                                        bgcolor: 'rgba(0, 0, 0, 0.5)',
-                                        position: 'absolute',
-                                        opacity: 0,
-                                        top: 0,
-                                        left: 0,
-                                        width: '100%',
-                                        height: '100%',
-                                        display: 'flex',
-                                        justifyContent: 'center',
-                                        alignItems: 'center',
-                                        transition: 'opacity 0.4s ease 0s',
-                                    }}
+                                {/* title */}
+                                <Stack
+                                    width={'100%'}
+                                    position={'relative'}
+                                    flexDirection={'row'}
+                                    justifyContent={'flex-end'}
+                                    alignItems={'center'}
                                 >
+                                    <Typography
+                                        variant="h5"
+                                        fontWeight={500}
+                                        textAlign={'center'}
+                                        left={0}
+                                        right={0}
+                                        component={'h2'}
+                                        // sx={{ fontSize: { sm: '1.5rem' } }}
+                                        position={'absolute'}
+                                        px={'40px'}
+                                    >
+                                        Thay đổi ảnh đại diện
+                                    </Typography>
+                                    <IconButton
+                                        color="neutral"
+                                        onClick={() => handleClose()}
+                                        disabled={isDisabled}
+                                    >
+                                        <CloseIcon />
+                                    </IconButton>
+                                </Stack>
+                                {/* title */}
+                                <Typography
+                                    variant="subtitle1"
+                                    component={'h3'}
+                                    textAlign={'center'}
+                                >
+                                    Chọn vào ảnh đại diện để thay đổi
+                                </Typography>
+                                {/* Avatar */}
+                                <label htmlFor="avatar">
                                     <Box
                                         sx={{
-                                            svg: {
-                                                width: '50px',
-                                                height: '50px',
+                                            width: {
+                                                xs: '250px',
+                                                sm: '200px',
+                                            },
+                                            height: {
+                                                xs: '250px',
+                                                sm: '200px',
+                                            },
+                                            position: 'relative',
+                                            cursor: 'pointer',
+                                            '&:hover': {
+                                                '.MuiBox-root': {
+                                                    opacity: 1,
+                                                },
                                             },
                                         }}
                                     >
-                                        <PhotoIcon />
+                                        <input
+                                            id="avatar"
+                                            style={{
+                                                display: 'none',
+                                            }}
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={handlePreviewAvatar}
+                                            multiple
+                                        />
+                                        <Avatar
+                                            src={
+                                                previewAvatar &&
+                                                previewAvatar.preview
+                                            }
+                                            alt={null}
+                                        />
+                                        <Box
+                                            sx={{
+                                                borderRadius: '1000px',
+                                                bgcolor: 'rgba(0, 0, 0, 0.5)',
+                                                position: 'absolute',
+                                                opacity: 0,
+                                                top: 0,
+                                                left: 0,
+                                                width: '100%',
+                                                height: '100%',
+                                                display: 'flex',
+                                                justifyContent: 'center',
+                                                alignItems: 'center',
+                                                transition:
+                                                    'opacity 0.4s ease 0s',
+                                            }}
+                                        >
+                                            <Box
+                                                sx={{
+                                                    svg: {
+                                                        width: '50px',
+                                                        height: '50px',
+                                                    },
+                                                }}
+                                            >
+                                                <PhotoIcon />
+                                            </Box>
+                                        </Box>
                                     </Box>
-                                </Box>
-                            </Box>
-                        </label>
-                        {/* Avatar */}
+                                </label>
+                                {/* Avatar */}
 
-                        {/* Button */}
-                        <Stack flexDirection={'row'} gap={2}>
-                            <Button
-                                ref={btnUpdateRef}
-                                variant="contained"
-                                color="secondary"
-                                onClick={handleUploadAvatar}
+                                {/* Button */}
+                                <Stack flexDirection={'row'} gap={2}>
+                                    {/* <Button
+                                                    ref={btnUpdateRef}
+                                                    variant="contained"
+                                                    color="secondary"
+                                                    onClick={handleUploadAvatar}
+                                                >
+                                                    Cập nhật
+                                                </Button> */}
+                                    <Button
+                                        disabled={isDisabled}
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={handleUploadAvatar}
+                                    >
+                                        Cập nhât
+                                    </Button>
+                                    <Button
+                                        disabled={isDisabled}
+                                        variant="contained"
+                                        color="secondary"
+                                        onClick={handleDeleteAvatar}
+                                    >
+                                        Xóa
+                                    </Button>
+                                </Stack>
+                                {/* Button */}
+                            </Box>
+                        </CSSTransition>
+
+                        <CSSTransition
+                            in={isEditing}
+                            timeout={500}
+                            classNames="modal-edit-avatar"
+                            unmountOnExit
+                            onEnter={calcHeight}
+                        >
+                            <Box
+                                sx={{
+                                    p: 2,
+                                    width: '1200px',
+                                    '&.modal-edit-avatar-enter': {
+                                        transform: 'translateX(100%)',
+                                    },
+                                    '&.modal-edit-avatar-enter-active': {
+                                        transform: 'translateX(0)',
+                                        transition:
+                                            'transform 500ms ease-in-out',
+                                    },
+                                    '&.modal-edit-avatar-exit': {
+                                        transform: 'translateX(0)',
+                                    },
+                                    '&.modal-edit-avatar-exit-active': {
+                                        transform: 'translateX(100%)',
+                                        transition:
+                                            'transform 500ms ease-in-out',
+                                    },
+                                }}
                             >
-                                Cập nhật
-                            </Button>
-                            <Button
-                                ref={btnRemoveRef}
-                                variant="contained"
-                                color="secondary"
-                                onClick={handleDeleteAvatar}
-                            >
-                                Xóa
-                            </Button>
-                        </Stack>
-                        {/* Button */}
-                    </Box>
-                </Fade>
-                {/* container */}
-            </Modal>
-        </>
+                                <Stack
+                                    direction={'row'}
+                                    sx={{
+                                        '& svg': {
+                                            rotate: '90deg',
+                                        },
+                                    }}
+                                    alignItems={'center'}
+                                    gap={1}
+                                    mb={2}
+                                >
+                                    <IconButton
+                                        onClick={() => {
+                                            setIsEditing(false);
+                                            setPreviewAvatar(null);
+                                            setAvatarFile(null);
+                                        }}
+                                    >
+                                        <ArrowDownIcon />
+                                    </IconButton>
+                                    <Typography variant="h5" fontWeight={500}>
+                                        Chỉnh sửa ảnh đại diện
+                                    </Typography>
+                                </Stack>
+                                <Grid container spacing={{ xs: 1, sm: 1.5 }}>
+                                    <Grid item xs={3}>
+                                        <Paper variant="outlined" sx={{ p: 2 }}>
+                                            <List
+                                                component="nav"
+                                                aria-label="main mailbox folders"
+                                                sx={{ py: 2 }}
+                                            >
+                                                <ListItemButton
+                                                    onClick={() => {
+                                                        cropperRef.current.cropper.reset();
+                                                    }}
+                                                    sx={{
+                                                        gap: 2,
+                                                    }}
+                                                >
+                                                    <RefreshIcon />
+                                                    <ListItemText
+                                                        primary={'Reset'}
+                                                    />
+                                                </ListItemButton>
+                                                <ListItemButton
+                                                    sx={{
+                                                        gap: 2,
+                                                    }}
+                                                    onClick={() => {
+                                                        cropperRef.current.cropper.rotate(
+                                                            90,
+                                                        );
+                                                    }}
+                                                >
+                                                    <RotateIcon />
+                                                    <ListItemText
+                                                        primary={'Rotate'}
+                                                    />
+                                                </ListItemButton>
+                                            </List>
+                                            <Button
+                                                disabled={isDisabled}
+                                                variant="contained"
+                                                color="secondary"
+                                                onClick={getCropData}
+                                            >
+                                                Lưu chỉnh sửa
+                                            </Button>
+                                        </Paper>
+                                    </Grid>
+                                    <Grid item xs={9}>
+                                        <Paper variant="outlined" sx={{ p: 2 }}>
+                                            <Cropper
+                                                style={{
+                                                    height: 400,
+                                                    width: '100%',
+                                                }}
+                                                autoCropArea={1}
+                                                dragMode={'move'}
+                                                highlight={false}
+                                                aspectRatio={1 / 1}
+                                                src={
+                                                    previewAvatar &&
+                                                    previewAvatar.preview
+                                                }
+                                                ref={cropperRef}
+                                                viewMode={1}
+                                                guides={true}
+                                                minCropBoxHeight={100}
+                                                minCropBoxWidth={100}
+                                                background={false}
+                                                responsive={true}
+                                                checkOrientation={false}
+                                            />
+                                        </Paper>
+                                    </Grid>
+                                </Grid>
+                            </Box>
+                        </CSSTransition>
+                    </ModalContainer>
+                </Box>
+            </Fade>
+
+            {/* container */}
+        </Modal>
     );
 }
 

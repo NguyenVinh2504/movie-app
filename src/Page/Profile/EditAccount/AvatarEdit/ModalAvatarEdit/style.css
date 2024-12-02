@@ -1,0 +1,45 @@
+.modal-chose-avatar {
+    transform: translateX(-100%);
+}
+
+.modal-chose-avatar-enter {
+    transform: translateX(-100%);
+}
+
+.modal-chose-avatar-enter-active {
+    position: absolute;
+    transform: translateX(0);
+    transition: transform 500ms ease-in-out;
+}
+
+.modal-chose-avatar-exit {
+    transform: translateX(0);
+}
+
+.modal-chose-avatar-exit-active {
+    position: absolute;
+    transform: translateX(-100%);
+    transition: transform 500ms ease-in-out;
+}
+
+.modal-chose-avatar-exit-done {
+    transform: translateX(-100%);
+}
+
+.modal-edit-avatar-enter {
+    transform: translateX(100%);
+}
+
+.modal-edit-avatar-enter-active {
+    transform: translateX(0);
+    transition: transform 500ms ease-in-out;
+}
+
+.modal-edit-avatar-exit {
+    transform: translateX(0);
+}
+
+.modal-edit-avatar-exit-active {
+    transform: translateX(100%);
+    transition: transform 500ms ease-in-out;
+}
