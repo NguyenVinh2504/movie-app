@@ -138,24 +138,24 @@ const theme = createTheme({
                         backgroundColor: '#121111',
                         borderRadius: '8px',
                         border: '1px solid hsla(0,0%,100%,.1)',
-                        color: 'white'
+                        color: 'white',
                     },
                 },
             ],
         },
         MuiAppBar: {
             defaultProps: {
-                elevation: 0
+                elevation: 0,
             },
             styleOverrides: {
                 root: {
-                    backgroundColor: Color.background
-                }
-            }
+                    backgroundColor: Color.background,
+                },
+            },
         },
         MuiPopover: {
             defaultProps: {
-                elevation: 0
+                elevation: 0,
             },
             styleOverrides: {
                 root: {
@@ -164,7 +164,7 @@ const theme = createTheme({
                         backgroundColor: Color.background,
                         border: '1px solid hsla(0,0%,100%,.1)',
                         color: 'white',
-                        borderRadius: 8
+                        borderRadius: 8,
                     },
                 },
             },
@@ -247,9 +247,9 @@ const theme = createTheme({
                 {
                     props: { color: 'primary' },
                     style: {
-                        "&.Mui-disabled": {
-                            background: "#930505",
-                            color: 'rgba(255, 255, 255, 0.80)'
+                        '&.Mui-disabled': {
+                            background: '#930505',
+                            color: 'rgba(255, 255, 255, 0.80)',
                         },
                         '&:hover': {
                             backgroundColor: 'rgba(236, 1, 1, 0.80)',
@@ -267,9 +267,9 @@ const theme = createTheme({
                 {
                     props: { color: 'secondary' },
                     style: {
-                        "&.Mui-disabled": {
+                        '&.Mui-disabled': {
                             background: Color.secondary,
-                            color: 'white'
+                            color: 'white',
                         },
                         '&:hover': {
                             backgroundColor: '#4B4949',
@@ -314,8 +314,7 @@ const theme = createTheme({
                     props: { disabled: true },
                     style: {
                         backgroundColor: 'rgba(255, 255, 255, 0.2)',
-                    }
-
+                    },
                 },
                 {
                     props: { color: 'neutral' },
@@ -329,7 +328,8 @@ const theme = createTheme({
                             },
                         },
                         '&:active': {
-                            backgroundColor: 'rgba(255, 255, 255, 0.4)!important',
+                            backgroundColor:
+                                'rgba(255, 255, 255, 0.4)!important',
                         },
                     },
                 },
@@ -346,7 +346,29 @@ const theme = createTheme({
                             },
                         },
                         '&:active': {
-                            backgroundColor: 'rgba(255, 255, 255, 0.4)!important',
+                            backgroundColor:
+                                'rgba(255, 255, 255, 0.4)!important',
+                        },
+                    },
+                },
+                {
+                    props: { color: 'primary' },
+                    style: {
+                        backgroundColor: Color.primary,
+                        '&.Mui-disabled': {
+                            background: '#930505',
+                            color: 'rgba(255, 255, 255, 0.80)',
+                        },
+                        '&:hover': {
+                            backgroundColor: 'rgba(236, 1, 1, 0.80)',
+                        },
+                        '@media (hover: none)': {
+                            '&:hover': {
+                                backgroundColor: Color.primary,
+                            },
+                        },
+                        '&:active': {
+                            backgroundColor: 'rgba(236, 1, 1, 0.60)',
                         },
                     },
                 },

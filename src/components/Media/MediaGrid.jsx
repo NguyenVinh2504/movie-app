@@ -3,6 +3,7 @@ import React from 'react';
 import MediaItems from '../MediaItems';
 import { SvgSpinners3DotsBounce } from '../Icon';
 import MediaItemSekeleton from '../MediaItemSekeleton';
+import ScrollButton from '../ScrollButton';
 
 function MediaList({ medias, mediaType }) {
     return medias?.map((item) => {
@@ -65,6 +66,7 @@ const MediaGrid = ({
                     </Button>
                 </Stack>
             )}
+            <ScrollButton />
         </>
     );
 };
