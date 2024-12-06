@@ -305,7 +305,7 @@ function ModalAvatarEdit({ open, handleClose }) {
                                     },
                                     maxHeight: {
                                         xs: 'initial',
-                                        sm: 'calc(100dvh - 380px)',
+                                        sm: 'calc(100dvh - 20px)',
                                     },
                                     width: {
                                         xs: '100%',
@@ -490,7 +490,7 @@ function ModalAvatarEdit({ open, handleClose }) {
                                     },
                                     maxHeight: {
                                         xs: 'initial',
-                                        sm: 'calc(100dvh - 200px)',
+                                        sm: 'calc(100dvh - 20px)',
                                     },
                                     overflowY: 'auto',
                                     width: {
