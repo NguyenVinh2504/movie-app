@@ -6,7 +6,6 @@ import {
     IconButton,
     List,
     ListItemButton,
-    ListItemIcon,
     ListItemText,
     Modal,
     Paper,
@@ -23,7 +22,6 @@ import {
     RefreshIcon,
     RotateIcon,
 } from '~/components/Icon';
-import uiConfigs from '~/config/ui.config';
 import { userValue } from '~/redux/selectors';
 import userApi from '~/api/module/user.api';
 import { updateUser } from '~/redux/features/userSlice';
@@ -35,6 +33,7 @@ import { singleFileValidator } from '~/utils/validators';
 import { CSSTransition } from 'react-transition-group';
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
+import { debounce } from 'lodash';
 function ModalContainer({ children, isEditing, menuSize, setMenuSize }) {
     const containerRef = useRef();
     useEffect(() => {
@@ -49,14 +48,11 @@ function ModalContainer({ children, isEditing, menuSize, setMenuSize }) {
             });
         }
     }, [setMenuSize]);
-    console.log(menuSize);
-    console.log('containerRef :>> ', containerRef);
 
     return (
         <Box
             ref={containerRef}
             sx={{
-                ...uiConfigs.style.centerAlight,
                 backgroundColor: '#121212',
                 borderRadius: 2,
                 border: {
@@ -65,14 +61,18 @@ function ModalContainer({ children, isEditing, menuSize, setMenuSize }) {
                 },
                 overflow: 'hidden',
                 transition: 'all 0.3s ease-in-out',
-                width: {
-                    xs: '100%',
-                    sm: menuSize ? `${menuSize.width + 2}px` : 'auto',
+                position: {
+                    xs: 'static',
+                    sm: 'relative',
                 },
-                height: {
-                    xs: '100%',
-                    sm: menuSize ? `${menuSize.height + 2}px` : 'auto',
-                },
+                width:
+                    menuSize?.width && !Number.isNaN(menuSize?.width)
+                        ? `${menuSize.width + 2}px`
+                        : 'auto',
+                height:
+                    menuSize?.width && !Number.isNaN(menuSize?.height)
+                        ? `${menuSize.height + 2}px`
+                        : 'auto',
             }}
         >
             {children}
@@ -99,6 +99,9 @@ function ModalAvatarEdit({ open, handleClose }) {
     const [menuSize, setMenuSize] = useState(null);
 
     const cropperRef = useRef(null);
+
+    const previewElementRef = useRef(null);
+    const editElementRef = useRef(null);
 
     useEffect(() => {
         return () => {
@@ -228,7 +231,6 @@ function ModalAvatarEdit({ open, handleClose }) {
     }, [dispatch, user.avatar]);
 
     const calcHeight = (e) => {
-        console.log('goik');
         const height = e?.offsetHeight;
         const width = e?.offsetWidth;
         setMenuSize({
@@ -239,6 +241,17 @@ function ModalAvatarEdit({ open, handleClose }) {
     // useEffect(() => {
     //     calcHeight();
     // }, []);
+    const calcHeightWhenResize = debounce(() => {
+        calcHeight(
+            isEditing ? editElementRef.current : previewElementRef.current,
+        );
+    }, 500);
+    useEffect(() => {
+        window.addEventListener('resize', calcHeightWhenResize);
+        return () => {
+            window.removeEventListener('resize', calcHeightWhenResize);
+        };
+    }, [calcHeightWhenResize, isEditing]);
     useEffect(() => {
         console.log('menuHeight', menuSize);
     });
@@ -250,28 +263,57 @@ function ModalAvatarEdit({ open, handleClose }) {
         >
             {/* container */}
             <Fade in={open} timeout={300}>
-                <Box>
+                <Box
+                    sx={{
+                        width: '100%',
+                        height: '100%',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        position: 'relative',
+                        overflow: 'hidden',
+                    }}
+                >
                     <ModalContainer
                         isEditing={isEditing}
                         menuSize={menuSize}
                         setMenuSize={setMenuSize}
                     >
                         <CSSTransition
+                            nodeRef={previewElementRef}
                             in={!isEditing}
                             timeout={500}
                             unmountOnExit
-                            onEnter={calcHeight}
+                            onEnter={() =>
+                                calcHeight(previewElementRef.current)
+                            }
                             classNames="modal-chose-avatar"
                         >
                             <Box
+                                ref={previewElementRef}
                                 sx={{
+                                    position: 'absolute',
                                     p: 2,
                                     display: 'flex',
                                     // justifyContent: 'center',
                                     alignItems: 'center',
                                     flexDirection: 'column',
                                     gap: 3,
-                                    width: '400px',
+                                    height: {
+                                        xs: '100%',
+                                        sm: 'auto',
+                                    },
+                                    maxHeight: {
+                                        xs: 'initial',
+                                        sm: 'calc(100dvh - 380px)',
+                                    },
+                                    width: {
+                                        xs: '100%',
+                                        sm: '400px',
+                                        overflowY: 'auto',
+                                    },
+                                    overflowY: 'auto',
+
                                     '&.modal-chose-avatar-enter': {
                                         transform: 'translateX(-100%)',
                                     },
@@ -432,15 +474,32 @@ function ModalAvatarEdit({ open, handleClose }) {
 
                         <CSSTransition
                             in={isEditing}
+                            nodeRef={editElementRef}
                             timeout={500}
                             classNames="modal-edit-avatar"
                             unmountOnExit
-                            onEnter={calcHeight}
+                            onEnter={() => calcHeight(editElementRef.current)}
                         >
                             <Box
                                 sx={{
                                     p: 2,
-                                    width: '1200px',
+                                    position: 'absolute',
+                                    height: {
+                                        xs: '100%',
+                                        sm: 'auto',
+                                    },
+                                    maxHeight: {
+                                        xs: 'initial',
+                                        sm: 'calc(100dvh - 200px)',
+                                    },
+                                    overflowY: 'auto',
+                                    width: {
+                                        xs: '100%',
+                                        sm: '580px',
+                                        md: '800px',
+                                        lg: '1000px',
+                                        xl: '1200px',
+                                    },
                                     '&.modal-edit-avatar-enter': {
                                         transform: 'translateX(100%)',
                                     },
@@ -458,6 +517,7 @@ function ModalAvatarEdit({ open, handleClose }) {
                                             'transform 500ms ease-in-out',
                                     },
                                 }}
+                                ref={editElementRef}
                             >
                                 <Stack
                                     direction={'row'}
@@ -484,12 +544,12 @@ function ModalAvatarEdit({ open, handleClose }) {
                                     </Typography>
                                 </Stack>
                                 <Grid container spacing={{ xs: 1, sm: 1.5 }}>
-                                    <Grid item xs={3}>
+                                    <Grid item xs={12} md={3}>
                                         <Paper variant="outlined" sx={{ p: 2 }}>
                                             <List
                                                 component="nav"
                                                 aria-label="main mailbox folders"
-                                                sx={{ py: 2 }}
+                                                sx={{ py: 0 }}
                                             >
                                                 <ListItemButton
                                                     onClick={() => {
@@ -525,12 +585,13 @@ function ModalAvatarEdit({ open, handleClose }) {
                                                 variant="contained"
                                                 color="secondary"
                                                 onClick={getCropData}
+                                                sx={{ mt: 2 }}
                                             >
                                                 Lưu chỉnh sửa
                                             </Button>
                                         </Paper>
                                     </Grid>
-                                    <Grid item xs={9}>
+                                    <Grid item xs={12} md={9}>
                                         <Paper variant="outlined" sx={{ p: 2 }}>
                                             <Cropper
                                                 style={{
