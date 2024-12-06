@@ -543,7 +543,13 @@ function ModalAvatarEdit({ open, handleClose }) {
                                         Chỉnh sửa ảnh đại diện
                                     </Typography>
                                 </Stack>
-                                <Grid container spacing={{ xs: 1, sm: 1.5 }}>
+                                <Grid
+                                    container
+                                    spacing={{ xs: 1, sm: 1.5 }}
+                                    sx={{
+                                        flexWrap: 'wrap-reverse',
+                                    }}
+                                >
                                     <Grid item xs={12} md={3}>
                                         <Paper variant="outlined" sx={{ p: 2 }}>
                                             <List
