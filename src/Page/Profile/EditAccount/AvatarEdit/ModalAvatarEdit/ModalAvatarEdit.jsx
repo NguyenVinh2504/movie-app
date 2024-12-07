@@ -456,7 +456,6 @@ function ModalAvatarEdit({ open, handleClose }) {
                                             type="file"
                                             accept="image/*"
                                             onChange={handlePreviewAvatar}
-                                            multiple
                                         />
                                         <Avatar
                                             src={
