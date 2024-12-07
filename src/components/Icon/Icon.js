@@ -798,3 +798,65 @@ export function RotateIcon() {
         </svg>
     );
 }
+
+export function ArrowHorizontalIcon() {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            width={24}
+            height={24}
+        >
+            <path
+                stroke="currentColor"
+                strokeLinejoin="bevel"
+                strokeWidth={2}
+                d="M21.75 12L2.25 12"
+            />
+            <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeWidth={2}
+                d="M6.5 17L2.56066 13.0607C1.97487 12.4749 1.97487 11.5251 2.56066 10.9393L6.5 7"
+            />
+            <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeWidth={2}
+                d="M17.5 7L21.4393 10.9393C22.0251 11.5251 22.0251 12.4749 21.4393 13.0607L17.5 17"
+            />
+        </svg>
+    );
+}
+
+export function ArrowVerticalIcon() {
+    return (
+        <svg
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+            width={24}
+            height={24}
+        >
+            <path
+                stroke="currentColor"
+                strokeLinejoin="bevel"
+                strokeWidth={2}
+                d="M12 21.75L12 2.25"
+            />
+            <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeWidth={2}
+                d="M7 6.5L10.9393 2.56066C11.5251 1.97487 12.4749 1.97487 13.0607 2.56066L17 6.5"
+            />
+            <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeWidth={2}
+                d="M17 17.5L13.0607 21.4393C12.4749 22.0251 11.5251 22.0251 10.9393 21.4393L7 17.5"
+            />
+        </svg>
+    );
+}

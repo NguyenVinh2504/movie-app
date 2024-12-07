@@ -17,6 +17,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Avatar from '~/components/Avatar';
 import {
     ArrowDownIcon,
+    ArrowHorizontalIcon,
+    ArrowVerticalIcon,
     CloseIcon,
     PhotoIcon,
     RefreshIcon,
@@ -35,12 +37,15 @@ import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
 import { debounce } from 'lodash';
 function ModalContainer({ children, isEditing, menuSize, setMenuSize }) {
-    const containerRef = useRef();
+    const containerRef = useRef(null);
     useEffect(() => {
-        if (containerRef.current?.firstChild) {
-            const height = containerRef.current.firstChild.offsetHeight;
-            const width = containerRef.current.firstChild.offsetWidth;
-            console.log(height, width);
+        if (
+            containerRef.current instanceof HTMLElement &&
+            containerRef.current.firstElementChild
+        ) {
+            const height = containerRef.current.firstElementChild.offsetHeight;
+            const width = containerRef.current.firstElementChild.offsetWidth;
+            // console.log(height, width);
 
             setMenuSize({
                 height,
@@ -49,10 +54,29 @@ function ModalContainer({ children, isEditing, menuSize, setMenuSize }) {
         }
     }, [setMenuSize]);
 
+    const getDimensionValue = (size, defaultValue = 'auto') => {
+        return typeof size === 'number' && !Number.isNaN(size)
+            ? `${size}px`
+            : defaultValue;
+    };
+    const widthContainer = getDimensionValue(menuSize?.width);
+    const heightContainer = getDimensionValue(menuSize?.height);
+    // useEffect(() => {
+    //     console.log('container', [
+    //         'widthContainer',
+    //         widthContainer,
+    //         'heightContainer',
+    //         heightContainer,
+    //         'menuSize',
+    //         menuSize,
+    //     ]);
+    // });
+
     return (
         <Box
             ref={containerRef}
             sx={{
+                position: 'relative',
                 backgroundColor: '#121212',
                 borderRadius: 2,
                 border: {
@@ -60,19 +84,15 @@ function ModalContainer({ children, isEditing, menuSize, setMenuSize }) {
                     sm: '1px solid hsla(0,0%,100%,.1)',
                 },
                 overflow: 'hidden',
-                transition: 'all 0.3s ease-in-out',
-                position: {
-                    xs: 'static',
-                    sm: 'relative',
+                transition: 'all 0.5s ease-in-out',
+                width: {
+                    xs: '100%',
+                    sm: widthContainer,
                 },
-                width:
-                    menuSize?.width && !Number.isNaN(menuSize?.width)
-                        ? `${menuSize.width + 2}px`
-                        : 'auto',
-                height:
-                    menuSize?.width && !Number.isNaN(menuSize?.height)
-                        ? `${menuSize.height + 2}px`
-                        : 'auto',
+                height: {
+                    xs: '100%',
+                    sm: heightContainer,
+                },
             }}
         >
             {children}
@@ -91,15 +111,11 @@ function ModalAvatarEdit({ open, handleClose }) {
 
     const [previewAvatar, setPreviewAvatar] = useState(null);
     const [avatarFile, setAvatarFile] = useState(null);
-
     const [isDisabled, setIsDisabled] = useState(false);
-
     const [isEditing, setIsEditing] = useState(false);
-
     const [menuSize, setMenuSize] = useState(null);
 
     const cropperRef = useRef(null);
-
     const previewElementRef = useRef(null);
     const editElementRef = useRef(null);
 
@@ -122,6 +138,34 @@ function ModalAvatarEdit({ open, handleClose }) {
         e.target.value = null;
         setIsEditing(true);
     };
+
+    const handleFlipHorizontal = () => {
+        if (cropperRef.current) {
+            const cropper = cropperRef.current.cropper;
+            cropper.scaleX(cropper.getData().scaleX === 1 ? -1 : 1);
+        }
+    };
+
+    const handleFlipVertical = () => {
+        if (cropperRef.current) {
+            const cropper = cropperRef.current.cropper;
+            cropper.scaleY(cropper.getData().scaleY === 1 ? -1 : 1);
+        }
+    };
+
+    const handleRotate = () => {
+        if (cropperRef.current) {
+            const cropper = cropperRef.current.cropper;
+            cropper.rotate(90);
+        }
+    };
+
+    const handleReset = () => {
+        if (cropperRef.current) {
+            const cropper = cropperRef.current.cropper;
+            cropper.reset();
+        }
+    };
     const resetAvatarState = useCallback(() => {
         setIsDisabled(false);
         setPreviewAvatar(null);
@@ -141,6 +185,7 @@ function ModalAvatarEdit({ open, handleClose }) {
             setIsEditing(false);
         });
     };
+
     const handleUploadAvatar = useCallback(async () => {
         if (!avatarFile) {
             toast.error('Vui lòng chọn ảnh');
@@ -230,13 +275,15 @@ function ModalAvatarEdit({ open, handleClose }) {
         }
     }, [dispatch, user.avatar]);
 
-    const calcHeight = (e) => {
-        const height = e?.offsetHeight;
-        const width = e?.offsetWidth;
-        setMenuSize({
-            height,
-            width,
-        });
+    const calcHeight = (element) => {
+        if (element instanceof HTMLElement) {
+            const height = element.offsetHeight;
+            const width = element.offsetWidth;
+            setMenuSize({
+                height,
+                width,
+            });
+        }
     };
     // useEffect(() => {
     //     calcHeight();
@@ -252,9 +299,20 @@ function ModalAvatarEdit({ open, handleClose }) {
             window.removeEventListener('resize', calcHeightWhenResize);
         };
     }, [calcHeightWhenResize, isEditing]);
-    useEffect(() => {
-        console.log('menuHeight', menuSize);
-    });
+    // useEffect(() => {
+    //     console.log([
+    //         'previewAvatar',
+    //         previewAvatar,
+    //         'avatarFile',
+    //         avatarFile,
+    //         'isDisabled',
+    //         isDisabled,
+    //         'isEditing',
+    //         isEditing,
+    //         'menuSize',
+    //         menuSize,
+    //     ]);
+    // });
     return (
         <Modal
             open={open}
@@ -265,12 +323,11 @@ function ModalAvatarEdit({ open, handleClose }) {
             <Fade in={open} timeout={300}>
                 <Box
                     sx={{
-                        width: '100%',
-                        height: '100%',
+                        width: '100vw',
+                        height: '100dvh',
                         display: 'flex',
                         justifyContent: 'center',
                         alignItems: 'center',
-                        position: 'relative',
                         overflow: 'hidden',
                     }}
                 >
@@ -292,7 +349,6 @@ function ModalAvatarEdit({ open, handleClose }) {
                             <Box
                                 ref={previewElementRef}
                                 sx={{
-                                    position: 'absolute',
                                     p: 2,
                                     display: 'flex',
                                     // justifyContent: 'center',
@@ -483,7 +539,6 @@ function ModalAvatarEdit({ open, handleClose }) {
                             <Box
                                 sx={{
                                     p: 2,
-                                    position: 'absolute',
                                     height: {
                                         xs: '100%',
                                         sm: 'auto',
@@ -550,7 +605,7 @@ function ModalAvatarEdit({ open, handleClose }) {
                                         flexWrap: 'wrap-reverse',
                                     }}
                                 >
-                                    <Grid item xs={12} md={3}>
+                                    <Grid item xs={12} md={4} lg={3}>
                                         <Paper variant="outlined" sx={{ p: 2 }}>
                                             <List
                                                 component="nav"
@@ -558,31 +613,49 @@ function ModalAvatarEdit({ open, handleClose }) {
                                                 sx={{ py: 0 }}
                                             >
                                                 <ListItemButton
-                                                    onClick={() => {
-                                                        cropperRef.current.cropper.reset();
-                                                    }}
+                                                    onClick={handleReset}
                                                     sx={{
                                                         gap: 2,
                                                     }}
                                                 >
                                                     <RefreshIcon />
                                                     <ListItemText
-                                                        primary={'Reset'}
+                                                        primary={'Đặt lại'}
                                                     />
                                                 </ListItemButton>
                                                 <ListItemButton
                                                     sx={{
                                                         gap: 2,
                                                     }}
-                                                    onClick={() => {
-                                                        cropperRef.current.cropper.rotate(
-                                                            90,
-                                                        );
-                                                    }}
+                                                    onClick={handleRotate}
                                                 >
                                                     <RotateIcon />
                                                     <ListItemText
-                                                        primary={'Rotate'}
+                                                        primary={'Xoay'}
+                                                    />
+                                                </ListItemButton>
+                                                <ListItemButton
+                                                    sx={{
+                                                        gap: 2,
+                                                    }}
+                                                    onClick={
+                                                        handleFlipHorizontal
+                                                    }
+                                                >
+                                                    <ArrowHorizontalIcon />
+                                                    <ListItemText
+                                                        primary={'Lật ngang'}
+                                                    />
+                                                </ListItemButton>
+                                                <ListItemButton
+                                                    sx={{
+                                                        gap: 2,
+                                                    }}
+                                                    onClick={handleFlipVertical}
+                                                >
+                                                    <ArrowVerticalIcon />
+                                                    <ListItemText
+                                                        primary={'Lật dọc'}
                                                     />
                                                 </ListItemButton>
                                             </List>
@@ -597,7 +670,7 @@ function ModalAvatarEdit({ open, handleClose }) {
                                             </Button>
                                         </Paper>
                                     </Grid>
-                                    <Grid item xs={12} md={9}>
+                                    <Grid item xs={12} md={8} lg={9}>
                                         <Paper variant="outlined" sx={{ p: 2 }}>
                                             <Cropper
                                                 style={{
