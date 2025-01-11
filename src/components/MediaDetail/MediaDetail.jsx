@@ -1,4 +1,4 @@
-import { memo, useEffect } from 'react';
+import { memo, useCallback, useEffect, useMemo } from 'react';
 import { Modal, Box, Typography, Stack, IconButton, Fade } from '@mui/material';
 import { CloseIcon } from '../Icon';
 import CastSlice from './CastItem';
@@ -24,7 +24,8 @@ function MovieDetail() {
     // const navigate = useNavigate();
     // console.log(mediaTypeDetail, id);
     const { media_type: mediaTypeDetail, id, category } = queryConfig;
-    const handleClose = () => {
+
+    const handleClose = useCallback(() => {
         setSearchParams(
             location.pathname === config.routes.searchPage
                 ? omit(
@@ -40,15 +41,17 @@ function MovieDetail() {
                       ['media_type', 'id', 'category'],
                   ),
         );
-    };
-    const getDataDetail = async () => {
+    }, [location.pathname, queryConfig, setSearchParams]);
+
+    const getDataDetail = useCallback(async () => {
         const { response, err } = await mediaApi.getDetail({
             mediaType: mediaTypeDetail,
             mediaId: id,
         });
         if (response) return response;
         if (err) throw err;
-    };
+    }, [id, mediaTypeDetail]);
+
     const {
         data: dataDetail = {},
         isPending: loading,
@@ -59,7 +62,10 @@ function MovieDetail() {
         enabled: Boolean(category && mediaTypeDetail && id),
     });
 
-    const newGenres = dataDetail?.genres?.map((item) => item.name) || [];
+    const newGenres = useMemo(
+        () => dataDetail?.genres?.map((item) => item.name) || [],
+        [dataDetail?.genres],
+    );
     useEffect(() => {
         if (Object.keys(dataDetail).length === 0 && !loading) {
             setSearchParams(

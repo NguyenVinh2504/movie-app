@@ -8,7 +8,7 @@ import {
     useMediaQuery,
 } from '@mui/material';
 import { useFormik } from 'formik';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import TextFieldInput from '~/components/TextFieldInput';
 import * as Yup from 'yup';
 import data from '@emoji-mart/data';
@@ -69,6 +69,21 @@ function TextFieldComment({ onSubmit }) {
         setIsShowEmoji(null);
     };
 
+    const handleChange = useCallback(
+        (e) => {
+            const inputValue = e.target.value;
+            const chars = Array.from(inputValue);
+            if (chars.length > 400) {
+                // Cắt chuỗi để chỉ lấy 400 ký tự đầu tiên
+                const truncatedValue = chars.slice(0, 400).join('');
+                formik.setFieldValue('comment', truncatedValue);
+            } else {
+                formik.handleChange(e);
+            }
+        },
+        [formik],
+    );
+
     const setCurrentEmoji = (emoji) => {
         if (Array.from(formik.values.comment).length < 400) {
             formik.setFieldValue(
@@ -92,10 +107,7 @@ function TextFieldComment({ onSubmit }) {
                         name="comment"
                         // onFocus={handleFocus}
                         value={formik.values.comment}
-                        onChange={(e) => {
-                            Array.from(e.target.value).length <= 400 &&
-                                formik.handleChange(e);
-                        }}
+                        onChange={handleChange}
                     />
                     {/* {isShowBtn && ( */}
                     <Stack

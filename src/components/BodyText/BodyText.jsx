@@ -1,20 +1,23 @@
-import { memo, useEffect, useRef, useState } from 'react';
+import { memo, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { Box, Typography, useMediaQuery, Skeleton } from '@mui/material';
 import uiConfigs from '~/config/ui.config';
 
-function OverviewMovieDetail({ loading = false, content }) {
+function BodyText({ loading = false, content }) {
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-    const [seeMore, setSeeMore] = useState(false);
-    const [heightBody, setHightBody] = useState(false);
+
+    const [isExpanded, setIsExpanded] = useState(false);
+    const [isOverflowing, setIsOverflowing] = useState(false);
+
     const bodyText = useRef();
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         if (bodyText.current) {
-            setHightBody(
+            setIsOverflowing(
                 bodyText.current.scrollHeight !== bodyText.current.clientHeight,
             );
         }
     }, [loading]);
+
     return (
         <>
             {loading ? (
@@ -22,26 +25,28 @@ function OverviewMovieDetail({ loading = false, content }) {
             ) : (
                 <Box
                     onClick={() => {
-                        if (heightBody) setSeeMore(!seeMore);
+                        if (isOverflowing) setIsExpanded(!isExpanded);
                     }}
-                    sx={{ cursor: heightBody ? 'pointer' : 'initial' }}
+                    sx={{ cursor: isOverflowing ? 'pointer' : 'initial' }}
                 >
                     <Typography
                         ref={bodyText}
                         variant={pointDownSm ? 'body2' : 'body1'}
                         sx={{
-                            ...uiConfigs.style.typoLines(seeMore ? 'none' : 2),
+                            ...uiConfigs.style.typoLines(
+                                isExpanded ? 'none' : 2,
+                            ),
                             wordBreak: 'break-word',
                         }}
                     >
                         {content || 'Không có nội dung'}
                     </Typography>
-                    {heightBody && (
+                    {isOverflowing && (
                         <Typography
                             variant={pointDownSm ? 'body2' : 'body1'}
                             fontWeight={'500'}
                         >
-                            {seeMore ? 'Ẩn bớt' : 'Xem Thêm'}
+                            {isExpanded ? 'Ẩn bớt' : 'Xem Thêm'}
                         </Typography>
                     )}
                 </Box>
@@ -50,4 +55,4 @@ function OverviewMovieDetail({ loading = false, content }) {
     );
 }
 
-export default memo(OverviewMovieDetail);
+export default memo(BodyText);
