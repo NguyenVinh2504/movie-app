@@ -12,11 +12,26 @@ import SwiperNavigation from '~/components/SwiperNavigation';
 import Image from '~/components/Image';
 function CastItem({ item }) {
     return (
-        <Box sx={{ bgcolor: 'rgba(255,255,255,0.1)', borderRadius: '4px', overflow: 'hidden' }}>
+        <Box
+            sx={{
+                bgcolor: 'rgba(255,255,255,0.1)',
+                borderRadius: '4px',
+                overflow: 'hidden',
+            }}
+        >
             <Box sx={{ position: 'relative', pt: '100%' }}>
-                <Box sx={{ ...uiConfigs.style.positionFullSize, cursor: 'pointer' }}>
+                <Box
+                    sx={{
+                        ...uiConfigs.style.positionFullSize,
+                        cursor: 'pointer',
+                    }}
+                >
                     <Image
-                        src={item.profile_path ? tmdbConfigs.posterPath(item.profile_path) : images.noImage2x3}
+                        src={
+                            item.profile_path
+                                ? tmdbConfigs.posterPath(item.profile_path)
+                                : images.noImage2x3
+                        }
                         alt={item.title}
                     />
                 </Box>
@@ -63,6 +78,9 @@ function CastSliceList({ cast }) {
                     },
                     1200: {
                         slidesPerView: 5,
+                    },
+                    1400: {
+                        slidesPerView: 8,
                     },
                 }}
             >

@@ -1,51 +1,42 @@
 /* eslint-disable no-unused-vars */
-import { Box } from '@mui/material';
-import React from 'react';
+import React, { useCallback, useMemo } from 'react';
 import Wrapper from '~/components/Wrapper';
-import uiConfigs from '~/config/ui.config';
 // import TitleMatchMovie from './TitleMatchMovie';
 // import OverviewWatchMovie from './OverviewWatchMovie';
-import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
+import OverviewMovieDetail from '~/components/MediaDetail/OverviewMovieDetail';
+import Episodes from '~/components/MediaDetail/Episodes';
+import CastSlice from '~/components/MediaDetail/CastItem';
+import VideoSlice from '~/components/MediaDetail/VideoSlice';
+import CommentMedia from '~/components/MediaDetail/CommentMedia';
+import { dataDetail } from './mockup-data';
+import WrapperMovieDetail from '~/components/MediaDetail/components/WrapperMovieDetail';
+import TitleMovieDetail from '~/components/MediaDetail/HeaderMovieDetail/TitleMovieDetail';
 
+import { VIETNAM } from './translations';
+import { customIcons } from './customIcon';
+
+import { MediaPlayer, MediaProvider, Poster, Track } from '@vidstack/react';
+import { DefaultVideoLayout } from '@vidstack/react/player/layouts/default';
+
+import { Box } from '@mui/material';
+import tmdbConfigs from '~/api/configs/tmdb.configs';
+import { textTracks } from './tracks';
 const WatchMovie = () => {
-    let { slugifyMovieName, epNumber } = useParams();
-
-    // console.log(user);
-    // const genres = ['Hành động', 'Phiêu Lưu', 'Lịch sử'];
-    // const dataDetail = {
-    //     vote_average: 8.4,
-    //     release_date: '2024-03-12',
-    //     runtime: 124,
-    //     title: 'Napoleon',
-    //     overview:
-    //         'Carol Danvers, aka Captain Marvel, has reclaimed her identity from the tyrannical Kree and taken revenge on the Supreme Intelligence. But unintended consequences see Carol shouldering the burden of a destabilized universe. When her duties send her to an anomalous wormhole linked to a Kree revolutionary, her powers become entangled with that of Jersey City super-fan Kamala Khan, aka Ms. Marvel, and Carol’s estranged niece, now S.A.B.E.R. astronaut Captain Monica Rambeau. Together, this unlikely trio must team up and learn to work in concert to save the universe.',
-    // };
-    const getLinkMovie = (value) => {
-        return axios.get(`https://ophim1.com/phim/${value}`, {
-            withCredentials: false,
-            headers: {
-                'Content-Type': 'application/json',
-            },
-        });
-    };
-    const { data } = useQuery({
-        queryKey: ['Search Phim', slugifyMovieName],
-        queryFn: () => getLinkMovie(slugifyMovieName),
-        enabled: Boolean(slugifyMovieName),
-    });
-
-    const linkMovie = epNumber
-        ? data?.data?.episodes[0]?.server_data?.find((item) => {
-              return item.name === epNumber;
-          })?.link_embed
-        : data?.data?.episodes[0]?.server_data[0]?.link_embed ?? '';
-
+    const mediaTypeDetail = 'movie';
+    const loading = false;
+    const id = 1114894;
+    const newGenres = useMemo(
+        () => dataDetail?.genres?.map((item) => item.name) || [],
+        [],
+    );
+    const smallVideoLayoutQuery = useCallback(({ width, height }) => {
+        return width < 600 || height < 300;
+    }, []);
     return (
         <Wrapper>
             {/* <Typography variant='h4'>Admin Lười Nên Chưa Có Phần Xem Phim. Sẽ Cập Nhật Trong Thời Gian Sắp Tới Nha. Yêu!!!</Typography> */}
-            <Box
+
+            {/* <Box
                 sx={{
                     position: 'relative',
                     pt: 'calc(9/16*100%)',
@@ -68,28 +59,71 @@ const WatchMovie = () => {
                             type="video/mp4"
                         />
                     </video>
-                    {/*  <iframe
-                        src={
-                            // movieId
-                            //     ? `https://vidsrc.xyz/embed/movie/${movieId}`
-                            //     : `https://vidsrc.xyz/embed/tv?tmdb=${showId}&season=${ssId}&episode=${epId}`
-                            linkMovie
-                        }
-                        title="watch"
-                        allowFullScreen={true}
-                        // sandbox="allow-modals allow-orientation-lock allow-pointer-lock allow-presentation allow-scripts allow-top-navigation allow-forms"
-                        style={{ width: '100%', height: '100%', border: '0px' }}
-                    ></iframe> */}
                 </Box>
-            </Box>
-            {/* title */}
-            {/* <Box>
-                <TitleMatchMovie dataDetail={dataDetail} genres={genres} />
             </Box> */}
-            {/* title */}
-            {/* <Box>
-                <OverviewWatchMovie dataDetail={dataDetail} />
-            </Box> */}
+
+            <WrapperMovieDetail noPadding>
+                <MediaPlayer
+                    // src={"https://files.vidstack.io/sprite-fight/hls/stream.m3u8"}
+                    src={
+                        'https://norlixfire12.xyz/file2/0tGBkVwHG4oM40Y2N8etn7u7Zf~In28mHQvs3JShRZFeigmu6hRO6BQ8sczNL7TaLrMGANJ7pE8KoYF~4P0ToM2p3+ogUestCbfKvj0qPIfdRGzhmHvu+~fDoTt0R121xco771OMhD6CJHB04laGYHyKoKulMPjqt2D9nWwIM4c=/cGxheWxpc3QubTN1OA==.m3u8'
+                    }
+                    poster={tmdbConfigs.backdropPath(dataDetail.backdrop_path)}
+                    crossOrigin
+                    playsInline
+                >
+                    <MediaProvider>
+                        <Poster className="vds-poster" />
+                        {textTracks.map((track) => (
+                            <Track {...track} key={track.src} />
+                        ))}
+                    </MediaProvider>
+                    <DefaultVideoLayout
+                        colorScheme="dark"
+                        translations={VIETNAM}
+                        // icons={defaultLayoutIcons}
+                        smallLayoutWhen={smallVideoLayoutQuery}
+                        noAudioGain
+                        slots={{
+                            googleCastButton: null,
+                        }}
+                        icons={customIcons}
+                    />
+                </MediaPlayer>
+                <TitleMovieDetail
+                    loading={loading}
+                    dataDetail={dataDetail}
+                    genres={newGenres}
+                    mediaType={mediaTypeDetail}
+                />
+            </WrapperMovieDetail>
+            <OverviewMovieDetail loading={loading} dataDetail={dataDetail} />
+            {/* thong tin phim */}
+
+            {/* tap phim */}
+            {mediaTypeDetail === 'tv' && (
+                <Episodes
+                    seasons={dataDetail?.seasons ?? []}
+                    seriesId={dataDetail?.id ?? Number('')}
+                    isLoading={loading}
+                    mediaTitle={dataDetail?.name ?? dataDetail?.title ?? ''}
+                />
+            )}
+            {/* tap phim */}
+
+            {/* slice dien vien */}
+            <CastSlice cast={dataDetail?.credits?.cast} loading={loading} />
+            {/* slice dien vien */}
+
+            {/* trailer */}
+            <VideoSlice
+                videos={dataDetail?.videos?.results}
+                loading={loading}
+            />
+            {/* trailer */}
+
+            {/* comment */}
+            <CommentMedia movieId={id} mediaType={mediaTypeDetail} />
         </Wrapper>
     );
 };
