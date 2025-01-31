@@ -1,8 +1,5 @@
-/* eslint-disable no-unused-vars */
-import React, { useCallback, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef } from 'react';
 import Wrapper from '~/components/Wrapper';
-// import TitleMatchMovie from './TitleMatchMovie';
-// import OverviewWatchMovie from './OverviewWatchMovie';
 import OverviewMovieDetail from '~/components/MediaDetail/OverviewMovieDetail';
 import Episodes from '~/components/MediaDetail/Episodes';
 import CastSlice from '~/components/MediaDetail/CastItem';
@@ -14,13 +11,16 @@ import TitleMovieDetail from '~/components/MediaDetail/HeaderMovieDetail/TitleMo
 
 import { VIETNAM } from './translations';
 import { customIcons } from './customIcon';
+import '@vidstack/react/player/styles/default/theme.css';
 
 import { MediaPlayer, MediaProvider, Poster, Track } from '@vidstack/react';
 import { DefaultVideoLayout } from '@vidstack/react/player/layouts/default';
 
-import { Box } from '@mui/material';
 import tmdbConfigs from '~/api/configs/tmdb.configs';
 import { textTracks } from './tracks';
+import VideoLayout from './VideoLayout';
+import { Box } from '@mui/material';
+import theme from '~/theme';
 const WatchMovie = () => {
     const mediaTypeDetail = 'movie';
     const loading = false;
@@ -32,64 +32,91 @@ const WatchMovie = () => {
     const smallVideoLayoutQuery = useCallback(({ width, height }) => {
         return width < 600 || height < 300;
     }, []);
+
+    const playerRef = useRef();
+
+    useEffect(() => {
+        const player = playerRef.current;
+        // player.setAttribute('');
+        // player.$$.$el().style.setProperty('--media-user-font-size', 2);
+        console.log(player.$$.$el());
+    }, []);
+
+    const url =
+        'https://norlixfire12.xyz/file2/0tGBkVwHG4oM40Y2N8etn7u7Zf~In28mHQvs3JShRZFeigmu6hRO6BQ8sczNL7TaLrMGANJ7pE8KoYF~4P0ToM2p3+ogUestCbfKvj0qPIfdRGzhmHvu+~fDoTt0R121xco771OMhD6CJHB04laGYHyKoKulMPjqt2D9nWwIM4c=/cGxheWxpc3QubTN1OA==.m3u8';
+
     return (
         <Wrapper>
             {/* <Typography variant='h4'>Admin Lười Nên Chưa Có Phần Xem Phim. Sẽ Cập Nhật Trong Thời Gian Sắp Tới Nha. Yêu!!!</Typography> */}
 
-            {/* <Box
-                sx={{
-                    position: 'relative',
-                    pt: 'calc(9/16*100%)',
-                    borderRadius: 2,
-                    overflow: 'hidden',
-                    backgroundColor: 'secondary.main',
-                }}
-            >
+            <WrapperMovieDetail noPadding>
                 <Box
                     sx={{
-                        position: 'absolute',
-                        ...uiConfigs.style.positionFullSize,
+                        '& .vds-menu-items[data-root]': {
+                            '--root-bg': '#000000',
+                            backgroundColor: 'var(--root-bg)',
+                        },
+                        '& .vds-menu-items': {
+                            '--root-padding': '20px',
+                            '--root-border':
+                                '1px solid rgba(255, 255, 255, 0.2)',
+                        },
+                        '& [data-media-player]': {
+                            'aspect-ratio': 'initial',
+                            '--media-brand': theme.palette.primary.main,
+                            '--media-slider-track-bg':
+                                'rgba(255, 255, 255, .5)',
+                        },
+                        '& .vds-radio': {
+                            pl: '30px',
+                            '& .vds-icon': {
+                                position: 'absolute',
+                                left: 0,
+                                top: '50%',
+                                transform: 'translateY(-50%)',
+                            },
+                        },
+                        '& .vds-poster': {
+                            objectFit: 'cover',
+                        },
                     }}
                 >
-                    <video width={'100%'} height={'100%'} controls={true}>
-                        <source
-                            src={
-                                'http://localhost:2504/api/v1/files/video-stream/97483167-6f1a-4f88-8db3-1898bc30cf6e.mp4'
-                            }
-                            type="video/mp4"
-                        />
-                    </video>
+                    <MediaPlayer
+                        ref={playerRef}
+                        // src={"https://files.vidstack.io/sprite-fight/hls/stream.m3u8"}
+                        src={`https://proxy-m3u8.viejoy.io.vn/m3u8-proxy?url=${encodeURIComponent(
+                            url,
+                        )}&header=${JSON.stringify({
+                            Referer: '',
+                        })}`}
+                        poster={tmdbConfigs.backdropPath(
+                            dataDetail.backdrop_path,
+                        )}
+                        crossOrigin
+                        playsInline
+                        storage="player-movie"
+                        className="media-player"
+                    >
+                        <MediaProvider>
+                            <Poster className="vds-poster" />
+                            {textTracks.map((track) => (
+                                <Track {...track} key={track.src} />
+                            ))}
+                        </MediaProvider>
+                        {/* <DefaultVideoLayout
+                            colorScheme="dark"
+                            translations={VIETNAM}
+                            // icons={defaultLayoutIcons}
+                            smallLayoutWhen={smallVideoLayoutQuery}
+                            noAudioGain
+                            slots={{
+                                googleCastButton: null,
+                            }}
+                            icons={customIcons}
+                        /> */}
+                        <VideoLayout />
+                    </MediaPlayer>
                 </Box>
-            </Box> */}
-
-            <WrapperMovieDetail noPadding>
-                <MediaPlayer
-                    // src={"https://files.vidstack.io/sprite-fight/hls/stream.m3u8"}
-                    src={
-                        'https://norlixfire12.xyz/file2/0tGBkVwHG4oM40Y2N8etn7u7Zf~In28mHQvs3JShRZFeigmu6hRO6BQ8sczNL7TaLrMGANJ7pE8KoYF~4P0ToM2p3+ogUestCbfKvj0qPIfdRGzhmHvu+~fDoTt0R121xco771OMhD6CJHB04laGYHyKoKulMPjqt2D9nWwIM4c=/cGxheWxpc3QubTN1OA==.m3u8'
-                    }
-                    poster={tmdbConfigs.backdropPath(dataDetail.backdrop_path)}
-                    crossOrigin
-                    playsInline
-                >
-                    <MediaProvider>
-                        <Poster className="vds-poster" />
-                        {textTracks.map((track) => (
-                            <Track {...track} key={track.src} />
-                        ))}
-                    </MediaProvider>
-                    <DefaultVideoLayout
-                        colorScheme="dark"
-                        translations={VIETNAM}
-                        // icons={defaultLayoutIcons}
-                        smallLayoutWhen={smallVideoLayoutQuery}
-                        noAudioGain
-                        slots={{
-                            googleCastButton: null,
-                        }}
-                        icons={customIcons}
-                    />
-                </MediaPlayer>
                 <TitleMovieDetail
                     loading={loading}
                     dataDetail={dataDetail}

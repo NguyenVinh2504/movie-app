@@ -445,7 +445,7 @@ const theme = createTheme({
         }
 
         button,
-        input {
+        input, [tabindex] {
             outline: none;
             border: none;
             padding: 0;

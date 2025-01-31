@@ -30,6 +30,7 @@
     "lodash.isequal": "^4.5.0",
     "material-ui-confirm": "^3.0.9",
     "material-ui-popup-state": "^5.0.10",
+    "media-icons": "^1.1.5",
     "normalize.css": "^8.0.1",
     "prop-types": "^15.8.1",
     "query-string": "^8.1.0",
