@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo, useRef } from 'react';
+import { useMemo } from 'react';
 import Wrapper from '~/components/Wrapper';
 import OverviewMovieDetail from '~/components/MediaDetail/OverviewMovieDetail';
 import Episodes from '~/components/MediaDetail/Episodes';
@@ -9,18 +9,7 @@ import { dataDetail } from './mockup-data';
 import WrapperMovieDetail from '~/components/MediaDetail/components/WrapperMovieDetail';
 import TitleMovieDetail from '~/components/MediaDetail/HeaderMovieDetail/TitleMovieDetail';
 
-import { VIETNAM } from './translations';
-import { customIcons } from './customIcon';
-import '@vidstack/react/player/styles/default/theme.css';
-
-import { MediaPlayer, MediaProvider, Poster, Track } from '@vidstack/react';
-import { DefaultVideoLayout } from '@vidstack/react/player/layouts/default';
-
-import tmdbConfigs from '~/api/configs/tmdb.configs';
-import { textTracks } from './tracks';
-import VideoLayout from './VideoLayout';
-import { Box } from '@mui/material';
-import theme from '~/theme';
+import Player from './VideoLayout/components/Player';
 const WatchMovie = () => {
     const mediaTypeDetail = 'movie';
     const loading = false;
@@ -29,18 +18,6 @@ const WatchMovie = () => {
         () => dataDetail?.genres?.map((item) => item.name) || [],
         [],
     );
-    const smallVideoLayoutQuery = useCallback(({ width, height }) => {
-        return width < 600 || height < 300;
-    }, []);
-
-    const playerRef = useRef();
-
-    useEffect(() => {
-        const player = playerRef.current;
-        // player.setAttribute('');
-        // player.$$.$el().style.setProperty('--media-user-font-size', 2);
-        console.log(player.$$.$el());
-    }, []);
 
     const url =
         'https://norlixfire12.xyz/file2/0tGBkVwHG4oM40Y2N8etn7u7Zf~In28mHQvs3JShRZFeigmu6hRO6BQ8sczNL7TaLrMGANJ7pE8KoYF~4P0ToM2p3+ogUestCbfKvj0qPIfdRGzhmHvu+~fDoTt0R121xco771OMhD6CJHB04laGYHyKoKulMPjqt2D9nWwIM4c=/cGxheWxpc3QubTN1OA==.m3u8';
@@ -50,7 +27,7 @@ const WatchMovie = () => {
             {/* <Typography variant='h4'>Admin Lười Nên Chưa Có Phần Xem Phim. Sẽ Cập Nhật Trong Thời Gian Sắp Tới Nha. Yêu!!!</Typography> */}
 
             <WrapperMovieDetail noPadding>
-                <Box
+                {/* <Box
                     sx={{
                         '& .vds-menu-items[data-root]': {
                             '--root-bg': '#000000',
@@ -62,10 +39,11 @@ const WatchMovie = () => {
                                 '1px solid rgba(255, 255, 255, 0.2)',
                         },
                         '& [data-media-player]': {
-                            'aspect-ratio': 'initial',
+                            aspectRatio: '16 /9',
                             '--media-brand': theme.palette.primary.main,
                             '--media-slider-track-bg':
                                 'rgba(255, 255, 255, .5)',
+                            backgroundColor: '#000',
                         },
                         '& .vds-radio': {
                             pl: '30px',
@@ -83,7 +61,6 @@ const WatchMovie = () => {
                 >
                     <MediaPlayer
                         ref={playerRef}
-                        // src={"https://files.vidstack.io/sprite-fight/hls/stream.m3u8"}
                         src={`https://proxy-m3u8.viejoy.io.vn/m3u8-proxy?url=${encodeURIComponent(
                             url,
                         )}&header=${JSON.stringify({
@@ -103,7 +80,7 @@ const WatchMovie = () => {
                                 <Track {...track} key={track.src} />
                             ))}
                         </MediaProvider>
-                        {/* <DefaultVideoLayout
+                        <DefaultVideoLayout
                             colorScheme="dark"
                             translations={VIETNAM}
                             // icons={defaultLayoutIcons}
@@ -113,10 +90,15 @@ const WatchMovie = () => {
                                 googleCastButton: null,
                             }}
                             icons={customIcons}
-                        /> */}
+                        />
                         <VideoLayout />
                     </MediaPlayer>
-                </Box>
+                </Box> */}
+                <Player
+                    poster={dataDetail.backdrop_path}
+                    url={url}
+                    title={dataDetail.title}
+                />
                 <TitleMovieDetail
                     loading={loading}
                     dataDetail={dataDetail}

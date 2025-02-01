@@ -448,10 +448,7 @@ const theme = createTheme({
         input, [tabindex] {
             outline: none;
             border: none;
-            padding: 0;
-            background-color: transparent;
         }
-        
             `,
         },
     },

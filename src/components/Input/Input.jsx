@@ -45,7 +45,9 @@ const Input = forwardRef(
             <Stack sx={{ width: '100%' }}>
                 <Box
                     sx={{
-                        backgroundColor: disable ? root.backgroundDisableInput : root.backgroundDefaultInput,
+                        backgroundColor: disable
+                            ? root.backgroundDisableInput
+                            : root.backgroundDefaultInput,
                         pointerEvents: disable && 'none',
                         display: 'flex',
                         alignItems: 'center',
@@ -61,6 +63,10 @@ const Input = forwardRef(
                         }`,
                         padding: '0px 8px 0px 16px',
                         gap: '8px',
+                        'button, input': {
+                            backgroundColor: 'transparent',
+                            padding: 0,
+                        },
                         input: {
                             color: root.textDefaultInput,
                             fontSize: '1rem',
@@ -69,15 +75,24 @@ const Input = forwardRef(
                             lineHeight: '45px',
                             letterSpacing: '0.03125rem',
                             width: '100%',
-                            '&:not(:placeholder-shown)': { color: root.textValueInput },
+                            '&:not(:placeholder-shown)': {
+                                color: root.textValueInput,
+                            },
                         },
-                        '&:hover': { border: `1px solid ${root.borderFocusInput}` },
-                        '&:focus-within': { border: `1px solid ${root.borderTypingInput}` },
+                        '&:hover': {
+                            border: `1px solid ${root.borderFocusInput}`,
+                        },
+                        '&:focus-within': {
+                            border: `1px solid ${root.borderTypingInput}`,
+                        },
                     }}
                 >
                     {leftIcon && (
                         <button {...iconLeftEvent}>
-                            <Box component={'span'} sx={{ display: 'flex', alignItems: 'center' }}>
+                            <Box
+                                component={'span'}
+                                sx={{ display: 'flex', alignItems: 'center' }}
+                            >
                                 {leftIcon}
                             </Box>
                         </button>
@@ -99,7 +114,11 @@ const Input = forwardRef(
                     {props?.type === 'password' && props?.value && (
                         <Box
                             component={'span'}
-                            sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}
+                            sx={{
+                                display: 'flex',
+                                alignItems: 'center',
+                                cursor: 'pointer',
+                            }}
                             onClick={toggleEye}
                         >
                             {!openEye ? <EyeIcon /> : <EyeSlashIcon />}
@@ -107,7 +126,14 @@ const Input = forwardRef(
                     )}
                     {rightIcon && (
                         <button {...iconRightEvent}>
-                            <Box component={'span'} sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+                            <Box
+                                component={'span'}
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    cursor: 'pointer',
+                                }}
+                            >
                                 {rightIcon}
                             </Box>
                         </button>
