@@ -1,23 +1,52 @@
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import Wrapper from '~/components/Wrapper';
 import OverviewMovieDetail from '~/components/MediaDetail/OverviewMovieDetail';
 import Episodes from '~/components/MediaDetail/Episodes';
 import CastSlice from '~/components/MediaDetail/CastItem';
 import VideoSlice from '~/components/MediaDetail/VideoSlice';
 import CommentMedia from '~/components/MediaDetail/CommentMedia';
-import { dataDetail } from './mockup-data';
 import WrapperMovieDetail from '~/components/MediaDetail/components/WrapperMovieDetail';
 import TitleMovieDetail from '~/components/MediaDetail/HeaderMovieDetail/TitleMovieDetail';
-
 import Player from './VideoLayout/components/Player';
+import { useQueryConfig } from '~/Hooks';
+import mediaApi from '~/api/module/media.api';
+import { useQuery } from '@tanstack/react-query';
 const WatchMovie = () => {
-    const mediaTypeDetail = 'movie';
-    const loading = false;
-    const id = 1114894;
+    const queryConfig = useQueryConfig();
+
+    const {
+        media_type: mediaTypeDetail,
+        id,
+        episode_number,
+        season_number,
+        episode_id,
+    } = queryConfig;
+    const getDataDetail = useCallback(async () => {
+        const { response, err } = await mediaApi.getDetail({
+            mediaType: mediaTypeDetail,
+            mediaId: id,
+        });
+        if (response) return response;
+        if (err) throw err;
+    }, [id, mediaTypeDetail]);
+
+    const { data: dataDetail = {}, isPending: loading } = useQuery({
+        queryKey: ['Media detail', mediaTypeDetail, id],
+        queryFn: getDataDetail,
+        enabled: Boolean(mediaTypeDetail && id),
+    });
+
     const newGenres = useMemo(
         () => dataDetail?.genres?.map((item) => item.name) || [],
-        [],
+        [dataDetail?.genres],
     );
+    // const mediaTypeDetail = 'movie';
+    // const loading = false;
+    // const id = 1114894;
+    // const newGenres = useMemo(
+    //     () => dataDetail?.genres?.map((item) => item.name) || [],
+    //     [],
+    // );
 
     const url =
         'https://norlixfire12.xyz/file2/0tGBkVwHG4oM40Y2N8etn7u7Zf~In28mHQvs3JShRZFeigmu6hRO6BQ8sczNL7TaLrMGANJ7pE8KoYF~4P0ToM2p3+ogUestCbfKvj0qPIfdRGzhmHvu+~fDoTt0R121xco771OMhD6CJHB04laGYHyKoKulMPjqt2D9nWwIM4c=/cGxheWxpc3QubTN1OA==.m3u8';
@@ -98,6 +127,11 @@ const WatchMovie = () => {
                     poster={dataDetail.backdrop_path}
                     url={url}
                     title={dataDetail.title}
+                    id={id}
+                    mediaType={mediaTypeDetail}
+                    episode_number={episode_number}
+                    season_number={season_number}
+                    episode_id={episode_id}
                 />
                 <TitleMovieDetail
                     loading={loading}

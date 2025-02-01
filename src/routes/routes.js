@@ -54,7 +54,7 @@ export const routesMainLayout = [
                         path: config.routes.signup,
                         element: <AuthPage />,
                     },
-                ]
+                ],
             },
             {
                 path: config.routes.forgotPassword,
@@ -86,19 +86,21 @@ export const routesMainLayout = [
                             },
                         ],
                     },
-                ]
+                ],
             },
             {
                 path: '',
                 element: <ProtectedRoute />,
-                children: [{
-                    path: config.routes.watchMovieId,
-                    element: <WatchMovie />,
-                },
-                {
-                    path: config.routes.watchTvId,
-                    element: <WatchMovie />,
-                }]
+                children: [
+                    {
+                        path: config.routes.watchMovie,
+                        element: <WatchMovie />,
+                    },
+                    // {
+                    //     path: config.routes.watchTvId,
+                    //     element: <WatchMovie />,
+                    // }
+                ],
             },
             {
                 path: config.routes.error,
@@ -109,17 +111,17 @@ export const routesMainLayout = [
 ];
 function ProtectedRoute() {
     const isLogged = useSelector(isAuthenticated);
-    return isLogged ? <Outlet /> : <Navigate to='/login' />
+    return isLogged ? <Outlet /> : <Navigate to="/login" />;
 }
 
 function RejectedRoute() {
     const isLogged = useSelector(isAuthenticated);
-    return !isLogged ? <Outlet /> : <Navigate to={config.routes.home} />
+    return !isLogged ? <Outlet /> : <Navigate to={config.routes.home} />;
 }
 
 const useRouteElements = () => {
-    const element = useRoutes(routesMainLayout)
-    return element
-}
+    const element = useRoutes(routesMainLayout);
+    return element;
+};
 
-export default useRouteElements
+export default useRouteElements;

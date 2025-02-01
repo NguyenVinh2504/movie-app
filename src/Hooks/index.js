@@ -4,3 +4,4 @@ export { default as useQueryConfig } from './useQueryConfig';
 export { default as useQueryParams } from './useQueryParams';
 export { default as useIsDetailMovie } from './useIsDetailMovie';
 export { default as useMediaList } from './useMediaList';
+export { default as useGoWatchMovie } from './useGoWatchMovie';

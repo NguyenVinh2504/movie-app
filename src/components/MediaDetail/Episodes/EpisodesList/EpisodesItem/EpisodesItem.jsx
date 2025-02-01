@@ -1,4 +1,11 @@
-import { Box, Typography, Stack, styled, IconButton, useMediaQuery } from '@mui/material';
+import {
+    Box,
+    Typography,
+    Stack,
+    styled,
+    IconButton,
+    useMediaQuery,
+} from '@mui/material';
 import { PlayIcon } from '~/components/Icon';
 
 import uiConfigs from '~/config/ui.config';
@@ -9,12 +16,11 @@ import Image from '~/components/Image';
 import config from '~/config';
 import { NavLink } from 'react-router-dom';
 import { slugify } from '~/utils/slugify';
-function EpisodesItem({ item, dataSeason, mediaTitle }) {
+import { useGoWatchMovie } from '~/Hooks';
+function EpisodesItem({ item, dataSeason }) {
+    console.log({ item });
+    const { handleOpen } = useGoWatchMovie();
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
-    let slugifyNameMovie = '';
-    if (mediaTitle) {
-        slugifyNameMovie = slugify(mediaTitle);
-    }
     const CustomBox = styled(Box)(({ theme }) => ({
         position: 'relative',
         marginRight: theme.spacing(2),
@@ -25,7 +31,9 @@ function EpisodesItem({ item, dataSeason, mediaTitle }) {
             gridArea: '1 / 1 / 2 / 2',
         },
     }));
-    const CustomIconButton = styled((props) => <IconButton color="secondNeutral" {...props} />)(({ theme }) => ({
+    const CustomIconButton = styled((props) => (
+        <IconButton color="secondNeutral" {...props} />
+    ))(({ theme }) => ({
         [theme.breakpoints.down('sm')]: {
             opacity: '1',
         },
@@ -49,7 +57,10 @@ function EpisodesItem({ item, dataSeason, mediaTitle }) {
                         alt={item.name}
                         src={
                             item?.still_path || dataSeason.poster_path
-                                ? tmdbConfigs.posterPath(item?.still_path ?? dataSeason.poster_path)
+                                ? tmdbConfigs.posterPath(
+                                      item?.still_path ??
+                                          dataSeason.poster_path,
+                                  )
                                 : images.noImage19x6
                         }
                     />
@@ -59,7 +70,7 @@ function EpisodesItem({ item, dataSeason, mediaTitle }) {
     };
 
     return (
-        <Box component={NavLink} to={`${config.routes.watchTv}/${slugifyNameMovie}/${item?.episode_number}`}>
+        <Box>
             {/* <CustomDivider /> */}
             <Box
                 sx={{
@@ -69,7 +80,10 @@ function EpisodesItem({ item, dataSeason, mediaTitle }) {
                     px: 1,
                     py: 3,
                     display: 'grid',
-                    gridTemplateColumns: { sm: '0.2fr 0.45fr 1fr', xs: '1.2fr 1fr' },
+                    gridTemplateColumns: {
+                        sm: '0.2fr 0.45fr 1fr',
+                        xs: '1.2fr 1fr',
+                    },
                     gridTemplateRows: 'repeat(2, auto)',
                     alignItems: 'center',
                     '&:hover': {
@@ -98,13 +112,26 @@ function EpisodesItem({ item, dataSeason, mediaTitle }) {
                     {item.episode_number || 'N/A'}
                 </Typography>
                 <CustomBox>
-                    <CustomIconButton>
+                    <CustomIconButton
+                        onClick={() =>
+                            handleOpen({
+                                id: item.show_id,
+                                mediaType: 'tv',
+                                episodeId: item.id,
+                                seasonNumber: item.season_number,
+                                episodeNumber: item.episode_number,
+                            })
+                        }
+                    >
                         <PlayIcon />
                     </CustomIconButton>
                     <CustomImage item={item}></CustomImage>
                 </CustomBox>
                 <Stack
-                    sx={{ flexDirection: { xs: 'column', sm: 'row' }, alignItems: { xs: 'flex-start', msm: 'center' } }}
+                    sx={{
+                        flexDirection: { xs: 'column', sm: 'row' },
+                        alignItems: { xs: 'flex-start', msm: 'center' },
+                    }}
                     justifyContent={'space-between'}
                 >
                     <Typography
@@ -116,7 +143,9 @@ function EpisodesItem({ item, dataSeason, mediaTitle }) {
                         fontWeight={500}
                         component={'h5'}
                     >
-                        {`${pointDownSm ? `${item.episode_number}. ` : ''}${item?.name || 'N/A'}`}
+                        {`${pointDownSm ? `${item.episode_number}. ` : ''}${
+                            item?.name || 'N/A'
+                        }`}
                     </Typography>
 
                     {item.runtime && (
@@ -128,7 +157,9 @@ function EpisodesItem({ item, dataSeason, mediaTitle }) {
                                 textAlign: { sm: 'end', xs: 'start' },
                             }}
                         >
-                            {`${item.runtime || 'N/A'} ${!item.runtime ? '' : 'minutes'}`}
+                            {`${item.runtime || 'N/A'} ${
+                                !item.runtime ? '' : 'minutes'
+                            }`}
                         </Typography>
                     )}
                 </Stack>

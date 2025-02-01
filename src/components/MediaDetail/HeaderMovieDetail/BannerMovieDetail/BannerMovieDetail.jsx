@@ -3,27 +3,37 @@ import { PlayIcon } from '~/components/Icon';
 import uiConfigs from '~/config/ui.config';
 import tmdbConfigs from '~/api/configs/tmdb.configs';
 import { memo } from 'react';
-import { NavLink } from 'react-router-dom';
 import Image from '~/components/Image';
-import config from '~/config';
-import { slugify } from '~/utils/slugify';
+import { useGoWatchMovie } from '~/Hooks';
+
 function BannerMovieDetail({ loading, dataDetail, mediaType }) {
-    let slugifyNameMovie = '';
-    if (dataDetail?.title || dataDetail?.name) {
-        slugifyNameMovie = slugify(dataDetail?.title || dataDetail?.name);
-    }
+    const { handleOpen } = useGoWatchMovie();
+
     return (
-        <Box sx={{ position: 'relative', overflow: 'hidden', pt: 'calc(9/16*100%)', pl: 0 }}>
+        <Box
+            sx={{
+                position: 'relative',
+                overflow: 'hidden',
+                pt: 'calc(9/16*100%)',
+                pl: 0,
+            }}
+        >
             {loading ? (
                 <>
-                    <Skeleton variant="rectangular" width={'100%'} height={'100%'} />
+                    <Skeleton
+                        variant="rectangular"
+                        width={'100%'}
+                        height={'100%'}
+                    />
                 </>
             ) : (
                 <>
                     {mediaType === 'movie' && (
                         <IconButton
-                            component={NavLink}
-                            to={`${config.routes.watchMovie}/${slugifyNameMovie}`}
+                            // component={NavLink}
+                            onClick={() =>
+                                handleOpen({ id: dataDetail.id, mediaType })
+                            }
                             color="secondNeutral"
                             sx={{
                                 zIndex: '10',
@@ -38,14 +48,20 @@ function BannerMovieDetail({ loading, dataDetail, mediaType }) {
                         </IconButton>
                     )}
                     <Box sx={{ ...uiConfigs.style.positionFullSize }}>
-                        <Image src={tmdbConfigs.backdropPath(dataDetail.backdrop_path)} alt={dataDetail.title} />
+                        <Image
+                            src={tmdbConfigs.backdropPath(
+                                dataDetail.backdrop_path,
+                            )}
+                            alt={dataDetail.title}
+                        />
                     </Box>
                     <Box
                         sx={{
                             ...uiConfigs.style.gradientBgImage,
                             bottom: '-2px',
                             height: 'auto',
-                            background: 'linear-gradient(180deg, rgba(18,18,18,0), rgb(18,18,18) )',
+                            background:
+                                'linear-gradient(180deg, rgba(18,18,18,0), rgb(18,18,18) )',
                         }}
                     />
                 </>

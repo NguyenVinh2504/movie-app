@@ -10,11 +10,11 @@ const routes = {
     movie: MovieTabItems[0].path,
     tv: TvTabItems[0].path,
     homeCategory: {
-        trending: "/home/all/day",
-        nowPlaying: "/home/movie/now_playing",
-        airingToday: "/home/tv/airing_today",
-        popularMovie: "/home/movie/popular",
-        popularTv: "/home/tv/popular",
+        trending: '/home/all/day',
+        nowPlaying: '/home/movie/now_playing',
+        airingToday: '/home/tv/airing_today',
+        popularMovie: '/home/movie/popular',
+        popularTv: '/home/tv/popular',
     },
 
     searchPage: '/search',
@@ -39,11 +39,13 @@ const routes = {
 
     forgotPassword: '/forgot-password',
 
-    watchMovieId: '/watch/movie/:slugifyMovieName',
-    watchMovie: '/watch/movie',
+    // watchMovieId: '/watch/movie/:slugifyMovieName',
+    // watchMovie: '/watch/movie',
 
-    watchTvId: '/watch/tv/:slugifyMovieName/:epNumber',
-    watchTv: '/watch/tv',
+    // watchTvId: '/watch/tv/:slugifyMovieName/:epNumber',
+    // watchTv: '/watch/tv',
+
+    watchMovie: '/watch',
 
     error: '*',
 };
