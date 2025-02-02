@@ -11,29 +11,49 @@ import videoApi from '~/api/module/video.api';
 import { useQuery } from '@tanstack/react-query';
 
 function Player({
+    poster,
+    title,
     id,
     mediaType,
-    episode_number = '',
-    season_number = '',
-    episode_id = '',
+    episodeNumber = '',
+    seasonNumber = '',
+    episodeId = '',
 }) {
     const smallVideoLayoutQuery = useCallback(({ width, height }) => {
         return width < 600 || height < 300;
     }, []);
 
     const getVideoInfo = useCallback(async () => {
-        return await videoApi.getVideoMovie({
-            movieId: id,
-        });
-    }, [id]);
+        let response = null;
+        if (mediaType === 'tv') {
+            response = await videoApi.getVideoTV({
+                mediaId: id,
+                episodeNumber,
+                seasonNumber,
+                episodeId,
+            });
+        } else {
+            response = await videoApi.getVideoMovie({
+                mediaId: id,
+            });
+        }
+        return response;
+    }, [id, mediaType, episodeNumber, seasonNumber, episodeId]);
 
-    const { data: { videoUrl, poster, title, tracks = [] } = {}, isError } =
-        useQuery({
-            queryKey: ['Video Info', mediaType, id],
-            queryFn: getVideoInfo,
-        });
+    const { data: { videoUrl, tracks = [] } = {} } = useQuery({
+        queryKey: [
+            'Video Info',
+            mediaType,
+            id,
+            episodeNumber,
+            seasonNumber,
+            episodeId,
+        ],
+        queryFn: getVideoInfo,
+        enabled: Boolean(mediaType && id),
+    });
 
-    return !isError ? (
+    return (
         <MediaPlayer
             src={`https://proxy-m3u8.viejoy.io.vn/m3u8-proxy?url=${encodeURIComponent(
                 videoUrl,
@@ -65,7 +85,7 @@ function Player({
                 icons={customIcons}
             />
         </MediaPlayer>
-    ) : null;
+    );
 }
 
 export default Player;

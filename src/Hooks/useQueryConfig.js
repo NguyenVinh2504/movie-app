@@ -1,15 +1,16 @@
-import useQueryParams from "./useQueryParams"
-import { omitBy, isUndefined } from 'lodash'
+import useQueryParams from './useQueryParams';
+import { omitBy, isUndefined } from 'lodash';
 export default function useQueryConfig() {
-    const queryParams = useQueryParams()
+    const queryParams = useQueryParams();
     const queryConfig = omitBy(
         {
             query: queryParams.query,
             media_type: queryParams.media_type,
             id: queryParams.id,
-            category: queryParams.category
+            category: queryParams.category,
+            v: queryParams.v,
         },
-        isUndefined
-    )
-    return queryConfig
+        isUndefined,
+    );
+    return queryConfig;
 }

@@ -1,6 +1,6 @@
 import config from '~/config';
-import { isUndefined, omitBy } from 'lodash';
 import { createSearchParams, useNavigate } from 'react-router-dom';
+import encodeObject from '~/utils/encodeObject';
 
 function useGoWatchMovie() {
     const navigate = useNavigate();
@@ -11,20 +11,21 @@ function useGoWatchMovie() {
         seasonNumber,
         episodeId,
     }) => {
+        const query = {
+            mediaType,
+            id,
+            ...(mediaType === 'tv' && {
+                episodeId,
+                episodeNumber,
+                seasonNumber,
+            }),
+        };
+
+        const encodeQuery = encodeObject(query);
+
         navigate({
             pathname: config.routes.watchMovie,
-            search: createSearchParams(
-                omitBy(
-                    {
-                        media_type: mediaType,
-                        id,
-                        episode_id: episodeId,
-                        episode_number: episodeNumber,
-                        season_number: seasonNumber,
-                    },
-                    isUndefined,
-                ),
-            ).toString(),
+            search: createSearchParams({ v: encodeQuery }).toString(),
         });
     };
 

@@ -13,9 +13,6 @@ import images from '~/assets/image';
 import tmdbConfigs from '~/api/configs/tmdb.configs';
 import { memo } from 'react';
 import Image from '~/components/Image';
-import config from '~/config';
-import { NavLink } from 'react-router-dom';
-import { slugify } from '~/utils/slugify';
 import { useGoWatchMovie } from '~/Hooks';
 function EpisodesItem({ item, dataSeason }) {
     console.log({ item });

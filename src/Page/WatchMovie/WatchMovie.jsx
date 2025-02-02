@@ -11,29 +11,32 @@ import Player from './VideoLayout/components/Player';
 import { useQueryConfig } from '~/Hooks';
 import mediaApi from '~/api/module/media.api';
 import { useQuery } from '@tanstack/react-query';
+import decodeObject from '~/utils/decodeObject';
 const WatchMovie = () => {
     const queryConfig = useQueryConfig();
 
-    const {
-        media_type: mediaTypeDetail,
-        id,
-        episode_number,
-        season_number,
-        episode_id,
-    } = queryConfig;
+    const { v } = queryConfig;
+    const { id, mediaType, episodeNumber, seasonNumber, episodeId } =
+        decodeObject(v);
+
+    const obj = decodeObject(v);
+    console.log(obj);
+
+    console.log(id, mediaType, episodeNumber, seasonNumber, episodeId);
+
     const getDataDetail = useCallback(async () => {
         const { response, err } = await mediaApi.getDetail({
-            mediaType: mediaTypeDetail,
+            mediaType,
             mediaId: id,
         });
         if (response) return response;
         if (err) throw err;
-    }, [id, mediaTypeDetail]);
+    }, [id, mediaType]);
 
     const { data: dataDetail = {}, isPending: loading } = useQuery({
-        queryKey: ['Media detail', mediaTypeDetail, id],
+        queryKey: ['Media detail', mediaType, id],
         queryFn: getDataDetail,
-        enabled: Boolean(mediaTypeDetail && id),
+        enabled: Boolean(mediaType && id && v),
     });
 
     const newGenres = useMemo(
@@ -127,24 +130,25 @@ const WatchMovie = () => {
                     poster={dataDetail.backdrop_path}
                     url={url}
                     title={dataDetail.title}
+                    v={v}
                     id={id}
-                    mediaType={mediaTypeDetail}
-                    episode_number={episode_number}
-                    season_number={season_number}
-                    episode_id={episode_id}
+                    mediaType={mediaType}
+                    episodeId={episodeId}
+                    seasonNumber={seasonNumber}
+                    episodeNumber={episodeNumber}
                 />
                 <TitleMovieDetail
                     loading={loading}
                     dataDetail={dataDetail}
                     genres={newGenres}
-                    mediaType={mediaTypeDetail}
+                    mediaType={mediaType}
                 />
             </WrapperMovieDetail>
             <OverviewMovieDetail loading={loading} dataDetail={dataDetail} />
             {/* thong tin phim */}
 
             {/* tap phim */}
-            {mediaTypeDetail === 'tv' && (
+            {mediaType === 'tv' && (
                 <Episodes
                     seasons={dataDetail?.seasons ?? []}
                     seriesId={dataDetail?.id ?? Number('')}
@@ -166,7 +170,7 @@ const WatchMovie = () => {
             {/* trailer */}
 
             {/* comment */}
-            <CommentMedia movieId={id} mediaType={mediaTypeDetail} />
+            <CommentMedia movieId={id} mediaType={mediaType} />
         </Wrapper>
     );
 };
