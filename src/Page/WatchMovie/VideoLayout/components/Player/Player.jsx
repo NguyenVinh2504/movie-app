@@ -2,13 +2,15 @@ import '@vidstack/react/player/styles/default/theme.css';
 import '@vidstack/react/player/styles/default/layouts/video.css';
 import { MediaPlayer, MediaProvider, Poster, Track } from '@vidstack/react';
 import { DefaultVideoLayout } from '@vidstack/react/player/layouts/default';
-import { useCallback } from 'react';
+import { memo, useCallback, useEffect } from 'react';
 import { VIETNAM } from '~/Page/WatchMovie/translations';
 import { customIcons } from '~/Page/WatchMovie/customIcon';
 import tmdbConfigs from '~/api/configs/tmdb.configs';
 import './Player.module.css';
 import videoApi from '~/api/module/video.api';
 import { useQuery } from '@tanstack/react-query';
+import { Box, Skeleton, Typography } from '@mui/material';
+import uiConfigs from '~/config/ui.config';
 
 function Player({
     poster,
@@ -19,6 +21,13 @@ function Player({
     seasonNumber = '',
     episodeId = '',
 }) {
+    useEffect(() => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth',
+        });
+    }, [id, mediaType, episodeNumber, seasonNumber, episodeId]);
+
     const smallVideoLayoutQuery = useCallback(({ width, height }) => {
         return width < 600 || height < 300;
     }, []);
@@ -40,7 +49,7 @@ function Player({
         return response;
     }, [id, mediaType, episodeNumber, seasonNumber, episodeId]);
 
-    const { data: { videoUrl, tracks = [] } = {} } = useQuery({
+    const { data = {}, isLoading } = useQuery({
         queryKey: [
             'Video Info',
             mediaType,
@@ -52,14 +61,51 @@ function Player({
         queryFn: getVideoInfo,
         enabled: Boolean(mediaType && id),
     });
+    const { videoUrl = '', tracks = [], referer = '' } = data;
+    if (Object.keys(data).length === 0) {
+        return (
+            <Box
+                sx={{
+                    width: '100%',
+                    pt: 'calc(9/16*100%)',
+                    backgroundColor: 'black',
 
+                    position: 'relative',
+                }}
+            >
+                {isLoading ? (
+                    <Skeleton
+                        variant="rounded"
+                        sx={{ ...uiConfigs.style.positionFullSize }}
+                    />
+                ) : (
+                    <Typography
+                        variant="h5"
+                        component={'p'}
+                        sx={{
+                            position: 'absolute',
+                            inset: 0,
+                            display: 'flex',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}
+                    >
+                        Phim sẽ được cập nhật trong thời gian sớm nhất. Xin cảm
+                        ơn!
+                    </Typography>
+                )}
+            </Box>
+        );
+    }
     return (
         <MediaPlayer
             src={`https://proxy-m3u8.viejoy.io.vn/m3u8-proxy?url=${encodeURIComponent(
                 videoUrl,
-            )}&header=${JSON.stringify({
-                Referer: 'https://megacloud.tube/',
-            })}`}
+            )}&header=${encodeURIComponent(
+                JSON.stringify({
+                    referer,
+                }),
+            )}`}
             poster={tmdbConfigs.backdropPath(poster)}
             viewType="video"
             streamType="on-demand"
@@ -88,4 +134,4 @@ function Player({
     );
 }
 
-export default Player;
+export default memo(Player);

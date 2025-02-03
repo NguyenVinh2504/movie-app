@@ -11,6 +11,7 @@ import { isAuthenticated } from '~/redux/selectors';
 import favoriteApi from '~/api/module/favorite.api';
 import userApi from '~/api/module/user.api';
 import { updateUser } from '~/redux/features/userSlice';
+import ScrollButton from '~/components/ScrollButton';
 
 function MainLayout() {
     const dispatch = useDispatch();
@@ -69,6 +70,7 @@ function MainLayout() {
                     <Outlet />
                 </Container>
                 <Footer />
+                <ScrollButton />
             </Container>
         </>
     );

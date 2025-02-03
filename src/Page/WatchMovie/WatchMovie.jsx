@@ -1,4 +1,4 @@
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import Wrapper from '~/components/Wrapper';
 import OverviewMovieDetail from '~/components/MediaDetail/OverviewMovieDetail';
 import Episodes from '~/components/MediaDetail/Episodes';
@@ -18,11 +18,9 @@ const WatchMovie = () => {
     const { v } = queryConfig;
     const { id, mediaType, episodeNumber, seasonNumber, episodeId } =
         decodeObject(v);
+    // console.log(obj);
 
-    const obj = decodeObject(v);
-    console.log(obj);
-
-    console.log(id, mediaType, episodeNumber, seasonNumber, episodeId);
+    // console.log(id, mediaType, episodeNumber, seasonNumber, episodeId);
 
     const getDataDetail = useCallback(async () => {
         const { response, err } = await mediaApi.getDetail({
@@ -51,9 +49,9 @@ const WatchMovie = () => {
     //     [],
     // );
 
-    const url =
-        'https://norlixfire12.xyz/file2/0tGBkVwHG4oM40Y2N8etn7u7Zf~In28mHQvs3JShRZFeigmu6hRO6BQ8sczNL7TaLrMGANJ7pE8KoYF~4P0ToM2p3+ogUestCbfKvj0qPIfdRGzhmHvu+~fDoTt0R121xco771OMhD6CJHB04laGYHyKoKulMPjqt2D9nWwIM4c=/cGxheWxpc3QubTN1OA==.m3u8';
-
+    useEffect(() => {
+        console.log('re-render');
+    }, []);
     return (
         <Wrapper>
             {/* <Typography variant='h4'>Admin Lười Nên Chưa Có Phần Xem Phim. Sẽ Cập Nhật Trong Thời Gian Sắp Tới Nha. Yêu!!!</Typography> */}
@@ -128,7 +126,6 @@ const WatchMovie = () => {
                 </Box> */}
                 <Player
                     poster={dataDetail.backdrop_path}
-                    url={url}
                     title={dataDetail.title}
                     v={v}
                     id={id}
