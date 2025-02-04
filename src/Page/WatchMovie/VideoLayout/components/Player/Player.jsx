@@ -69,7 +69,6 @@ function Player({
                     width: '100%',
                     pt: 'calc(9/16*100%)',
                     backgroundColor: 'black',
-
                     position: 'relative',
                 }}
             >
@@ -88,6 +87,7 @@ function Player({
                             display: 'flex',
                             justifyContent: 'center',
                             alignItems: 'center',
+                            p: 4,
                         }}
                     >
                         Phim sẽ được cập nhật trong thời gian sớm nhất. Xin cảm
@@ -106,6 +106,12 @@ function Player({
                     referer,
                 }),
             )}`}
+            // src={`https://server2-m3u8-proxy.onrender.com/proxy/${encodeURIComponent(
+            //     videoUrl,
+            // )}`}
+            // src={
+            //     'https://renewed-georgeanne-nekonode-1aa70c0c.koyeb.app/fetch?url=https%3A%2F%2Ftmstr1.luminousstreamhaven.com%2Fstream_new%2FH4sIAAAAAAAAAw3N3W6DIBiA4VtC1Dp3tqagcQMnBfw5Qz_TVbQ10Vr16ufhmzzJG3hhgxs3DH1ocPvhYTi1AQ4gdBGuT6b5ZB2dDeqfjbztYJ0lG3gk3PFbEGEMKt2a6D5DvjT4762Ko_ebb6hWmqwJs_OUS.2qnfe8gJntlDLK75ld58rRhR7gzuLzBJH2hKUv3vEB4oQqvD4qJCwbqqlWYXqNdcc6tVVUdFrTLdVi4TFXx3mrbfJT5f4mbFVA94VL7A_pJVsY4eIwD3PJ3qanpURjniE4c6RRS8AwRH.vRGFOkCcj55VbMUIeSjM8d7EnCmTj5gTWf50mlDAhAQAA%2Fmaster.m3u8'
+            // }
             poster={tmdbConfigs.backdropPath(poster)}
             viewType="video"
             streamType="on-demand"

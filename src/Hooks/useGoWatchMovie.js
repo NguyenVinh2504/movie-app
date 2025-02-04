@@ -13,7 +13,7 @@ function useGoWatchMovie() {
     }) => {
         const query = {
             mediaType,
-            id,
+            id: String(id),
             ...(mediaType === 'tv' && {
                 episodeId,
                 episodeNumber,

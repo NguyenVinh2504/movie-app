@@ -27,6 +27,7 @@ function EpisodesItem({ item, dataSeason }) {
         [theme.breakpoints.down('sm')]: {
             gridArea: '1 / 1 / 2 / 2',
         },
+        cursor: 'pointer',
     }));
     const CustomIconButton = styled((props) => (
         <IconButton color="secondNeutral" {...props} />
@@ -48,7 +49,12 @@ function EpisodesItem({ item, dataSeason }) {
     }));
     const CustomImage = ({ item }) => {
         return (
-            <Box sx={{ pt: 'calc(9/16*100%)', position: 'relative' }}>
+            <Box
+                sx={{
+                    pt: 'calc(9/16*100%)',
+                    position: 'relative',
+                }}
+            >
                 <Box sx={{ ...uiConfigs.style.positionFullSize }}>
                     <Image
                         alt={item.name}
@@ -67,110 +73,107 @@ function EpisodesItem({ item, dataSeason }) {
     };
 
     return (
-        <Box>
-            {/* <CustomDivider /> */}
-            <Box
-                sx={{
-                    borderColor: 'rgb(255,255,255,0.5)',
-                    borderTopWidth: '1px',
-                    borderTopStyle: 'solid',
-                    px: 1,
-                    py: 3,
-                    display: 'grid',
-                    gridTemplateColumns: {
-                        sm: '0.2fr 0.45fr 1fr',
-                        xs: '1.2fr 1fr',
+        <Box
+            sx={{
+                borderColor: 'rgb(255,255,255,0.5)',
+                borderTopWidth: '1px',
+                borderTopStyle: 'solid',
+                px: 1,
+                py: 3,
+                display: 'grid',
+                gridTemplateColumns: {
+                    sm: '0.2fr 0.45fr 1fr',
+                    xs: '1.2fr 1fr',
+                },
+                gridTemplateRows: 'repeat(2, auto)',
+                alignItems: 'center',
+                '&:hover': {
+                    '.MuiIconButton-root': {
+                        opacity: 1,
                     },
-                    gridTemplateRows: 'repeat(2, auto)',
-                    alignItems: 'center',
+                },
+                '@media (hover: none)': {
                     '&:hover': {
                         '.MuiIconButton-root': {
-                            opacity: 1,
+                            opacity: 0,
                         },
                     },
-                    '@media (hover: none)': {
-                        '&:hover': {
-                            '.MuiIconButton-root': {
-                                opacity: 0,
-                            },
-                        },
-                    },
+                },
+            }}
+        >
+            <Typography
+                variant="h5"
+                component={'h5'}
+                textAlign={'center'}
+                sx={{
+                    gridArea: '1 / 1 / 3 / 2',
+                    display: { xs: 'none', sm: 'block' },
                 }}
             >
+                {item.episode_number || 'N/A'}
+            </Typography>
+            <CustomBox
+                onClick={() =>
+                    handleOpen({
+                        id: item.show_id,
+                        mediaType: 'tv',
+                        episodeId: item.id,
+                        seasonNumber: item.season_number,
+                        episodeNumber: item.episode_number,
+                    })
+                }
+            >
+                <CustomIconButton>
+                    <PlayIcon />
+                </CustomIconButton>
+                <CustomImage item={item}></CustomImage>
+            </CustomBox>
+            <Stack
+                sx={{
+                    flexDirection: { xs: 'column', sm: 'row' },
+                    alignItems: { xs: 'flex-start', msm: 'center' },
+                }}
+                justifyContent={'space-between'}
+            >
                 <Typography
-                    variant="h5"
+                    variant={pointDownSm ? 'subtitle1' : 'h6'}
+                    sx={{
+                        mr: { sm: 2, xs: 0 },
+                        mb: { sm: 0, xs: 1 },
+                    }}
+                    fontWeight={500}
                     component={'h5'}
-                    textAlign={'center'}
-                    sx={{
-                        gridArea: '1 / 1 / 3 / 2',
-                        display: { xs: 'none', sm: 'block' },
-                    }}
                 >
-                    {item.episode_number || 'N/A'}
+                    {`${pointDownSm ? `${item.episode_number}. ` : ''}${
+                        item?.name || 'N/A'
+                    }`}
                 </Typography>
-                <CustomBox>
-                    <CustomIconButton
-                        onClick={() =>
-                            handleOpen({
-                                id: item.show_id,
-                                mediaType: 'tv',
-                                episodeId: item.id,
-                                seasonNumber: item.season_number,
-                                episodeNumber: item.episode_number,
-                            })
-                        }
-                    >
-                        <PlayIcon />
-                    </CustomIconButton>
-                    <CustomImage item={item}></CustomImage>
-                </CustomBox>
-                <Stack
-                    sx={{
-                        flexDirection: { xs: 'column', sm: 'row' },
-                        alignItems: { xs: 'flex-start', msm: 'center' },
-                    }}
-                    justifyContent={'space-between'}
-                >
+
+                {item.runtime && (
                     <Typography
-                        variant={pointDownSm ? 'subtitle1' : 'h6'}
+                        whiteSpace={'nowrap'}
+                        variant={pointDownSm ? 'subtitle2' : 'body1'}
+                        fontWeight={400}
                         sx={{
-                            mr: { sm: 2, xs: 0 },
-                            mb: { sm: 0, xs: 1 },
+                            textAlign: { sm: 'end', xs: 'start' },
                         }}
-                        fontWeight={500}
-                        component={'h5'}
                     >
-                        {`${pointDownSm ? `${item.episode_number}. ` : ''}${
-                            item?.name || 'N/A'
+                        {`${item.runtime || 'N/A'} ${
+                            !item.runtime ? '' : 'minutes'
                         }`}
                     </Typography>
-
-                    {item.runtime && (
-                        <Typography
-                            whiteSpace={'nowrap'}
-                            variant={pointDownSm ? 'subtitle2' : 'body1'}
-                            fontWeight={400}
-                            sx={{
-                                textAlign: { sm: 'end', xs: 'start' },
-                            }}
-                        >
-                            {`${item.runtime || 'N/A'} ${
-                                !item.runtime ? '' : 'minutes'
-                            }`}
-                        </Typography>
-                    )}
-                </Stack>
-                <Typography
-                    variant={pointDownSm ? 'body2' : 'body1'}
-                    mt={1}
-                    fontWeight={400}
-                    sx={{
-                        gridArea: { sm: '2 / 3 / 3 / 4', xs: '2 / 1 / 3 / 3' },
-                    }}
-                >
-                    {item.overview || 'N/A'}
-                </Typography>
-            </Box>
+                )}
+            </Stack>
+            <Typography
+                variant={pointDownSm ? 'body2' : 'body1'}
+                mt={1}
+                fontWeight={400}
+                sx={{
+                    gridArea: { sm: '2 / 3 / 3 / 4', xs: '2 / 1 / 3 / 3' },
+                }}
+            >
+                {item.overview || 'N/A'}
+            </Typography>
         </Box>
     );
 }

@@ -1,9 +1,14 @@
 import Input from '~/components/Input';
 import { CloseIcon, SearchIcon } from '~/components/Icon';
 import { memo } from 'react';
-import { createSearchParams, useNavigate, useSearchParams } from 'react-router-dom';
+import {
+    createSearchParams,
+    useNavigate,
+    useSearchParams,
+} from 'react-router-dom';
 import config from '~/config';
 import { useQueryConfig } from '~/Hooks';
+import { omit } from 'lodash';
 // import { useDebounce } from '~/Hooks';
 function Search({ round = false, inHeader = false }) {
     const props = {
@@ -20,7 +25,10 @@ function Search({ round = false, inHeader = false }) {
         if (!value.startsWith(' ') && value.trim()) {
             location({
                 pathname: config.routes.searchPage,
-                search: createSearchParams({ query: value, ...configQuery }).toString(),
+                search: createSearchParams({
+                    query: value,
+                    ...omit(configQuery, 'v'),
+                }).toString(),
             });
         } else {
             if (inHeader) {

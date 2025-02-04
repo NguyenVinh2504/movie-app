@@ -1,4 +1,13 @@
-import { Box, Button, Grid, IconButton, Stack, Typography, styled, useMediaQuery } from '@mui/material';
+import {
+    Box,
+    Button,
+    Grid,
+    IconButton,
+    Stack,
+    Typography,
+    styled,
+    useMediaQuery,
+} from '@mui/material';
 import { SwiperSlide, Swiper } from 'swiper/react';
 import 'swiper/scss';
 import 'swiper/scss/navigation';
@@ -10,16 +19,19 @@ import HeroSliceSkeleton from './HeroSliceSkeleton';
 import { Autoplay, EffectFade, Navigation } from 'swiper/modules';
 import SwiperNavigation from '~/components/SwiperNavigation';
 import Image from '~/components/Image';
-import config from '~/config';
-import { NavLink, useSearchParams } from 'react-router-dom';
-import { useQueryConfig } from '~/Hooks';
+import { useSearchParams } from 'react-router-dom';
+import { useGoWatchMovie, useQueryConfig } from '~/Hooks';
 
 function HeroSliceList({ isLoading, medias, mediaType }) {
     const pointDownLg = useMediaQuery((theme) => theme.breakpoints.down('lg'));
     const pointDownMd = useMediaQuery((theme) => theme.breakpoints.down('md'));
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const CustomButton = styled((props) => (
-        <Button variant="contained" size={pointDownMd ? 'small' : pointDownLg ? 'medium' : 'large'} {...props} />
+        <Button
+            variant="contained"
+            size={pointDownMd ? 'small' : pointDownLg ? 'medium' : 'large'}
+            {...props}
+        />
     ))(({ theme }) => ({
         [theme.breakpoints.down('md')]: {
             svg: {
@@ -36,6 +48,19 @@ function HeroSliceList({ isLoading, medias, mediaType }) {
             category: 'detail',
             media_type: mediaType,
             id: id,
+        });
+    };
+
+    const { handleOpen: handleOpenLink } = useGoWatchMovie();
+
+    const handleOpenWatch = (item) => {
+        handleOpenLink({
+            id: item.id,
+            mediaType: item.media_type,
+            ...(item.media_type === 'tv' && {
+                seasonNumber: 1,
+                episodeNumber: 1,
+            }),
         });
     };
     return (
@@ -64,7 +89,13 @@ function HeroSliceList({ isLoading, medias, mediaType }) {
                             <SwiperSlide key={item.id}>
                                 {/* background image */}
                                 <Box
-                                    sx={{ position: 'relative', pt: { sm: 'calc(43/100*100%)', xs: 'calc(3/2*100%)' } }}
+                                    sx={{
+                                        position: 'relative',
+                                        pt: {
+                                            sm: 'calc(43/100*100%)',
+                                            xs: 'calc(3/2*100%)',
+                                        },
+                                    }}
                                 >
                                     <Box
                                         sx={{
@@ -80,7 +111,8 @@ function HeroSliceList({ isLoading, medias, mediaType }) {
                                             },
                                             ':before': {
                                                 content: '""',
-                                                ...uiConfigs.style.gradientBgImage,
+                                                ...uiConfigs.style
+                                                    .gradientBgImage,
                                                 background:
                                                     'linear-gradient(180deg, rgba(0, 0, 0, 0), rgb(0, 0, 0, 1))',
                                             },
@@ -89,20 +121,24 @@ function HeroSliceList({ isLoading, medias, mediaType }) {
                                         {/* background image */}
                                         <Image
                                             src={tmdbConfigs.backdropPath(
-                                                pointDownSm ? item.poster_path : item.backdrop_path,
+                                                pointDownSm
+                                                    ? item.poster_path
+                                                    : item.backdrop_path,
                                             )}
                                             alt={item.title}
                                         />
                                         <Box
                                             sx={{
-                                                ...uiConfigs.style.gradientBgImage,
+                                                ...uiConfigs.style
+                                                    .gradientBgImage,
                                                 background:
                                                     'linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgb(0, 0, 0, 1) 100%)',
                                             }}
                                         ></Box>
                                         <IconButton
-                                            component={NavLink}
-                                            to={`${config.routes.watchMovie}/${item?.id}`}
+                                            onClick={() =>
+                                                handleOpenWatch(item)
+                                            }
                                             color="secondNeutral"
                                             sx={{
                                                 display: { sm: 'none' },
@@ -126,19 +162,39 @@ function HeroSliceList({ isLoading, medias, mediaType }) {
                                                 width: '100%',
                                                 height: '100%',
                                                 display: 'flex',
-                                                alignItems: { xs: 'flex-end', sm: 'center' },
-                                                paddingLeft: { lg: '80px', sm: '60px', xs: '30px' },
+                                                alignItems: {
+                                                    xs: 'flex-end',
+                                                    sm: 'center',
+                                                },
+                                                paddingLeft: {
+                                                    lg: '80px',
+                                                    sm: '60px',
+                                                    xs: '30px',
+                                                },
                                                 paddingRight: '15px',
-                                                justifyContent: { sm: 'flex-start' },
+                                                justifyContent: {
+                                                    sm: 'flex-start',
+                                                },
                                             }}
                                         >
                                             {/* text content */}
-                                            <Grid item lg={6} md={6} sm={8} xs={12}>
+                                            <Grid
+                                                item
+                                                lg={6}
+                                                md={6}
+                                                sm={8}
+                                                xs={12}
+                                            >
                                                 <Stack
                                                     spacing={1}
-                                                    alignItems={{ sm: 'flex-start' }}
+                                                    alignItems={{
+                                                        sm: 'flex-start',
+                                                    }}
                                                     textAlign={{ sm: 'left' }}
-                                                    marginBottom={{ xs: '50px', sm: '0' }}
+                                                    marginBottom={{
+                                                        xs: '50px',
+                                                        sm: '0',
+                                                    }}
                                                 >
                                                     {/* <Box
                                                 sx={{
@@ -166,45 +222,77 @@ function HeroSliceList({ isLoading, medias, mediaType }) {
                                                         component={'h1'}
                                                         sx={{
                                                             fontWeight: '500',
-                                                            ...uiConfigs.style.typoLines(3),
+                                                            ...uiConfigs.style.typoLines(
+                                                                3,
+                                                            ),
                                                         }}
                                                     >
-                                                        {item.title ?? item.name}
+                                                        {item.title ??
+                                                            item.name}
                                                     </Typography>
                                                     {/* title */}
                                                     <Typography
                                                         variant={
-                                                            pointDownMd ? 'subtitle2' : pointDownLg ? 'subtitle1' : 'h6'
+                                                            pointDownMd
+                                                                ? 'subtitle2'
+                                                                : pointDownLg
+                                                                ? 'subtitle1'
+                                                                : 'h6'
                                                         }
                                                         component={'p'}
                                                         sx={{
                                                             fontWeight: '400',
-                                                            ...uiConfigs.style.typoLines(3),
+                                                            ...uiConfigs.style.typoLines(
+                                                                3,
+                                                            ),
                                                         }}
                                                     >
                                                         {item.overview}
                                                     </Typography>
                                                     <Stack
                                                         direction={'row'}
-                                                        spacing={pointDownSm ? 0 : pointDownLg ? 1 : 2}
+                                                        spacing={
+                                                            pointDownSm
+                                                                ? 0
+                                                                : pointDownLg
+                                                                ? 1
+                                                                : 2
+                                                        }
                                                     >
                                                         <CustomButton
-                                                            startIcon={<PlayIcon />}
-                                                            component={NavLink}
-                                                            sx={{ display: { sm: 'inline-flex', xs: 'none' } }}
-                                                            to={`${config.routes.watchMovie}/${item?.id}`}
+                                                            startIcon={
+                                                                <PlayIcon />
+                                                            }
+                                                            sx={{
+                                                                display: {
+                                                                    sm: 'inline-flex',
+                                                                    xs: 'none',
+                                                                },
+                                                            }}
+                                                            onClick={() =>
+                                                                handleOpenWatch(
+                                                                    item,
+                                                                )
+                                                            }
                                                         >
                                                             Xem Ngay
                                                         </CustomButton>
                                                         <CustomButton
                                                             color="secondary"
-                                                            startIcon={<AboutIcon />}
+                                                            startIcon={
+                                                                <AboutIcon />
+                                                            }
                                                             onClick={() => {
-                                                                if (id === item.id) return;
+                                                                if (
+                                                                    id ===
+                                                                    item.id
+                                                                )
+                                                                    return;
                                                                 handleOpen({
                                                                     id: item.id,
                                                                     mediaType:
-                                                                        mediaType === 'all'
+                                                                        mediaType ===
+                                                                        'all'
                                                                             ? item.media_type
                                                                             : mediaType,
                                                                 });
