@@ -119,6 +119,7 @@ function Player({
             crossOrigin
             playsInline
             title={title}
+            storage="player-movie"
         >
             <MediaProvider>
                 <Poster className="vds-poster" />
