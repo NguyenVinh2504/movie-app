@@ -120,12 +120,15 @@ const theme = createTheme({
         borderRadius: '5px',
     },
     palette: {
-        mode: 'light',
+        mode: 'dark',
         primary: {
             main: Color.primary,
         },
         secondary: {
             main: Color.secondary,
+        },
+        background: {
+            default: Color.background,
         },
     },
     components: {
@@ -394,7 +397,6 @@ const theme = createTheme({
         MuiCssBaseline: {
             styleOverrides: `
             * {
-            box-sizing: border-box;
             scrollbar-width: auto;
             scrollbar-color: rgba(255,255,255,0.5);
           }
@@ -413,13 +415,7 @@ const theme = createTheme({
             background: rgba(255,255,255,0.5);
           }
         body {
-            font-size: 1.6rem;
-            line-height: 1.5rem;
-            margin: 0;
             overflow-y: overlay;
-            padding: 0;
-            background-color: #0c0a0a;
-            color: white !important;
         }
         img {
             display: block;
@@ -448,6 +444,12 @@ const theme = createTheme({
         input, [tabindex] {
             outline: none;
             border: none;
+           
+        }
+        
+        button, input {
+            background-color: transparent;
+            padding: 0;
         }
             `,
         },

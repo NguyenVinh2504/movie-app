@@ -51,28 +51,27 @@ root.render(
                                 cancellationText: 'Hủy',
                             }}
                         >
-                            <CssBaseline>
-                                <SocketProvider>
-                                    <App />
-                                    <ReactQueryDevtools
-                                        initialIsOpen={false}
-                                        position="bottom"
-                                    />
-                                    <ToastContainer
-                                        position="bottom-left"
-                                        autoClose={3000}
-                                        hideProgressBar={true}
-                                        newestOnTop={false}
-                                        closeOnClick
-                                        rtl={false}
-                                        pauseOnFocusLoss={false}
-                                        draggable
-                                        style={{ fontSize: '16px' }}
-                                        pauseOnHover
-                                        theme="dark"
-                                    />
-                                </SocketProvider>
-                            </CssBaseline>
+                            <CssBaseline />
+                            <SocketProvider>
+                                <App />
+                                <ReactQueryDevtools
+                                    initialIsOpen={false}
+                                    position="bottom"
+                                />
+                                <ToastContainer
+                                    position="bottom-left"
+                                    autoClose={3000}
+                                    hideProgressBar={true}
+                                    newestOnTop={false}
+                                    closeOnClick
+                                    rtl={false}
+                                    pauseOnFocusLoss={false}
+                                    draggable
+                                    style={{ fontSize: '16px' }}
+                                    pauseOnHover
+                                    theme="dark"
+                                />
+                            </SocketProvider>
                         </ConfirmProvider>
                     </ThemeProvider>
                 </QueryClientProvider>

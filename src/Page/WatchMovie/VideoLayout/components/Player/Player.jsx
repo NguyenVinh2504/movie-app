@@ -1,4 +1,4 @@
-import '@vidstack/react/player/styles/default/theme.css';
+// import '@vidstack/react/player/styles/default/theme.css';
 import '@vidstack/react/player/styles/default/layouts/video.css';
 import { MediaPlayer, MediaProvider, Poster, Track } from '@vidstack/react';
 import { DefaultVideoLayout } from '@vidstack/react/player/layouts/default';
@@ -6,7 +6,7 @@ import { memo, useCallback, useEffect } from 'react';
 import { VIETNAM } from '~/Page/WatchMovie/translations';
 import { customIcons } from '~/Page/WatchMovie/customIcon';
 import tmdbConfigs from '~/api/configs/tmdb.configs';
-import './Player.module.css';
+import './Player.css';
 import videoApi from '~/api/module/video.api';
 import { useQuery } from '@tanstack/react-query';
 import { Box, Skeleton, Typography } from '@mui/material';
