@@ -11,6 +11,7 @@ import videoApi from '~/api/module/video.api';
 import { useQuery } from '@tanstack/react-query';
 import { Box, Skeleton, Typography } from '@mui/material';
 import uiConfigs from '~/config/ui.config';
+import { QualitySubmenu, SpeedSubmenu } from '../menus';
 
 function Player({
     poster,
@@ -97,9 +98,11 @@ function Player({
             </Box>
         );
     }
+    // const url = 'https://proxy-m3u8.vercel.app';
+    const url = 'https://server2-proxy-m3u8.viejoy.io.vn';
     return (
         <MediaPlayer
-            src={`https://proxy-m3u8.viejoy.io.vn/m3u8-proxy?url=${encodeURIComponent(
+            src={`${url}/m3u8-proxy?url=${encodeURIComponent(
                 videoUrl,
             )}&header=${encodeURIComponent(
                 JSON.stringify({
@@ -134,6 +137,8 @@ function Player({
                 noAudioGain
                 slots={{
                     googleCastButton: null,
+                    settingsMenuStartItems: <QualitySubmenu />,
+                    afterSettingsMenuStartItems: <SpeedSubmenu />,
                 }}
                 icons={customIcons}
             />

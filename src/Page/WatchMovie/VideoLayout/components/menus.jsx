@@ -96,7 +96,7 @@ function CaptionsSubmenu() {
     );
 }
 
-function QualitySubmenu() {
+export function QualitySubmenu() {
     const options = useVideoQualityOptions(),
         currentQuality = options.selectedQuality?.height,
         hint =
@@ -106,7 +106,7 @@ function QualitySubmenu() {
     return (
         <Menu.Root>
             <SubmenuButton
-                label="Quality"
+                label="Chất lượng"
                 hint={hint}
                 disabled={options.disabled}
                 icon={SettingsMenuIcon}
@@ -138,7 +138,7 @@ function QualitySubmenu() {
     );
 }
 
-function SpeedSubmenu() {
+export function SpeedSubmenu() {
     const options = usePlaybackRateOptions(),
         hint =
             options.selectedValue === '1'
@@ -147,7 +147,7 @@ function SpeedSubmenu() {
     return (
         <Menu.Root>
             <SubmenuButton
-                label="Speed"
+                label="Tốc độ"
                 hint={hint}
                 disabled={options.disabled}
                 icon={OdometerIcon}

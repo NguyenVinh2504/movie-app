@@ -248,6 +248,7 @@ function SideBar({ open, onClick, onKeyDown, onClose, isLoading }) {
                 '& .MuiDrawer-paper': {
                     width: { xs: '92%', sm: '45%', md: '32%' },
                     backgroundColor: '#0c0a0a',
+                    backgroundImage: 'none',
                     color: 'white',
                 },
             }}
