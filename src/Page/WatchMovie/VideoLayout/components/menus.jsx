@@ -83,6 +83,45 @@ export function SettingsMobile() {
         </Menu.Root>
     );
 }
+
+const useLocalStorage = (key, defaultValue) => {
+    const [storage, setStorage] = useState(() => {
+        try {
+            const value = localStorage.getItem(key);
+            return value ? JSON.parse(value) : defaultValue;
+        } catch (error) {
+            console.error('Có lỗi khi truy cập Local Storage:', error);
+            return defaultValue;
+        }
+    });
+
+    const setValue = useCallback(
+        (value) => {
+            try {
+                setStorage((prev) => {
+                    const valueToStore =
+                        typeof value === 'function' ? value(prev) : value;
+                    // So sánh giá trị mới với giá trị mặc định
+                    if (
+                        JSON.stringify(valueToStore) ===
+                        JSON.stringify(defaultValue)
+                    ) {
+                        localStorage.removeItem(key);
+                    } else {
+                        localStorage.setItem(key, JSON.stringify(valueToStore));
+                    }
+                    return valueToStore;
+                });
+            } catch (error) {
+                console.error('Có lỗi khi set Local Storage:', error);
+            }
+        },
+        [key, defaultValue],
+    );
+
+    return [storage, setValue];
+};
+
 const useDebounce = (value, delay) => {
     const [debouncedValue, setDebouncedValue] = useState(value);
     useEffect(() => {
@@ -187,7 +226,10 @@ const SettingsCaptionsSubmenu = memo(() => {
         <Menu.Root>
             <SubmenuButton label="Tùy chỉnh phụ đề" icon={StyleFontIcon} />
             <Menu.Content className={styles.submenu}>
-                <SettingsFontFamily resetTrigger={resetTrigger} />
+                <SettingsFontFamily
+                    resetTrigger={resetTrigger}
+                    setResetTrigger={setResetTrigger}
+                />
                 <SettingsFontColor resetTrigger={resetTrigger} />
                 <SettingsFontSize resetTrigger={resetTrigger} />
                 <SettingsBackgroundColor resetTrigger={resetTrigger} />
@@ -206,8 +248,19 @@ const SettingsCaptionsSubmenu = memo(() => {
 //
 // Settings Font Family Component
 //
-const SettingsFontFamily = memo(({ resetTrigger }) => {
-    const [fontFamily, setFontFamily] = useState(DEFAULT_SETTINGS.fontFamily);
+const KEY_SETTINGS_CAPTION = {
+    FONT_FAMILY: 'vds-font-family',
+    FONT_SIZE: 'vds-font-size',
+    FONT_COLOR: 'vds-font-color',
+    BACKGROUND_COLOR: 'vds-background-color',
+    BACKGROUND_OPACITY: 'vds-background-opacity',
+};
+
+const SettingsFontFamily = memo(({ resetTrigger, setResetTrigger }) => {
+    const [fontFamily, setFontFamily] = useLocalStorage(
+        KEY_SETTINGS_CAPTION.FONT_FAMILY,
+        DEFAULT_SETTINGS.fontFamily,
+    );
 
     // Reset effect sử dụng hook dùng chung
     useReset(resetTrigger, DEFAULT_SETTINGS.fontFamily, setFontFamily);
@@ -254,7 +307,10 @@ const SettingsFontFamily = memo(({ resetTrigger }) => {
 // Settings Font Color Component
 //
 const SettingsFontColor = memo(({ resetTrigger }) => {
-    const [color, setColor] = useState(DEFAULT_SETTINGS.fontColor);
+    const [color, setColor] = useLocalStorage(
+        KEY_SETTINGS_CAPTION.FONT_COLOR,
+        DEFAULT_SETTINGS.fontColor,
+    );
     // Sử dụng useDebounce cho giá trị màu, ví dụ delay 300ms
     const debouncedColor = useDebounce(color, 300);
 
@@ -301,7 +357,10 @@ const SettingsFontColor = memo(({ resetTrigger }) => {
 // Settings Font Size Component
 //
 const SettingsFontSize = memo(({ resetTrigger }) => {
-    const [fontSize, setFontSize] = useState(DEFAULT_SETTINGS.fontSize);
+    const [fontSize, setFontSize] = useLocalStorage(
+        KEY_SETTINGS_CAPTION.FONT_SIZE,
+        DEFAULT_SETTINGS.fontSize,
+    );
 
     useReset(resetTrigger, DEFAULT_SETTINGS.fontSize, setFontSize);
 
@@ -354,14 +413,17 @@ const SettingsFontSize = memo(({ resetTrigger }) => {
 // Settings Background Color Component
 //
 const SettingsBackgroundColor = memo(({ resetTrigger }) => {
-    const [backgroundColor, setBackgroundColor] = useState(
+    const [backgroundColor, setBackgroundColor] = useLocalStorage(
+        KEY_SETTINGS_CAPTION.BACKGROUND_COLOR,
         DEFAULT_SETTINGS.backgroundColor,
     );
+
     useReset(
         resetTrigger,
         DEFAULT_SETTINGS.backgroundColor,
         setBackgroundColor,
     );
+
     const player = useMediaPlayer();
 
     // Sử dụng useDebounce cho backgroundColor với delay 300ms
@@ -420,7 +482,10 @@ const SettingsBackgroundColor = memo(({ resetTrigger }) => {
 // Settings Background Opacity Component
 //
 const SettingsBackgroundOpacity = memo(({ resetTrigger }) => {
-    const [opacity, setOpacity] = useState(DEFAULT_SETTINGS.backgroundOpacity);
+    const [opacity, setOpacity] = useLocalStorage(
+        KEY_SETTINGS_CAPTION.BACKGROUND_OPACITY,
+        DEFAULT_SETTINGS.backgroundOpacity,
+    );
 
     useReset(resetTrigger, DEFAULT_SETTINGS.backgroundOpacity, setOpacity);
 

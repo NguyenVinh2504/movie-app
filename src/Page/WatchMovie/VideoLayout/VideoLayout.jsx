@@ -1,13 +1,13 @@
 import styles from './video-layout.module.css';
 
-import { Captions, Controls, Gesture, Title } from '@vidstack/react';
+import { Captions, Controls, Gesture } from '@vidstack/react';
 
 import * as Buttons from './components/buttons';
 import * as Menus from './components/menus';
 import * as Sliders from './components/sliders';
 import { TimeGroup } from './components/time-group';
 import { Box, useMediaQuery } from '@mui/material';
-import titleStyles from './components/styles/title.module.css';
+
 import { BufferingIndicator } from './components/BufferingIndicator';
 function VideoLayout() {
     const isMobile = useMediaQuery('(max-width: 767.98px)');
@@ -34,7 +34,12 @@ function ControlsDesktop() {
                     sx={{
                         display: 'flex',
                         alignItems: 'center',
-                        ':hover': {
+                        '@media (hover: hover) and (pointer: fine)': {
+                            '&:hover .volume-slider': {
+                                width: '72px',
+                            },
+                        },
+                        '@media (hover: none) and (pointer: coarse)': {
                             '& .volume-slider': {
                                 width: '72px',
                             },

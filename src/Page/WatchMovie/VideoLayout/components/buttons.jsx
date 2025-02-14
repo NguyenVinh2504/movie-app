@@ -48,7 +48,14 @@ export const CustomIconButton = styled((props) => {
             {...props}
         ></IconButton>
     );
-})(() => {});
+})(({ theme }) => ({
+    [theme.breakpoints.down('sm')]: {
+        svg: {
+            height: '24px',
+            width: '24px',
+        },
+    },
+}));
 
 export function Play({ tooltipPlacement }) {
     const isPaused = useMediaState('paused');

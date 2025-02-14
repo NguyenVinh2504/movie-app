@@ -3,7 +3,7 @@ import styles from './styles/BufferingIndicator.module.css';
 export function BufferingIndicator() {
     return (
         <div className={styles.mediaBufferingIndicator}>
-            <Spinner.Root className={styles.mediaBufferingSpinner} size={96}>
+            <Spinner.Root className={styles.mediaBufferingSpinner} size={80}>
                 <Spinner.Track
                     className={styles.mediaBufferingTrack}
                     width={10}

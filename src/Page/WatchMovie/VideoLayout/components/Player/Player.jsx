@@ -116,7 +116,8 @@ function Player({
             //     videoUrl,
             // )}`}
             src={
-                'https://sundaythekingplays.xyz/hls/CTWIkLfH8bz-PkNqR4Uget-x7FdHf0sbnQYaKmzvAxf9pJS6tOFQ1yB+Z6P3NILSOILGDpGSxEW0+vH6Ae+CUw==/bWFzdGVyLm0zdTg=.m3u8'
+                videoUrl
+                // 'https://sundaythekingplays.xyz/hls/CTWIkLfH8bz-PkNqR4Uget-x7FdHf0sbnQYaKmzvAxf9pJS6tOFQ1yB+Z6P3NILSOILGDpGSxEW0+vH6Ae+CUw==/bWFzdGVyLm0zdTg=.m3u8'
                 // 'https://sundaythekingplays.xyz/hls/IObLdzQJJwnIBQpiSEdLovKSUc7W2K3rtexfT4A92ZYusyWIbwsFXIRLOWkRh48zymyolDB5b4WAXml50eqctQ==/bWFzdGVyLm0zdTg=.m3u8'
             }
             poster={tmdbConfigs.backdropPath(poster)}
