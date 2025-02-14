@@ -1,11 +1,12 @@
 import { Time } from '@vidstack/react';
+import styles from './styles/time-group.module.css';
 
 export function TimeGroup() {
     return (
-        <div className="vds-time-group">
-            <Time className="vds-time" type="current" />
-            <div className="vds-time-divider">/</div>
-            <Time className="vds-time" type="duration" />
+        <div className={styles.group}>
+            <Time className={styles.time} type="current" />
+            <div className={styles.divider}>/</div>
+            <Time className={styles.time} type="duration" />
         </div>
     );
 }

@@ -401,19 +401,37 @@ const theme = createTheme({
             scrollbar-color: rgba(255,255,255,0.5);
           }
         
-          /* Chrome, Edge, and Safari */
-          *::-webkit-scrollbar {
-            width: 8px;
-          }
-        
-          *::-webkit-scrollbar-track {
-            background: transparent;
-          }
-        
-          *::-webkit-scrollbar-thumb {
-            border-radius: 100px;
-            background: rgba(255,255,255,0.5);
-          }
+            *::-webkit-scrollbar {
+                height: 8px;
+                width: 8px;
+            }
+
+            *::-webkit-scrollbar-track {
+                border-radius: 16px;
+                background-color: transparent;
+            }
+
+            *::-webkit-scrollbar-track:hover {
+                background-color: transparent;
+            }
+
+            *::-webkit-scrollbar-track:active {
+                background-color: transparent;
+            }
+
+            *::-webkit-scrollbar-thumb {
+                border-radius: 20px;
+                background-color:rgba(255,255,255,0.5);
+            }
+
+            *::-webkit-scrollbar-thumb:hover {
+                background-color: rgba(255, 255, 255, 0.71);
+            }
+
+            *::-webkit-scrollbar-thumb:active {
+                background-color: rgba(255, 255, 255, 0.81);
+            }
+
         body {
             overflow-y: overlay;
         }

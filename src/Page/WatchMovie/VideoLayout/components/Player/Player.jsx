@@ -1,5 +1,7 @@
-import '@vidstack/react/player/styles/default/theme.css';
-import '@vidstack/react/player/styles/default/layouts/video.css';
+// import '@vidstack/react/player/styles/default/theme.css';
+// import '@vidstack/react/player/styles/default/layouts/video.css';
+import '@vidstack/react/player/styles/base.css';
+
 import { MediaPlayer, MediaProvider, Poster, Track } from '@vidstack/react';
 import { DefaultVideoLayout } from '@vidstack/react/player/layouts/default';
 import { memo, useCallback, useEffect } from 'react';
@@ -12,7 +14,8 @@ import { useQuery } from '@tanstack/react-query';
 import { Box, Skeleton, Typography } from '@mui/material';
 import uiConfigs from '~/config/ui.config';
 import { QualitySubmenu, SpeedSubmenu } from '../menus';
-
+import VideoLayout from '../../VideoLayout';
+import style from './Player.module.css';
 function Player({
     poster,
     title,
@@ -102,35 +105,37 @@ function Player({
     const url = 'https://server2-proxy-m3u8.viejoy.io.vn';
     return (
         <MediaPlayer
-            src={`${url}/m3u8-proxy?url=${encodeURIComponent(
-                videoUrl,
-            )}&header=${encodeURIComponent(
-                JSON.stringify({
-                    referer,
-                }),
-            )}`}
+            // src={`${url}/m3u8-proxy?url=${encodeURIComponent(
+            //     videoUrl,
+            // )}&headers=${encodeURIComponent(
+            //     JSON.stringify({
+            //         referer,
+            //     }),
+            // )}`}
             // src={`https://server2-m3u8-proxy.onrender.com/proxy/${encodeURIComponent(
             //     videoUrl,
             // )}`}
-            // src={
-            //     'https://renewed-georgeanne-nekonode-1aa70c0c.koyeb.app/fetch?url=https%3A%2F%2Ftmstr1.luminousstreamhaven.com%2Fstream_new%2FH4sIAAAAAAAAAw3N3W6DIBiA4VtC1Dp3tqagcQMnBfw5Qz_TVbQ10Vr16ufhmzzJG3hhgxs3DH1ocPvhYTi1AQ4gdBGuT6b5ZB2dDeqfjbztYJ0lG3gk3PFbEGEMKt2a6D5DvjT4762Ko_ebb6hWmqwJs_OUS.2qnfe8gJntlDLK75ld58rRhR7gzuLzBJH2hKUv3vEB4oQqvD4qJCwbqqlWYXqNdcc6tVVUdFrTLdVi4TFXx3mrbfJT5f4mbFVA94VL7A_pJVsY4eIwD3PJ3qanpURjniE4c6RRS8AwRH.vRGFOkCcj55VbMUIeSjM8d7EnCmTj5gTWf50mlDAhAQAA%2Fmaster.m3u8'
-            // }
+            src={
+                'https://sundaythekingplays.xyz/hls/CTWIkLfH8bz-PkNqR4Uget-x7FdHf0sbnQYaKmzvAxf9pJS6tOFQ1yB+Z6P3NILSOILGDpGSxEW0+vH6Ae+CUw==/bWFzdGVyLm0zdTg=.m3u8'
+                // 'https://sundaythekingplays.xyz/hls/IObLdzQJJwnIBQpiSEdLovKSUc7W2K3rtexfT4A92ZYusyWIbwsFXIRLOWkRh48zymyolDB5b4WAXml50eqctQ==/bWFzdGVyLm0zdTg=.m3u8'
+            }
             poster={tmdbConfigs.backdropPath(poster)}
             viewType="video"
             streamType="on-demand"
             logLevel="warn"
-            crossOrigin
             playsInline
             title={title}
             storage="player-movie"
+            crossOrigin
+            className={`player ${style.player}`}
         >
             <MediaProvider>
-                <Poster className="vds-poster" />
+                <Poster className={style.poster} />
                 {tracks.map((track, index) => (
                     <Track {...track} key={track.src} />
                 ))}
             </MediaProvider>
-            <DefaultVideoLayout
+            {/* <DefaultVideoLayout
                 colorScheme="dark"
                 translations={VIETNAM}
                 smallLayoutWhen={smallVideoLayoutQuery}
@@ -141,7 +146,8 @@ function Player({
                     afterSettingsMenuStartItems: <SpeedSubmenu />,
                 }}
                 icons={customIcons}
-            />
+            /> */}
+            <VideoLayout />
         </MediaPlayer>
     );
 }

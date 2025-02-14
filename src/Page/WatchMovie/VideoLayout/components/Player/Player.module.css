@@ -12,3 +12,41 @@
 :global(.vds-playback-menu) {
     display: none !important;
 }
+
+.player {
+    --media-border-radius: 4px;
+    --media-poster-bg: #000000;
+    --media-slider-track-bg: #ffffff80;
+    --media-brand: #ec0101;
+    aspect-ratio: 16 /9;
+    background-color: #000000;
+    border-radius: var(--media-border-radius);
+    color: #f5f5f5;
+    contain: layout;
+    overflow: hidden;
+}
+
+.poster {
+    position: absolute;
+    top: 0;
+    left: 0;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.2s ease-out;
+    background-color: var(--media-poster-bg, black);
+}
+
+.poster[data-visible] {
+    opacity: 1;
+}
+
+:global([data-media-provider] video),
+:global([data-media-provider] iframe) {
+    aspect-ratio: inherit;
+    display: inline-block;
+    height: auto;
+    object-fit: contain;
+    touch-action: manipulation;
+    border-radius: inherit;
+    width: 100%;
+}

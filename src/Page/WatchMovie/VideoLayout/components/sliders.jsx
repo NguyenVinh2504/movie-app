@@ -1,52 +1,60 @@
 import { TimeSlider, VolumeSlider } from '@vidstack/react';
-
+import styles from './styles/slider.module.css';
 export function Volume() {
     return (
-        <VolumeSlider.Root className="vds-volume-slider vds-slider">
-            <VolumeSlider.Track className="vds-slider-track" />
-            <VolumeSlider.TrackFill className="vds-slider-track-fill vds-slider-track" />
-            <VolumeSlider.Preview className="vds-slider-preview" noClamp>
-                <VolumeSlider.Value className="vds-slider-value" />
+        <VolumeSlider.Root
+            className={`volume-slider ${styles.slider} ${styles.sliderSmall}`}
+        >
+            <VolumeSlider.Track className={styles.track} />
+            <VolumeSlider.TrackFill
+                className={`${styles.trackFill} ${styles.track}`}
+            />
+            <VolumeSlider.Preview className={styles.preview} noClamp>
+                <VolumeSlider.Value className={styles.volumeValue} />
             </VolumeSlider.Preview>
-            <VolumeSlider.Thumb className="vds-slider-thumb" />
+            <VolumeSlider.Thumb className={styles.thumb} />
         </VolumeSlider.Root>
     );
 }
 
 export function Time({ thumbnails }) {
     return (
-        <TimeSlider.Root className="vds-time-slider vds-slider">
-            <TimeSlider.Chapters className="vds-slider-chapters">
+        <TimeSlider.Root className={`time-slider ${styles.slider}`}>
+            <TimeSlider.Chapters className={styles.chapters}>
                 {(cues, forwardRef) =>
                     cues.map((cue) => (
                         <div
-                            className="vds-slider-chapter"
+                            className={styles.chapter}
                             key={cue.startTime}
                             ref={forwardRef}
                         >
-                            <TimeSlider.Track className="vds-slider-track" />
-                            <TimeSlider.TrackFill className="vds-slider-track-fill vds-slider-track" />
-                            <TimeSlider.Progress className="vds-slider-progress vds-slider-track" />
+                            <TimeSlider.Track className={styles.track} />
+                            <TimeSlider.TrackFill
+                                className={`${styles.trackFill} ${styles.track}`}
+                            />
+                            <TimeSlider.Progress
+                                className={`${styles.progress} ${styles.track}`}
+                            />
                         </div>
                     ))
                 }
             </TimeSlider.Chapters>
 
-            <TimeSlider.Thumb className="vds-slider-thumb" />
+            <TimeSlider.Thumb className={styles.thumb} />
 
-            <TimeSlider.Preview className="vds-slider-preview">
+            <TimeSlider.Preview className={styles.preview}>
                 {thumbnails ? (
                     <TimeSlider.Thumbnail.Root
                         src={thumbnails}
-                        className="vds-slider-thumbnail vds-thumbnail"
+                        className={styles.thumbnail}
                     >
                         <TimeSlider.Thumbnail.Img />
                     </TimeSlider.Thumbnail.Root>
                 ) : null}
 
-                <TimeSlider.ChapterTitle className="vds-slider-chapter-title" />
+                <TimeSlider.ChapterTitle className={styles.chapterTitle} />
 
-                <TimeSlider.Value className="vds-slider-value" />
+                <TimeSlider.Value className={styles.timeValue} />
             </TimeSlider.Preview>
         </TimeSlider.Root>
     );

@@ -9,40 +9,59 @@
     inset: 0;
     width: 100%;
     height: 100%;
+    z-index: 10;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
 }
 
-.controls :global(.vds-time-slider) {
-    --media-slider-height: 40px;
-}
-
-.controls :global(.vds-time-slider .vds-slider-value) {
-    background-color: unset;
-}
-
-.controls :global(.vds-volume-slider) {
-    --media-slider-height: 40px;
-    --media-slider-preview-offset: 32px;
-    margin-left: 1.5px;
-    max-width: 80px;
-}
-
-.controls :global(.vds-time-group) {
-    margin-left: 8px;
+.controls[data-visible] {
+    opacity: 1;
+    visibility: visible;
+    background-image: linear-gradient(to top,
+            rgb(0 0 0 / 0.5),
+            10%,
+            transparent,
+            95%,
+            rgb(0 0 0 / 0.3));
 }
 
 .controlsGroup {
     display: flex;
     align-items: center;
     width: 100%;
+    z-index: 0;
 }
 
 .controlsGroup {
     padding-inline: 8px;
 }
 
+.controlsGroup:first-child {
+    padding-top: 8px;
+}
+
 .controlsGroup:last-child {
     margin-top: -4px;
     padding-bottom: 8px;
+}
+
+.spacer {
+    flex: 1;
+    pointer-events: none;
+}
+
+.controls :global(.mute-button) {
+    margin-left: -2.5px;
+    margin-right: -5px !important;
+}
+
+.controls :global(.fullscreen-button) {
+    margin-right: 0 !important;
+}
+
+.controls :global(.volume-slider) {
+    --media-slider-preview-offset: 30px;
 }
 
 /*************************************************************************************************
@@ -61,7 +80,7 @@
 
 .gesture[action='seek:-10'],
 .gesture[action='seek:10'] {
-    width: 20%;
+    width: 40%;
     z-index: 1;
 }
 
@@ -89,17 +108,85 @@
    *************************************************************************************************/
 
 .captions {
-    z-index: 10;
-    bottom: 0;
+    --cue-color: var(--media-user-font-color, white);
+    --cue-bg-color: var(--media-user-text-bg, var(--media-cue-bg, rgba(0, 0, 0, 0.7)));
+    --cue-default-font-size: calc(var(--overlay-height) / 100 * 4.5);
+    --cue-font-size: calc(var(--cue-default-font-size) * var(--media-user-font-size, 1));
+    --cue-line-height: calc(var(--cue-font-size) * 1.2);
+    --cue-padding-x: calc(var(--cue-font-size) * 0.6);
+    --cue-padding-y: calc(var(--cue-font-size) * 0.4);
+    --overlay-padding: 1%;
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    contain: layout style;
+    margin: var(--overlay-padding);
+    font-size: var(--cue-font-size);
+    font-family: var(--media-user-font-family, 'Arial');
+    pointer-events: none;
+    user-select: none;
+    word-spacing: normal;
+    word-break: break-word;
+    bottom: 8px;
     transition: bottom 0.15s linear;
 }
 
+.captions[aria-hidden='true'] {
+    display: none;
+}
+
+/*************************************************************************************************
+   * Cue Display
+   *************************************************************************************************/
+
+.captions [data-part='cue-display'] {
+    position: absolute;
+    direction: ltr;
+    overflow: visible;
+    contain: content;
+    top: var(--cue-top);
+    left: var(--cue-left);
+    right: var(--cue-right);
+    bottom: var(--cue-bottom);
+    width: var(--cue-width, auto);
+    height: var(--cue-height, auto);
+    transform: var(--cue-transform);
+    text-align: var(--cue-text-align);
+    writing-mode: var(--cue-writing-mode, unset);
+    white-space: pre-line;
+    unicode-bidi: plaintext;
+    min-width: min-content;
+    min-height: min-content;
+}
+
+.captions[data-dir='rtl'] [data-part='cue-display'] {
+    direction: rtl;
+}
+
+.captions [data-part='cue'] {
+    display: inline-block;
+    contain: content;
+    border-radius: 2px;
+    backdrop-filter: blur(8px);
+    padding: var(--cue-padding-y) var(--cue-padding-x);
+    line-height: var(--cue-line-height);
+    background-color: var(--cue-bg-color);
+    color: var(--cue-color);
+    white-space: pre-wrap;
+    outline: var(--cue-outline);
+    text-shadow: var(--cue-text-shadow);
+}
+
+.captions [data-part='cue-display'][data-vertical] [data-part='cue'] {
+    padding: var(--cue-padding-x) var(--cue-padding-y);
+}
+
 /* Pull captions up when controls are visible. */
-:global(.media-player[data-controls]) .captions {
+:global(.player[data-controls]) .captions {
     bottom: 80px;
 }
 
 /* Hide captions when interacting with time slider. */
-:global(.media-player[data-preview]) .captions {
+:global(.player[data-preview]) .captions {
     opacity: 0;
 }
