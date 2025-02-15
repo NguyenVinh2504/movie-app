@@ -13,9 +13,14 @@ import images from '~/assets/image';
 import tmdbConfigs from '~/api/configs/tmdb.configs';
 import { memo } from 'react';
 import Image from '~/components/Image';
-import { useGoWatchMovie } from '~/Hooks';
+import { useGoWatchMovie, useQueryConfig } from '~/Hooks';
+import decodeObject from '~/utils/decodeObject';
 function EpisodesItem({ item, dataSeason }) {
-    console.log({ item });
+    const queryConfig = useQueryConfig();
+
+    const { v } = queryConfig;
+    const { episodeId } = decodeObject(v);
+    const isActive = episodeId === item.id;
     const { handleOpen } = useGoWatchMovie();
     const pointDownSm = useMediaQuery((theme) => theme.breakpoints.down('sm'));
     const CustomBox = styled(Box)(({ theme }) => ({
@@ -99,6 +104,9 @@ function EpisodesItem({ item, dataSeason }) {
                         },
                     },
                 },
+                ...(isActive && {
+                    backgroundColor: 'rgb(255,255,255,0.1)',
+                }),
             }}
         >
             <Typography

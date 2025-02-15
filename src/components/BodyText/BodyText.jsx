@@ -29,7 +29,7 @@ function BodyText({ loading = false, content }) {
                     }}
                     sx={{
                         cursor: isOverflowing ? 'pointer' : 'initial',
-                        '-webkit-tap-highlight-color': 'transparent',
+                        WebkitTapHighlightColor: 'transparent',
                     }}
                 >
                     <Typography
