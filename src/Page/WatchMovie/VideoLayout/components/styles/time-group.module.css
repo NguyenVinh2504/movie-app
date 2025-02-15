@@ -16,3 +16,9 @@
     margin: 0 2.5px;
     color: #e0e0e0;
 }
+
+@media (max-width: 767.98px) {
+    .group {
+        margin-left: calc(15px / 2);
+    }
+}

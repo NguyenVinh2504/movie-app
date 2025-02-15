@@ -84,13 +84,37 @@ export function PlayMobile() {
         <PlayButton
             style={{
                 pointerEvents: 'auto',
+                margin: '0 40px',
             }}
         >
-            <CustomIconButton size={'medium'} color="secondNeutral">
+            <CustomIconButton size={'large'} color="secondNeutral">
                 {isPaused ? <PlayIcon /> : <PauseIcon />}
             </CustomIconButton>
         </PlayButton>
     );
+}
+
+export function Seek({ seconds, IconButton }) {
+    return (
+        <SeekButton
+            seconds={seconds}
+            style={{
+                pointerEvents: 'auto',
+            }}
+        >
+            <CustomIconButton size={'medium'} color="secondNeutral">
+                <IconButton />
+            </CustomIconButton>
+        </SeekButton>
+    );
+}
+
+export function SeekBack() {
+    return <Seek seconds={-10} IconButton={SeekBackward10Icon} />;
+}
+
+export function SeekForward() {
+    return <Seek seconds={10} IconButton={SeekForward10Icon} />;
 }
 
 export function Mute({ tooltipPlacement }) {
@@ -201,29 +225,6 @@ export function Fullscreen({ tooltipPlacement }) {
                 placement={tooltipPlacement}
             >
                 {isActive ? 'Thoát toàn màn hình' : 'Toàn màn hình'}
-            </Tooltip.Content>
-        </Tooltip.Root>
-    );
-}
-
-export function Seek({ seconds, tooltipPlacement }) {
-    const isBackward = seconds < 0;
-    return (
-        <Tooltip.Root>
-            <Tooltip.Trigger asChild>
-                <SeekButton className="vds-button" seconds={seconds}>
-                    {isBackward ? (
-                        <SeekBackward10Icon />
-                    ) : (
-                        <SeekForward10Icon />
-                    )}
-                </SeekButton>
-            </Tooltip.Trigger>
-            <Tooltip.Content
-                className="vds-tooltip-content"
-                placement={tooltipPlacement}
-            >
-                {isBackward ? 'Seek Backward' : 'Seek Forward'}
             </Tooltip.Content>
         </Tooltip.Root>
     );

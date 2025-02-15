@@ -1,4 +1,4 @@
-import { memo, useEffect, useLayoutEffect, useRef, useState } from 'react';
+import { memo, useLayoutEffect, useRef, useState } from 'react';
 import { Box, Typography, useMediaQuery, Skeleton } from '@mui/material';
 import uiConfigs from '~/config/ui.config';
 
@@ -27,7 +27,10 @@ function BodyText({ loading = false, content }) {
                     onClick={() => {
                         if (isOverflowing) setIsExpanded(!isExpanded);
                     }}
-                    sx={{ cursor: isOverflowing ? 'pointer' : 'initial' }}
+                    sx={{
+                        cursor: isOverflowing ? 'pointer' : 'initial',
+                        '-webkit-tap-highlight-color': 'transparent',
+                    }}
                 >
                     <Typography
                         ref={bodyText}

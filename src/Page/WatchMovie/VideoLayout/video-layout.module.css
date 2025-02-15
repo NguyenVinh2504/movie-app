@@ -3,6 +3,7 @@
  *************************************************************************************************/
 
 .controls {
+    --padding-controls: 8px;
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -34,16 +35,23 @@
 }
 
 .controlsGroup {
-    padding-inline: 8px;
+    padding-inline: var(--padding-controls, 8px);
+}
+
+.controlsGroupMobile {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
 .controlsGroup:first-child {
-    padding-top: 8px;
+    padding-top: var(--padding-controls, 8px);
 }
 
 .controlsGroup:last-child {
     margin-top: -4px;
-    padding-bottom: 8px;
+    padding-bottom: var(--padding-controls, 8px);
 }
 
 .spacer {
@@ -189,4 +197,16 @@
 /* Hide captions when interacting with time slider. */
 :global(.player[data-preview]) .captions {
     opacity: 0;
+}
+
+/* Mobile. */
+@media (max-width: 767.98px) {
+    :global(.player[data-controls]) .captions {
+        bottom: 50px;
+    }
+
+    .controls {
+        --padding-controls: 6px;
+    }
+
 }

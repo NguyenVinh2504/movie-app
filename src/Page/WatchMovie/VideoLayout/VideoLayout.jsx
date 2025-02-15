@@ -72,15 +72,16 @@ function ControlsMobile() {
                     tooltipPlacement="top"
                 />
             </Controls.Group>
-            <div className={styles.spacer} />
             <Controls.Group
-                className={styles.controlsGroup}
+                className={`${styles.controlsGroup} ${styles.controlsGroupMobile}`}
                 style={{
                     pointerEvents: 'none',
                 }}
             >
                 <div className={styles.spacer} />
+                <Buttons.SeekBack />
                 <Buttons.PlayMobile />
+                <Buttons.SeekForward />
                 <div className={styles.spacer} />
             </Controls.Group>
             <div className={styles.spacer} />
